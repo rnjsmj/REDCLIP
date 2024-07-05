@@ -1,0 +1,2 @@
+# REDCLIP
+Spring Team Project
