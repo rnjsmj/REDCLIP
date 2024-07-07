@@ -8,4 +8,11 @@
   		<setting name="jdbcTypeForNull" value="NULL"/>
   	</settings>
   	
+  	<typeAliases>
+  		<typeAlias type="com.kh.redclip.sample.model.vo.Sample" alias="sample"/>
+  	</typeAliases>
+  	<mappers>
+  		<mapper resource="/mapper/sample-mapper.xml"/>
+  	</mappers>
+  	
 </configuration>

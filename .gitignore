@@ -63,11 +63,11 @@ config.properties
 .scala_dependencies
 .worksheet
 
-### Eclipse Patch ###
+# Eclipse m2e generated files
 # Eclipse Core
-
+.project
 # JDT-specific (Eclipse Java Development Tools)
-
+.classpath
 
 # Annotation Processing
 .apt_generated
@@ -148,4 +148,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+redclip/.classpath
+
 # End of https://www.gitignore.io/api/git,java,maven,windows,eclipse
+
