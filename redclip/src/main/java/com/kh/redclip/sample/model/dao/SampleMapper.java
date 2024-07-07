@@ -12,4 +12,10 @@ public interface SampleMapper {
 	List<Sample> findAll();
 	
 	Sample findById(int sampleNo);
+<<<<<<< HEAD
+=======
+	
+	
+	asdasdasdasda
+>>>>>>> parent of 1dae3db (asdasd)
 }
