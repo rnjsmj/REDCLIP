@@ -29,32 +29,6 @@ public class SampleController {
 		model.addAttribute("list", sampleList);
 		return "sample/list";
 	}
-   @GetMapping("/123")
-   public String finnnnnnnnnnnnndAL() {
-	   asdklahslfhalsfhasdasasd
-	   ;as'kd;laslkdaljkhfzlxjkchvljas
-	   lz;lxcjlkxzjchlkxzhclxzh
-	   com.azul.tooling.in.Model.classasdl'aksdl;
-	   
-	   asdasdasd
-	   asdasdasd
-	   wkrdjqwkdjrdk민지가 작업ㅇ합
-	   wkrdjqwkdjrdk민지가 작업ㅇ합
-	   wkrdjqwkdjrdk민지가 작업ㅇ합
-	   wkrdjqwkdjrdk민지가 작업ㅇ합
-	   wkrdjqwkdjrdk민지가 작업ㅇ합
-	   
-	   wkrdjqwkdjrdk민지가 작업ㅇ합
-	   wkrdjqwkdjrdk민지가 작업ㅇ합
-	   wkrdjqwkdjrdk민지가 작업ㅇ합
-	   wkrdjqwkdjrdk민지가 작업ㅇ합
-	   wkrdjqwkdjrdk민지가 작업ㅇ합
-	   ㅍwkrdjqwkdjrdk민지가 작업ㅇ합
-   }
 	
-	@GetMapping("/1")
-	public String test() {
-		return "";
-	}
 	
 }
