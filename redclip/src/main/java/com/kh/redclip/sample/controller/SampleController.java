@@ -32,10 +32,6 @@ public class SampleController {
    @GetMapping("/123")
    public String finnnnnnnnnnnnndAL() {
 	   asdklahslfhalsfhasdasasd
-	   ;as'kd;laslkdaljkhfzlxjkchvljas
-	   lz;lxcjlkxzjchlkxzhclxzh
-	   com.azul.tooling.in.Model.classasdl'aksdl;
-	   
 	   asdasdasd
 	   asdasdasd
 	   wkrdjqwkdjrdk민지가 작업ㅇ합
