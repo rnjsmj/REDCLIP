@@ -20,6 +20,5 @@
 		 WHERE
 		 		NUM = #{num}
 	</select>
-	
-	
+
 </mapper>

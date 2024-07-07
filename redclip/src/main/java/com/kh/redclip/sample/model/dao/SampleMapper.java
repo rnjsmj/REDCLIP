@@ -12,4 +12,7 @@ public interface SampleMapper {
 	List<Sample> findAll();
 	
 	Sample findById(int sampleNo);
+	
+	
+	asdasdasdasda
 }
