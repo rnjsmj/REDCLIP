@@ -29,7 +29,7 @@ public class SampleController {
 		model.addAttribute("list", sampleList);
 		return "sample/list";
 	}
-   @GetMapping
+   @GetMapping("/123")
    public String finnnnnnnnnnnnndAL() {
 	   asdklahslfhalsfhasdasasd
 	   asdasdasd
