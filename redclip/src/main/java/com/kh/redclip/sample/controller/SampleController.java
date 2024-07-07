@@ -35,7 +35,7 @@ public class SampleController {
 	public String findById() {
 		
 		return "sample/list";
->>>>>>> parent of 1dae3db (asdasd)
+
 	}
 
  
