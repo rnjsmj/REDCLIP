@@ -28,6 +28,15 @@ public class SampleController {
 		
 		model.addAttribute("list", sampleList);
 		return "sample/list";
+<<<<<<< HEAD
+=======
+  }
+	
+	@GetMapping("/{id}")
+	public String findById() {
+		
+		return "sample/list";
+>>>>>>> parent of 1dae3db (asdasd)
 	}
 
  
