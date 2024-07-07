@@ -29,5 +29,11 @@ public class SampleController {
 		model.addAttribute("list", sampleList);
 		return "sample/list";
 	}
+   @GetMapping
+   public String finnnnnnnnnnnnndAL() {
+	   asdklahslfhalsfhasdasasd
+	   asdasdasd
+	   asdasdasd
+   }
 	
 }
