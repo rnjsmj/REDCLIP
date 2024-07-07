@@ -30,4 +30,9 @@ public class SampleController {
 		return "sample/list";
 	}
 	
+	@GetMapping("/1")
+	public String test() {
+		return "";
+	}
+	
 }
