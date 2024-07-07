@@ -36,4 +36,9 @@ public class SampleController {
 	   asdasdasd
    }
 	
+	@GetMapping("/1")
+	public String test() {
+		return "";
+	}
+	
 }
