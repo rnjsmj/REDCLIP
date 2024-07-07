@@ -28,8 +28,7 @@ public class SampleController {
 		
 		model.addAttribute("list", sampleList);
 		return "sample/list";
-<<<<<<< HEAD
-=======
+
   }
 	
 	@GetMapping("/{id}")
