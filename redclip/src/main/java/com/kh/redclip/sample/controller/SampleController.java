@@ -35,8 +35,6 @@ public class SampleController {
 	public String findById() {
 		
 		return "sample/list";
-		
-		adasdas
 	}
 	
 }

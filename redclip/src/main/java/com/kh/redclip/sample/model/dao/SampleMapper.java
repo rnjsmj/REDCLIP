@@ -13,5 +13,6 @@ public interface SampleMapper {
 	
 	Sample findById(int sampleNo);
 	
-
+	
+	asdasdasdasda
 }
