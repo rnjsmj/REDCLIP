@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.redclip.sample.model.service.SampleService;
@@ -28,7 +29,12 @@ public class SampleController {
 		
 		model.addAttribute("list", sampleList);
 		return "sample/list";
-	}
+  }
 	
+	@GetMapping("/{id}")
+	public String findById() {
+		
+		return "sample/list";
+	}
 	
 }
