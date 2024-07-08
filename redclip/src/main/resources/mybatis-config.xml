@@ -10,6 +10,8 @@
   	
   	<typeAliases>
   		<typeAlias type="com.kh.redclip.sample.model.vo.Sample" alias="sample" />
+  		<typeAlias type="com.kh.redclip.member.model.vo.Member" alias="member" />
+  		
   	</typeAliases>
   	<mappers>
   		<mapper resource="/mapper/sample-mapper.xml" />

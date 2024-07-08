@@ -70,19 +70,18 @@
       }
     </style>
 </head>
-<body>
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm navbar">
-    <h5 class="my-0 font-weight-normal">회사이름이던 로고던 암거나</h5>
-    <nav class="my-2 my-md-0 mr-md-3">
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm navbar">
+   <h5 class="my-0 font-weight-normal"><a href="${requestScope.contextPath}">홈</a></h5>
+
+   <nav class="my-2 my-md-0 mr-md-3">
       <a class="p-2 text-dark" href="#">물물교환</a>
       <a class="p-2 text-dark" href="#">체팅</a>
       <a class="p-2 text-dark" href="#">공지사항</a>
       <a class="p-2 text-dark" href="#">FAQ</a>
-    </nav>
-    <nav class="btnbox">
-      <a class="btn btn-outline-primary" href="#" id="btn sign">회원가입</a>
-      <a class="btn btn-outline-primary" href="#" id="btn sign">로그인</a>
-    </nav>
-  </div>    
-  </body>
+   </nav>
+   <nav class="btnbox">
+      <a class="btn btn-outline-primary" href="joinform" id="btn-sign">회원가입</a>
+      <a class="btn btn-outline-primary" href="#" id="btn-sign">로그인</a>
+   </nav>
+</div>    
 </html>
