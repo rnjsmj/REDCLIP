@@ -5,7 +5,7 @@ import com.kh.redclip.member.model.vo.Member;
 public interface MemberService {
 
 	//회원정보 수정
-	public int update(String member);
+	public int update(Member member);
 	
 	//회원상태 업데이트(탈퇴)
 	public int changeStatus(String userId);
