@@ -10,7 +10,12 @@
 			  MEMBER
 		   SET
 		   	  (
-		   	  
+		   	  USER_NAME = #{userName},
+		   	  NAICKNAME = #{nickname},
+		   	  EMAIL = #{email},
+		   	  TEL = #{tel},
+		   	  POSTCODE = #{postCode},
+		   	  ADDRESS = #{address}
 		   	  )
 		   	  
 	
