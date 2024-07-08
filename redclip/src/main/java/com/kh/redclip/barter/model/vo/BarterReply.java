@@ -15,4 +15,5 @@ public class BarterReply {
 	private String replyContent;
 	private String replyWriter;
 	private String replyDate;
+	private String replyNickname;
 }

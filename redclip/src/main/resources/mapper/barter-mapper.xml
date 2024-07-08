@@ -30,14 +30,14 @@
 		
 	</resultMap>
 	
-	<resultMap type="barterReply" id="bartetReplyResultSet">
+	<resultMap type="barterReply" id="barterReplyResultSet">
 		<result column="REPLY_NO" property="replyNo" />
 		<result column="REPLY_CONTENT" property="replyContent" />
 		<result column="REPLY_NICKNAME" property="replyNickname" />
 		<result column="REPLY_DATE" property="replyDate" />
 	</resultMap>
 
-	<select id="findById" parameterType="_int" resultType="barter">
+	<select id="findById" parameterType="_int" resultType="barterVo" resultMap="barterResultSet">
 		<!-- resultMap 적용하여 수정 -->
 		SELECT
 				BARTER_NO,
