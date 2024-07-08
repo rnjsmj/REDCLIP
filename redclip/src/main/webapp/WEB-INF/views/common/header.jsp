@@ -11,7 +11,7 @@
 <meta name="generator" content="Hugo 0.101.0">
 <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/pricing/">
 <!-- Bootstrap 핵심 CSS -->
-<link href="$/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
   .bd-placeholder-img {

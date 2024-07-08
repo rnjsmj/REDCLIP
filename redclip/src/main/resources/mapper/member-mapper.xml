@@ -4,13 +4,24 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.redclip.member.model.dao.MemberMapper">
 
-   <select id="idCheck" parameterType="string" resultType="_int">
+   <select id="checkId" parameterType="string" resultType="_int">
 	    SELECT 
 	    		COUNT(*)
 	    FROM 
-	    		MEMBER
+	    		TB_MEMBER
 	    WHERE 
-	    		USER_ID = #{checkId}
+	    		USER_ID = #{userId}
+	</select>
+	
+	<select id="checkNick" parameterType="string" resultType="_int">
+	  SELECT 
+	    		COUNT(*)
+	    FROM 
+	    		TB_MEMBER
+	    WHERE 
+	    		NICKNAME = #{userNick}
+	
+	
 	</select>
 	
 </mapper>

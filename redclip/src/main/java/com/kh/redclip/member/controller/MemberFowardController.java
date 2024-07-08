@@ -11,4 +11,6 @@ public class MemberFowardController {
 		 return "member/joinform";
 		
 	}	
+	
+	
 }

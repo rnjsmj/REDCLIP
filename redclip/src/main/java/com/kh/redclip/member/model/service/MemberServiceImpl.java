@@ -13,4 +13,10 @@ public class MemberServiceImpl implements MemberService {
 	public int idCheck(String userId) {
 		return memberMapper.checkId(userId);
 	}
+	
+	
+	@Override
+	public int nickCheck(String userNick) {
+		return memberMapper.checkNick(userNick);
+	}
 }
