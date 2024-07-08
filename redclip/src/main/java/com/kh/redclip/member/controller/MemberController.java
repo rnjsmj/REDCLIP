@@ -9,9 +9,11 @@ import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
 	private final MemberService memberService; 
@@ -20,7 +22,7 @@ public class MemberController {
 	@PostMapping
 	public String update(Member member, HttpSession session) {
 		
-		memberService.update(member);
+		// memberService.update(member);
 		
 		return "";
 	}
