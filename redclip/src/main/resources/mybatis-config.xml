@@ -10,9 +10,11 @@
   	
   	<typeAliases>
   		<typeAlias type="com.kh.redclip.sample.model.vo.Sample" alias="sample" />
+  		<typeAlias type="com.kh.redclip.barter.model.vo.Barter" alias="barter" />
   	</typeAliases>
   	<mappers>
   		<mapper resource="/mapper/sample-mapper.xml" />
+  		<mapper resource="/mapper/barter-mapper.xml" />
   	</mappers>
   	
 </configuration>

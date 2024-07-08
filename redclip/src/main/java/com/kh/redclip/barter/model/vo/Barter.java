@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class Barter {
 	private int barterNo;
+	private String barterName;
 	private String barterContent;
 	private String barterWriter;
 	private String villageCode;
@@ -18,5 +19,5 @@ public class Barter {
 	private int hit;
 	private String barterDate;
 	private String barterStatus;
-
+	
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.redclip.barter.model.dao.BarterMapper">
+
+	<select id="findById" parameterType="_int" resultType="barter">
+		<!-- resultMap 적용하여 수정 -->
+		SELECT
+				BARTER_NO barterNo,
+				BARTER_NAME barterName,
+				BARTER_CONTENT barterContent,
+				BARTER_NICKNAME barterNickname,
+				CITY_NAME cityName,
+				TOWN_NAME townName,
+				VILLAGE_NAME villageName,
+				CATEGORY_NAME categoryName,
+				HIT,
+				BARTER_DATE barterDate,
+				WISH_COUNT wishCount,
+				BARTER_STATUS barterStatus,
+				POINT,
+				REPLY_NO replyNo,
+				REPLY_CONTENT replyContent,
+				REPLY_NICKNAME replyNickname,
+				REPLY_DATE replyDate
+		  FROM
+		  		VW_BARTER_DETAIL
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	
+	</select>
+
+
+</mapper>
