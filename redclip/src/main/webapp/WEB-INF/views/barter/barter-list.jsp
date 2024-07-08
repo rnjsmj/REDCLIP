@@ -77,26 +77,6 @@
            margin-right: 10px;
        }
 
-       .header-nav a {
-           margin-right: 20px;
-           color: black;
-           text-decoration: none;
-       }
-       .header-nav a:hover {
-           text-decoration: underline;
-       }
-
-       .search {
-           width: 500px;
-           margin: auto;
-           margin-bottom: 60px;
-           display: flex;
-           justify-content: center;
-       }
-       .search-button {
-           width: 100px;
-           margin-left: 10px;
-       }
        .filter-select {
            margin: 0 5px;
        }
@@ -111,23 +91,7 @@
    </style>
    </head>
    <body>
-       <header id="header">
-           <div
-               class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm navbar"
-           >
-               <h5 class="my-0 font-weight-normal">회사이름이던 로고던 암거나</h5>
-               <nav class="my-2 my-md-0 mr-md-3">
-                   <a class="p-2 text-dark" href="#">물물교환</a>
-                   <a class="p-2 text-dark" href="#">체팅</a>
-                   <a class="p-2 text-dark" href="#">공지사항</a>
-                   <a class="p-2 text-dark" href="#">FAQ</a>
-               </nav>
-               <nav class="btnbox">
-                   <a class="btn btn-outline-primary" href="#" id="btn sign">회원가입</a>
-                   <a class="btn btn-outline-primary" href="#" id="btn sign">로그인</a>
-               </nav>
-           </div>
-       </header>
+       <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
        <div class="container">
            <nav aria-label="breadcrumb">
@@ -138,10 +102,7 @@
                </ol>
            </nav>
 
-           <div class="search">
-               <input type="text" class="form-control search-bar" placeholder="키워드를 입력해주세요." />
-               <button id="btn-search" class="btn btn-outline-secondary search-button" type="button">검색</button>
-           </div>
+           <jsp:include page="/WEB-INF/views/common/search.jsp" />
 
            <div class="d-flex justify-content-between align-items-center mb-3">
                <div class="d-flex">
@@ -293,16 +254,6 @@
                });
            });
        </script>
-        <footer>
-            <div class="footer-content">
-                <div class="footer-left">
-                    <p class="footer-info">회사 이름 | 주소 | 연락처</p>
-                    <a href="#">이용약관</a>
-                    <a href="#">개인정보처리방침</a>
-                </div>
-                <div class="footer-right">추가적인 정보나 링크가 여기에 올 수 있습니다.</div>
-            </div>
-            <div class="footer-bottom">&copy; 2023 Company Name. All rights reserved.</div>
-        </footer>
+        <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     </body>
 </html>
