@@ -143,36 +143,38 @@
     </div>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     
-    <!-- 아이디 유효성 검사후 아이디중복검사 -->
     <script>
-    $(() => {
-        const $idInput = $('#userId');
-        const pattern = /^[a-z0-9]{5,12}$/; 
-        const $checkId = $('#checkId');
+        $(() => {
+            const $idInput = $('#userId');
+            const pattern = /^[a-z0-9]{5,12}$/; 
+            const $checkId = $('#checkId');
 
-        $checkId.click(() => {
-            const userId = $idInput.val();
-            if (!pattern.test(userId)) {
-                alert("아이디는 소문자와 숫자를 포함하여 5~12자여야 합니다.");
-                return;
-            }
-            console.log("콘솔에 잘 찍힘?:", userId); 
-            $.ajax({
-                url: 'check-id',
-                type: 'POST',
-                data: { userId: userId }, // 데이터를 URL 인코딩된 형식으로 전송
-                success: response =>{
-                    if (response === 'Y') {
-                        alert("중복된 아이디 입니다. 다른 아이디를 사용해주세요");
-                    } else {
-                        alert("사용 가능한 아이디 입니다.");
-                    }
-                },
-                error: function() {
-                    alert('오류임키키븅신');
+            $checkId.click(() => {
+                const userId = $idInput.val();
+                if (!pattern.test(userId)) {
+                    alert("아이디는 소문자와 숫자를 포함하여 5~12자여야 합니다.");
+                    return;
                 }
+                console.log("AJAX request will send userId:", userId); 
+                $.ajax({
+                    url: '/check-id',
+                    type: 'POST',
+                    data: { userId: userId }, //사용자가입력한 아이디값
+                    success: function(response) {
+                        if (response===Y) {
+                            alert("중복된 아이디 입니다. 다른 아이디를 사용해주세요");
+                        } else {
+                            alert("사용 가능한 아이디 입니다.");
+                        }
+                    },
+                    error: function() {
+                        alert('서버와의 통신 중 오류가 발생했습니다.');
+                    }
+                });
+
             });
         });
+<<<<<<< HEAD
     });
 </script>
 <!-- 닉네임 유효성 검사후 중복검사  -->
@@ -188,7 +190,7 @@ $(() => {
                 alert("닉네임은 한글/영문/숫자를 이용하여 2~10 자리로 작성해주세요");
                 return;
             }
-});
-</script>
+        
+</script>            
 </body>
 </html>
