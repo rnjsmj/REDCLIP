@@ -30,5 +30,6 @@
 </bean>
 
 <mybatis-spring:scan base-package="com.kh.redclip.sample.model.dao"/>
+<mybatis-spring:scan base-package="com.kh.redclip.member.model.dao"/>
 
 </beans>
