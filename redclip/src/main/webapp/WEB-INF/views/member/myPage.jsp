@@ -13,6 +13,8 @@
     .modal-body { line-height: 2rem; }
 
         body {
+        	width:100%;
+        	height:auto;
             margin: 20px;
             line-height: 1.6;
             height: auto;
@@ -21,28 +23,41 @@
         .tab {
             width: 1200px;
             margin: 0 auto;
+            margin-top: 50px;
         }
+        
+        #title {
+        	margin: 30px; 
+            margin-left: 340px;
+            }
 
+		#content {
+			width:100%;
+			height: auto;
+			margin-bottom: 300px;
+    		margin-top: 100px;
+			}
        
         #updateForm {
              margin: 0 auto; 
              width: 1200px;
-             margin-top: 40px;
+             margin-top: 30px;
             }
 
         #buttons {
+        	width:100%;
             float: right;
-            margin-top: 30px;
+            margin-top: 60px;
          }
 
          #delete-btn {
-            margin-top: 100px;
+            margin-top: 80px;
         }
 </style>
 </head>
 <body>
     <header>
-		
+		<jsp:include page="../common/header.jsp"></jsp:include>
     </header>
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -66,10 +81,10 @@
           </ul>
     </div>
     <div id="content">
+    
+    <h3 id="title">회원정보 수정</h3>
+    
         <div id="updateForm">
-
-            <h3 id="title">회원정보 수정</h3>
-            
             <form action="update" method="post">
                 <div class="form-group">
                     <label for="userId">* ID </label><br>
@@ -108,7 +123,10 @@
             
         </div>
     </div>
-
+	<footer>
+        <jsp:include page="../common/footer.jsp"></jsp:include>
+    </footer>
+    
     <!--회원 탈퇴 시 띄워줄 모달창 -->
     <div class="modal fade" id="deleteForm">
         <div class="modal-dialog modal-lg">
@@ -158,8 +176,6 @@
         </div>
     </div>
 
-    <footer>
-        <!-- 푸터 영역 -->
-    </footer>
+    
 </body>
 </html>

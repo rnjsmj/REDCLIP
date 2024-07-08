@@ -1,5 +1,10 @@
 package com.kh.redclip.member.model.service;
 
-public class MemberServiceImpl {
+import org.springframework.stereotype.Service;
 
+@Service
+public class MemberServiceImpl implements MemberService {
+
+	
+	
 }
