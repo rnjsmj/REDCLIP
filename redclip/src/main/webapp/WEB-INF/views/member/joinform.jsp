@@ -155,17 +155,17 @@
                     alert("아이디는 소문자와 숫자를 포함하여 5~12자여야 합니다.");
                     return;
                 }
+                console.log("AJAX request will send userId:", userId); 
                 $.ajax({
-                    url: '/check-id', // 이 URL은 서버 측 엔드포인트에 맞게 변경해야 합니다.
+                    url: '/check-id',
                     type: 'POST',
-                    data: userId : userId,
-                    success: (response) {
-                    	if(response===Y){
-                    		alert("중복된 아이디 입니다. 다른 아이디를 사용해주세요")
-                    	}else{
-                    		alert("사용가능한 아이디 입니다.")
-                    	}
-                   
+                    data: { userId: userId }, //사용자가입력한 아이디값
+                    success: function(response) {
+                        if (response===Y) {
+                            alert("중복된 아이디 입니다. 다른 아이디를 사용해주세요");
+                        } else {
+                            alert("사용 가능한 아이디 입니다.");
+                        }
                     },
                     error: function() {
                         alert('서버와의 통신 중 오류가 발생했습니다.');
