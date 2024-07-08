@@ -18,4 +18,5 @@ public class Barter {
 	private int hit;
 	private String barterDate;
 	private String barterStatus;
+
 }
