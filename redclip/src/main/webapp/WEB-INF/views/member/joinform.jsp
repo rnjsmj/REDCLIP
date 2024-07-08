@@ -134,7 +134,7 @@
                 </div>
 
                 <div class="buttonwrap">
-                    <button type="submit" class="btn btn-primary joinbtn">회원가입</button>
+                    <button type="submit" class="btn btn-primary joinbtn" >회원가입</button>
                     <button type="reset" class="btn btn-secondary joinbtn">초기화</button>
                 </div>
             </form>
@@ -180,7 +180,14 @@
 $(() => {
 	const $nickInput = $('#nickName');
 	const pattern =/^[가-힣a-zA-Z0-9]{2-10}$/;
-	const $checknick = $('')
+	const $checknick = $('#checkNickName')
+	
+	 $checknick.click(() => {
+            const usernick = $nickInput.val();
+            if (!pattern.test(usernick)) {
+                alert("닉네임은 한글/영문/숫자를 이용하여 2~10 자리로 작성해주세요");
+                return;
+            }
 });
 </script>
 </body>
