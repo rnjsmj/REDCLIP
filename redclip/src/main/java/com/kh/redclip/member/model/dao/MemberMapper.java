@@ -1,5 +1,8 @@
 package com.kh.redclip.member.model.dao;
 
-public class MemberMapper {
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
+public interface MemberMapper {
+    int checkId(String userId);
 }
