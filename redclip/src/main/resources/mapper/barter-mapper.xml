@@ -18,20 +18,25 @@
 		<result column="WISH_COUNT" property="wishCount" />
 		<result column="BARTER_STATUS" property="barterStatus" />
 		<result column="POINT" property="point" />
-		<association resultMap="regionResultSet" property="region" />
+		<association javaType="region" property="region">
+			<result column="CITY_CODE" property="cityCode" />
+			<result column="CITY_NAME" property="cityName" />
+			<result column="TOWN_CODE" property="townCode" />
+			<result column="TOWN_NAME" property="townName" />
+			<result column="VILLAGE_CODE" property="villageCode" />
+			<result column="VILLAGE_NAME" property="villageName"/>
+		</association>
 		<collection resultMap="barterReplyResultSet" property="barterReplyList" />
 		
 	</resultMap>
 	
 	<resultMap type="barterReply" id="bartetReplyResultSet">
-	
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="REPLY_NICKNAME" property="replyNickname" />
+		<result column="REPLY_DATE" property="replyDate" />
 	</resultMap>
-	
-	<resultMap type="region" id="regionResultSet">
-	
-	
-	</resultMap>	
-	
+
 	<select id="findById" parameterType="_int" resultType="barter">
 		<!-- resultMap 적용하여 수정 -->
 		SELECT
