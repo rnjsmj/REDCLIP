@@ -41,10 +41,8 @@
 </style>
 </head>
 <body>
-    <!-- 헤더 영역-->
     <header>
-        <!-- 메뉴바 -->
-        <nav class="menuBar"></nav>
+		
     </header>
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -75,7 +73,7 @@
             <form action="update" method="post">
                 <div class="form-group">
                     <label for="userId">* ID </label><br>
-                    <input type="text" class="form-control" value="admin" aria-label="Disabled input example" disabled readonly> <br>
+                    <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" aria-label="Disabled input example" disabled readonly> <br>
 
                     <label for="userName">* Name : </label>
                     <input type="text" class="form-control" id="userName" value="이가을" name="userName" required> <br>
