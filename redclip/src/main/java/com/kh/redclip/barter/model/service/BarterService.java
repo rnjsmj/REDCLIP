@@ -7,7 +7,8 @@ import com.kh.redclip.barter.model.vo.BarterVO;
 public interface BarterService {
 
 
-  List<Barter> getAllBarters();
+	List<Barter> getAllBarters();
 	BarterVO findById(int barterNo);
+	int insert(Barter barter);
 
 }

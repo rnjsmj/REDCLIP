@@ -24,10 +24,11 @@ public class BarterController {
 	
 	private final BarterService barterService;
 	
+	//교환 게시글 목록보기
 	@GetMapping
-    public ResponseEntity<List<Barter>> getAllBarters() {
+    public String getAllBarters() {
         List<Barter> barters = barterService.getAllBarters();
-        return ResponseEntity.ok(barters);
+        return "barter/barter-list";
     }
 	
 	
@@ -39,5 +40,11 @@ public class BarterController {
 		model.addAttribute("barter", barterDetail);
 		
 		return "barter/detail";
+	}
+	
+	// 교환 게시글 글 등록하기
+	@GetMapping("insertForm.do")
+	public String barterForwarding() {
+		return "barter/insertForm";
 	}
 }
