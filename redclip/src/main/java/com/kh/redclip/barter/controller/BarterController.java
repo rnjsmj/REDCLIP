@@ -6,10 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.redclip.barter.model.service.BarterService;
 import com.kh.redclip.barter.model.vo.Barter;
+import com.kh.redclip.barter.model.vo.BarterVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/barters")
 public class BarterController {
+	
 	private final BarterService barterService;
 	
 	@GetMapping
@@ -29,11 +32,11 @@ public class BarterController {
 	
 	
 	// 교환 게시글 상세보기
-	@GetMapping("/barters/{no}")
-	public String findByNo(int barterNo, Model model) {
+	@GetMapping("/{barterNo}")
+	public String findByNo(@PathVariable int barterNo, Model model) {
 		
-		
-		
+		BarterVO barterDetail = barterService.findById(barterNo);
+		model.addAttribute("barter", barterDetail);
 		
 		return "barter/detail";
 	}
