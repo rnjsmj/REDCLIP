@@ -199,7 +199,7 @@
 		
 		$.ajax(() => {
 			url : 'member/' + userId,
-			type : 'PUT',
+			type : 'put',
 			data : updateData,
 			success : result => {
 				
