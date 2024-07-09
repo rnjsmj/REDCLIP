@@ -129,7 +129,23 @@
                 <div class="form-group">
                     <input type="tel" class="form-control" id="tel" placeholder="연락처" name="">
                 </div>
-
+				<!-- 시 구 동 정보가 담긴 selectbox  -->
+				 <div class="form-group">
+                <select class="form-control" id="city">
+                    <option value="">시 선택</option>
+                    <option value="seoul">서울특별시</option>
+                </select>
+            	</div>
+	            <div class="form-group">
+	                <select class="form-control" id="district" disabled>
+	                    <option value="">구 선택</option>
+	                </select>
+	            </div>
+	            <div class="form-group">
+	                <select class="form-control" id="neighborhood" disabled>
+	                    <option value="">동 선택</option>
+	                </select>
+	            </div>	
                 <div class="form-group rel">
                     <input type="text" class="form-control" id="postcode" placeholder="우편번호" name="">
                     <button class="btn btn-outline-secondary" type="button" id="findaddr">주소검색</button>

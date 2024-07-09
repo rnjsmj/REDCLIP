@@ -3,6 +3,7 @@ package com.kh.redclip.member.model.service;
 import org.springframework.stereotype.Service;
 
 import com.kh.redclip.member.model.dao.MemberMapper;
+import com.kh.redclip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 @Service
@@ -18,5 +19,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int nickCheck(String userNick) {
 		return memberMapper.checkNick(userNick);
+	}
+
+
+	@Override
+	public Member login(Member member) {
+		return memberMapper.login(member);
 	}
 }
