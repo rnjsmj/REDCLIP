@@ -11,7 +11,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <style>
-  	.container {margin-top: 60px; margin-bottom: 80px;}
+  	.container {margin-bottom: 80px;}
+  	.title {margin-top: 40px; margin-bottom: 20px;}
 	.image-placeholder {
 	  width: 100%;
 	  height: 150px;
@@ -42,7 +43,17 @@
 <body>
   <jsp:include page="/WEB-INF/views/common/header.jsp" />
   <div class="container">
-    <h2>상품 등록하기</h2>
+	<!-- breadcrumb -->
+	<section id="page1" class="page">
+	    <nav aria-label="breadcrumb">
+	        <ol class="breadcrumb">
+	            <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
+	        <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
+	        <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
+	        <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
+	    </ol>
+	</nav>
+    <h2 class="title">상품 등록하기</h2>
     <form>
       <div class="form-group">
         <label for="productName">상품명</label>

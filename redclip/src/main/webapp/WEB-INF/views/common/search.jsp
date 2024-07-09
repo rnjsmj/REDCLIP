@@ -8,111 +8,118 @@
     <title>검색창</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-	.search-container {
-	    position: relative;
-	    width: 400px;
-	    margin: 0 auto;
-	    margin-top: 80px;
-	    margin-bottom: 80px;
-	    display: flex;
-	}
-	.search-input {
-	    flex: 1;
-	    padding: 8px;
-	    border: 1px solid #ddd;
-	    border-radius: 5px 0 0 5px;
-	}
-	.search-button {
-	    padding: 8px 16px;
-	    border: 1px solid #ccc;
-	    border-left: 0;
-	    background-color: rgb(238, 60, 60);
-	    color: white;
-	    border-radius: 0 5px 5px 0;
-	    cursor: pointer;
-	}
-	.search-results {
-	    position: absolute;
-	    top: 40px;
-	    width: 100%;
-	    background: white;
-	    border: 1px solid #ccc;
-	    border-radius: 5px;
-	    display: none;
-	    z-index: 1000;
-	}
-	.search-results.active {
-	    display: block;
-	}
-	.search-results .tab {
-	    display: flex;
-	    border-bottom: 1px solid #ccc;
-	}
-	.search-results .tab button {
-	    flex: 1;
-	    padding: 10px;
-	    border: none;
-	    background: none;
-	    cursor: pointer;
-	}
-	.search-results .tab button.active {
-	    border-bottom: 2px solid #858585;
-	    font-weight: bold;
-	}
-	.search-results .content {
-	    padding: 10px;
-	}
-	.search-results .content .recent-searches,
-	.search-results .content .popular-searches {
-	    display: none;
-	}
-	.search-results .content .recent-searches.active,
-	.search-results .content .popular-searches.active {
-	    display: block;
-	}
-	.search-results .content ul {
-	    list-style: none;
-	    padding: 0;
-	    margin: 0;
-	}
-	.search-results .content li {
-	    display: flex;
-	    justify-content: space-between;
-	    align-items: center;
-	    padding: 5px 0;
-	    color: black; /* 기본 텍스트 색상을 명시적으로 설정 */
-	}
-	.search-results .content li span {
-	    flex: 1;
-	    overflow: hidden;
-	    white-space: nowrap;
-	    text-overflow: ellipsis;
-	    color: black; /* 기본 텍스트 색상을 명시적으로 설정 */
-	}
-	.search-results .content li .delete-btn {
-	    cursor: pointer;
-	    color: #aaa;
-	    margin-left: 10px; /* margin to separate delete button from text */
-	}
-	.search-results .actions {
-	    display: flex;
-	    justify-content: space-between;
-	    padding: 10px;
-	}
-	.search-results .actions button {
-	    border: none;
-	    background: none;
-	    cursor: pointer;
-	    color: #aaa;
-	}
-	.search-results .actions .clear-recent {
-	    visibility: visible;
-	}
-	.search-results .actions .clear-recent.hidden {
-	    visibility: hidden;
-	}
-</style>
+    <style>
+        .search-container {
+            position: relative;
+            width: 400px;
+            margin: 0 auto;
+            margin-top: 80px;
+            margin-bottom: 80px;
+            display: flex;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            outline: none; /* Remove default focus border */
+        }
+        .search-input:focus {
+            border-color: rgb(238, 60, 60); /* Change border color on focus */
+        }
+        .search-button {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-left: 0;
+            background-color: rgb(238, 60, 60);
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .search-results {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+        .search-results.active {
+            display: block;
+        }
+        .search-results .tab {
+            display: flex;
+            border-bottom: 1px solid #ccc;
+        }
+        .search-results .tab button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+        .search-results .tab button.active {
+            border-bottom: 2px solid #858585;
+            font-weight: bold;
+        }
+        .search-results .content {
+            padding: 10px;
+        }
+        .search-results .content .recent-searches,
+        .search-results .content .popular-searches {
+            display: none;
+        }
+        .search-results .content .recent-searches.active,
+        .search-results .content .popular-searches.active {
+            display: block;
+        }
+        .search-results .content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .search-results .content li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+        .search-results .content li span {
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .search-results .content li .delete-btn {
+            cursor: pointer;
+            color: #aaa;
+            text-align: right;
+            margin-right: 5px;
+        }
+        .search-results .actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+        .search-results .actions button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #aaa;
+        }
+        .search-results .actions .clear-recent {
+            visibility: visible;
+        }
+        .search-results .actions .clear-recent.hidden {
+            visibility: hidden;
+        }
+        #no-recent-searches {
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
 </head>
 <body>
     <div class="search-container">
@@ -212,6 +219,7 @@
                 });
             }
         }
+
         function fetchPopularSearches() {
             $.ajax({
                 url: '/api/popular_searches',
@@ -225,12 +233,13 @@
                 },
             });
         }
+
         // 페이지 로드 시 초기 인기 검색어를 가져옴
         fetchPopularSearches();
 
         // 주기적으로 15분마다 인기 검색어를 갱신
         setInterval(fetchPopularSearches, 15 * 60 * 1000);
     });
-	</script>
-   </body>
+</script>
+</body>
 </html>

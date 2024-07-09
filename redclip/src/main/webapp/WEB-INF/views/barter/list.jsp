@@ -72,7 +72,7 @@
         <section id="page1" class="page">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <img src="house-door-fill.svg" style="margin-right: 4px" />
+                    <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
                     <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
                     <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
                     <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
