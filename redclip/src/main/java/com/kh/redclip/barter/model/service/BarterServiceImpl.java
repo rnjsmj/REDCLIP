@@ -22,8 +22,8 @@ public class BarterServiceImpl implements BarterService{
 	private final SqlSessionTemplate sqlSession;
 	
 	@Override
-	public List<BarterVO> getAllBarters(Map<String, Integer> map) {
-		return barterMapper.getAllBarters(map);
+	public List<BarterVO> getAllBarters() {
+		return barterMapper.getAllBarters();
 	}
 
 	@Override

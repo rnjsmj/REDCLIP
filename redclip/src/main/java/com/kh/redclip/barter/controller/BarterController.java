@@ -29,8 +29,9 @@ public class BarterController {
 	
 	//교환 게시글 목록보기
 	@GetMapping
-    public String getAllBarters() {
-        List<Barter> barters = barterService.getAllBarters();
+    public String getAllBarters(@RequestParam(value="code", required=false) int code, Model model) {
+        List<BarterVO> barters = barterService.getAllBarters();
+        model.addAttribute("list", barters);
         return "barter/barter-list";
     }
 	
