@@ -173,11 +173,11 @@
         });
 
         function addSearchTerm() {
-            const searchTerm = $('.search-input').val();
+            const searchTerm = $('.search-input').val().trim(); // trim()으로 공백 제거
             if (searchTerm) {
                 recentSearches.push(searchTerm);
                 updateRecentSearches();
-                $('.search-input').val('');
+                $('.search-input').val(''); // 입력란 초기화
             }
         }
 

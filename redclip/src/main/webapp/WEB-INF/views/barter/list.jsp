@@ -40,14 +40,6 @@
         width: 800px;
         margin-right: 10px;
     }
-    .header-nav a {
-        margin-right: 20px;
-        color: black;
-        text-decoration: none;
-    }
-    .header-nav a:hover {
-        text-decoration: underline;
-    }
     .filter-select {
         margin: 0 5px;
     }
