@@ -4,8 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.redclip.barter.model.dao.BarterMapper">
 
-
-	
 	<resultMap type="barterVo" id="barterResultSet">
 		<id column="BARTER_NO" property="barterNo" />
 		<result column="BARTER_NAME" property="barterName" />
@@ -64,6 +62,40 @@
 		 WHERE
 		 		BARTER_NO = #{barterNo}
 	
+	</select>
+	
+	
+	
+	<resultMap type="barterVO" id="barterListResultSet">
+		<id column="BARTER_NO" property="barterNo" />
+		<result column="BARTER_NAME" property="barterName" />
+		<result column="BARTER_DATE" property="barterDate" />
+		<result column="BARTER_STATUS" property="barterStatus" />
+		<association javaType="region" property="region">
+			<result column="CITY_NAME" property="cityName" />
+			<result column="TOWN_NAME" property="townName" />
+			<result column="VILLAGE_NAME" property="villageName"/>
+		</association>
+	</resultMap>
+	
+	
+	<select id="getAllBarters" parameterType="hashMap" resultType="barterVO" resultMap="barterListResultSet">
+		SELECT
+				BARTER_NO,
+				BARTER_NAME,
+				CITY_NAME,
+				TOWN_NAME
+				VILLAGE_NAME,
+				BARTER_DATE,
+				BARTER_STATUS
+		  FROM
+		  		VW_BARTER_DETAIL
+		 WHERE
+		 		TO_CHAR(VILLAGE_CODE) LIKE '#{code}%';
+		 ORDER
+		    BY
+		    	BARTER_STATUS DESC,
+		    	BARTER_NO DESC
 	</select>
 
 

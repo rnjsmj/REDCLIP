@@ -1,6 +1,8 @@
 package com.kh.redclip.barter.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.redclip.barter.model.service.BarterService;
 import com.kh.redclip.barter.model.vo.Barter;
@@ -25,9 +28,15 @@ public class BarterController {
 	private final BarterService barterService;
 	
 	@GetMapping
-    public ResponseEntity<List<Barter>> getAllBarters() {
-        List<Barter> barters = barterService.getAllBarters();
-        return ResponseEntity.ok(barters);
+    public List<BarterVO> getAllBarters(@RequestParam(value="region", required=false) int region,
+    									@RequestParam(value="code", required=false) int code) {
+		
+		Map<String, Integer> map = new HashMap();
+		map.put("region", region);
+		map.put("code", code);
+		
+        List<BarterVO> barters = barterService.getAllBarters(map);
+        return barters;
     }
 	
 	

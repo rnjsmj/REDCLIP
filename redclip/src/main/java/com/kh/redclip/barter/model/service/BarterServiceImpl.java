@@ -1,11 +1,11 @@
 package com.kh.redclip.barter.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.kh.redclip.barter.model.dao.BarterMapper;
-import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterVO;
 
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,8 @@ public class BarterServiceImpl implements BarterService{
 	private final BarterMapper barterMapper;
 	
 	@Override
-	public List<Barter> getAllBarters() {
-		return null;
+	public List<BarterVO> getAllBarters(Map<String, Integer> map) {
+		return barterMapper.getAllBarters(map);
 	}
 
 	@Override
