@@ -35,4 +35,36 @@
 		STATUS ='Y'
 		<!-- AND USER_PWD = #{userPwd} AND STATUS = 'Y' -->
 	</select>
+	
+	<select id="selectgu" parameterType="int" resultType="region">
+        SELECT 
+        DISTINCT 
+        CITY_CODE cityCode,
+        CITY_NAME cityName,
+        TOWN_CODE townCode, 
+        TOWN_NAME townName,
+        VILLAGE_CODE villageCode,
+        VILLAGE_NAME villageName
+        
+        FROM VW_REGION
+        WHERE 
+        CITY_CODE = #{cityCode}
+    </select>
+	
+	<select id="selectdong" parameterType="int" resultType="region">
+        SELECT 
+        DISTINCT 
+        CITY_CODE cityCode,
+        CITY_NAME cityName,
+        TOWN_CODE townCode, 
+        TOWN_NAME townName,
+        VILLAGE_CODE villageCode,
+        VILLAGE_NAME villageName
+        
+        FROM VW_REGION
+        WHERE 
+        TOWN_CODE = #{townCode}
+    </select>
+	
+	
 </mapper>
