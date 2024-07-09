@@ -12,6 +12,7 @@
 		<result column="BARTER_WRITER" property="barterWriter" />
 		<result column="CATEGORY_NO" property="categoryNo" />
 		<result column="CATEGORY_NAME" property="categoryName" />
+		<result column="HIT" property="hit" />
 		<result column="BARTER_DATE" property="barterDate" />
 		<result column="WISH_COUNT" property="wishCount" />
 		<result column="BARTER_STATUS" property="barterStatus" />
@@ -133,6 +134,9 @@
 		  		VW_REPLY_LIST
 		 WHERE
 		 		BARTER_NO = #{barterNo}	
+		 ORDER
+		 	BY
+		 		REPLY_NO DESC
 	</select>
 	<!-- 댓글 입력 -->
 	<insert id="replyInsert" parameterType="barterReply">
@@ -178,7 +182,15 @@
 	
 	
 	<!-- 조회수 증가 -->
+	<update id="increaseHit" parameterType="_int">
+		UPDATE
+				TB_BARTER
+		   SET
+		   		HIT = HIT + 1
+		 WHERE
+		 		BARTER_NO = #{barterNo}
 	
+	</update>
 	
 	
 	

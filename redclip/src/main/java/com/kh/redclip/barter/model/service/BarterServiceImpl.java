@@ -58,8 +58,13 @@ public class BarterServiceImpl implements BarterService{
 	}
 
 	@Override
-	public int replyDelete(int barterNo) {
-		return barterMapper.replyDelete(barterNo);
+	public int replyDelete(int replyNo) {
+		return barterMapper.replyDelete(replyNo);
+	}
+	
+	@Override
+	public int increaseHit(int barterNo) {
+		return barterMapper.increaseHit(barterNo);
 	}
 	
 }

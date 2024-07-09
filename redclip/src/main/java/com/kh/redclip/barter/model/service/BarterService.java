@@ -24,6 +24,8 @@ public interface BarterService {
 	//댓글 수정
 	int replyUpdate(BarterReply barterReply);
 	//댓글 삭제
-	int replyDelete(int barterNo);
+	int replyDelete(int replyNo);
 	
+	//게시글 조회수 증가
+	int increaseHit(int barterNo);
 }

@@ -173,7 +173,7 @@
             width: 900px;
             margin: 0 auto;
             padding: 10px;
-            min-height: 220px;
+            min-height: 150px;
             position: relative;
         }
         .reply-img {
@@ -459,19 +459,21 @@
                         </div>
                         <hr />
                         <!--글 작성자에게만 보여질 버튼-->
+                        <c:if test="${ sessionScope.loginUser.userId eq barter.barterWriter }">
                         <div class="btn-group" id="writer-btn">
                             <a href="" id="updbtn">수정</a>
                             <a onclick="" id="delbtn">삭제</a>
                         </div>
+                        </c:if>
                         <div class="btn-group" id="user-btn">
-                            <a id="listbtn" href="">목록</a>
+                            <a id="listbtn" href="/redclip/barters">목록</a>
                         </div>
                     </div>
                 </div>
                 <!-- 로그인한 사용자만 reply-wrap 볼 수 있음-->
                 <div id="reply-wrap">
+                <c:if test="${ not empty sessionScope.loginUser.userId && sessionScope.loginUser.userId ne barter.barterWriter }">
                     <div id="input-reply">
-                        <form action="" method="post">
                             <table id="reply-table">
                                 <tr>
                                     <td rowspan="2">
@@ -482,7 +484,7 @@
                                             required
                                         ></textarea>
                                     </td>
-                                    <td><button type="submit" id="replybtn">교환 신청</button></td>
+                                    <td><button type="button" id="replybtn" onclick="saveReply();">교환 신청</button></td>
                                 </tr>
                                 <tr>
                                     <td id="filebtn">
@@ -527,237 +529,18 @@
                                 </tr>
                             </table>
                             <input type="file" id="reply-file" />
-                        </form>
+                        </div>
                         <!--script로 선택한 사진들 li로 출력-->
-                    </div>
+                       <div id="file-list"> 
+                       
+                       </div>
+                        </c:if>
+                    
                     <div id="reply-list">
-                        <!-- reply item 반복문 시작 -->
-                        <hr />
-                        <div class="reply-item">
-                            <!--첨부된 파일이 있는 경우 figure 출력-->
-                            <figure class="reply-img">
-                                <div id="reply-img-1" class="carousel slide" data-ride="carousel">
-                                    <div
-                                        class="carousel-inner"
-                                        data-toggle="modal"
-                                        data-target="#trade-image-modal"
-                                        onclick="modalContent(this);">
-                                        <div class="carousel-item active">
-                                            <img
-                                                class="d-block w-100"
-                                                src="https://via.placeholder.com/200x200?auto=yes&bg=777&fg=555&text=First slide"
-                                                alt="First slide"/>
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img
-                                                class="d-block w-100"
-                                                src="https://via.placeholder.com/200x200???auto=yes&bg=666&fg=444&text=Second slide"
-                                                alt="Second slide"/>
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img
-                                                class="d-block w-100"
-                                                src="https://via.placeholder.com/200x200??auto=yes&bg=555&fg=333&text=Third slide"
-                                                alt="Third slide"/>
-                                        </div>
-                                        --
-                                    </div>
-                                    <a
-                                        class="carousel-control-prev"
-                                        href="#reply-img-1"
-                                        role="button"
-                                        data-slide="prev"
-                                    >
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a
-                                        class="carousel-control-next"
-                                        href="#reply-img-1"
-                                        role="button"
-                                        data-slide="next"
-                                    >
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </figure>
-                            <!-- userId에 따라 버튼 달라짐 : 작성자 => 1 / 답글 작성자 => 2 / 일반 유저 =>3 -->
-                            <!-- 답글 목록 출력 확인 후 AJAX 기능으로 수정 -->
-                            <div class="reply-detail">
-                                <div class="reply-list-content">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
-                                        <path
-                                            d="M12 2.5a5.25 5.25 0 0 0-2.519 9.857 9.005 9.005 0 0 0-6.477 8.37.75.75 0 0 0 .727.773H20.27a.75.75 0 0 0 .727-.772 9.005 9.005 0 0 0-6.477-8.37A5.25 5.25 0 0 0 12 2.5Z"
-                                        ></path>
-                                    </svg>
-                                    
-                                    <a href="">댓글작성자</a>
-                                    <span class="reply-date">6분 전</span>
-                                    <p>
-                                        1번 댓글내용 댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용 1번 댓글내용
-                                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                                        댓글내용댓글내용댓글내용댓글내용댓글내
-                                    </p>
-                                </div>
-                                <div class="btn-group2">
-                                    <a href="" id="chatbtn" class="btn btn-light">채팅하기</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- reply item 반복문 끝 -->
-                        <!-- carousel의 id태그를 댓글번호를 이용하여 댓글마다 다르게 지정-->
-                        <hr />
-                        <div class="reply-item">
-                            <figure class="reply-img">
-                                <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
-                                    <div
-                                        class="carousel-inner"
-                                        data-toggle="modal"
-                                        data-target="#trade-image-modal"
-                                        onclick="modalContent(this);"
-                                    >
-                                        <div class="carousel-item active">
-                                            <img
-                                                class="d-block w-100"
-                                                src="https://via.placeholder.com/200x200?auto=yes&bg=777&fg=555&text=First slide"
-                                                alt="First slide"
-                                            />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img
-                                                class="d-block w-100"
-                                                src="https://via.placeholder.com/200x200???auto=yes&bg=666&fg=444&text=Second slide"
-                                                alt="Second slide"
-                                            />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img
-                                                class="d-block w-100"
-                                                src="https://via.placeholder.com/200x200??auto=yes&bg=555&fg=333&text=Third slide"
-                                                alt="Third slide"
-                                            />
-                                        </div>
-                                    </div>
-                                    <a
-                                        class="carousel-control-prev"
-                                        href="#carouselExampleControls2"
-                                        role="button"
-                                        data-slide="prev"
-                                    >
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a
-                                        class="carousel-control-next"
-                                        href="#carouselExampleControls2"
-                                        role="button"
-                                        data-slide="next"
-                                    >
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </figure>
-                            <!-- userId에 따라 버튼 달라짐 : 작성자 => 1 / 답글 작성자 => 2 / 일반 유저 =>3 -->
-                            <div class="reply-detail">
-                                <div class="reply-list-content">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
-                                        <path
-                                            d="M12 2.5a5.25 5.25 0 0 0-2.519 9.857 9.005 9.005 0 0 0-6.477 8.37.75.75 0 0 0 .727.773H20.27a.75.75 0 0 0 .727-.772 9.005 9.005 0 0 0-6.477-8.37A5.25 5.25 0 0 0 12 2.5Z"
-                                        ></path>
-                                    </svg>
-                                    <a href="">댓글 작성자</a>
-                                    <p>
-                                        2번 댓글내용 댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                                    </p>
-                                </div>
-                                <div class="btn-group2">
-                                    <a href="" id="updbtn" class="btn btn-light">수정</a>
-                                    <button id="delbtn" class="btn btn-light">삭제</button>
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="reply-item">
-                            <figure class="reply-img">
-                                <div id="carouselExampleControls3" class="carousel slide" data-ride="carousel">
-                                    <div
-                                        class="carousel-inner"
-                                        data-toggle="modal"
-                                        data-target="#trade-image-modal"
-                                        onclick="modalContent(this);"
-                                    >
-                                        <div class="carousel-item active">
-                                            <img
-                                                class="d-block w-100"
-                                                src="https://via.placeholder.com/200x200?auto=yes&bg=777&fg=555&text=First slide"
-                                                alt="First slide"
-                                            />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img
-                                                class="d-block w-100"
-                                                src="https://via.placeholder.com/200x200???auto=yes&bg=666&fg=444&text=Second slide"
-                                                alt="Second slide"
-                                            />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img
-                                                class="d-block w-100"
-                                                src="https://via.placeholder.com/200x200??auto=yes&bg=555&fg=333&text=Third slide"
-                                                alt="Third slide"
-                                            />
-                                        </div>
-                                    </div>
-                                    <a
-                                        class="carousel-control-prev"
-                                        href="#carouselExampleControls3"
-                                        role="button"
-                                        data-slide="prev"
-                                    >
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a
-                                        class="carousel-control-next"
-                                        href="#carouselExampleControls3"
-                                        role="button"
-                                        data-slide="next"
-                                    >
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </figure>
-                            <!-- userId에 따라 버튼 달라짐 : 작성자 => 1 / 답글 작성자 => 2 / 일반 유저 =>3 -->
-                            <div class="reply-detail">
-                                <div class="reply-list-content">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
-                                        <path
-                                            d="M12 2.5a5.25 5.25 0 0 0-2.519 9.857 9.005 9.005 0 0 0-6.477 8.37.75.75 0 0 0 .727.773H20.27a.75.75 0 0 0 .727-.772 9.005 9.005 0 0 0-6.477-8.37A5.25 5.25 0 0 0 12 2.5Z"
-                                        ></path>
-                                    </svg>
-                                    <a href="">댓글 작성자</a>
-                                    <p>
-                                        3번 댓글내용 댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
-                        
-                    </div>
+                        <!--  답글 목록 -->
+                	</div>
+                
                 </div>
-                
-                
                 <script>
                 
                 	$(() => {
@@ -828,16 +611,19 @@
                                     	resultStr += '<div class="btn-group2"><a href="'
                                     			  +'" id="chatbtn" class="btn btn-light">채팅하기</a></div>'
                                     			  +'</div></div>';
-                                    } else if( userId === result[i].barterWriter) {
-                                    	resultStr += '<div class="btn-group2"><a href="'
+                                    } else if( userId === result[i].replyWriter) {
+                                    	resultStr += '<div class="btn-group2"><button onclick="editReply('
                                     			  + '" id="updbtn" class="btn btn-light">수정</a>'
-                                    			  + '<button id="rep-delbtn" class="btn btn-light">삭제</button></div>'
+                                    			  + result[i].replyNo + '); <button id="rep-delbtn" class="btn btn-light"'
+                                    			  + ' onclick="deleteReply('+ result[i].replyNo + ')">삭제</button></div>'
                                     			  + '</div></div>';
                                     } else {
                                     	resultStr += '</div></div>';
                                     }
                                     
+                                    
                 				};
+                				resultStr += "<hr/>";
                 				 $('#reply-list').html(resultStr);
                 				
                 			}
@@ -845,6 +631,76 @@
                 		});
                 		
                 	};
+                	
+                	
+                	function saveReply() {
+                		
+                		if($('#reply-content').val().trim() != '') {
+                			
+                			$.ajax({
+                				
+                				url : 'reply',
+                				type : 'post',
+                				//barterNo, replyContent, replyWriter
+                				data : {
+                					barterNo : ${ barter.barterNo },
+                					replyContent : $('#reply-content').val(),
+                					replyWriter : '${ sessionScope.loginUser.userId }'
+                				},
+                				success : result => {
+                					
+                					console.log(result);
+                					if (result == 'success') {
+                						
+                						selectReply();
+                						$('#reply-content').val('');
+                						
+                					}
+                					
+                				}
+                			});
+                			
+                		} else {
+                			alert('댓글 내용을 입력해주세요.');
+                		}
+                	};
+                	
+                	
+                	function deleteReply(no) {
+                		console.log(no);
+                		
+                		if(confirm('삭제하시겠습니까?')) {
+                			
+                			$.ajax({
+                				
+                				url : 'reply/' + no,
+                				type : 'delete',
+                				success : result => {
+                					
+                					console.log(result);
+                					if(result == 'success') {
+                						
+                						selectReply();
+                						alert('삭제되었습니다.');
+                						
+                					} else {
+                						alert('오류가 발생했습니다.');
+                					}
+                				}
+                				
+                			});
+                			
+                		}
+                		
+                	};
+                	
+                	function editReply(no) {
+                		
+                		console.log(no);
+                		
+                		
+            
+                	}
                 
                 </script>
                 
