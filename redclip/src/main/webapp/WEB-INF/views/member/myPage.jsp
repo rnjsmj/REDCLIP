@@ -53,6 +53,10 @@
          #delete-btn {
             margin-top: 80px;
         }
+        
+        #pointbar {
+        	margin-top: 40px;
+        }
 </style>
 </head>
 <body>
@@ -112,9 +116,10 @@
                     <input type="number" class="form-control" id="villageCode" value="10101" name="villageCode">
 
                     <!-- 조건문 사용 -> 포인트 별로 다르게 출력-->
-                    <label for="progress" style="line-height: 4rem;"> &nbsp; 다음 등급까지 </label>
-                    <div class="progress"  id="progress" name="point"" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >
-                        <div class="progress-bar" style="width: 0%"></div>
+                    <div id="pointbar">다음 등급까지
+	                    <div class="progress"  id="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >
+	                        <div class="progress-bar" style="width: 0%"></div>
+	                    </div>
                     </div>
                      
                 <div id="buttons">
