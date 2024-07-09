@@ -28,13 +28,20 @@ public class BarterController {
 	private final BarterService barterService;
 	
 	//교환 게시글 목록보기
+	/*
 	@GetMapping
     public String getAllBarters(@RequestParam(value="code", required=false) int code, Model model) {
+        List<BarterVO> barters = barterService.getAllBarters(code);
+        model.addAttribute("list", barters);
+        return "barter/barter-list";
+    }
+	*/
+	@GetMapping
+    public String getAllBarters(Model model) {
         List<BarterVO> barters = barterService.getAllBarters();
         model.addAttribute("list", barters);
         return "barter/barter-list";
     }
-	
 	
 	// 교환 게시글 상세보기
 	@GetMapping("/{barterNo}")

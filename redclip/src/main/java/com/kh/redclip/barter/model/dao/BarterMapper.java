@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterVO;
 
 @Mapper
@@ -14,5 +15,6 @@ public interface BarterMapper {
 	
 	BarterVO findById(int barterNo);
 	
+	int insert (Barter barter);
 	
 }

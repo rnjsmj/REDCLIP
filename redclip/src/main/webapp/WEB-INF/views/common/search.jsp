@@ -13,12 +13,14 @@
                 position: relative;
                 width: 400px;
                 margin: 0 auto;
+                margin-top:80px;
+                margin-bottom:80px;
                 display: flex;
             }
             .search-input {
                 flex: 1;
                 padding: 8px;
-                border: 1px solid #ccc;
+                border: 1px solid #ddd;
                 border-radius: 5px 0 0 5px;
             }
             .search-button {
