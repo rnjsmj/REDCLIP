@@ -27,16 +27,11 @@ public class BarterController {
 	
 	private final BarterService barterService;
 	
+	//교환 게시글 목록보기
 	@GetMapping
-    public List<BarterVO> getAllBarters(@RequestParam(value="region", required=false) int region,
-    									@RequestParam(value="code", required=false) int code) {
-		
-		Map<String, Integer> map = new HashMap();
-		map.put("region", region);
-		map.put("code", code);
-		
-        List<BarterVO> barters = barterService.getAllBarters(map);
-        return barters;
+    public String getAllBarters() {
+        List<Barter> barters = barterService.getAllBarters();
+        return "barter/barter-list";
     }
 	
 	
@@ -48,5 +43,11 @@ public class BarterController {
 		model.addAttribute("barter", barterDetail);
 		
 		return "barter/detail";
+	}
+	
+	// 교환 게시글 글 등록하기
+	@GetMapping("insertForm.do")
+	public String barterForwarding() {
+		return "barter/insertForm";
 	}
 }

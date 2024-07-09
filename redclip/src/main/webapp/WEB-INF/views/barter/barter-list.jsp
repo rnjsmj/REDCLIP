@@ -66,7 +66,7 @@
                <ol class="breadcrumb">
                    <img src="house-door-fill.svg" style="margin-right: 4px" />
                    <li class="breadcrumb-item"><a href="main.jsp" class="p-2 text-dark">홈</a></li>
-                   <li class="breadcrumb-item"><a href="barter-list.jsp" class="p-2 text-dark">물물교환</a></li>
+                   <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
                </ol>
            </nav>
            <div class="d-flex justify-content-between align-items-center mb-3">
