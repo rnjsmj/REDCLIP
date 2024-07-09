@@ -60,7 +60,7 @@ public class MemberController {
         } else {
             log.error("로그인 실패: 사용자 정보가 없습니다.");
             model.addAttribute("errorMsg", "로그인 실패");
-            return "redirect/";  // 홈화면으로
+            return "redirect:/";  // 홈화면으로
             
             
         }

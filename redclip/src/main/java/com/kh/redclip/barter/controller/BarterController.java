@@ -1,9 +1,8 @@
 package com.kh.redclip.barter.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.barter.model.service.BarterService;
-import com.kh.redclip.barter.model.vo.Barter;
+import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterVO;
 
 import lombok.RequiredArgsConstructor;
@@ -40,6 +40,9 @@ public class BarterController {
 	public String findByNo(@PathVariable int barterNo, Model model) {
 		
 		BarterVO barterDetail = barterService.findById(barterNo);
+		if (barterDetail == null) {
+			return "barter/bater-list";
+		}
 		model.addAttribute("barter", barterDetail);
 		
 		return "barter/detail";
@@ -50,4 +53,45 @@ public class BarterController {
 	public String barterForwarding() {
 		return "barter/insertForm";
 	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//답글 목록
+	@GetMapping(value="reply", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<List<BarterReply>> getAllBarterReply(int barterNo) {
+		
+		List<BarterReply> replyList = barterService.getBarterReply(barterNo);
+		return ResponseEntity.status(HttpStatus.OK).body(replyList);
+	}
+	
 }
