@@ -88,7 +88,7 @@
             <div>
                 <div class="form-group">
                     <label for="userId">* ID </label><br>
-                    <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" aria-label="Disabled input example" disabled readonly> <br>
+                    <input type="text" class="form-control" value="admin" neme="userId" aria-label="Disabled input example" disabled readonly> <br>
 
                     <label for="userName">* Name : </label>
                     <input type="text" class="form-control" id="userName" value="이가을" name="userName" required> <br>
@@ -118,7 +118,8 @@
                     </div>
                      
                 <div id="buttons">
-                    <button type="submit" id="update" class="btn btn-success"  onclick="update();">수정</button> | <button type="reset" class="btn btn-secondary">취소</button><br>
+                    <button type="button" id="update" class="btn btn-success"  onclick="update()">수정</button>
+                    <button type="reset" class="btn btn-secondary">취소</button><br>
                     <button type="button" id="delete-btn" class="btn btn-secondary" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
                 </div>
                 </div>
@@ -183,6 +184,8 @@
 
 	function update() {
 		
+		const userId = ('userId').val();
+		
 		var updateData = {
 				"userName" : $('#userName').val(),
 				"nickname" : $('#nickname').val(),
@@ -192,11 +195,11 @@
 				"address" : $('#address').val(),
 				"villageCode" : $('#villageCode').val(),
 				
-		}
+		};
 		
 		$.ajax(() => {
-			url : 'update',
-			type : 'put',
+			url : 'member/' + userId,
+			type : 'PUT',
 			data : updateData,
 			success : result => {
 				
