@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.redclip.barter.model.dao.BarterMapper">
+
+	<resultMap type="barterVo" id="barterResultSet">
+		<id column="BARTER_NO" property="barterNo" />
+		<result column="BARTER_NAME" property="barterName" />
+		<result column="BARTER_CONTENT" property="barterContent" />
+		<result column="BARTER_NICKNAME" property="barterNickname" />
+		<result column="BARTER_WRITER" property="barterWriter" />
+		<result column="CATEGORY_NO" property="categoryNo" />
+		<result column="CATEGORY_NAME" property="categoryName" />
+		<result column="BARTER_DATE" property="barterDate" />
+		<result column="WISH_COUNT" property="wishCount" />
+		<result column="BARTER_STATUS" property="barterStatus" />
+		<result column="POINT" property="point" />
+		<association javaType="region" property="region">
+			<result column="CITY_CODE" property="cityCode" />
+			<result column="CITY_NAME" property="cityName" />
+			<result column="TOWN_CODE" property="townCode" />
+			<result column="TOWN_NAME" property="townName" />
+			<result column="VILLAGE_CODE" property="villageCode" />
+			<result column="VILLAGE_NAME" property="villageName"/>
+		</association>
+		<collection resultMap="barterReplyResultSet" property="barterReplyList" />
+		
+	</resultMap>
+	
+	<resultMap type="barterReply" id="barterReplyResultSet">
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="REPLY_NICKNAME" property="replyNickname" />
+		<result column="REPLY_DATE" property="replyDate" />
+	</resultMap>
+
+	<select id="findById" parameterType="_int" resultType="barterVo" resultMap="barterResultSet">
+		<!-- resultMap 적용하여 수정 -->
+		SELECT
+				BARTER_NO,
+				BARTER_NAME,
+				BARTER_CONTENT,
+				BARTER_WRITER,
+				BARTER_NICKNAME,
+				CITY_NAME,
+				TOWN_NAME,
+				VILLAGE_NAME,
+				CATEGORY_NO,
+				CATEGORY_NAME,
+				HIT,
+				BARTER_DATE,
+				WISH_COUNT,
+				BARTER_STATUS,
+				POINT,
+				REPLY_NO,
+				REPLY_CONTENT,
+				REPLY_NICKNAME,
+				REPLY_DATE
+		  FROM
+		  		VW_BARTER_DETAIL
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	
+	</select>
+	
+	
+	
+	<resultMap type="barterVO" id="barterListResultSet">
+		<id column="BARTER_NO" property="barterNo" />
+		<result column="BARTER_NAME" property="barterName" />
+		<result column="BARTER_DATE" property="barterDate" />
+		<result column="BARTER_STATUS" property="barterStatus" />
+		<association javaType="region" property="region">
+			<result column="CITY_NAME" property="cityName" />
+			<result column="TOWN_NAME" property="townName" />
+			<result column="VILLAGE_NAME" property="villageName"/>
+		</association>
+	</resultMap>
+	
+	
+	<select id="getAllBarters" parameterType="int" resultType="barterVO" resultMap="barterListResultSet">
+		SELECT
+				BARTER_NO,
+				BARTER_NAME,
+				CITY_NAME,
+				TOWN_NAME
+				VILLAGE_NAME,
+				BARTER_DATE,
+				BARTER_STATUS
+		  FROM
+		  		VW_BARTER_DETAIL
+
+		<if test='value != 0'>
+		 WHERE
+		 		TO_CHAR(VILLAGE_CODE) LIKE '+||#{value}%'
+	    </if>
+		 ORDER
+		    BY
+		    	BARTER_STATUS DESC,
+		    	BARTER_NO DESC
+	</select>
+
+
+</mapper>
