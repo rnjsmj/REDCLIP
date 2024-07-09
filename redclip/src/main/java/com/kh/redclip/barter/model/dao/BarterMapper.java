@@ -10,7 +10,7 @@ import com.kh.redclip.barter.model.vo.BarterVO;
 @Mapper
 public interface BarterMapper {
 	
-	List<BarterVO> getAllBarters();
+	List<BarterVO> getAllBarters(Integer code);
 	
 	BarterVO findById(int barterNo);
 	

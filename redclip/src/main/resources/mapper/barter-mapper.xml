@@ -79,7 +79,7 @@
 	</resultMap>
 	
 	
-	<select id="getAllBarters" parameterType="_int" resultType="barterVO" resultMap="barterListResultSet">
+	<select id="getAllBarters" parameterType="int" resultType="barterVO" resultMap="barterListResultSet">
 		SELECT
 				BARTER_NO,
 				BARTER_NAME,
@@ -90,8 +90,10 @@
 				BARTER_STATUS
 		  FROM
 		  		VW_BARTER_DETAIL
+		<if test='value != 0'>
 		 WHERE
-		 		TO_CHAR(VILLAGE_CODE) LIKE '+||#{code}%';
+		 		TO_CHAR(VILLAGE_CODE) LIKE '+||#{value}%'
+	    </if>
 		 ORDER
 		    BY
 		    	BARTER_STATUS DESC,
