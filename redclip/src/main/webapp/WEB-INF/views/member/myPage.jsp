@@ -85,7 +85,7 @@
     <h3 id="title">회원정보 수정</h3>
     
         <div id="updateForm">
-            <form action="update" method="post">
+            <div>
                 <div class="form-group">
                     <label for="userId">* ID </label><br>
                     <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" aria-label="Disabled input example" disabled readonly> <br>
@@ -94,7 +94,7 @@
                     <input type="text" class="form-control" id="userName" value="이가을" name="userName" required> <br>
 
                     <label for="Nickname">* Nickname : </label>
-                    <input type="text" class="form-control" id="nickame" value="관리자" name="nickame" required> <br>
+                    <input type="text" class="form-control" id="nickame" value="관리자" name="nickname" required> <br>
 
                     <label for="email"> &nbsp; Email : </label>
                     <input type="text" class="form-control" id="email" value="gaga@gmail.com" name="email"> <br>
@@ -107,6 +107,9 @@
                     
                     <label for="address"> &nbsp; Address : </label>
                     <input type="text" class="form-control" id="address" value="김포시" name="address">
+                    
+                    <label for="villageCode"> &nbsp; VillageCode : </label>
+                    <input type="number" class="form-control" id="villageCode" value="10101" name="villageCode">
 
                     <!-- 조건문 사용 -> 포인트 별로 다르게 출력-->
                     <label for="progress" style="line-height: 4rem;"> &nbsp; 다음 등급까지 </label>
@@ -115,11 +118,11 @@
                     </div>
                      
                 <div id="buttons">
-                    <button type="button" id="update" class="btn btn-success" onclick="update();">수정</button> | <button type="reset" class="btn btn-secondary">취소</button><br>
+                    <button type="submit" id="update" class="btn btn-success"  onclick="update();">수정</button> | <button type="reset" class="btn btn-secondary">취소</button><br>
                     <button type="button" id="delete-btn" class="btn btn-secondary" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
                 </div>
                 </div>
-            </form>
+            </div>
             
         </div>
     </div>
@@ -176,6 +179,32 @@
         </div>
     </div>
 
-    
+    <script>
+
+	function update() {
+		
+		var updateData = {
+				"userName" : $('#userName').val(),
+				"nickname" : $('#nickname').val(),
+				"email" : $('#email').val(),
+				"tel" : $('#tel').val(),
+				"postCode" : $('#postCode').val(),
+				"address" : $('#address').val(),
+				"villageCode" : $('#villageCode').val(),
+				
+		}
+		
+		$.ajax(() => {
+			url : 'update',
+			type : 'put',
+			data : updateData,
+			success : result => {
+				
+				console.log(result);
+			}
+		});
+	}
+	
+    </script>
 </body>
 </html>

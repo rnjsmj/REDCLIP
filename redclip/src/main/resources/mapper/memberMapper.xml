@@ -7,18 +7,21 @@
 	<!-- 회원 정보 수정 -->
 	<update id="update">
 		UPDATE
-			  MEMBER
-		   SET
-		   	  (
-		   	  USER_NAME = #{userName},
-		   	  NAICKNAME = #{nickname},
-		   	  EMAIL = #{email},
-		   	  TEL = #{tel},
-		   	  POSTCODE = #{postCode},
-		   	  ADDRESS = #{address}
-		   	  )
-		   	  
-	
+					  MEMBER
+		   		SET
+		   	  		 (
+		   	  		  USER_NAME = #{userName},
+		   	  		  NAICKNAME = #{nickname},
+		   	  		  EMAIL = #{email},
+		   	  		  TEL = #{tel},
+		   	  		  POSTCODE = #{postCode},
+		   	  		  ADDRESS = #{address},
+		   	  		  VILLAGE_CODE = #{villageCode}
+		   	  		  )
+	  	  WHERE
+	  	  			  USER_ID = #{userId}
+	  	  	  AND
+	  	  	  		  STATUS = 'Y' 	  
 	</update>
 
 </mapper>
