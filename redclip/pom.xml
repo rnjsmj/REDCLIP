@@ -22,6 +22,8 @@
 	</repositories>
 	
 	<dependencies>
+				
+		
 	
 		<!-- Spring -->
 		<dependency>
