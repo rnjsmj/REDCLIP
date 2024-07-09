@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.redclip.barter.model.service.BarterService;
 import com.kh.redclip.barter.model.vo.Barter;
@@ -32,7 +33,7 @@ public class BarterController {
 	public String getAllBarters(@RequestParam(value="code", defaultValue="0") Integer code, Model model) {
 	List<BarterVO> barters = barterService.getAllBarters(code);
 	model.addAttribute("list", barters);
-	return "barter/barter-list";
+	return "barter/list";
     }
 	
 	// 교환 게시글 상세보기
@@ -45,9 +46,17 @@ public class BarterController {
 		return "barter/detail";
 	}
 	
+	// 교환 게시글 등록 페이지 보기
+		@GetMapping("/registration")
+		public String barterForwarding() {
+			return "barter/registration";
+		}
+	
 	// 교환 게시글 글 등록하기
-	@GetMapping("insertForm.do")
-	public String barterForwarding() {
-		return "barter/insertForm";
+	@GetMapping("update")
+	public ModelAndView updateForm(ModelAndView mv, int boardNo) {
+		mv.addObject("barter",barterService.findById(boardNo))
+	      .setViewName("barter/barterUpdate");
+	    return mv;
 	}
 }

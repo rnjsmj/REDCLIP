@@ -11,35 +11,37 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <style>
-    .image-placeholder {
-      width: 100%;
-      height: 150px;
-      background-color: #ddd;
-      border: 1px solid #ccc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-      position: relative;
-    }
-    .image-preview {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: none;
-    }
-    .file-input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-    }
-  </style>
+  	.container {margin-top: 60px; margin-bottom: 80px;}
+	.image-placeholder {
+	  width: 100%;
+	  height: 150px;
+	  background-color: #ddd;
+	  border: 1px solid #ccc;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  margin-bottom: 10px;
+	  position: relative;
+	}
+	.image-preview {
+	  width: 100%;
+	  height: 100%;
+	  object-fit: cover;
+	  display: none;
+	}
+	.file-input {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  opacity: 0;
+	}
+</style>
 </head>
 <body>
-  <div class="container mt-5">
+  <jsp:include page="/WEB-INF/views/common/header.jsp" />
+  <div class="container">
     <h2>상품 등록하기</h2>
     <form>
       <div class="form-group">
@@ -198,5 +200,6 @@
       handleFileSelect(event, 'imagePreview4');
     });
   </script>
+  <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
