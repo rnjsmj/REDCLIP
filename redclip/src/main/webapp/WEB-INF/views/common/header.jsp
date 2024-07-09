@@ -81,7 +81,7 @@
    </nav>
    <nav class="btnbox">
       <a class="btn btn-outline-primary" href="joinform" id="btn-sign">회원가입</a>
-      <a class="btn btn-outline-primary" href="loginform" id="btn-login">로그인</a>
+      <a class="btn btn-outline-primary" href="#" id="btn-sign">로그인</a>
    </nav>
 </div>    
 </body>
