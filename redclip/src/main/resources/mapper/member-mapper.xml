@@ -23,5 +23,16 @@
 	
 	
 	</select>
-	
+<select id="login" parameterType="member" resultType="member">
+		SELECT
+		USER_ID userId,
+		USER_PWD userPwd
+   		FROM
+		TB_MEMBER
+		WHERE
+		USER_ID = #{userId}
+		AND
+		STATUS ='Y'
+		<!-- AND USER_PWD = #{userPwd} AND STATUS = 'Y' -->
+	</select>
 </mapper>
