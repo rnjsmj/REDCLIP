@@ -25,7 +25,7 @@ public class MemberController {
 	
 	//마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
 	@PutMapping("/{userId}")
-	public ResponseEntity<Member> update(@PathVariable String userId, Member member) {
+	public String update(@PathVariable String userId, Member member) {
 		
 		//log.info("입력한 정보 : {}", member);
 		

@@ -88,13 +88,13 @@
             <div>
                 <div class="form-group">
                     <label for="userId">* ID </label><br>
-                    <input type="text" class="form-control" value="admin" neme="userId" aria-label="Disabled input example" disabled readonly> <br>
+                    <input type="text" class="form-control" value="admin" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
 
                     <label for="userName">* Name : </label>
                     <input type="text" class="form-control" id="userName" value="이가을" name="userName" required> <br>
 
-                    <label for="Nickname">* Nickname : </label>
-                    <input type="text" class="form-control" id="nickame" value="관리자" name="nickname" required> <br>
+                    <label for="nickname">* Nickname : </label>
+                    <input type="text" class="form-control" id="nickname" value="관리자" name="nickname" required> <br>
 
                     <label for="email"> &nbsp; Email : </label>
                     <input type="text" class="form-control" id="email" value="gaga@gmail.com" name="email"> <br>
@@ -113,7 +113,7 @@
 
                     <!-- 조건문 사용 -> 포인트 별로 다르게 출력-->
                     <label for="progress" style="line-height: 4rem;"> &nbsp; 다음 등급까지 </label>
-                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >
+                    <div class="progress"  id="progress" name="point"" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >
                         <div class="progress-bar" style="width: 0%"></div>
                     </div>
                      
@@ -184,7 +184,9 @@
 
 	function update() {
 		
-		const userId = ('userId').val();
+		const userId = ('#userId').value;
+		
+		console.log('userId');
 		
 		var updateData = {
 				"userName" : $('#userName').val(),
@@ -197,15 +199,18 @@
 				
 		};
 		
+		//console.log(updateData);
+	/*	
 		$.ajax(() => {
 			url : 'member/' + userId,
 			type : 'put',
-			data : updateData,
+			data : JSON.Stringify(updateData),
 			success : result => {
 				
 				console.log(result);
 			}
 		});
+	*/
 	}
 	
     </script>
