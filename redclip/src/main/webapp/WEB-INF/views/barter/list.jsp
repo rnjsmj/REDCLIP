@@ -143,9 +143,9 @@
 		        const siValue = $siSelect.val();  
 				console.log(siValue);
 		        if (siValue !== null ) { //시벨류값이 널이 아닐때 실행)
-		            // console.log("시밸류값:", siValue); 
+		             console.log("시밸류값:", siValue); 
 		            $.ajax({
-		                url: 'guSelect', 
+		                url: 'member/guSelect', 
 		                type: 'GET',
 		                data: { si: siValue }, 
 		                success: response => {
@@ -168,7 +168,7 @@
 		         console.log("선택한구벨류값:", guValue);
 		    	if (guValue !== null) {
 		    		$.ajax({
-			    		url: 'dongSelect',
+			    		url: 'member/dongSelect',
 			    		type: 'GET',
 			    		data: { gu: guValue },
 			    		success: response => {
