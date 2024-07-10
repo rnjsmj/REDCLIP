@@ -24,5 +24,8 @@ public class Member {
     private int point;
     private char status;
     private String createDate;
+    private String addr1;
+    private String addr2;
+    
 
 }
