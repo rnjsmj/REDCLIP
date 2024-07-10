@@ -121,7 +121,7 @@
 	        const siValue = $siSelect.val();  
 			console.log(siValue);
 	        if (siValue !== null ) { //시벨류값이 널이 아닐때 실행)
-	            // console.log("시밸류값:", siValue); 
+	             console.log("시밸류값:", siValue); 
 	            $.ajax({
 	                url: 'guSelect', 
 	                type: 'GET',

@@ -81,8 +81,8 @@
                         </select>
                         <select class="form-control" id="si">
                             <option selected>시</option>
-                            <option>서울특별시</option>
-                            <option>인천광역시</option>
+                            <option value="1">서울특별시</option>
+                            <option value="2">인천광역시</option>
                         </select>
                         <select class="form-control" id="gu" disabled>
                             <option selected>구</option>
@@ -134,7 +134,7 @@
 	
     <script>
       	$(() => {
-		    const $categorySelect = $('#category)
+		    const $categorySelect = $('#category');
         	const $siSelect = $('#si');
 		    const $guSelect = $('#gu');
 		    const $dongSelect = $('#dong');
