@@ -15,6 +15,7 @@
   		<typeAlias type="com.kh.redclip.barter.model.vo.Barter" alias="barter" />
   		<typeAlias type="com.kh.redclip.barter.model.vo.BarterVO" alias="barterVo" />
   		<typeAlias type="com.kh.redclip.barter.model.vo.BarterReply" alias="barterReply" />
+  		<typeAlias type="com.kh.redclip.barter.model.vo.BarterReplyFile" alias="barterReplyFile" />
   		<typeAlias type="com.kh.redclip.region.model.vo.Region" alias="region" />
   	</typeAliases>
   
