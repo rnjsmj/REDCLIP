@@ -14,9 +14,6 @@
     .card-text {
         font-size: 16px;
     }
-    .btn {
-        margin: 20px 0;
-    }
     .btn-container {
         display: flex;
         justify-content: center;
