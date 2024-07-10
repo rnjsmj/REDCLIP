@@ -1,13 +1,16 @@
 package com.kh.redclip.member.controller;
 
+
 import javax.servlet.http.HttpSession;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
@@ -15,25 +18,15 @@ import com.kh.redclip.member.model.vo.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
+
+@RestController
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping(value = "/member", produces = "application/json; charset=UTF-8")
 public class MemberController {
+    
     private final MemberService memberService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    @ResponseBody
-    @PostMapping(value = "/check-id", produces = "text/html; charset=UTF-8")
-    public String checkId(@RequestParam("userId") String userId) {
-        // log.info("아이디 잘 가져왔나: {}", userId);
-        int result = memberService.idCheck(userId);
-        
-        log.info("리져트잘가져옴?{}", result);
-        if (result > 0) {
-            return "Y"; // 반환값(중복아이디 수)가 0보다 크면 Y를 리턴
-        } else {
-            return "N"; // 아니면 N을 리턴해준다
-        }
-    }
 
     @ResponseBody
     @PostMapping(value = "/check-nick", produces = "text/html; charset=UTF-8")
@@ -66,4 +59,18 @@ public class MemberController {
         }
     }
    
+   //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
+	@PutMapping("/{userId}")
+	public ResponseEntity<Member> update(@PathVariable String userId, Member member, Model model) {
+		
+		//log.info("입력한 정보 : {}", member);
+		
+		int result = memberService.update(member);
+		
+		if(result == 0) {
+			
+		}
+		
+		return "redirect:";
+	}
 }

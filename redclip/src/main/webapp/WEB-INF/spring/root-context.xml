@@ -17,6 +17,10 @@
         dataSource.set{property의 name값}("{property의 value값)");
     -->
 
+<mybatis-spring:scan base-package="com.kh.redclip.sample.model.dao"/>
+<mybatis-spring:scan base-package="com.kh.redclip.member.model.dao"/>
+
+
     <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <!-- 배포 시 classes 디렉토리를 기준으로 배포되므로 target 디렉토리 확인할 것 -->
@@ -36,7 +40,6 @@
         <property name="maxUploadSize" value="100000000"/>
         <property name="maxInMemorySize" value="100000000"/>
     </bean>
-
     <mybatis-spring:scan base-package="com.kh.redclip.sample.model.dao"/>
     <mybatis-spring:scan base-package="com.kh.redclip.member.model.dao"/>
 	<mybatis-spring:scan base-package="com.kh.redclip.barter.model.dao"/>
