@@ -25,6 +25,6 @@ public class BarterVO {
 	private int wishCount;
 	private String barterStatus;
 	private int point;
-	private List<BarterReply> barterReplyList;
+	//private List<BarterReply> barterReplyList;
 	
 }

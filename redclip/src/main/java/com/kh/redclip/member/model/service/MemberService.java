@@ -1,6 +1,10 @@
 package com.kh.redclip.member.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.kh.redclip.member.model.vo.Member;
+import com.kh.redclip.region.model.vo.Region;
 
 public interface MemberService {
 
@@ -28,4 +32,11 @@ public interface MemberService {
 	//회원 아이디 검색
 	//누적 신고 횟수 조회
 
+
+
+	List<Region> selectgu(int cityCode);
+
+	List<Region> selectdong(int townCode);
+
+	int insert(Member member);
 }

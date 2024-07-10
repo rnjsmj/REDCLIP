@@ -36,10 +36,8 @@
         font-size: 22px;
         font-weight: bold;
     }
-    #form-all {
-        width: 800px;
-        margin-right: 10px;
-    }
+    .d-flex { width: 1100px; margin-bottom: 40px;}
+    .form-control { margin-right: 4px;}
     .filter-select {
         margin: 0 5px;
     }
@@ -74,33 +72,30 @@
             <div id="filter-info" class="clr-fix">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex">
-                        <select class="form-control filter-select" id="form-all">
+                        <select class="form-control" id="category">
                             <option selected>전체보기</option>
                             <option>전자기기</option>
                             <option>가구</option>
                             <option>의류</option>
                             <option>도서</option>
                         </select>
-                        <select class="form-control filter-select" id="city-select">
+                        <select class="form-control" id="si">
                             <option selected>시</option>
                             <option>서울특별시</option>
-                            <option>부산광역시</option>
-                            <!-- 다른 시/도 옵션 추가 -->
+                            <option>인천광역시</option>
                         </select>
-                        <select class="form-control filter-select" id="district-select">
+                        <select class="form-control" id="gu" disabled>
                             <option selected>구</option>
-                            <!-- 구 옵션들 추가 -->
                         </select>
-                        <select class="form-control filter-select" id="town-select">
+                        <select class="form-control" id="dong" disabled>
                             <option selected>동</option>
-                            <!-- 동 옵션들 추가 -->
                         </select>
                     </div>
                 </div>
             </div>
 
         <div class="container">
-            <p>추천 물물교환</p>
+            <h5 style="font-weight: bold">추천 물물교환</h5>
             <br>
             <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
             <c:if test="${not empty sessionScope.loginUser }">
@@ -138,55 +133,59 @@
     </div>
 	
     <script>
-        $(document).ready(function() {
-            $('#form-all').on('change', function() {
-                const category = $(this).val();
-                console.log('선택한 카테고리:', category);
-            });
-
-            $('#city-select').on('change', function() {
-                const city = $(this).val();
-                console.log('선택한 시:', city);
-                updateDistrictOptions(city);
-            });
-
-            $('#district-select').on('change', function() {
-                const district = $(this).val();
-                console.log('선택한 구:', district);
-                updateTownOptions(district);
-            });
-
-            $('#town-select').on('change', function() {
-                const town = $(this).val();
-                console.log('선택한 동:', town);
-            });
-
-            function updateDistrictOptions(city) {
-                const districtSelect = $('#district-select');
-                districtSelect.empty();
-                districtSelect.append('<option selected>구</option>');
-
-                if (city === '서울특별시') {
-                    districtSelect.append('<option>강남구</option><option>서초구</option><!-- 다른 구 옵션 추가 -->');
-                } else if (city === '부산광역시') {
-                    districtSelect.append('<option>해운대구</option><option>수영구</option><!-- 다른 구 옵션 추가 -->');
-                }
-                // 다른 시/도에 대한 구 옵션 추가
-            }
-
-            function updateTownOptions(district) {
-                const townSelect = $('#town-select');
-                townSelect.empty();
-                townSelect.append('<option selected>동</option>');
-
-                if (district === '강남구') {
-                    townSelect.append('<option>삼성동</option><option>대치동</option><!-- 다른 동 옵션 추가 -->');
-                } else if (district === '서초구') {
-                    townSelect.append('<option>서초동</option><option>방배동</option><!-- 다른 동 옵션 추가 -->');
-                }
-                // 다른 구에 대한 동 옵션 추가
-            }
-        });
+      	$(() => {
+		    const $categorySelect = $('#category)
+        	const $siSelect = $('#si');
+		    const $guSelect = $('#gu');
+		    const $dongSelect = $('#dong');
+		
+		    $siSelect.change(() => {
+		        const siValue = $siSelect.val();  
+				console.log(siValue);
+		        if (siValue !== null ) { //시벨류값이 널이 아닐때 실행)
+		            // console.log("시밸류값:", siValue); 
+		            $.ajax({
+		                url: 'guSelect', 
+		                type: 'GET',
+		                data: { si: siValue }, 
+		                success: response => {
+		                	 console.log(response);
+		                	$guSelect.empty().append('<option value="">구 선택</option>');
+		                    response.forEach((a) => { 
+		                    	$guSelect.append('<option value='+a.townCode+'>'+a.townName+'</option>');
+		                    });
+		                    $guSelect.prop('disabled', false); // 구 셀렉트 박스 활성화
+		                },
+		                error: function() {
+		                    alert('오류가 발생했습니다.');
+		                }
+		            });
+		        }
+		    });
+		   
+		    $guSelect.change(() => {
+		    	 const guValue = $guSelect.val();
+		         console.log("선택한구벨류값:", guValue);
+		    	if (guValue !== null) {
+		    		$.ajax({
+			    		url: 'dongSelect',
+			    		type: 'GET',
+			    		data: { gu: guValue },
+			    		success: response => {
+			    			console.log(response);
+			    			$dongSelect.empty().append('<option value="">동 선택</option>')
+			    			response.forEach((a) => {
+			    				$dongSelect.append('<option value='+a.villageCode+'>'+a.villageName+'</option>');
+			    			});
+			    			$dongSelect.prop('disabled', false); // 동 셀렉트 박스 활성화
+			    		},
+			    		error: function() {
+			    			alert('오류가 발생했습니다.');
+			    		}
+		    		});
+		    	}
+		    });
+		});
 
         const cardContainer = document.getElementById('card-container');
         const loadMoreBtn = document.getElementById('load-more-btn');

@@ -26,7 +26,7 @@
 
         #userId, #userPwd, #checkPwd, #userName, #tel,
          #email, #postcode, #address1, #address2, #nickName {
-            width: 350px;
+            width: 400px;
         }
 
         .form-group.rel {
@@ -47,7 +47,7 @@
 
         .joinbtn, .resetbtn {
             display: block;
-            width: 350px;
+            width: 400px;
             margin: 0 auto;
             margin-bottom: 10px;
         }
@@ -57,7 +57,7 @@
             width: 95px;
             height: 40px !important;
             top: 0;
-            left: 435px;
+            left: 455px;
         }
 
         #checkNickName {
@@ -66,7 +66,7 @@
             height: 40px !important;
             margin-left: 10px;
             top: 0;
-            left: 425px;
+            left: 445px;
         }
 
         #findaddr {
@@ -75,7 +75,7 @@
             height: 40px !important;
             margin-left: 10px;
             top: 0;
-            left: 425px;
+            left: 445px;
         }
         
         #checkEmail{
@@ -84,8 +84,18 @@
             height: 40px !important;
             margin-left: 10px;
             top: 0;
-            left: 425px;
+            left: 445px;
         }
+        
+           #si{
+            width : 400px
+           }
+        
+           #gu, #dong{
+            display: inline-block;
+          	width : 195px;
+          	margin-right : 5px; 
+          }
     </style>
 </head>
 
@@ -98,7 +108,7 @@
             <h2>회원가입</h2>
             <br>
 
-            <form action="" method="post">
+            <form action="join" method="post">
                 <div class="form-group rel">
                     <input type="text" class="form-control" id="userId" placeholder="아이디" name="userId" required>
                     <button type="button" class="btn btn-outline-secondary" id="checkId">중복체크</button>
@@ -123,29 +133,86 @@
 
                 <div class="form-group rel">
                     <input type="text" class="form-control" id="email" placeholder="이메일" name="">
-                    <button class="btn btn-outline-secondary" type="button" id="checkEmail">메일인증</button>
+                    <button class="btn btn-outline-secondary" type="button" id="checkEmail" hidden>메일인증</button>
                 </div>
 
                 <div class="form-group">
                     <input type="tel" class="form-control" id="tel" placeholder="연락처" name="">
                 </div>
-				<!-- 시 구 동 정보가 담긴 selectbox  -->
-				 <div class="form-group">
-                <select class="form-control" id="city">
-                    <option value="">시 선택</option>
-                    <option value="seoul">서울특별시</option>
-                </select>
-            	</div>
-	            <div class="form-group">
-	                <select class="form-control" id="district" disabled>
-	                    <option value="">구 선택</option>
-	                </select>
-	            </div>
-	            <div class="form-group">
-	                <select class="form-control" id="neighborhood" disabled>
-	                    <option value="">동 선택</option>
-	                </select>
-	            </div>	
+                
+                <!-- 시 구 동 정보가 담긴 selectbox  -->
+                <div class="form-group">
+                    <select class="form-control " id="si">
+                        <option value="">관심지역 선택</option>
+                        <option value="1">서울특별시</option>
+                        <option value="2">인천광역시</option>
+                    </select>
+                    <select class="form-control " id="gu" disabled>
+                        <option value="">구 선택</option>
+                    </select>
+                    <select class="form-control " id="dong" disabled>
+                        <option value="">동 선택</option>
+                    </select>
+                </div>
+                
+				<script>
+				  // 시 선택 시 벨류 값을
+				$(() => {
+				    const $siSelect = $('#si');
+				    const $guSelect = $('#gu');
+				    const $dongSelect = $('#dong');
+				
+				    $siSelect.change(() => {
+				        const siValue = $siSelect.val();  
+						console.log(siValue);
+						
+				        if (siValue !== null ) {
+				            // console.log("시밸류값:", siValue); 
+				            $.ajax({
+				                url: 'guSelect', 
+				                type: 'GET',
+				                data: { si: siValue },
+				                success: response => {
+				                	 console.log(response);
+				                	$guSelect.empty().append('<option value="">구 선택</option>');
+				                    response.forEach((a) => {
+				                    	$guSelect.append('<option value='+a.townCode+'>'+a.townName+'</option>');
+				                    });
+				                    $guSelect.prop('disabled', false); // 구 셀렉트 박스 활성화
+				                },
+				                error: function() {
+				                    alert('오류임 ㅉㅉ');
+				                }
+				            });
+				        }
+				    });
+				   
+				    $guSelect.change(() => {
+				    	 const guValue = $guSelect.val();
+				         console.log("선택한구벨류값:", guValue);
+				    	if (guValue !== null) {
+				    		$.ajax({
+					    		url: 'dongSelect',
+					    		type: 'GET',
+					    		data: { gu: guValue },
+					    		success: response => {
+					    			console.log(response);
+					    			$dongSelect.empty().append('<option value="">동 선택</option>')
+					    			response.forEach((a) => {
+					    				$dongSelect.append('<option value='+a.villageCode+'>'+a.villageName+'</option>');
+					    			});
+					    			$dongSelect.prop('disabled', false); // 동 셀렉트 박스 활성화
+					    		},
+					    		error: function() {
+					    			alert('오류임 키키 ');
+					    		}
+				    		});
+				    	}
+				    });
+				});
+				</script>
+
+
                 <div class="form-group rel">
                     <input type="text" class="form-control" id="postcode" placeholder="우편번호" name="">
                     <button class="btn btn-outline-secondary" type="button" id="findaddr">주소검색</button>
@@ -169,166 +236,102 @@
     </div>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
- <!-- 모달 -->
-<div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h5 class="modal-title" id="emailModalLabel">이메일 인증</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+    <!-- 모달 
+    <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <!-- Modal Header
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emailModalLabel">이메일 인증</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="authCode" class="mr-sm-2">인증번호 : </label>
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Enter Auth Code" id="authCode" name="authCode">
-            <div class="input-group-append">
-              <button type="button" class="btn btn-primary" id="checkAuthCode">인증</button>
+                <!-- Modal body 
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="authCode" class="mr-sm-2">인증번호 : </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Enter Auth Code" id="authCode" name="authCode">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary" id="checkAuthCode">인증</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary mt-2" id="resendAuthCode">인증번호 재전송</button>
+                </div>
+
+                <!-- Modal footer 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                </div>
             </div>
-          </div>
         </div>
-        <button type="button" class="btn btn-secondary mt-2" id="resendAuthCode">인증번호 재전송</button>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-      </div>
     </div>
-  </div>
-</div>
+    -->
+    <script>
+        // 아이디 중복체크
+        $(() => {
+            const $idInput = $('#userId');
+            const pattern = /^[a-z0-9]{5,12}$/; 
+            const $checkId = $('#checkId');
 
-
-
-    
-<script>
-    $(() => {
-        const $idInput = $('#userId');
-        const pattern = /^[a-z0-9]{5,12}$/; 
-        const $checkId = $('#checkId');
-
-        $checkId.click(() => {
-            const userId = $idInput.val();
-            if (!pattern.test(userId)) {
-                alert("아이디는 소문자와 숫자를 포함하여 5~12자여야 합니다.");
-                return;
-            }
-            console.log("콘솔에 잘 찍힘?:", userId); 
-            $.ajax({
-                url: 'check-id',
-                type: 'POST',
-                data: { userId: userId }, // 데이터를 URL 인코딩된 형식으로 전송
-                success: response => {
-                    if (response === 'Y') {
-                        alert("중복된 아이디 입니다. 다른 아이디를 사용해주세요");
-                    } else {
-                        alert("사용 가능한 아이디 입니다.");
-                    }
-                },
-                error: function() {
-                    alert('오류임키키븅신');
+            $checkId.click(() => {
+                const userId = $idInput.val();
+                if (!pattern.test(userId)) {
+                    alert("아이디는 소문자와 숫자를 포함하여 5~12자여야 합니다.");
+                    return;
                 }
+                console.log("콘솔에 잘 찍힘?:", userId); 
+                $.ajax({
+                    url: 'check-id',
+                    type: 'POST',
+                    data: { userId: userId }, 
+                    success: response => {
+                        if (response === 'Y') {
+                            alert("중복된 아이디 입니다. 다른 아이디를 사용해주세요");
+                        } else {
+                            alert("사용 가능한 아이디 입니다.");
+                        }
+                    },
+                    error: function() {
+                        alert('오류 발생');
+                    }
+                });
             });
         });
-    });
 
-</script>
-<!-- 닉네임 유효성 검사후 중복검사  -->
-<script>
-$(() => {
-	const $nickInput = $('#nickName');
-	const pattern = /^[가-힣a-zA-Z0-9]{2,10}$/;
-	const $checknick = $('#checkNickName');
-	$checknick.click(() => {
-		const userNick = $nickInput.val();
-		if (!pattern.test(userNick)) {
-			alert("닉네임은 한글/영문/숫자를 이용하여 2~10 자리로 작성해주세요");
-			return;
-		}
-		 console.log("콘솔에 잘 찍힘?:", userNick);
-		 $.ajax({
-             url: 'check-nick',
-             type: 'POST',
-             data: { userNick: userNick }, // 데이터를 URL 인코딩된 형식으로 전송
-             success: response => {
-                 if (response === 'Y') {
-                     alert("중복된 닉네임 입니다. 다른 아이디를 사용해주세요");
-                 } else {
-                     alert("사용 가능한 닉네임 입니다.");
-                 }
-             },
-             error: function() {
-                 alert('오류임키키븅신');
-             }
-         });
-	});
-});
-</script>
-
-<!-- 이메일 인증 -->
-<script>
-$(() => {
-    const $emailInput = $('#email');
-    const $checkEmail = $('#checkEmail');
-    
-    $checkEmail.click(() => {
-        const email = $emailInput.val();
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        
-        if (!email || !emailPattern.test(email)) {
-            alert("알맞은 이메일 형식을 입력해주세요");
-            return;
-        }
-        
-        // 이메일 유효성 검사를 통과한 경우 Ajax 요청
-        $.ajax({
-            url: './EmailAuth',
-            data: { email: email },
-            type: 'POST',
-            dataType: 'json',
-            success: result => {
-                console.log("result : " + result);
-                alert("인증 코드가 입력하신 이메일로 전송되었습니다.");
-                // 모달을 표시
-                $('#emailModal').modal('show');
-                $("#authCode").attr("disabled", false);
-            },
-            error: function() {
-                alert("이메일 인증 요청에 실패했습니다.");
-            }
+        // 닉네임 유효성 검사후 중복검사
+        $(() => {
+            const $nickInput = $('#nickName');
+            const pattern = /^[가-힣a-zA-Z0-9]{2,10}$/;
+            const $checknick = $('#checkNickName');
+            $checknick.click(() => {
+                const userNick = $nickInput.val();
+                if (!pattern.test(userNick)) {
+                    alert("닉네임은 한글/영문/숫자를 이용하여 2~10 자리로 작성해주세요");
+                    return;
+                }
+                console.log("콘솔에 잘 찍힘?:", userNick);
+                $.ajax({
+                    url: 'check-nick',
+                    type: 'POST',
+                    data: { userNick: userNick }, 
+                    success: response => {
+                        if (response === 'Y') {
+                            alert("중복된 닉네임 입니다. 다른 닉네임을 사용해주세요");
+                        } else {
+                            alert("사용 가능한 닉네임 입니다.");
+                        }
+                    },
+                    error: function() {
+                        alert('오류 발생');
+                    }
+                });
+            });
         });
-    });
 
-    // 인증번호 재전송 버튼 클릭 이벤트
-    $('#resendAuthCode').click(() => {
-        const email = $emailInput.val();
-        if (!email) {
-            alert("이메일을 입력해주세요.");
-            return;
-        }
-        alert("인증번호가 재발송되었습니다.");
-        // 실제 인증번호 재발송 로직을 여기에 추가하세요.
-    });
-
-    // 인증 버튼 클릭 이벤트
-    $('#checkAuthCode').click(() => {
-        const authCode = $('#authCode').val();
-        if (authCode === "") {
-            alert("인증번호를 입력해주세요.");
-        } else {
-            alert("인증번호가 확인되었습니다.");
-            // 실제 인증번호 확인 로직을 여기에 추가하세요.
-        }
-    });
-});
-
-
-</script>
- 
+    </script>
 </body>
 </html>

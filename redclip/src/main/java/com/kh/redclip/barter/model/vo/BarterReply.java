@@ -1,5 +1,7 @@
 package com.kh.redclip.barter.model.vo;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,4 +18,5 @@ public class BarterReply {
 	private String replyWriter;
 	private String replyDate;
 	private String replyNickname;
+	private List<BarterReply> replyFileList;
 }

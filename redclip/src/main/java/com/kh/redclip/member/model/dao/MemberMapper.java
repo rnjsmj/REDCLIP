@@ -1,8 +1,12 @@
 package com.kh.redclip.member.model.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.redclip.member.model.vo.Member;
+import com.kh.redclip.region.model.vo.Region;
 
 @Mapper
 public interface MemberMapper {
@@ -31,4 +35,12 @@ public interface MemberMapper {
 		//회원 아이디 검색
 		//누적 신고 횟수 조회
 
+	List<Region> selectgu(int cityCode);
+	
+	List<Region> selectdong(int townCode);
+
+	int insertMember(Member member);
+
+
+	
 }
