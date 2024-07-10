@@ -94,7 +94,7 @@
                     <label for="userId">* ID </label><br>
                     <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
                     
-                    <input type="hidden" class="form-control" value="${ sessionScope.loginUser.userPwd }" id="userPwd"  neme="userPwd" aria-label="Disabled input example" disabled readonly> <br>
+                    <input type="hidden" value="${ sessionScope.loginUser.userPwd }" id="userPwd"  neme="userPwd"> <br>
 
                     <label for="userName">* Name : </label>
                     <input type="text" class="form-control" id="userName" value="${ sessionScope.loginUser.userName }" name="userName" required> <br>
@@ -103,7 +103,7 @@
                     <input type="text" class="form-control" id="nickname" value="${ sessionScope.loginUser.nickname }" name="nickname" required> <br>
 
                     <label for="email"> &nbsp; Email : </label>
-                    <input type="text" class="form-control" id="email" value="${ sessionScope.loginUser.email }" name="email"> <br>
+                    <input type="email" class="form-control" id="email" value="${ sessionScope.loginUser.email }" name="email"> <br>
 
                     <label for="tel"> &nbsp; Tel : </label>
                     <input type="tel" class="form-control" id="tel" value="${ sessionScope.loginUser.tel }" name="tel"> <br>
@@ -125,7 +125,7 @@
                     </div>
                      
                 <div id="buttons">
-                    <button type="button" id="update" class="btn btn-success" onclick="update()">수정</button>
+                    <button type="button" id="userUpdate" class="btn btn-success" onclick="update()">수정</button>
                     <button type="reset" class="btn btn-secondary">취소</button><br>
                     <button type="button" id="delete-btn" class="btn btn-secondary" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
                 </form>
@@ -174,9 +174,6 @@
                               모든 내용을 숙지하였으며 회원 탈퇴에 동의합니다.
                             </label>
                         </div>
-                        <br>
-                            <label for="userPwd" class="mr-sm-2">Password : </label>
-                            <input type="text" class="form-control mb-2 mr-sm-2" placeholder="비밀번호를 입력하세요" id="userPwd" name="userPwd"> <br>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
@@ -188,34 +185,38 @@
     </div>
 
    <script>
-
-	function update() {
-		
-		var updateData = {
-				"userId" : $('#userId').val(),
-				"userName" : $('#userName').val(),
-				"nickname" : $('#nickname').val(),
-				"email" : $('#email').val(),
-				"tel" : $('#tel').val(),
-				"postCode" : $('#postCode').val(),
-				"address" : $('#address').val(),
-				"villageCode" : $('#villageCode').val(),
-				
-		};
-		
-		console.log(updateData);
-
-		$.ajax(() => {
-			url : 'member/'
-			type : 'put',
-			data : { updateData },
-			success : result => {
-				
-				console.log(result);
-			}
-		});
-	}
 	
+   	
+   		function update() {
+   			
+   			var updateData = {
+   					"userId" : $('#userId').val(),
+   					"userName" : $('#userName').val(),
+   					"nickname" : $('#nickname').val(),
+   					"email" : $('#email').val(),
+   					"tel" : $('#tel').val(),
+   					"postCode" : $('#postCode').val(),
+   					"address" : $('#address').val(),
+   					"villageCode" : $('#villageCode').val(),
+   					
+   			};
+   			
+   			// console.log(updateData);
+
+   			$.ajax(() => {
+   				url : 'member/'
+   				type : 'PUT',
+   				data : updateData,
+   				dataType : 'application/json; charset=UTF-8'
+   				success : result => {
+   					
+   					console.log(result);
+   				}
+   			});
+   		}
+
+   		
+		
     </script>
 </body>
 </html>
