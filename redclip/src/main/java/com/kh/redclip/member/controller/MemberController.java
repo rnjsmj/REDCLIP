@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,8 +64,8 @@ public class MemberController {
    
    //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
     @ResponseBody
-	@PutMapping
-	public ResponseEntity<String> update(@RequestBody Member member) {
+	@PutMapping("/{userId}")
+	public ResponseEntity<String> update(Member member) {
 		
 		//log.info("입력한 정보 : {}", member);
     	

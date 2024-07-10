@@ -206,8 +206,8 @@
    			$.ajax(() => {
    				url : 'member/'
    				type : 'PUT',
-   				data : JSON.stringify(updateData),
-   				dataType : 'application/json'
+   				data : updateData,
+   				dataType : 'application/json; charset=UTF-8'
    				success : result => {
    					
    					console.log(result);
