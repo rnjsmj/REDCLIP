@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,19 +79,9 @@
       <a class="p-2 text-dark" href="#">공지사항</a>
       <a class="p-2 text-dark" href="#">FAQ</a>
    </nav>
-   <c:choose>
-   <c:when test="${empty sessionScope.loginUser }">
    <nav class="btnbox">
       <a class="btn btn-outline-primary" href="joinform" id="btn-sign">회원가입</a>
       <a class="btn btn-outline-primary" href="loginform" id="btn-sign">로그인</a>
    </nav>
-   </c:when>
-   <c:otherwise>
-    <nav class="btnbox">
-      <a class="btn btn-outline-primary" href="myPage" id="btn-sign">마이페이지</a>
-      <a class="btn btn-outline-primary" href="#" id="btn-sign">로그아웃</a>
-   </nav>
-   </c:otherwise>
-   </c:choose>
 </div>    
 </html>
