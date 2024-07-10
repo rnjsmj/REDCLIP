@@ -90,5 +90,19 @@
         TOWN_CODE = #{townCode}
     </select>
 	
+	<!-- 회원상태 전환-->
+	<update id="changeStatus" parameterType="String">
+		UPDATE
+		   	  TB_MEMBER
+		   SET
+		   	  STATUS = 'N'
+		 WHERE
+		 	  USER_ID = #{userId}
+		   AND
+		   	  STATUS = 'Y'
+		   	  
+	</update>
+	
+	
 	
 </mapper>

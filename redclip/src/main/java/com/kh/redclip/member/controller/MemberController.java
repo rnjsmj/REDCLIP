@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -115,5 +116,16 @@ public class MemberController {
         	 return "error";
         }
   }
+    
+    @ResponseBody
+    @PutMapping("/{userId}")
+    public String changeStatus(@RequestBody String userId) {
+    	
+    	memberService.changeStatus(userId);
+    	
+    	log.info("탈퇴 대기 회원 : {}", userId);
+    	
+    	return null;
+    }
     
 }

@@ -180,7 +180,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="submit" id="delete" class="btn btn-secondary">탈퇴하기</button>
+                        <button type="button" id="delete" class="btn btn-secondary" onclick="changeStatus();">탈퇴하기</button>
                     </div>
                 </div>
             </div>
@@ -189,7 +189,7 @@
 
    <script>
 	
-     	
+     	//회원정보 수정
    		function update() {
    			
    			var updateData = {
@@ -204,7 +204,7 @@
    					
    			};
    			
-   			 console.log(updateData);
+   			 //console.log(updateData);
 
    			$.ajax({
    				url : 'member/',
@@ -216,7 +216,6 @@
    					//console.log(result);
    					
    						alert('회원 정보가 수정되었습니다.');
-   						location.reloard();
    						
    					},
    				error : function(error) {
@@ -225,7 +224,21 @@
    			});
    		};
 
-   		
+   		//회원 탈퇴
+   		function changeStatus() {
+   			
+   			$.ajax({
+   				url: '/member',
+   				type: 'put' + userId,
+   				data: JSON.stringify(userId),
+   				contentType: 'applicaion/json',
+   				success : result => {
+   					
+   					console.log(result);
+   				}
+   			});
+   			
+   		};
 		
     </script>
 </body>
