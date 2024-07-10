@@ -128,7 +128,7 @@
             </div>
                      
                 <div id="buttons">
-                    <button type="button" id="userUpdate" class="btn btn-success" onclick="update()">수정</button>
+                    <button type="button" id="userUpdate" class="btn btn-success" onclick="update();">수정</button>
                     <button type="reset" class="btn btn-secondary">취소</button><br>
                     <button type="button" id="delete-btn" class="btn btn-secondary" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
                 </form>
@@ -189,7 +189,7 @@
 
    <script>
 	
-   	
+     	
    		function update() {
    			
    			var updateData = {
@@ -204,19 +204,19 @@
    					
    			};
    			
-   			// console.log(updateData);
+   			 console.log(updateData);
 
    			$.ajax({
-   				url : 'member/'
-   				type : 'PUT',
-   				data : JSON.stringtify(updateData),
+   				url : 'member/',
+   				type : 'put',
+   				data : JSON.stringify(updateData),
    				contentType : 'application/json',
    				success : result => {
    					
    					console.log(result);
    				}
    			});
-   		}
+   		};
 
    		
 		

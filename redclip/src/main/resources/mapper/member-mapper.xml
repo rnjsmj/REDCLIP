@@ -50,17 +50,15 @@
 	<!-- 회원 정보 수정 -->
 	<update id="update" parameterType="member">
 		UPDATE
-			  MEMBER
+			  TB_MEMBER
 		   SET
-		   	  (
 		   	   USER_NAME = #{userName},
-		   	   NAICKNAME = #{nickname},
+		   	   NICKNAME = #{nickname},
 		   	   EMAIL = #{email},
 		   	   TEL = #{tel},
 		   	   POSTCODE = #{postCode},
 		   	   ADDRESS = #{address},
 		   	   VILLAGE_CODE = #{villageCode}
-		   	   )
 	  	 WHERE
 	  	  	   USER_ID = #{userId}
 	  	   AND
