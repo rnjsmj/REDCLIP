@@ -132,10 +132,10 @@
 	                    response.forEach((a) => { 
 	                    	$guSelect.append('<option value='+a.townCode+'>'+a.townName+'</option>');
 	                    });
-	                    $guSelect.prop('disabled', false); // 구 셀렉트 박스 활성화
+	                    $guSelect.prop(false); // 구 셀렉트 박스 활성화
 	                },
 	                error: function() {
-	                    alert('오류임 ㅉㅉ');
+	                    alert('오류가 발생했습니다.');
 	                }
 	            });
 	        }
@@ -155,10 +155,10 @@
 		    			response.forEach((a) => {
 		    				$dongSelect.append('<option value='+a.villageCode+'>'+a.villageName+'</option>');
 		    			});
-		    			$dongSelect.prop('disabled', false); // 동 셀렉트 박스 활성화
+		    			$dongSelect.prop(false);
 		    		},
 		    		error: function() {
-		    			alert('오류임 키키 ');
+		    			alert('오류가 발생했습니다.');
 		    		}
 	    		});
 	    	}
