@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import com.kh.redclip.barter.model.service.BarterService;
+import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterVO;
 
@@ -70,11 +71,6 @@ public class BarterController {
 		}
 	
 	// 교환 게시글 글 등록하기
-	@GetMapping("insertForm.do")
-	public String barterForwarding() {
-		return "barter/insertForm";
-	}
-	
 	@PostMapping("/insert")
 		public String insert(Barter barter, MultipartFile upfile, HttpSession session, Model model) {
 		    log.info("게시글정보 : {}", barter);
