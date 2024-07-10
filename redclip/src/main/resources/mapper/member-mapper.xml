@@ -92,5 +92,31 @@
         TOWN_CODE = #{townCode}
     </select>
 	
-	
+	<insert id="insertMember" parameterType="member">
+    INSERT INTO TB_MEMBER
+        (
+            USER_ID,
+            USER_PWD,
+            USER_NAME,
+            NICKNAME,
+            EMAIL,
+            TEL,
+            POSTCODE,
+            ADDRESS,
+            VILLAGE_CODE
+        )
+    VALUES
+        (
+            #{userId},
+            #{userPwd},
+            #{userName},
+            #{nickname},
+            #{email},
+            #{tel},
+            #{postCode},
+            #{address},
+            #{villageCode}
+        )
+	</insert>
+
 </mapper>
