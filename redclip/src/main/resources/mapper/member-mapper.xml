@@ -23,16 +23,37 @@
 	
 	
 	</select>
-<select id="login" parameterType="member" resultType="member">
+	
+	<select id="login" parameterType="member" resultType="member">
 		SELECT
-		USER_ID userId,
-		USER_PWD userPwd
-   		FROM
-		TB_MEMBER
-		WHERE
-		USER_ID = #{userId}
-		AND
-		STATUS ='Y'
+			  USER_ID userId,
+			  USER_PWD userPwd
+   		  FROM
+			  TB_MEMBER
+		 WHERE
+			  USER_ID = #{userId}
+		   AND
+			  STATUS ='Y'
 		<!-- AND USER_PWD = #{userPwd} AND STATUS = 'Y' -->
 	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="update" parameterType="member">
+		UPDATE
+					  MEMBER
+		   		SET
+		   	  		 (
+		   	  		  USER_NAME = #{userName},
+		   	  		  NAICKNAME = #{nickname},
+		   	  		  EMAIL = #{email},
+		   	  		  TEL = #{tel},
+		   	  		  POSTCODE = #{postCode},
+		   	  		  ADDRESS = #{address},
+		   	  		  VILLAGE_CODE = #{villageCode}
+		   	  		  )
+	  	  WHERE
+	  	  			  USER_ID = #{userId}
+	  	  	  AND
+	  	  	  		  STATUS = 'Y' 	  
+	</update>
 </mapper>

@@ -3,14 +3,15 @@ package com.kh.redclip.member.controller;
 
 import javax.servlet.http.HttpSession;
 
-
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
@@ -22,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping(value = "/member", produces = "application/json; charset=UTF-8")
+@RequestMapping("/member")
 public class MemberController {
     
     private final MemberService memberService;
@@ -47,11 +48,11 @@ public class MemberController {
         Member loginUser = memberService.login(member);
 
         if (loginUser != null && bCryptPasswordEncoder.matches(member.getUserPwd(), loginUser.getUserPwd())) {
-            log.info("로그인 성공: {}", loginUser);
+            //log.info("로그인 성공: {}", loginUser);
             session.setAttribute("loginUser", loginUser);
             return "redirect:/";  // 로그인 성공 시 홈 페이지로 리다이렉트
         } else {
-            log.error("로그인 실패: 사용자 정보가 없습니다.");
+           // log.error("로그인 실패: 사용자 정보가 없습니다.");
             model.addAttribute("errorMsg", "로그인 실패");
             return "redirect/";  // 홈화면으로
             
@@ -60,17 +61,29 @@ public class MemberController {
     }
    
    //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
-	@PutMapping("/{userId}")
-	public ResponseEntity<Member> update(@PathVariable String userId, Member member, Model model) {
+	@PutMapping(value = "/{userId}", produces = "application/json; charset=UTF-8")
+	public String update(@PathVariable String userId, Member member, HttpSession session) {
 		
 		//log.info("입력한 정보 : {}", member);
 		
 		int result = memberService.update(member);
 		
-		if(result == 0) {
+		//rsult = 0 ==> 업데이트 실패
+		//rsult = 1 ==> 업데이트 성공
+		if(result>0) {
 			
+			//http 상에 메세지를 띄움
+			session.setAttribute("Msg", "회원 정보 업데이트에 성공했습니다.");
+			
+			return "redirect:/";
+		} else {
+			
+			session.setAttribute("errorMsg", "회원 정보 업데이트에 실패했습니다.");
+			
+			return "redirect:/";
 		}
 		
-		return "redirect:";
+		
+		
 	}
 }
