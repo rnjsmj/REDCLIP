@@ -211,9 +211,16 @@
    				type : 'put',
    				data : JSON.stringify(updateData),
    				contentType : 'application/json',
-   				success : result => {
+   				success : function(result) {
    					
-   					console.log(result);
+   					//console.log(result);
+   					
+   						alert('회원 정보가 수정되었습니다.');
+   						location.reloard();
+   						
+   					},
+   				error : function(error) {
+   					alert('회원 정보 수정에 실패했습니다.');
    				}
    			});
    		};

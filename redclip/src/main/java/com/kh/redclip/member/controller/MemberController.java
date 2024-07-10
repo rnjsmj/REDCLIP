@@ -69,21 +69,12 @@ public class MemberController {
    //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
     @ResponseBody
 	@PutMapping
-	public ResponseEntity<Member> update(@RequestBody Member member) {
+	public String update(@RequestBody Member member) {
 		
 		//log.info("입력한 정보 : {}", member);
     	
-    	int result = memberService.update(member);
+    	return memberService.update(member) > 0? "success" : "error";
     	
-    	if(result>0) {
-    	
-    		return ResponseEntity.status(HttpStatus.OK).build();
-    		
-    	}
-    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    		
-		
-            
     }
     
     
