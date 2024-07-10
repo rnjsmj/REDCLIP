@@ -6,9 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,27 +59,12 @@ public class MemberController {
     }
    
    //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
-	@PutMapping(value = "/{userId}", produces = "application/json; charset=UTF-8")
-	public String update(@PathVariable String userId, Member member, HttpSession session) {
+	@PostMapping("update")
+	public String update(String userId, Member member, HttpSession session, Model model) {
 		
-		//log.info("입력한 정보 : {}", member);
+		log.info("입력한 정보 : {}", member);
+		return null;
 		
-		int result = memberService.update(member);
-		
-		//rsult = 0 ==> 업데이트 실패
-		//rsult = 1 ==> 업데이트 성공
-		if(result>0) {
-			
-			//http 상에 메세지를 띄움
-			session.setAttribute("Msg", "회원 정보 업데이트에 성공했습니다.");
-			
-			return "redirect:/";
-		} else {
-			
-			session.setAttribute("errorMsg", "회원 정보 업데이트에 실패했습니다.");
-			
-			return "redirect:/";
-		}
 		
 		
 		

@@ -89,7 +89,7 @@
     <h3 id="title">회원정보 수정</h3>
     
         <div id="updateForm">
-            <div>
+            <form action="update" method="post">
                 <div class="form-group">
                     <label for="userId">* ID </label><br>
                     <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
@@ -123,10 +123,10 @@
                     </div>
                      
                 <div id="buttons">
-                    <button type="button" id="update" class="btn btn-success"  onclick="update()">수정</button>
+                    <button type="submit" id="update" class="btn btn-success">수정</button>
                     <button type="reset" class="btn btn-secondary">취소</button><br>
                     <button type="button" id="delete-btn" class="btn btn-secondary" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
-                </div>
+                </form>
                 </div>
             </div>
             
@@ -185,11 +185,12 @@
         </div>
     </div>
 
-    <script>
+   <script>
 
 	function update() {
 		
 		var updateData = {
+				"userId" : $('#userId').val(),
 				"userName" : $('#userName').val(),
 				"nickname" : $('#nickname').val(),
 				"email" : $('#email').val(),
@@ -200,7 +201,7 @@
 				
 		};
 		
-		//console.log(updateData);
+		console.log(updateData);
 
 		$.ajax(() => {
 			url : 'member/' + userId,
