@@ -1,11 +1,9 @@
 package com.kh.redclip.member.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,12 +23,16 @@ public class MemberController {
 	
 	//마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
 	@PutMapping("/{userId}")
-	public String update(@PathVariable String userId, Member member) {
+	public ResponseEntity<Member> update(@PathVariable String userId, Member member, Model model) {
 		
 		//log.info("입력한 정보 : {}", member);
 		
 		int result = memberService.update(member);
 		
-		return "";
+		if(result == 0) {
+			
+		}
+		
+		return "redirect:";
 	}
 }
