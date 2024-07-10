@@ -4,12 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -69,11 +66,17 @@ public class MemberController {
    //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
     @ResponseBody
 	@PutMapping
-	public String update(@RequestBody Member member) {
+	public String update(@RequestBody Member member, HttpSession session, Model model) {
 		
 		//log.info("입력한 정보 : {}", member);
+    	if(memberService.update(member)>0) {
+    		
+    		session.setAttribute("loginUser", memberService.login(member));
+    		return "success";
+    	} else {
+    		return "error";
+    	}
     	
-    	return memberService.update(member) > 0? "success" : "error";
     	
     }
     
