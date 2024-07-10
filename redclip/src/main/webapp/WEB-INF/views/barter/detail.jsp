@@ -25,6 +25,10 @@
             content: '';
             display: block;
         }
+        
+        .breadcrumb {
+        	background-color:#fff;
+        }
         #hd {
             width: 100%;
             min-width: 960px;
@@ -327,52 +331,37 @@
                </ol>
            </nav>
                 <div id="detail-wrap">
+                <c:if test="${ barter.barterFileList.barterFileName ne null }">
                     <div id="trade-image">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> -->
+                        <div id="carouselBarters" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
-                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                                <!-- <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li> -->
+                                <c:forEach var="barterFile" items="${ barter.barterFileList }" varStatus="status">
+                                	<li data-target="#carouselBarters" data-slide-to="${ status.index }"></li>
+                                </c:forEach>
                             </ol>
                             <div
                                 class="carousel-inner"
                                 data-toggle="modal"
-                                data-target="#trade-image-modal"
-                                onclick="modalContent(this);"
-                            >
-                                <div class="carousel-item active">
-                                    <img
-                                        class="d-block w-100 img-fluid"
-                                        src="https://via.placeholder.com/800x400?auto=yes&bg=777&fg=555&text=First slide"
-                                        alt="First slide"
-                                    />
-                                </div>
-                                <div class="carousel-item">
-                                    <img
-                                        class="d-block w-100"
-                                        src="https://via.placeholder.com/800x400?auto=yes&bg=666&fg=444&text=Second slide"
-                                        alt="Second slide"
-                                    />
-                                </div>
-                                <div class="carousel-item">
-                                    <img
-                                        class="d-block w-100"
-                                        src="https://via.placeholder.com/800x400?auto=yes&bg=555&fg=333&text=Third slide"
-                                        alt="Third slide"
-                                    />
-                                </div>
-                                <div class="carousel-item">
-                                    <img
-                                        class="d-block w-100"
-                                        src="https://via.placeholder.com/800x400?auto=yes&bg=555&fg=333&text=Fourth slide"
-                                        alt="Fourth slide"
-                                    />
-                                </div>
+                                data-target="#barter-image-modal"
+                                onclick="modalContent(this);">
+                                <!-- <div class="carousel-item active"> -->
+                                <c:forEach var="barterFile" items="${ barter.barterFileList }" >
+                                
+	                                <div class="carousel-item">
+	                                    <img
+	                                        class="d-block w-100 img-fluid"
+	                                        src="${ barterFile.barterFileName }"
+	                                        alt="${ barterFile.barterFileNo }"
+	                                    />
+	                                </div>
+	                                
+                                </c:forEach>
                             </div>
                             <a
                                 class="carousel-control-prev"
-                                href="#carouselExampleIndicators"
+                                href="#carouselBarters"
                                 role="button"
                                 data-slide="prev"
                             >
@@ -381,7 +370,7 @@
                             </a>
                             <a
                                 class="carousel-control-next"
-                                href="#carouselExampleIndicators"
+                                href="#carouselBarters"
                                 role="button"
                                 data-slide="next"
                             >
@@ -390,43 +379,42 @@
                             </a>
                         </div>
                     </div>
+                   
+                    
 
                     <!--이미지 모달 창-->
                     <div
                         class="modal fade"
-                        id="trade-image-modal"
+                        id="barter-image-modal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="exampleModalCenterTitle"
                         aria-hidden="true"
                     >
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="position: relative">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <div class="modal-body">
+                                	<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 20px; right: 20px; z-index: 999">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                </div>
-                                <div class="modal-body">
                                     <div
-                                        id="carouselExampleIndicators-modal"
+                                        id="carouselBarters-modal"
                                         class="carousel slide"
                                         data-ride="carousel"
                                     >
-                                        <ol class="carousel-indicators">
-                                            <li
-                                                data-target="#carouselExampleIndicators-modal"
+                                        <ol class="carousel-indicators" id="modal-indicators">
+                                            <!-- <li
+                                                data-target="#carouselBarters-modal"
                                                 data-slide-to="0"
                                                 class="active"
-                                            ></li>
-                                            <li data-target="#carouselExampleIndicators-modal" data-slide-to="1"></li>
-                                            <li data-target="#carouselExampleIndicators-modal" data-slide-to="2"></li>
-                                            <li data-target="#carouselExampleIndicators-modal" data-slide-to="3"></li>
+                                            ></li> -->
                                         </ol>
-                                        <div class="carousel-inner modal-inner"></div>
+                                        <div class="carousel-inner modal-inner">
+                                        
+                                        </div>
                                         <a
                                             class="carousel-control-prev"
-                                            href="#carouselExampleIndicators-modal"
+                                            href="#carouselBarters-modal"
                                             role="button"
                                             data-slide="prev"
                                         >
@@ -435,7 +423,7 @@
                                         </a>
                                         <a
                                             class="carousel-control-next"
-                                            href="#carouselExampleIndicators-modal"
+                                            href="#carouselBarters-modal"
                                             role="button"
                                             data-slide="next"
                                         >
@@ -447,7 +435,8 @@
                             </div>
                         </div>
                     </div>
-
+ 					</c:if>
+ 					
                     <div id="trade-info">
                         <div id="main-info" class="clr-fix">
                             <div id="left-info">
@@ -582,8 +571,15 @@
                 	$(() => {
                 		
                 		selectReply();
+                		addActive();
                 		
                 	});
+                	
+                	function addActive() {
+                        console.log($('.carousel-item:first-child'));
+                    	$('.carousel-item:first-child').addClass('active');
+                      
+                	}
                 	
                 	function selectReply() {
                 		
@@ -610,7 +606,7 @@
                 						
                 						resultStr += '<figure class="reply-img">'
                                             	  +'<div id="reply-img-' + result[i].replyNo + '" class="carousel slide" data-ride="carousel">'
-                                        		  + '<div class="carousel-inner" data-toggle="modal" data-target="#trade-image-modal" onclick="modalContent(this);">';
+                                        		  + '<div class="carousel-inner" data-toggle="modal" data-target="#barter-image-modal" onclick="modalContent(this);">';
                 						
                 						for (let j in fileList) {
                 							resultStr += '<div class="carousel-item">'
@@ -629,7 +625,7 @@
                                             	  + '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
                                                   + '<span class="sr-only">Next</span></a></div></figure>';
                 						
-                						$('.reply-img .carousel-inner').addClass('active');
+                						$('.reply-img .carousel-item:first-child').addClass('active');
                 						
                 					}
                 					
@@ -934,6 +930,18 @@
             var innerContent = track.innerHTML;
             $('.modal-inner').html(innerContent);
             console.log($('.modal-inner').html());
+            
+            var child = track.length;
+            
+           	let modalIndicators = '';
+           	for (var step = 0; step < child; step++ ) {
+           		let += '<li data-target="#carouselBarters-modal" data-slide-to="'
+           			 + step + '"></li>';
+           	}
+           	
+           	var child = track.childElementCount;
+            $('#modal-indicators').children().eq(0).addClass('active');
+           	
         }
     </script>
 </body>

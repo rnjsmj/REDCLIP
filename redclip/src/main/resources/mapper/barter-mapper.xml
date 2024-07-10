@@ -25,15 +25,16 @@
 			<result column="VILLAGE_CODE" property="villageCode" />
 			<result column="VILLAGE_NAME" property="villageName"/>
 		</association>
+		<collection resultMap="barterFileResultSet" property="barterFileList" />
 	</resultMap>
 	
-	<resultMap type="barterReply" id="barterReplyResultSet">
-		<result column="REPLY_NO" property="replyNo" />
-		<result column="REPLY_CONTENT" property="replyContent" />
-		<result column="REPLY_NICKNAME" property="replyNickname" />
-		<result column="REPLY_DATE" property="replyDate" />
+	<resultMap type="barterFile" id="barterFileResultSet">
+		<result column="BARTER_FILE_NO" property="barterFileNo"/>
+		<result column="BARTER_NO" property="barterNo"/>	
+		<result column="BARTER_FILE_NAME" property="barterFileName"/>
 	</resultMap>
-
+	
+	
 	<select id="findById" parameterType="_int" resultType="barterVo" resultMap="barterResultSet">
 		<!-- resultMap 적용하여 수정 -->
 		SELECT
@@ -42,8 +43,11 @@
 				BARTER_CONTENT,
 				BARTER_WRITER,
 				BARTER_NICKNAME,
+				CITY_CODE,
 				CITY_NAME,
+				TOWN_CODE,
 				TOWN_NAME,
+				VILLAGE_CODE,
 				VILLAGE_NAME,
 				CATEGORY_NO,
 				CATEGORY_NAME,
@@ -52,10 +56,8 @@
 				WISH_COUNT,
 				BARTER_STATUS,
 				POINT,
-				REPLY_NO,
-				REPLY_CONTENT,
-				REPLY_NICKNAME,
-				REPLY_DATE
+				BARTER_FILE_NO,
+				BARTER_FILE_NAME
 		  FROM
 		  		VW_BARTER_DETAIL
 		 WHERE
