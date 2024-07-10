@@ -173,7 +173,7 @@
         });
 
         function addSearchTerm() {
-            const searchTerm = $('.search-input').val().trim(); // trim()으로 공백 제거
+            const searchTerm = $('.search-input').val();
             if (searchTerm) {
                 recentSearches.push(searchTerm);
                 updateRecentSearches();
