@@ -15,6 +15,8 @@ local.properties
 .recommenders
 .target/
 Servers/
+.classpath
+.project
 
 # ignore properties file
 config.properties
