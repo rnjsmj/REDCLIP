@@ -17,4 +17,11 @@ public class MemberFowardController {
 		return "member/loginform";
 	}
 	
+	//마이페이지 이동
+	@GetMapping
+	public String myPage() {
+		
+		return "member/myPage";
+	}
+	
 }

@@ -56,7 +56,7 @@ public class MemberController {
         if (loginUser != null && bCryptPasswordEncoder.matches(member.getUserPwd(), loginUser.getUserPwd())) {
             //log.info("로그인 성공: {}", loginUser);
             session.setAttribute("loginUser", loginUser);
-            return "member/myPage";  // 로그인 성공 시 홈 페이지로 리다이렉트
+            return "redirect:/";  // 로그인 성공 시 홈 페이지로 리다이렉트
         } else {
            // log.error("로그인 실패: 사용자 정보가 없습니다.");
             model.addAttribute("errorMsg", "로그인 실패");
@@ -69,18 +69,19 @@ public class MemberController {
    //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
     @ResponseBody
 	@PutMapping
-	public ResponseEntity<String> update(@RequestBody Member member) {
+	public ResponseEntity<Member> update(@RequestBody Member member) {
 		
 		//log.info("입력한 정보 : {}", member);
     	
     	int result = memberService.update(member);
     	
-    	if(result == 0) {
-    		
-    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원정보 수정 실패");
-    	}
+    	if(result>0) {
     	
-    		return ResponseEntity.status(HttpStatus.OK).body("회원정보 수정 성공");
+    		return ResponseEntity.status(HttpStatus.OK).build();
+    		
+    	}
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    		
 		
             
     }

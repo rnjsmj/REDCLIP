@@ -210,7 +210,7 @@
    				url : 'member/'
    				type : 'PUT',
    				data : JSON.stringtify(updateData),
-   				dataType : 'json'
+   				contentType : 'application/json',
    				success : result => {
    					
    					console.log(result);
