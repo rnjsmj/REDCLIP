@@ -83,12 +83,12 @@
             </select>
           </div>
           <div class="col">
-            <select class="form-control" id="gu">
+            <select class="form-control" id="gu" disabled>
               <option value="">구 선택</option>
             </select>
           </div>
           <div class="col">
-            <select class="form-control" id="dong" required>
+            <select class="form-control" id="dong" disabled>
               <option value="">동 선택</option>
             </select>
           </div>
@@ -108,7 +108,7 @@
 		    </div>
 		</div>
 	</div>
-    <button type="submit" class="btn btn-success" href="insertForm.do">등록하기</button>
+    <button type="submit" class="btn btn-success" href="insert">등록하기</button>
     </form>
   </div>
   <script>
@@ -132,7 +132,7 @@
 	                    response.forEach((a) => { 
 	                    	$guSelect.append('<option value='+a.townCode+'>'+a.townName+'</option>');
 	                    });
-	                    $guSelect.prop(false); // 구 셀렉트 박스 활성화
+	                    $guSelect.prop('disabled', false); // 구 셀렉트 박스 활성화
 	                },
 	                error: function() {
 	                    alert('오류가 발생했습니다.');
@@ -155,7 +155,7 @@
 		    			response.forEach((a) => {
 		    				$dongSelect.append('<option value='+a.villageCode+'>'+a.villageName+'</option>');
 		    			});
-		    			$dongSelect.prop(false);
+		    			$dongSelect.prop('disabled', false); // 동 셀렉트 박스 활성화
 		    		},
 		    		error: function() {
 		    			alert('오류가 발생했습니다.');
