@@ -92,30 +92,30 @@
             <div>
                 <div class="form-group">
                     <label for="userId">* ID </label><br>
-                    <input type="text" class="form-control" value="admin" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
+                    <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
 
                     <label for="userName">* Name : </label>
-                    <input type="text" class="form-control" id="userName" value="이가을" name="userName" required> <br>
+                    <input type="text" class="form-control" id="userName" value="${ sessionScope.loginUser.userName }" name="userName" required> <br>
 
                     <label for="nickname">* Nickname : </label>
-                    <input type="text" class="form-control" id="nickname" value="관리자" name="nickname" required> <br>
+                    <input type="text" class="form-control" id="nickname" value="${ sessionScope.loginUser.nickname }" name="nickname" required> <br>
 
                     <label for="email"> &nbsp; Email : </label>
-                    <input type="text" class="form-control" id="email" value="gaga@gmail.com" name="email"> <br>
+                    <input type="text" class="form-control" id="email" value="${ sessionScope.loginUser.email }" name="email"> <br>
 
                     <label for="tel"> &nbsp; Tel : </label>
-                    <input type="tel" class="form-control" id="tel" value="010-1111-1111" name="tel"> <br>
+                    <input type="tel" class="form-control" id="tel" value="${ sessionScope.loginUser.tel }" name="tel"> <br>
 
                     <label for="postCode"> &nbsp; PostCode : </label>
-                    <input type="text" class="form-control" id="postCode" value="123-45" name="postCode"> <br>
+                    <input type="text" class="form-control" id="postCode" value="${ sessionScope.loginUser.postCode }" name="postCode"> <br>
                     
                     <label for="address"> &nbsp; Address : </label>
-                    <input type="text" class="form-control" id="address" value="김포시" name="address">
+                    <input type="text" class="form-control" id="address" value="${ sessionScope.loginUser.address }" name="address">
                     
                     <label for="villageCode"> &nbsp; VillageCode : </label>
-                    <input type="number" class="form-control" id="villageCode" value="10101" name="villageCode">
+                    <input type="number" class="form-control" id="villageCode" value="${ sessionScope.loginUser.villageCode }" name="villageCode">
 
-                    <!-- 조건문 사용 -> 포인트 별로 다르게 출력-->
+                    <!-- 자스 사용 -> aria-valuenow 값에 따라 progress-bar에 style 주기 -->
                     <div id="pointbar">다음 등급까지
 	                    <div class="progress"  id="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >
 	                        <div class="progress-bar" style="width: 0%"></div>

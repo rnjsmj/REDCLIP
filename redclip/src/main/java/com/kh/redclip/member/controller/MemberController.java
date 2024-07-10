@@ -4,6 +4,7 @@ package com.kh.redclip.member.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
-@RestController
+@Controller
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/member")
@@ -42,8 +42,8 @@ public class MemberController {
             return "N"; // 아니면 N을 리턴해준다
         }
     }
-    
-    @PostMapping("login")
+   
+    @PostMapping("/login")
     public String login(Member member, Model model, HttpSession session) {
         Member loginUser = memberService.login(member);
 
@@ -54,7 +54,7 @@ public class MemberController {
         } else {
            // log.error("로그인 실패: 사용자 정보가 없습니다.");
             model.addAttribute("errorMsg", "로그인 실패");
-            return "redirect/";  // 홈화면으로
+            return "redirect:/";  // 홈화면으로
             
             
         }
