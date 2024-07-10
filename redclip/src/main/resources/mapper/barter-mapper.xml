@@ -63,8 +63,6 @@
 	
 	</select>
 	
-	
-	
 	<resultMap type="barterVO" id="barterListResultSet">
 		<id column="BARTER_NO" property="barterNo" />
 		<result column="BARTER_NAME" property="barterName" />
@@ -76,7 +74,6 @@
 			<result column="VILLAGE_NAME" property="villageName"/>
 		</association>
 	</resultMap>
-	
 	
 	<select id="getAllBarters" parameterType="int" resultType="barterVO" resultMap="barterListResultSet">
 		SELECT
@@ -101,31 +98,27 @@
 	</select>
 	
 	<insert id="insert" parameterType="barter">
-    INSERT INTO TB_BARTER(
-        BARTER_NO,
-        BARTER_NAME,
-        BARTER_CONTENT,
-        BARTER_WRITER,
-        VILLAGE_CODE,
-        CATEGORY_NO
-    )
-    VALUES (
-        SEQ_BARTER.NEXTVAL,
-        #{barterName},
-        #{barterContent},
-        #{barterWriter},
-        #{villageCode},
-        #{categoryNo}
-    )
-</insert>
-
-
-
-
-
-
-
-
+	    INSERT
+	      		INTO
+	 TB_BARTER
+	  			(
+	       		BARTER_NO,
+	       		BARTER_NAME,
+	      		BARTER_CONTENT,
+	      		BARTER_WRITER,
+	      		VILLAGE_CODE,
+	      		CATEGORY_NO
+	    		)
+	   VALUES
+	    		(
+	        	SEQ_BARTER.NEXTVAL,
+	        	#{barterName},
+	        	#{barterContent},
+	        	#{barterWriter},
+	        	#{villageCode},
+	        	#{categoryNo}
+	    		)
+	</insert>
 
 	<resultMap type="barterReply" id="replyResultSet">
 		<id column="REPLY_NO" property="replyNo"/>
@@ -161,19 +154,19 @@
 	<insert id="replyInsert" parameterType="barterReply">
 		INSERT
 		  INTO
-		  		TB_BARTER_REPLY
-		  		(
-		  			REPLY_NO,
-		  			BARTER_NO,
-		  			REPLY_CONTENT,
-		  			REPLY_WRITER
-		  		)
+	  			TB_BARTER_REPLY
+	  			(
+	  			REPLY_NO,
+	  			BARTER_NO,
+	  			REPLY_CONTENT,
+	  			REPLY_WRITER
+	  			)
 		VALUES
 				(
-					SEQ_BREP.NEXTVAL,
-					#{barterNo},
-					#{replyContent},
-					#{replyWriter}
+				SEQ_BREP.NEXTVAL,
+				#{barterNo},
+				#{replyContent},
+				#{replyWriter}
 				)
 	</insert>
 	
@@ -212,11 +205,7 @@
 		  		VW_REPLY_LIST
 		 WHERE
 		 		REPLY_NO = #{replyNo}	 
-				
-	
 	</select>
-	
-	
 	
 	<!-- 조회수 증가 -->
 	<update id="increaseHit" parameterType="_int">
@@ -226,7 +215,6 @@
 		   		HIT = HIT + 1
 		 WHERE
 		 		BARTER_NO = #{barterNo}
-	
 	</update>
 	
 	
