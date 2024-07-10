@@ -27,7 +27,17 @@
 	<select id="login" parameterType="member" resultType="member">
 		SELECT
 			  USER_ID userId,
-			  USER_PWD userPwd
+			  USER_PWD userPwd,
+			  USER_NAME userName,
+			  NICKNAME nickname,
+			  EMAIL email,
+			  TEL tel,
+			  ADDRESS address,
+			  POSTCODE postCode,
+			  POINT point,
+			  STATUS status,
+			  CREATE_DATE createDate,
+			  VILLAGE_CODE villageCode
    		  FROM
 			  TB_MEMBER
 		 WHERE
