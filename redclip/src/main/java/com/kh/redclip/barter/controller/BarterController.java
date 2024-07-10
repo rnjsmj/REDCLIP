@@ -130,7 +130,6 @@ public class BarterController {
 	@ResponseBody
 	public String replyUpdate(BarterReply reply) {
 		
-		
 		return barterService.replyUpdate(reply) > 0 ? "success" : "error";
 	}
 }

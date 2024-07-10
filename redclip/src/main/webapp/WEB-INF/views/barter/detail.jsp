@@ -740,6 +740,8 @@
            				var replyContentEl = '#reply-content-' + no + ' > p'; 
            				var btngroupEl = '#btn-group-' + no;
            				
+           				$('#edit-reply').remove();
+           				
            				if(state == 0) {
            					
 	                		$.ajax({
@@ -755,7 +757,7 @@
 	                				
 	                				let replyContent = '<div id="edit-reply">'
 	                				+ '<div style="width: 100%; content: "'+'"; clear: both"></div>'
-	                                + '<textarea class="reply-content-area">'
+	                                + '<textarea class="reply-content-area" id="edit-reply-content">'
 	                                + result.replyContent + '</textarea>'
 	                                + '<span style="margin-left: 10px" onclick="editReply('
 	                				+ result.replyNo +')" >저장</span>'
@@ -773,6 +775,35 @@
         					$('#edit-reply').remove();
                 		}
                 	};
+                	
+                	
+                	function editReply(no) {
+                		
+                		const updateData = {
+                				replyNo : no,
+                				replyContent : $('#edit-reply-content').val()
+                			};
+                		
+                		$.ajax({
+                			
+                			url : 'reply',
+                			type : 'put',
+                			data : JSON.stringify(updateData),
+                			contentType : 'application/json',
+                			success : result => {
+                				console.log(result);
+                				if(result == 'success') {
+            						
+            						selectReply();
+            						
+            					} else {
+            						alert('오류가 발생했습니다.');
+            					}
+                			}
+                			
+                		});
+                		
+                	}
                 
                 </script>
          
