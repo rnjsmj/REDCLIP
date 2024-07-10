@@ -81,8 +81,8 @@
                         </select>
                         <select class="form-control" id="si">
                             <option selected>시</option>
-                            <option>서울특별시</option>
-                            <option>인천광역시</option>
+                            <option value="1">서울특별시</option>
+                            <option value="2">인천광역시</option>
                         </select>
                         <select class="form-control" id="gu" disabled>
                             <option selected>구</option>
@@ -134,7 +134,7 @@
 	
     <script>
       	$(() => {
-		    const $categorySelect = $('#category)
+		    const $categorySelect = $('#category');
         	const $siSelect = $('#si');
 		    const $guSelect = $('#gu');
 		    const $dongSelect = $('#dong');
@@ -143,9 +143,9 @@
 		        const siValue = $siSelect.val();  
 				console.log(siValue);
 		        if (siValue !== null ) { //시벨류값이 널이 아닐때 실행)
-		            // console.log("시밸류값:", siValue); 
+		             console.log("시밸류값:", siValue); 
 		            $.ajax({
-		                url: 'guSelect', 
+		                url: 'member/guSelect', 
 		                type: 'GET',
 		                data: { si: siValue }, 
 		                success: response => {
@@ -168,7 +168,7 @@
 		         console.log("선택한구벨류값:", guValue);
 		    	if (guValue !== null) {
 		    		$.ajax({
-			    		url: 'dongSelect',
+			    		url: 'member/dongSelect',
 			    		type: 'GET',
 			    		data: { gu: guValue },
 			    		success: response => {

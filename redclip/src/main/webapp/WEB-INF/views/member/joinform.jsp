@@ -110,7 +110,7 @@
 
             <form action="join" method="post">
                 <div class="form-group rel">
-                    <input type="text" class="form-control" id="userId" placeholder="아이디" name="" required>
+                    <input type="text" class="form-control" id="userId" placeholder="아이디" name="userId" required>
                     <button type="button" class="btn btn-outline-secondary" id="checkId">중복체크</button>
                 </div>
 				
