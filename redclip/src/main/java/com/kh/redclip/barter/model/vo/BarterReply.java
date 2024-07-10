@@ -18,5 +18,5 @@ public class BarterReply {
 	private String replyWriter;
 	private String replyDate;
 	private String replyNickname;
-	private List<BarterReplyFile> replyFileList;
+	private List<BarterReply> replyFileList;
 }
