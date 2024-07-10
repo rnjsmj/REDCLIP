@@ -1,16 +1,20 @@
 package com.kh.redclip.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
+import com.kh.redclip.region.model.vo.Region;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,8 +66,43 @@ public class MemberController {
             model.addAttribute("errorMsg", "로그인 실패");
             return "redirect:/";  // 홈화면으로
             
-            
         }
     }
-   
+    
+    
+    @ResponseBody
+    @GetMapping("/guSelect")
+    public List<Region> getGuList(@RequestParam("si") int cityCode) {
+    	
+    	log.info("시티코드머임 : {} ",cityCode);
+        List<Region> guList = memberService.selectgu(cityCode);
+        log.info("이거 어캐나오냐: {}", guList);
+        
+        return guList;
+    }
+    
+    @ResponseBody
+    @GetMapping("/dongSelect")
+    public List<Region> getDongList(@RequestParam("gu") int townCode) {
+    	
+    	log.info("타운코드머임 : {} ",townCode);
+        List<Region> dongList = memberService.selectdong(townCode);
+        log.info("이거 어캐나오냐: {}", dongList);
+        
+        return dongList;
+    }
+    
+    @PostMapping("join")
+    public String join(Member member,Model model) {
+    	 
+    	String enPwd = bCryptPasswordEncoder.encode(member.getUserPwd());
+    	member.setUserPwd(enPwd);
+        if (memberService.insert(member) > 0) { // 성공 => 메인~
+            return "redirect:/";
+        } else { // 실패 => 에러페이지
+        	 model.addAttribute("errorMessage", "회원 가입에 실패했습니다. 다시 시도해 주세요.");
+        	 return "error";
+        }
+  }
+    
 }
