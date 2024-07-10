@@ -63,6 +63,8 @@ public class BarterController {
 			return "barter/registration";
 		}
 	
+
+	// 교환 게시글 글 등록하기
 	@PostMapping("/insert")
 		public String insert(Barter barter, MultipartFile upfile, HttpSession session, Model model) {
 		    log.info("게시글정보 : {}", barter);
