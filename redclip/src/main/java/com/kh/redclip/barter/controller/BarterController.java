@@ -2,31 +2,25 @@ package com.kh.redclip.barter.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import javax.servlet.http.HttpSession;
-
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.kh.redclip.barter.model.service.BarterService;
+import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterVO;
 
@@ -68,12 +62,6 @@ public class BarterController {
 		public String barterForwarding() {
 			return "barter/registration";
 		}
-	
-	// 교환 게시글 글 등록하기
-	@GetMapping("insertForm.do")
-	public String barterForwarding() {
-		return "barter/insertForm";
-	}
 	
 	@PostMapping("/insert")
 		public String insert(Barter barter, MultipartFile upfile, HttpSession session, Model model) {
