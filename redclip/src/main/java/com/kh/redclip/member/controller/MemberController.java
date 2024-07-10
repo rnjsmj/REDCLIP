@@ -48,9 +48,9 @@ public class MemberController {
         Member loginUser = memberService.login(member);
 
         if (loginUser != null && bCryptPasswordEncoder.matches(member.getUserPwd(), loginUser.getUserPwd())) {
-            log.info("로그인 성공: {}", loginUser);
+            //log.info("로그인 성공: {}", loginUser);
             session.setAttribute("loginUser", loginUser);
-            return "redirect:/";  // 로그인 성공 시 홈 페이지로 리다이렉트
+            return "member/myPage";  // 로그인 성공 시 홈 페이지로 리다이렉트
         } else {
            // log.error("로그인 실패: 사용자 정보가 없습니다.");
             model.addAttribute("errorMsg", "로그인 실패");
