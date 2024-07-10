@@ -18,7 +18,7 @@ public class MemberFowardController {
 	}
 	
 	//마이페이지 이동
-	@GetMapping
+	@GetMapping("/myPage")
 	public String myPage() {
 		
 		return "member/myPage";
