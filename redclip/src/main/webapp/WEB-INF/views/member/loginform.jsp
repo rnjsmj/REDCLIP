@@ -6,9 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Bootstrap core CSS -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="${pageContext.request.contextPath}/resources/css/signin.css" rel="stylesheet">
+    <link href="resources/css/signin.css" rel="stylesheet">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;

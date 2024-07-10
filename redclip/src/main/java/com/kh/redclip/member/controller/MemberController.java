@@ -3,10 +3,14 @@ package com.kh.redclip.member.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,14 +63,20 @@ public class MemberController {
     }
    
    //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
-	@PostMapping("update")
-	public String update(String userId, Member member, HttpSession session, Model model) {
+    @ResponseBody
+	@PutMapping("/{userId}")
+	public ResponseEntity<String> update(Member member) {
 		
-		log.info("입력한 정보 : {}", member);
-		return null;
-		
-		
-		
+		//log.info("입력한 정보 : {}", member);
+    	
+    	int result = memberService.update(member);
+    	
+    	if(result == 0) {
+    		
+    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원정보 수정 실패");
+    	}
+    	
+    		return ResponseEntity.status(HttpStatus.OK).body("회원정보 수정 성공");
 		
 	}
 }

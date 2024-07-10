@@ -21,8 +21,8 @@
   	</typeAliases>
   
   	<mappers>
-  		<mapper resource="mapper/sample-mapper.xml" />
-  		<mapper resource="mapper/member-mapper.xml" />
+  		<mapper resource="/mapper/sample-mapper.xml" />
+  		<mapper resource="/mapper/member-mapper.xml" />
   		<mapper resource="/mapper/barter-mapper.xml" />
   	</mappers>
   	

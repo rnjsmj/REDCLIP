@@ -93,6 +93,8 @@
                 <div class="form-group">
                     <label for="userId">* ID </label><br>
                     <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
+                    
+                    <input type="hidden" class="form-control" value="${ sessionScope.loginUser.userPwd }" id="userPwd"  neme="userPwd" aria-label="Disabled input example" disabled readonly> <br>
 
                     <label for="userName">* Name : </label>
                     <input type="text" class="form-control" id="userName" value="${ sessionScope.loginUser.userName }" name="userName" required> <br>
@@ -123,7 +125,7 @@
                     </div>
                      
                 <div id="buttons">
-                    <button type="submit" id="update" class="btn btn-success">수정</button>
+                    <button type="button" id="update" class="btn btn-success" onclick="update()">수정</button>
                     <button type="reset" class="btn btn-secondary">취소</button><br>
                     <button type="button" id="delete-btn" class="btn btn-secondary" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
                 </form>
@@ -147,7 +149,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <form action="" method="post">
+                <div>
                 	<!-- 같은 조건의 pwd 값을 가진 모든 유저가 삭제 될 수 있으므로 행을 식별할 수 있는 값을 추가 -->
                 	<input type="hidden" value="${ sessionScope.loginUser.userId }" name="userId">
                     <!-- Modal body -->
@@ -180,7 +182,7 @@
                     <div class="modal-footer" align="center">
                         <button type="submit" id="delete" class="btn btn-secondary">탈퇴하기</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -204,9 +206,9 @@
 		console.log(updateData);
 
 		$.ajax(() => {
-			url : 'member/' + userId,
+			url : 'member/'
 			type : 'put',
-			data : updateData,
+			data : { updateData },
 			success : result => {
 				
 				console.log(result);
