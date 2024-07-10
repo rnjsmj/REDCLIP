@@ -91,7 +91,7 @@
 </head>
 <body class="text-center">
     
-<form class="form-signin" action="login" method="post">
+<form class="form-signin" action="member/login" method="post">
   <img class="mb-4" src="../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
   <h1 class="h3 mb-3 font-weight-normal">로그인</h1>
   <label for="inputEmail" class="sr-only">아이디</label>
