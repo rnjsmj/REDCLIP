@@ -89,7 +89,7 @@
     <h3 id="title">회원정보 수정</h3>
     
         <div id="updateForm">
-            <form action="update" method="post">
+            <div>
                 <div class="form-group">
                     <label for="userId">* ID </label><br>
                     <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
@@ -123,6 +123,9 @@
 	                        <div class="progress-bar" style="width: 0%"></div>
 	                    </div>
                     </div>
+                  </div>
+                </div>
+            </div>
                      
                 <div id="buttons">
                     <button type="button" id="userUpdate" class="btn btn-success" onclick="update()">수정</button>
@@ -203,11 +206,11 @@
    			
    			// console.log(updateData);
 
-   			$.ajax(() => {
+   			$.ajax({
    				url : 'member/'
    				type : 'PUT',
-   				data : updateData,
-   				dataType : 'application/json; charset=UTF-8'
+   				data : JSON.stringtify(updateData),
+   				dataType : 'json'
    				success : result => {
    					
    					console.log(result);
