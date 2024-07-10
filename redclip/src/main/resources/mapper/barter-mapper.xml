@@ -100,5 +100,25 @@
 		    	BARTER_STATUS DESC,
 		    	BARTER_NO DESC
 	</select>
+	
+	<insert id="insert" parameterType="barter">
+    INSERT INTO TB_BARTER(
+        BARTER_NO,
+        BARTER_NAME,
+        BARTER_CONTENT,
+        BARTER_WRITER,
+        VILLAGE_CODE,
+        CATEGORY_NO
+    )
+    VALUES (
+        SEQ_BARTER.NEXTVAL,
+        #{barterName},
+        #{barterContent},
+        #{barterWriter},
+        #{villageCode},
+        #{categoryNo}
+    )
+</insert>
+
 
 </mapper>

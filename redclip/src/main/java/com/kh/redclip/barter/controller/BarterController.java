@@ -1,17 +1,17 @@
 package com.kh.redclip.barter.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.redclip.barter.model.service.BarterService;
 import com.kh.redclip.barter.model.vo.Barter;
@@ -53,10 +53,23 @@ public class BarterController {
 		}
 	
 	// 교환 게시글 글 등록하기
-	@GetMapping("update")
-	public ModelAndView updateForm(ModelAndView mv, int boardNo) {
-		mv.addObject("barter",barterService.findById(boardNo))
-	      .setViewName("barter/barterUpdate");
-	    return mv;
-	}
+		@PostMapping("/insert")
+		public String insert(Barter barter, MultipartFile upfile, HttpSession session, Model model) {
+		    log.info("게시글정보 : {}", barter);
+		    log.info("파일의정보 : {}", upfile);
+		    
+		    if (!upfile.isEmpty()) {
+		        barter.setBarterName(upfile.getOriginalFilename());
+		    }
+		    
+		    if (barterService.insert(barter) > 0) {
+		        session.setAttribute("alertMsg", "게시물 등록 완료");
+		        return "redirect:/barters";  // 바뀐 URL: /barters로 수정
+		    } else {
+		        model.addAttribute("alertMsg", "게시물 등록을 실패했습니다.");
+		    }
+		    
+		    return "redirect:/barters/registration";  // 바뀐 URL: /barters/registration으로 수정
+		}
+
 }
