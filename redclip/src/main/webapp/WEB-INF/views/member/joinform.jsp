@@ -8,7 +8,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+	  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
     <style>
         .content {
             width: 50%;
@@ -108,14 +109,14 @@
             <h2>회원가입</h2>
             <br>
 
-            <form action="join" method="post">
+            <form action="member/join" method="post">
                 <div class="form-group rel">
                     <input type="text" class="form-control" id="userId" placeholder="아이디" name="userId" required>
                     <button type="button" class="btn btn-outline-secondary" id="checkId">중복체크</button>
                 </div>
 				
 				<div class="form-group">
-                    <input type="password" class="form-control" id="userPwd" placeholder="비밀번호" name="" required>
+                    <input type="password" class="form-control" id="userPwd" name="userPwd" placeholder="비밀번호" name="" required>
                 </div>
 
                 <div class="form-group">
@@ -123,21 +124,21 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" id="userName" placeholder="이름" name="" required>
+                    <input type="text" class="form-control" id="userName" placeholder="이름" name="userName" required>
                 </div>
 
                 <div class="form-group rel">
-                    <input type="text" class="form-control" id="nickName" placeholder="닉네임" name="" required>
+                    <input type="text" class="form-control" id="nickName" placeholder="닉네임" name="nickname" required>
                     <button class="btn btn-outline-secondary" type="button" id="checkNickName">중복체크</button>
                 </div>
 
                 <div class="form-group rel">
-                    <input type="text" class="form-control" id="email" placeholder="이메일" name="">
+                    <input type="text" class="form-control" id="email" placeholder="이메일" name="email">
                     <button class="btn btn-outline-secondary" type="button" id="checkEmail" hidden>메일인증</button>
                 </div>
 
                 <div class="form-group">
-                    <input type="tel" class="form-control" id="tel" placeholder="연락처" name="">
+                    <input type="tel" class="form-control" id="tel" placeholder="연락처" name="tel">
                 </div>
                 
                 <!-- 시 구 동 정보가 담긴 selectbox  -->
@@ -150,7 +151,7 @@
                     <select class="form-control " id="gu" disabled>
                         <option value="">구 선택</option>
                     </select>
-                    <select class="form-control " id="dong" disabled>
+                    <select class="form-control " id="dong" name="villageCode" disabled>
                         <option value="">동 선택</option>
                     </select>
                 </div>
@@ -169,7 +170,7 @@
 				        if (siValue !== null ) {
 				            // console.log("시밸류값:", siValue); 
 				            $.ajax({
-				                url: 'guSelect', 
+				                url: 'member/guSelect', 
 				                type: 'GET',
 				                data: { si: siValue },
 				                success: response => {
@@ -192,7 +193,7 @@
 				         console.log("선택한구벨류값:", guValue);
 				    	if (guValue !== null) {
 				    		$.ajax({
-					    		url: 'dongSelect',
+					    		url: 'member/dongSelect',
 					    		type: 'GET',
 					    		data: { gu: guValue },
 					    		success: response => {
@@ -214,17 +215,63 @@
 
 
                 <div class="form-group rel">
-                    <input type="text" class="form-control" id="postcode" placeholder="우편번호" name="">
+                    <input type="text" class="form-control" id="postcode" placeholder="우편번호" name="postCode">
                     <button class="btn btn-outline-secondary" type="button" id="findaddr">주소검색</button>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" id="address1" placeholder="도로명주소" name="">
+                    <input type="text" class="form-control" id="address1" placeholder="도로명주소" name="addr1">
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" id="address2" placeholder="상세주소" name="">
+                    <input type="text" class="form-control" id="address2" placeholder="상세주소" name="addr2">
                 </div>
+				<script>
+			    $(() => {
+			        const $findaddr = $('#findaddr');
+			        
+			        $findaddr.click(() => {//주소찾기 버튼클릭
+			            new daum.Postcode({
+			                oncomplete: (result) => {
+			                	//통합 로딩 방식 : postcode.v2.js 라는 이름의 파일 로딩을 통해 우편번호 서비스를 이용하실 수 있습니다. 카카오 우편번호서비스 공식문서
+			                	// oncomplete: 우편번호 찾기가 완료되었을때 실행되는코드를 이후에 작성한다
+			                    var addr = '';
+			                    var extraAddr = '';
+			                    
+			                    if (result.userSelectedType === 'R') {//R은 도로명주소를 선택했을때 반환되는 값 
+			                        addr = result.roadAddress;
+			                    } else {
+			                        addr = result.jibunAddress;
+			                    }
+
+			                    if (result.userSelectedType === 'R') {
+			                        if (result.bname !== '' && /[동|로|가]$/g.test(result.bname)) {
+			                            // result.bname이 빈 문자열이 아니고, '동', '로', '가'로 끝나는지 확인
+				                        // 법정동명이 있는 경우 '삼성동', '종로', '경복궁가' 등으로 끝나는지 확인
+			                            extraAddr += result.bname;
+			                            // 추가 주소 변수(extraAddr)에 법정동명을 추가
+			                        }
+			                        if (result.buildingName !== '' && result.apartment === 'Y') {
+			                        	 // result.buildingName이 빈 문자열이 아니고, result.apartment가 'Y'인 경우 (아파트인 경우)
+			                            extraAddr += (extraAddr !== '' ? ', ' + result.buildingName : result.buildingName);
+			                            // 만약 extraAddr에 이미 동로가 이름이 있다면 쉼표와 함께 건물명을 적음 아니라면 그냥 건물명적음
+			                        }
+			                        if (extraAddr !== '') {
+			                            extraAddr = ' (' + extraAddr + ')';
+			                            // extraAddr이 빈 문자열이 아닌 경우 괄호로 감싼다(법정동명, 건물명)
+			                        }
+			                    } 
+
+			                    $('#postcode').val(result.zonecode);
+			                    //postcode의 값을 result.zonecod
+			                    $('#address1').val(addr + extraAddr);
+			                    //address1의 값을 addr+extraAddr로 함
+			                }
+			            }).open(); //우편번호 검색창을여는거
+			        });
+			    });
+			</script>
+
 
                 <div class="buttonwrap">
                     <button type="submit" class="btn btn-primary joinbtn" >회원가입</button>
@@ -285,7 +332,7 @@
                 }
                 console.log("콘솔에 잘 찍힘?:", userId); 
                 $.ajax({
-                    url: 'check-id',
+                    url: 'member/check-id',
                     type: 'POST',
                     data: { userId: userId }, 
                     success: response => {
@@ -315,7 +362,7 @@
                 }
                 console.log("콘솔에 잘 찍힘?:", userNick);
                 $.ajax({
-                    url: 'check-nick',
+                    url: 'member/check-nick',
                     type: 'POST',
                     data: { userNick: userNick }, 
                     success: response => {
