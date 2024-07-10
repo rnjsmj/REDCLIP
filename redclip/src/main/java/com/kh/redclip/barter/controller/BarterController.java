@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -128,7 +129,7 @@ public class BarterController {
 	//답글 수정
 	@PutMapping(value="reply")
 	@ResponseBody
-	public String replyUpdate(BarterReply reply) {
+	public String replyUpdate(@RequestBody BarterReply reply) {
 		
 		return barterService.replyUpdate(reply) > 0 ? "success" : "error";
 	}
