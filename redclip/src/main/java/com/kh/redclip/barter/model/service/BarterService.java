@@ -28,4 +28,6 @@ public interface BarterService {
 	
 	//게시글 조회수 증가
 	int increaseHit(int barterNo);
+	//하나의 답글 select
+	BarterReply getBarterReplyById(int replyNo);
 }

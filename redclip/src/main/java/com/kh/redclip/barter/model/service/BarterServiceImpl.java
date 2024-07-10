@@ -67,4 +67,9 @@ public class BarterServiceImpl implements BarterService{
 		return barterMapper.increaseHit(barterNo);
 	}
 	
+	@Override
+	public BarterReply getBarterReplyById(int replyNo) {
+		return barterMapper.getBarterReplyById(replyNo);
+	}
+	
 }

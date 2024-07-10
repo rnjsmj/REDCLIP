@@ -179,6 +179,24 @@
 		 		REPLY_NO = #{replyNo}
 	</delete>
 	
+	<!-- 하나의 답글 -->
+	<select id="getBarterReplyById" parameterType="_int" resultType="barterReply" resultMap="replyResultSet">
+		SELECT
+				REPLY_NO,
+				REPLY_CONTENT,
+				REPLY_WRITER,
+				REPLY_NICKNAME,
+				REPLY_DATE,
+				REPLY_FILE_NO,
+				REPLY_FILE_NAME
+		  FROM
+		  		VW_REPLY_LIST
+		 WHERE
+		 		REPLY_NO = #{replyNo}	 
+				
+	
+	</select>
+	
 	
 	
 	<!-- 조회수 증가 -->

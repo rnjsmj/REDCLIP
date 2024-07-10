@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -96,6 +97,18 @@ public class BarterController {
 		List<BarterReply> replyList = barterService.getBarterReply(barterNo);
 		return ResponseEntity.status(HttpStatus.OK).body(replyList);
 	}
+	
+	
+	//하나의 답글
+	@GetMapping(value="reply/{replyNo}", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<BarterReply> getBarterReplyById(@PathVariable int replyNo) {
+		
+		BarterReply reply = barterService.getBarterReplyById(replyNo);
+		return ResponseEntity.status(HttpStatus.OK).body(reply);
+		
+	}
+	
 	//답글 입력
 	@PostMapping(value="reply")
 	@ResponseBody
@@ -105,7 +118,7 @@ public class BarterController {
 		
 	}
 	//답글 삭제
-	@GetMapping(value="reply/{replyNo}")
+	@DeleteMapping(value="reply/{replyNo}")
 	@ResponseBody
 	public String replyDelete(@PathVariable int replyNo) {
 		

@@ -199,6 +199,10 @@
             display: inline-block;
             width: 100%;
         }
+        
+        .reply-list-content:after {
+        
+        }
 
         .reply-list-content a {
             color: #101010;
@@ -216,6 +220,12 @@
             position: absolute;
             bottom: 0;
             right: 0;
+            
+        }
+        
+        .btn-group2 button {
+        	margin-left:10px;
+        	background-color:#e9eef7
         }
 
         #page2 {
@@ -274,6 +284,32 @@
         	color:#999;
         }
         
+        #updateModal * {
+        	text-align:left;
+        }
+        
+        #updateModalLabel {
+        	font-size : 22px;
+        	
+        }
+        
+        
+        .reply-content-area:before{
+        	width: 100%; content: ""; clear: both;
+        }
+        
+        .reply-content-area {
+        	width: 100%;height: 100px;resize: none;margin-bottom: 10px; margin-top:10px;padding: 20px;
+        }
+        
+        #edit-reply span {
+        	float:right;
+        	cursor:pointer;
+        }
+        #edit-reply span:hover {
+        	color:#b6b9bf;
+        	text-decoration:underline;
+        }
     </style>
 </head>
 <body>
@@ -598,7 +634,7 @@
                 					}
                 					
                 					resultStr += '<div class="reply-detail">'
-                							  + '<div class="reply-list-content">'
+                							  + '<div class="reply-list-content" id="reply-content-' + result[i].replyNo + '">'
                                     		  + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path d="M12 2.5a5.25 5.25 0 0 0-2.519 9.857 9.005 9.005 0 0 0-6.477 8.37.75.75 0 0 0 .727.773H20.27a.75.75 0 0 0 .727-.772 9.005 9.005 0 0 0-6.477-8.37A5.25 5.25 0 0 0 12 2.5Z"></path>'
                                     		  + '</svg><a href="">' + result[i].replyNickname 
                                     		  + '</a><span class="reply-date">' + result[i].replyDate + '</span><p>'
@@ -608,13 +644,13 @@
                                     const userId = "${ sessionScope.loginUser.userId }";
                                     
                                     if( userId === "${ barter.barterWriter}") {
-                                    	resultStr += '<div class="btn-group2"><a href="'
+                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo +'"><a href="'
                                     			  +'" id="chatbtn" class="btn btn-light">채팅하기</a></div>'
                                     			  +'</div></div>';
                                     } else if( userId === result[i].replyWriter) {
-                                    	resultStr += '<div class="btn-group2"><button onclick="editReply('
-                                    			  + '" id="updbtn" class="btn btn-light">수정</a>'
-                                    			  + result[i].replyNo + '); <button id="rep-delbtn" class="btn btn-light"'
+                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo + '"><button id="updbtn" class="btn btn-light" data-toggle="modal" href="#updateModal"'
+                                    			  + 'onclick="getReply(' + result[i].replyNo + ', 0)">수정</a>'
+                                    			  + '<button id="rep-delbtn" class="btn btn-light"'
                                     			  + ' onclick="deleteReply('+ result[i].replyNo + ')">삭제</button></div>'
                                     			  + '</div></div>';
                                     } else {
@@ -694,16 +730,80 @@
                 		
                 	};
                 	
-                	function editReply(no) {
+                	function getReply(no, state) {
                 		
                 		console.log(no);
+                		// 1. 선택한 답글 정보 SELECT 수행
+                		// 2. p 태그를 textarea로 변환하여 select한 replyContent를 textarea에 출력
+                		// 3. 내용 수정 후 다시 수정 버튼을 누르면 UPDATE 수행
+                		var selectEl = '#reply-content-' + no;
+           				var replyContentEl = '#reply-content-' + no + ' > p'; 
+           				var btngroupEl = '#btn-group-' + no;
+           				
+           				if(state == 0) {
+           					
+	                		$.ajax({
+	                			
+	                			url : 'reply/' + no,
+	                			type : 'get',
+	                			success : result => {
+	                				
+	                				console.log(result);
+	                				
+	                				$(replyContentEl).hide();
+	                				$(btngroupEl).hide();
+	                				
+	                				let replyContent = '<div id="edit-reply">'
+	                				+ '<div style="width: 100%; content: "'+'"; clear: both"></div>'
+	                                + '<textarea class="reply-content-area">'
+	                                + result.replyContent + '</textarea>'
+	                                + '<span style="margin-left: 10px" onclick="editReply('
+	                				+ result.replyNo +')" >저장</span>'
+	                				+ '<span style="margin-left: 10px" onclick="getReply('+ result.replyNo +', 1)">취소</span></div>';
+	                                
+	                				$(selectEl).append(replyContent);
+	                				
+	                			}
+	                			
+	                		});
                 		
-                		
-            
-                	}
+                		} else {
+                			$(replyContentEl).show();
+            				$(btngroupEl).show();
+        					$('#edit-reply').remove();
+                		}
+                	};
                 
                 </script>
-                
+         
+	
+	
+	
+	
+		<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h1 class="modal-title fs-5" >수정</h1>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <form>
+		          <div class="mb-3">
+		            <textarea class="form-control" id="reply-content" style="resize:none; maxlength:200; height:200px;"></textarea>
+		          </div>
+		          <div class="mb-3">
+		           <!-- 파일 첨부? -->
+		          </div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+		        <button type="button" class="btn btn-primary" onclick="editReply();">수정</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
                 
             </section>
             <section id="page2" class="page">
