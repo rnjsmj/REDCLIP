@@ -94,13 +94,15 @@ public class MemberController {
     
     @PostMapping("join")
     public String join(Member member,Model model) {
- 
+    	 
+    	String enPwd = bCryptPasswordEncoder.encode(member.getUserPwd());
+    	member.setUserPwd(enPwd);
         if (memberService.insert(member) > 0) { // 성공 => 메인~
             return "redirect:/";
         } else { // 실패 => 에러페이지
-            return "redirect:";
+        	 model.addAttribute("errorMessage", "회원 가입에 실패했습니다. 다시 시도해 주세요.");
+        	 return "error";
         }
-        
   }
     
 }
