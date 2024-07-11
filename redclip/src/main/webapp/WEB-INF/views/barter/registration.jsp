@@ -4,40 +4,43 @@
 <html>
 <head>
 <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상품 등록</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상품 등록</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <style>
-  	.container {margin-bottom: 80px;}
-  	.title {margin-top: 40px; margin-bottom: 20px;}
-	.image-placeholder {
-	  width: 100%;
-	  height: 150px;
-	  background-color: #ddd;
-	  border: 1px solid #ccc;
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
-	  margin-bottom: 10px;
-	  position: relative;
-	}
-	.image-preview {
-	  width: 100%;
-	  height: 100%;
-	  object-fit: cover;
-	  display: none;
-	}
-	.file-input {
-	  position: absolute;
-	  top: 0;
-	  left: 0;
-	  width: 100%;
-	  height: 100%;
-	  opacity: 0;
-	}
+  .container {margin-bottom: 80px;}
+  .title {margin-top: 40px; margin-bottom: 20px;}
+  .form-row {
+   display: flex;
+   padding: 0;
+   margin: 0;
+ }
+ .image-placeholder {
+   width: 100%;
+   height: 230px;
+   display: flex;
+   align-items: center;
+   overflow: hidden;
+   border: 1px solid #ddd;
+}
+ .image-preview {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   display: none;
+ }
+ .file-input {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   opacity: 0;
+ }
+
 </style>
 </head>
 <body>
@@ -113,14 +116,25 @@
 	    <textarea class="form-control" id="barterContent" name="barterContent" rows="4" placeholder="내용을 입력해주세요."></textarea>
 	  </div>
       <div class="form-group">
-		<label>이미지 등록</label>
-		<div class="form-row">
-		    <div class="col image-placeholder">
-		        <img id="imagePreview1" class="image-preview" src="" alt="이미지 미리보기">
-		        <label for="upfile">첨부파일</label>
-		        <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this)">
-		    </div>
-		</div>
+	    <label>이미지 등록</label>
+	    <div class="form-row">
+	        <div class="col image-placeholder">
+	            <img id="imagePreview1" class="image-preview" src="" alt="이미지 미리보기">
+	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 1)">
+	        </div>
+	        <div class="col image-placeholder">
+	            <img id="imagePreview2" class="image-preview" src="" alt="이미지 미리보기">
+	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 2)">
+	        </div>
+	        <div class="col image-placeholder">
+	            <img id="imagePreview3" class="image-preview" src="" alt="이미지 미리보기">
+	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 3)">
+	        </div>
+	        <div class="col image-placeholder">
+	            <img id="imagePreview4" class="image-preview" src="" alt="이미지 미리보기">
+	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 4)">
+	        </div>
+	    </div>
 	</div>
     <button type="submit" class="btn btn-success" href="insert">등록하기</button>
     </form>
@@ -180,19 +194,20 @@
 	});
 	
     
-    function loadImg(inputFile) {
-        if (inputFile.files.length) {
-          const reader = new FileReader();
-          reader.readAsDataURL(inputFile.files[0]);
-          reader.onload = e => {
-            document.getElementById('imagePreview1').src = e.target.result;
-            document.getElementById('imagePreview1').style.display = 'block';
-          };
-        } else {
-          document.getElementById('imagePreview1').src = "";
-          document.getElementById('imagePreview1').style.display = 'none';
-        }
-      }
+	function loadImg(inputFile, index) {
+	    if (inputFile.files.length) {
+	        const reader = new FileReader();
+	        reader.readAsDataURL(inputFile.files[0]);
+	        reader.onload = e => {
+	            const previewImage = document.getElementById('imagePreview' + index);
+	            previewImage.src = e.target.result;
+	            previewImage.style.display = 'block';
+	        };
+	    } else {
+	        const previewImage = document.getElementById('imagePreview' + index);
+	        previewImage.style.display = 'none';
+	    }
+	}
 
   </script>
   <jsp:include page="/WEB-INF/views/common/footer.jsp" />

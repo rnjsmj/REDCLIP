@@ -84,9 +84,7 @@ public class BarterController {
 		    }
 		    
 		    return "redirect:/barters/registration";  // 바뀐 URL: /barters/registration으로 수정
-		}
-
-	
+		}	
 	
 	//답글 목록
 	@GetMapping(value="reply", produces="application/json; charset=UTF-8")
