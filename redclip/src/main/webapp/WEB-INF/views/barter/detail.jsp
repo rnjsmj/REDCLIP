@@ -189,7 +189,7 @@
         }
         
         .reply-img img {
-        	width:100;
+        	width:100%;
         	height:100%;
         	object-fit:cover;
         }
@@ -347,7 +347,7 @@
                 <c:if test="${ barter.barterFileList[0].barterFileNo != 0 }">
                     <div id="trade-image">
                         <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> -->
-                        <div id="carouselBarters" class="carousel slide" data-ride="carousel">
+                        <div id="carouselBarters" class="carousel slide" data-ride="carousel" data-interval="false">
                             <ol class="carousel-indicators">
                                 <!-- <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li> -->
                                 <c:forEach var="barterFile" items="${ barter.barterFileList }" varStatus="status">
@@ -585,7 +585,6 @@
                     <script>
                     	function loadImg(inputFile) {
                     		
-                    		console.log(inputFile.files);
                     		
                     		$('#file-list').html('');
         
@@ -625,9 +624,12 @@
                 	function addActive() {
                         console.log($('.carousel-item:first-child'));
                     	$('.carousel-item:first-child').addClass('active');
-                      
-                	}
-                	
+                    	$('.reply-img .carousel-item:first-child').addClass('active');
+                    	console.log($('#carousel-item:first-child').attr("class"));
+                    	console.log($('.reply-img .carousel-item:first-child'));
+                    	document.querySelector("#carousel-item:first-child").classList.add("active");
+                      	console.log(document.querySelector("#carousel-item:first-child").classList);
+                	};
                 	function selectReply() {
                 		
                 		$.ajax({
@@ -652,14 +654,14 @@
                 					if(fileList.length != 0) {
                 						
                 						resultStr += '<figure class="reply-img">'
-                                            	  +'<div id="reply-img-' + result[i].replyNo + '" class="carousel slide" data-ride="carousel">'
+                                            	  +'<div id="reply-img-' + result[i].replyNo + '" class="carousel slide" data-ride="carousel" data-interval="false">'
                                         		  + '<div class="carousel-inner" data-toggle="modal" data-target="#barter-image-modal" onclick="modalContent(this);">';
                 						
                 						for (let j in fileList) {
-                							resultStr += '<div class="carousel-item">'
-                                            		  + '<img src="'
-                                            		  + fileList.replyFileName
-                                            		  + '" alt="' + fileList.replyFileNo + '"/></div>';
+                							resultStr += '<div class="carousel-item" id="carousel-item">'
+                                            		  + '<img src="/redclip/'
+                                            		  + fileList[j].replyFileName
+                                            		  + '" alt="이미지' + fileList[j].replyFileNo + '"/></div>';
                 						}
                                         		  
                                         resultStr += '</div><a class="carousel-control-prev"'
@@ -667,12 +669,12 @@
                                             	  + 'role="button" data-slide="prev">'
                                             	  + '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a>'
                                             	  + '<a class="carousel-control-next" '
-                                            	  + 'href="#reply-img-' + result[i].replyNo + 
+                                            	  + 'href="#reply-img-' + result[i].replyNo  
                                             	  + '" role="button" data-slide="next"> '
                                             	  + '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
                                                   + '<span class="sr-only">Next</span></a></div></figure>';
                 						
-                						$('.reply-img .carousel-item:first-child').addClass('active');
+                						
                 						
                 					}
                 					
@@ -745,6 +747,9 @@
                 						
                 						selectReply();
                 						$('#reply-content').val('');
+                						$('#reply-file').val('');
+                						$('#file-list').html('');
+                						
                 						
                 					}
                 					
@@ -985,10 +990,12 @@
             interval: false,
         });
 
+        
         function modalContent(track) {
             var innerContent = track.innerHTML;
-            $('.modal-inner').html(innerContent);
-            console.log($('.modal-inner').html());
+            $('.carousel-inner.modal-inner').html(innerContent);
+            console.log($('.carousel-inner.modal-inner').html());
+            console.log($('.carousel-inner.modal-inner'));
             
             var child = track.length;
             
@@ -1001,7 +1008,19 @@
            	var child = track.childElementCount;
             $('#modal-indicators').children().eq(0).addClass('active');
            	
-        }
+        };
+    	
+    	window.onload = function() {
+    		$('.carousel').carousel({
+                interval: false,
+            });
+    		
+    		addActive();
+    		
+
+            
+    		
+    	}
     </script>
 </body>
 </html>
