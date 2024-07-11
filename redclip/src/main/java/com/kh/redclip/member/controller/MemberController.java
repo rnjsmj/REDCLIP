@@ -122,9 +122,9 @@ public class MemberController {
     @PutMapping("/{userId}")
     public String changeStatus(@RequestBody String userId) {
     	
-    	//memberService.changeStatus(userId);
+    	memberService.changeStatus(userId);
     	
-    	log.info("탈퇴 대기 회원 : {}", userId);
+    	//log.info("탈퇴 대기 회원 : {}", userId);
     	
     	return null;
     }

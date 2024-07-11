@@ -234,7 +234,7 @@
    			$.ajax({
    				url: 'member/' + userId,
    				type: 'put',
-   				data: JSON.stringify({"userId" : userId}),
+   				data: JSON.stringify(userId),
    				contentType : 'application/json',
    				success : result => {
    					
