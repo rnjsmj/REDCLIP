@@ -121,12 +121,10 @@ public class MemberController {
     @ResponseBody
     @PutMapping("/{userId}")
     public String changeStatus(@RequestBody String userId) {
-    	
-    	memberService.changeStatus(userId);
-    	
+    	    	   	
     	//log.info("탈퇴 대기 회원 : {}", userId);
     	
-    	return null;
+    	return memberService.changeStatus(userId) > 0 ? "success" : "error";
     }
     
 }
