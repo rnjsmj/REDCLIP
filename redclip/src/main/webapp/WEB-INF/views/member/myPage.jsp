@@ -154,7 +154,7 @@
 
                 <div>
                 	<!-- 같은 조건의 pwd 값을 가진 모든 유저가 삭제 될 수 있으므로 행을 식별할 수 있는 값을 추가 -->
-                	<input type="hidden" value="${ sessionScope.loginUser.userId }" name="userId">
+                	<input type="hidden" value="${ sessionScope.loginUser.userId }" id="loginUserId" name="userId">
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div align="left">
@@ -227,11 +227,15 @@
    		//회원 탈퇴
    		function changeStatus() {
    			
+   			const userId = $('#loginUserId').val();
+   			
+   			//console.log(userId);
+   			
    			$.ajax({
-   				url: '/member',
-   				type: 'put' + userId,
-   				data: JSON.stringify(userId),
-   				contentType: 'applicaion/json',
+   				url: 'member/' + userId,
+   				type: 'put',
+   				data: JSON.stringify({"userId" : userId}),
+   				contentType : 'application/json',
    				success : result => {
    					
    					console.log(result);

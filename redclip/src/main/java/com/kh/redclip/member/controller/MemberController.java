@@ -117,11 +117,12 @@ public class MemberController {
         }
   }
     
+    //회원 상태 변경
     @ResponseBody
     @PutMapping("/{userId}")
     public String changeStatus(@RequestBody String userId) {
     	
-    	memberService.changeStatus(userId);
+    	//memberService.changeStatus(userId);
     	
     	log.info("탈퇴 대기 회원 : {}", userId);
     	
