@@ -16,7 +16,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Member {
-
+	
+	private String changeName;			//프사
 	private String userId;				//아이디
 	private String userPwd;			//비밀번호
 	private String userName;		//이름

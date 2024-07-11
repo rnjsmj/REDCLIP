@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +44,11 @@
              width: 1200px;
              margin-top: 30px;
             }
+        
+        #changeName {
+        	width: 100px;
+        	height: 100px;
+        }
 
         #buttons {
         	width:100%;
@@ -91,6 +97,10 @@
         <div id="updateForm">
             <div>
                 <div class="form-group">
+                	<div id="changeName">
+                    	<img alt="프로필 사진" src="${ sessionScope.loginUser.changeName }"><input type="file" >
+                    </div><br><br>
+                    
                     <label for="userId">* ID </label><br>
                     <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
                     
@@ -180,7 +190,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="button" id="delete" class="btn btn-secondary" onclick="changeStatus();">탈퇴하기</button>
+                    	<button type="button" id="delete" class="btn btn-secondary" onclick="changeStatus();">탈퇴하기</button>
                     </div>
                 </div>
             </div>
@@ -224,6 +234,9 @@
    			});
    		};
 
+   		//체크박스 체크 여부 확인
+   		
+   		
    		//회원 탈퇴
    		function changeStatus() {
    			
@@ -234,11 +247,14 @@
    			$.ajax({
    				url: 'member/' + userId,
    				type: 'put',
-   				data: JSON.stringify(userId),
-   				contentType : 'application/json',
    				success : result => {
    					
-   					console.log(result);
+   					alert('회원 탈퇴에 성공했습니다.');
+   				},
+   				error : (e) => {
+   					
+   					//console.log("요청 실패");
+   					alert('회원 탈퇴에 실패했습니다.');
    				}
    			});
    			

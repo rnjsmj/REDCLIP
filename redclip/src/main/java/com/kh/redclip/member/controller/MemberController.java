@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,7 +68,7 @@ public class MemberController {
    //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
     @ResponseBody
 	@PutMapping
-	public String update(@RequestBody Member member, HttpSession session, Model model) {
+	public String update(@RequestBody Member member, HttpSession session) {
 		
 		//log.info("입력한 정보 : {}", member);
     	if(memberService.update(member)>0) {
@@ -120,10 +121,9 @@ public class MemberController {
     //회원 상태 변경
     @ResponseBody
     @PutMapping("/{userId}")
-    public String changeStatus(@RequestBody String userId) {
-    	    	   	
-    	//log.info("탈퇴 대기 회원 : {}", userId);
-    	
+    public String changeStatus(@PathVariable String userId) {
+    	  
+    	//log.info("탈주: {}", userId);
     	return memberService.changeStatus(userId) > 0 ? "success" : "error";
     }
     
