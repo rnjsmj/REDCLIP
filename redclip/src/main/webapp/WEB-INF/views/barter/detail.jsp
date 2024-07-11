@@ -314,6 +314,19 @@
         	color:#b6b9bf;
         	text-decoration:underline;
         }
+        .reply-pre-list {
+        	display:inline-block;
+        	width:200px;
+        	height:200px;
+        	overflow:hidden;
+        	
+        	
+        	> img {
+        		width:100%;
+        		height:100%;
+        		object-fit:cover;
+        	}	
+        }
     </style>
 </head>
 <body>
@@ -498,7 +511,7 @@
                 <!-- 로그인한 사용자만 reply-wrap 볼 수 있음-->
                 <div id="reply-wrap">
                 <c:if test="${ not empty sessionScope.loginUser.userId && sessionScope.loginUser.userId ne barter.barterWriter }">
-                    <div id="input-reply">
+                    <form id="input-reply" enctype="multipart/form-data">
                             <table id="reply-table">
                                 <tr>
                                     <td rowspan="2">
@@ -549,18 +562,52 @@
                                                     $(this).val($(this).val().substring(0, 199));
                                                 }
                                             });
+                                            
+                                            
+                                            
+                                            
                                         </script>
                                     </td>
                                 </tr>
                             </table>
-                            <input type="file" id="reply-file" />
-                        </div>
+                            <input type="file" id="reply-file" onchange="loadImg(this);" name="upfile" multiple/>
+                        </form>
                         <!--script로 선택한 사진들 li로 출력-->
-                       <div id="file-list"> 
-                       
+                       <div id="file-list-div"> 
+                       		<ul id="file-list">
+                       		
+                       		</ul>
                        </div>
+                       
+                       
+                       
                         </c:if>
-                    
+                    <script>
+                    	function loadImg(inputFile) {
+                    		
+                    		console.log(inputFile.files);
+                    		
+                    		$('#file-list').html('');
+        
+                    		
+                    		if(inputFile.files.length) {
+                    			for(let i=0; i < inputFile.files.length; i++) {
+                    				var reader = new FileReader();
+                        			reader.readAsDataURL(inputFile.files[i]);
+                        			reader.onload = e => {
+                        				let preImage = '<li class="reply-pre-list"><img src="' + e.target.result + '"></li>';
+                        				$('#file-list').append(preImage);
+                        			}
+                        			
+                        		}
+                    			
+                    		} else {
+                    			$('#file-list').html('');
+                    		}
+                    		
+                    		console.log($('#reply-file').val());
+                    	};
+                    </script>
                     <div id="reply-list">
                         <!--  답글 목록 -->
                 	</div>
@@ -669,16 +716,28 @@
                 		
                 		if($('#reply-content').val().trim() != '') {
                 			
+                			var formData = new FormData();
+                			var inputFile = $("#reply-file");
+                			var files = inputFile[0].files;
+                			console.log(files);
+                			
+                			for (var i=0; i<files.length; i++) {
+                				
+                				formData.append("upfiles", files[i]);
+                			}
+                			
+                			formData.append("barterNo", ${ barter.barterNo });
+                			formData.append("replyContent", $('#reply-content').val());
+                			formData.append("replyWriter", '${ sessionScope.loginUser.userId }');
+                			
+                			
                 			$.ajax({
                 				
                 				url : 'reply',
                 				type : 'post',
-                				//barterNo, replyContent, replyWriter
-                				data : {
-                					barterNo : ${ barter.barterNo },
-                					replyContent : $('#reply-content').val(),
-                					replyWriter : '${ sessionScope.loginUser.userId }'
-                				},
+                				data : formData,
+                				processData : false,
+                				contentType : false,
                 				success : result => {
                 					
                 					console.log(result);
