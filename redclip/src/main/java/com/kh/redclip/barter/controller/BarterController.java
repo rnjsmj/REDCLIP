@@ -69,7 +69,7 @@ public class BarterController {
 	@PostMapping("/insert")
 		public String insert(Barter barter, MultipartFile upfile, HttpSession session, Model model) {
 		    log.info("게시글정보 : {}", barter);
-		    log.info("파일의정보 : {}", upfile);
+		    log.info("파일의 정보 : {}", upfile.getOriginalFilename());
 		    
 		    if (!upfile.isEmpty()) {
 		    	BarterFile barterFile = new BarterFile();
@@ -78,12 +78,12 @@ public class BarterController {
 		    
 		    if (barterService.insert(barter) > 0) {
 		        session.setAttribute("alertMsg", "게시물 등록 완료");
-		        return "redirect:/barters";  // 바뀐 URL: /barters로 수정
+		        return "redirect:/barters";
 		    } else {
 		        model.addAttribute("alertMsg", "게시물 등록을 실패했습니다.");
 		    }
 		    
-		    return "redirect:/barters/registration";  // 바뀐 URL: /barters/registration으로 수정
+		    return "redirect:/barters/registration";
 		}	
 	
 	//답글 목록

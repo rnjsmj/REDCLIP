@@ -47,13 +47,13 @@
   <jsp:include page="/WEB-INF/views/common/header.jsp" />
   <div class="container">
 	<!-- breadcrumb -->
-	<section id="page1" class="page">
-	    <nav aria-label="breadcrumb">
-	        <ol class="breadcrumb">
-		        <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
-		        <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
-		        <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
-		        <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
+	<section>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+	        <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
+	        <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
+	        <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
+	        <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
 	    </ol>
 	</nav>
     <h2 class="title">상품 등록하기</h2>
@@ -135,9 +135,10 @@
 	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 4)">
 	        </div>
 	    </div>
-	</div>
-    <button type="submit" class="btn btn-success" href="insert">등록하기</button>
-    </form>
+	 </div>
+     <button type="submit" class="btn btn-success" href="insert">등록하기</button>
+     </form>
+    </section>
   </div>
   <script>
   $(() => {

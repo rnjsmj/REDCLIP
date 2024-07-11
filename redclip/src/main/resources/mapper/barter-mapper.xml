@@ -121,7 +121,23 @@
 	        	#{categoryNo}
 	    		)
 	</insert>
-
+	
+	<insert id="insertBarterFile" parameterType="barterFile">
+ 	   INSERT
+    			INTO
+TB_BARTER_FILE
+    			(
+    			BARTER_FILE_NO,
+    			BARTER_FILE_NAME
+    			)
+    	VALUES 
+    			(
+    			SEQ_BARTER_FILE.NEXTVAL,
+    			#{barterNo},
+    			#{barterFileName}
+    			)
+	</insert>
+	
 	<resultMap type="barterReply" id="replyResultSet">
 		<id column="REPLY_NO" property="replyNo"/>
 		<result column="REPLY_CONTENT" property="replyContent" />
