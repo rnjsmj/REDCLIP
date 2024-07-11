@@ -48,11 +48,11 @@
         #changeName {
         	width: 100px;
         	height: 100px;
+        	
         }
 
         #buttons {
-        	width:100%;
-            float: right;
+        	float: right;
             margin-top: 60px;
          }
 
@@ -63,6 +63,8 @@
         #pointbar {
         	margin-top: 40px;
         }
+        
+        
 </style>
 </head>
 <body>
@@ -96,10 +98,12 @@
     
         <div id="updateForm">
             <div>
-                <div class="form-group">
+                <div class="userImg">
                 	<div id="changeName">
-                    	<img alt="프로필 사진" src="${ sessionScope.loginUser.changeName }"><input type="file" >
-                    </div><br><br>
+						<img alt="프로필 사진" src="${ sessionScope.loginUser.chageName }">
+					</div>
+					<input type="file" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+				</div>
                     
                     <label for="userId">* ID </label><br>
                     <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
@@ -133,20 +137,15 @@
 	                        <div class="progress-bar" style="width: 0%"></div>
 	                    </div>
                     </div>
-                  </div>
-                </div>
-            </div>
-                     
-                <div id="buttons">
+               
+				<div id="buttons">
                     <button type="button" id="userUpdate" class="btn btn-success" onclick="update();">수정</button>
                     <button type="reset" class="btn btn-secondary" onclick="location.reloard">취소</button><br>
                     <button type="button" id="delete-btn" class="btn btn-secondary" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
-                </form>
-                </div>
+				</div>
+              </div>
             </div>
-            
         </div>
-    </div>
 	<footer>
         <jsp:include page="../common/footer.jsp"></jsp:include>
     </footer>
