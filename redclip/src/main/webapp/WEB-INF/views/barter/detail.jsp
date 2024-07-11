@@ -331,7 +331,7 @@
                </ol>
            </nav>
                 <div id="detail-wrap">
-                <c:if test="${ barter.barterFileList.barterFileName ne null }">
+                <c:if test="${ barter.barterFileList[0].barterFileNo != 0 }">
                     <div id="trade-image">
                         <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> -->
                         <div id="carouselBarters" class="carousel slide" data-ride="carousel">
