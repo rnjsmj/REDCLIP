@@ -58,12 +58,26 @@
       <div class="form-group">
        <label for="name">상품명</label>
         <div class="input-group">
-          <select class="form-control" style="max-width: 150px;" required>
+          <select class="form-control" id="categoryNo" name="categoryNo" style="max-width: 150px;" required>
             <option>카테고리</option>
-            <option>전자기기</option>
-            <option>가구</option>
-            <option>의류</option>
-            <option>도서</option>
+            <option value="1">디지털기기</option>
+            <option value="2">가구/인테리어</option>
+            <option value="3">유아용품</option>
+            <option value="4">여성의류</option>
+            <option value="5">여성잡화</option>
+            <option value="6">남성의류</option>
+            <option value="7">남성잡화</option>
+            <option value="8">생활가전</option>
+            <option value="9">주방용품</option>
+            <option value="10">스포츠/레저</option>
+            <option value="11">게임/음반</option>
+            <option value="12">뷰티/미용</option>
+            <option value="13">식물</option>
+            <option value="14">가공식품</option>
+            <option value="15">건강기능식품</option>
+            <option value="16">반려동물용품</option>
+            <option value="17">티켓/교환권</option>
+            <option value="18">도서</option>
           </select>
           <input type="text" class="form-control" id="name" name="barterName" maxlength="250" placeholder="내용을 입력해주세요." required>
         </div>
@@ -88,7 +102,7 @@
             </select>
           </div>
           <div class="col">
-            <select class="form-control" id="dong" disabled>
+            <select class="form-control" id="dong" name="villageCode" disabled>
               <option value="">동 선택</option>
             </select>
           </div>

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.redclip.barter.model.service.BarterService;
 import com.kh.redclip.barter.model.vo.Barter;
+import com.kh.redclip.barter.model.vo.BarterFile;
 import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterVO;
 
@@ -71,7 +72,8 @@ public class BarterController {
 		    log.info("파일의정보 : {}", upfile);
 		    
 		    if (!upfile.isEmpty()) {
-		        barter.setBarterName(upfile.getOriginalFilename());
+		    	BarterFile barterFile = new BarterFile();
+		        barterFile.setBarterFileName(upfile.getOriginalFilename());
 		    }
 		    
 		    if (barterService.insert(barter) > 0) {
