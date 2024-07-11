@@ -15,7 +15,7 @@
             line-height: 1.6;
             height: auto;
         }
-        .container {
+        #container {
             max-width: 800px;
             margin: auto;
             border: 1px solid #ccc;
@@ -34,11 +34,11 @@
             margin-left: 20px;
             list-style-type: decimal;
         }
-        .section {
+        #section {
             margin-bottom: 20px;
         }
 
-        .form-control {
+        #form-control {
             text-indent: -20px;
             text-align: left;
             line-height: 2rem;
@@ -46,7 +46,7 @@
         }
         
       
-        .page_title { line-height: 4rem;}
+        #page_title { line-height: 4rem;}
     </style>
 </head>
 <body>
@@ -62,9 +62,9 @@
     </nav>
     <div id="content">
         <div style="width:1100px; margin:0 auto;">
-			<h3 class="page_title">개인정보처리 방침</h3>
+			<h3 id="page_title">개인정보처리 방침</h3>
 			<div id="team-area">
-			<textarea class="form-control" rows="50" cols="100" readonly>
+			<textarea id="form-control" rows="50" cols="100" readonly>
 			
 				제 1 장 총칙
 
