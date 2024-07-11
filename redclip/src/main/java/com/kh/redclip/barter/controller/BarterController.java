@@ -1,5 +1,9 @@
 package com.kh.redclip.barter.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -65,7 +69,7 @@ public class BarterController {
 		}
 	
 
-	// 교환 게시글 글 등록하기
+	// 교환 게시글 글 입력하기
 	@PostMapping("/insert")
 		public String insert(Barter barter, MultipartFile upfile, HttpSession session, Model model) {
 		    log.info("게시글정보 : {}", barter);
@@ -85,6 +89,32 @@ public class BarterController {
 		    
 		    return "redirect:/barters/registration";
 		}	
+	
+	//교환 게시글 글 등록하기
+	@PostMapping(value="barterFile")
+	@ResponseBody
+	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
+	    log.info("파일 배열 : {}", upfile);
+
+	    if (barterService.insert(barter) > 0) {
+	        int fileCount = 0;
+
+	        if (upfile.length > 0) {
+	            for (MultipartFile file : upfile) {
+	                    BarterFile uploadFile = new BarterFile();
+	                    uploadFile.setBarterFileName(file.getOriginalFilename());
+
+	                    fileCount += barterService.barterInsert(uploadFile);
+	            }
+	        }
+
+	        return fileCount == upfile.length ? "success" : "file upload error";
+	    } else {
+	        return "reply upload error";
+	    }
+	}
+
+	
 	
 	//답글 목록
 	@GetMapping(value="reply", produces="application/json; charset=UTF-8")
@@ -129,8 +159,32 @@ public class BarterController {
 		
 		return barterService.replyUpdate(reply) > 0 ? "success" : "error";
 	}
+	
 
-		
-
+	// 파일 업로드 메서드
+   public String saveFile(MultipartFile upfile, HttpSession session) {
+      
+      String fileName = upfile.getOriginalFilename();
+      String ext = fileName.substring(fileName.lastIndexOf("."));
+      
+      int num = (int) (Math.random() * 900) + 100; 
+      String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+      
+      String savePath = session.getServletContext().getRealPath("/resources/upload/");   
+      
+      String changeName = "REDCLIP_" + currentTime + "_" + num + ext;
+      
+      //파일 업로드
+      try {
+         upfile.transferTo(new File(savePath + changeName));
+      } catch (IllegalStateException e) {
+         e.printStackTrace();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+      
+      return "resources/upload/" + changeName;
+   }	
+   
 
 }

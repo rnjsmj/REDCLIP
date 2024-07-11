@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.redclip.barter.model.dao.BarterMapper;
 import com.kh.redclip.barter.model.vo.Barter;
+import com.kh.redclip.barter.model.vo.BarterFile;
 import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterVO;
 
@@ -36,13 +37,11 @@ public class BarterServiceImpl implements BarterService{
 		return barterMapper.insert(barter);
 	}
 
-	
+	@Override
+	public int barterInsert(BarterFile barterFile) {
+		return barterMapper.barterInsert(barterFile);
+	}
 
-
-	
-	
-	
-	
 	@Override
 	public List<BarterReply> getBarterReply(int barterNo) {
 		return barterMapper.getBarterReply(barterNo);

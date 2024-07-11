@@ -136,7 +136,7 @@
 	        </div>
 	    </div>
 	 </div>
-     <button type="submit" class="btn btn-success" href="insert">등록하기</button>
+     <button type="submit" class="btn btn-success">등록하기</button>
      </form>
     </section>
   </div>
@@ -198,6 +198,8 @@
 	function loadImg(inputFile, index) {
 	    if (inputFile.files.length) {
 	        const reader = new FileReader();
+	        //console.log(inputFile.files[0]);
+	        
 	        reader.readAsDataURL(inputFile.files[0]);
 	        reader.onload = e => {
 	            const previewImage = document.getElementById('imagePreview' + index);

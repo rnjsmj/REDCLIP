@@ -117,23 +117,24 @@
 	        	#{barterName},
 	        	#{barterContent},
 	        	#{barterWriter},
-	        	#{villageCode},
-	        	#{categoryNo}
+	        	#{villageCode, jdbcType=NUMERIC}, 
+        		#{categoryNo, jdbcType=NUMERIC}
 	    		)
 	</insert>
-	
-	<insert id="insertBarterFile" parameterType="barterFile">
- 	   INSERT
+
+	<insert id="barterInsert" parameterType="barterFile">
+	INSERT
     			INTO
 TB_BARTER_FILE
     			(
     			BARTER_FILE_NO,
+ 			    BARTER_NO,
     			BARTER_FILE_NAME
     			)
     	VALUES 
     			(
     			SEQ_BARTER_FILE.NEXTVAL,
-    			#{barterNo},
+    			SEQ_BARTER.CURRVAL,
     			#{barterFileName}
     			)
 	</insert>
