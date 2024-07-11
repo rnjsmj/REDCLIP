@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.redclip.barter.model.service.BarterService;
+import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
@@ -32,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
     
     private final MemberService memberService;
+    private final BarterService barterService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @ResponseBody
@@ -126,5 +128,15 @@ public class MemberController {
     	//log.info("탈주: {}", userId);
     	return memberService.changeStatus(userId) > 0 ? "success" : "error";
     }
+    
+    //내가 쓴 글 조회
+    @GetMapping("/{userId}")
+    public String findById(@PathVariable String userId) {
+    	
+    	
+    	
+    	return "redirect:/";
+    }
+    
     
 }

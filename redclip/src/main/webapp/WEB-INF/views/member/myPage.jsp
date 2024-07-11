@@ -85,10 +85,10 @@
               <a class="nav-link active" aria-current="page" href="#">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">차단 목록</a>
+              <a class="nav-link" href="bolockList">차단 목록</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">내가 쓴 글</a>
+              <a class="nav-link" href="myProduct">내가 쓴 글</a>
             </li>
           </ul>
     </div>
@@ -100,7 +100,7 @@
             <div>
                 <div class="userImg">
                 	<div id="changeName">
-						<img alt="프로필 사진" src="${ sessionScope.loginUser.chageName }">
+						<img alt="프로필 사진" src="">
 					</div>
 					<input type="file" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
 				</div>
@@ -233,7 +233,7 @@
    			});
    		};
 
-   		//체크박스 체크 여부 확인
+   		//체크박스 체크 여부 확인(시간 남으면 구현)
    		
    		
    		//회원 탈퇴
@@ -259,6 +259,9 @@
    			
    		};
 		
+   		//차단 회원 페이지 이동
+   		
+   		
     </script>
 </body>
 </html>
