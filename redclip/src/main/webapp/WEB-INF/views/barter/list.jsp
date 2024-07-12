@@ -33,7 +33,7 @@
         font-size: 22px;
         font-weight: bold;
     }
-    .d-flex { width: 1100px; margin-bottom: 40px;}
+    .d-flex { width: 1110px; margin-bottom: 40px;}
     .form-control { margin-right: 4px;}
     .filter-select {
         margin: 0 5px;
@@ -105,7 +105,7 @@
                 </div>
             </div>
 
-        <div class="container">
+        <div class="container" style="max-width: 1200px;">
             <h5 style="font-weight: bold">추천 물물교환</h5>
             <br>
             <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
