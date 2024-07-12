@@ -132,14 +132,14 @@
 	</insert>
 	
 	<!-- 내가 쓴 글 조회 -->
-	<select id="selectById" parameterType="String" resultType="barter">
+	<select id="selectById" parameterType="String" resultType="barterVo">
 		SELECT
 		      BARTER_NAME,
 		      BARTER_DATE,
 		      BARTER_STATUS,
 		      HIT
 		 FROM
-      		  VW_BARTER_DETAIL, TB_MEMBER
+      		  VW_BARTER_DETAIL
 		WHERE
      		  BARTER_WRITER = #{userId}
      		  

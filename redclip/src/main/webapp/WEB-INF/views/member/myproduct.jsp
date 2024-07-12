@@ -88,17 +88,24 @@
             </thead>
             <tbody>
                 <!-- 반복문으로 회원 아이디와 일치하는 레코드를 전부 출력-->
-                <c:forEach items="list" var="barterVo">
-	                 <tr>
-	                    <td><div class="form-check">
-	                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-	                      </div></td>
-	                      <td><a href="">${ barter.barterName }</a></td>
-	                      <td>${ barter.barterDate }</td>
-	                      <td>${ barter.baterStatus }</td>
-	                      <td>${ barter.hit }</td>
-	                 </tr>
-                 </c:forEach>
+                <c:choose>
+	                <c:when test="${ empty list }">
+	                	<td colspan="5" align="center">글이 존재하지 않습니다.</td>
+	                </c:when>
+                <c:otherwise>
+	                <c:forEach items="${ list }" var="barterVo">
+		                 <tr>
+		                    <td><div class="form-check">
+		                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+		                      </div></td>
+		                      <td><a href="#">${ barterVo.barterName }</a></td>
+		                      <td>${ barterVo.barterDate }</td>
+		                      <td>${ barterVo.baterStatus }</td>
+		                      <td>${ barterVo.hit }</td>
+		                 </tr>
+	                 </c:forEach>
+                 </c:otherwise>
+                 </c:choose>
             </tbody>
         </table>
         <div id="buttons">
@@ -106,11 +113,22 @@
         </div>
     </div>
     <script>
-
-    window.onload() => {
+    
+    $(() => {
     	
-    	console.log(barter);
-    };
+    	selectById();
+    });
+    
+    
+    function selectById(userId) {
+    	
+    	
+    }
+	
+   // const pr = $('#productList').value;
+    
+   // console.log(pr);
+    
 	//거래 상태 변경    
     
     //글 삭제

@@ -1,11 +1,11 @@
 package com.kh.redclip.member.model.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.kh.redclip.barter.model.vo.Barter;
+import com.kh.redclip.barter.model.dao.BarterMapper;
+import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.member.model.dao.MemberMapper;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper memberMapper;
+	private final BarterMapper barterMapper;
 
 	@Override
 	public int idCheck(String userId) {
@@ -74,7 +75,7 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public List<Barter> selectById(String userId) {
+	public List<BarterVO> selectById(String userId) {
 		return memberMapper.selectById(userId);
 	}
 
