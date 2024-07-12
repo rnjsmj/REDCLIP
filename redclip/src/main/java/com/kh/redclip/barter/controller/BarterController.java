@@ -59,7 +59,7 @@ public class BarterController {
 			return "barter/detail";	
 			
 		}
-		return "barter/barter-list";
+		return "barter/list";
 	}
 	
 	// 교환 게시글 등록 페이지 보기
@@ -114,18 +114,19 @@ public class BarterController {
 	//답글 입력
 	@PostMapping(value="reply")
 	@ResponseBody
-	public String replyInsert(BarterReply reply,  MultipartFile[] upfiles, HttpSession session) {
+	public String replyInsert(BarterReply reply, MultipartFile[] upfiles, HttpSession session) {
 		
-		//log.info("답글 : {}", reply);
-		//log.info("파일 배열 : {}", upfiles);
-		//barterNo, replyContent, replyWriter
+		log.info("답글 : {}", reply);
+		log.info("파일 배열 : {}", upfiles);
+		//barterNo, replyContent, replyWriter 필요
 		
 		
 		if (barterService.replyInsert(reply) > 0) {
 			
 			int fileCount = 0;
+			boolean fileSuccess = true;
 			
-			if (upfiles.length > 0) {
+			if (upfiles != null) {
 				
 				for(MultipartFile file : upfiles) {
 					
@@ -134,10 +135,11 @@ public class BarterController {
 					fileCount += barterService.replyFileInsert(replyFile);
 					
 				}
-				
+				fileSuccess = (fileCount == upfiles.length ? true : false); 
 			}
 			
-			return fileCount == upfiles.length ? "success" : "file upload error"; 
+			return fileSuccess == true ? "success" : "file upload error"; 
+			
 		
 		} else {
 			

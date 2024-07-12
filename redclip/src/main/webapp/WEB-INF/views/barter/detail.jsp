@@ -79,7 +79,7 @@
             text-align: left;
         }
         #left-info h2 {
-            white-space: normal;
+            word-break: break-all;
         }
         #left-info span {
             color: #393939;
@@ -179,6 +179,7 @@
             padding: 10px;
             min-height: 150px;
             position: relative;
+            display: flow-root;
         }
         .reply-img {
             width: 200px;
@@ -186,6 +187,12 @@
             margin-right: 20px;
             float: left;
             overflow:hidden;
+            
+            .carousel-item {
+            	overflow: hidden;
+   				 width: 200px;
+    			height: 200px;
+            }
         }
         
         .reply-img img {
@@ -202,6 +209,7 @@
         .reply-list-content {
             display: inline-block;
             width: 100%;
+            word-wrap:break-word;
         }
         
         .reply-list-content:after {
@@ -337,7 +345,7 @@
             <section id="page1" class="page">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                   <img src="/redclip/resources/img/house.svg" style="margin-right: 4px" />
+                   <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
                    <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
                    <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
                    <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
@@ -395,7 +403,9 @@
                    
                     
 
-                    <!--이미지 모달 창-->
+                    
+ 					</c:if>
+ 					<!--이미지 모달 창-->
                     <div
                         class="modal fade"
                         id="barter-image-modal"
@@ -429,8 +439,7 @@
                                             class="carousel-control-prev"
                                             href="#carouselBarters-modal"
                                             role="button"
-                                            data-slide="prev"
-                                        >
+                                            data-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Previous</span>
                                         </a>
@@ -438,8 +447,7 @@
                                             class="carousel-control-next"
                                             href="#carouselBarters-modal"
                                             role="button"
-                                            data-slide="next"
-                                        >
+                                            data-slide="next">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Next</span>
                                         </a>
@@ -448,8 +456,6 @@
                             </div>
                         </div>
                     </div>
- 					</c:if>
- 					
                     <div id="trade-info">
                         <div id="main-info" class="clr-fix">
                             <div id="left-info">
@@ -604,7 +610,6 @@
                     			$('#file-list').html('');
                     		}
                     		
-                    		console.log($('#reply-file').val());
                     	};
                     </script>
                     <div id="reply-list">
@@ -622,14 +627,10 @@
                 	});
                 	
                 	function addActive() {
-                        console.log($('.carousel-item:first-child'));
                     	$('.carousel-item:first-child').addClass('active');
                     	$('.reply-img .carousel-item:first-child').addClass('active');
-                    	console.log($('#carousel-item:first-child').attr("class"));
-                    	console.log($('.reply-img .carousel-item:first-child'));
-                    	document.querySelector("#carousel-item:first-child").classList.add("active");
-                      	console.log(document.querySelector("#carousel-item:first-child").classList);
                 	};
+                	
                 	function selectReply() {
                 		
                 		$.ajax({
@@ -658,13 +659,16 @@
                                         		  + '<div class="carousel-inner" data-toggle="modal" data-target="#barter-image-modal" onclick="modalContent(this);">';
                 						
                 						for (let j in fileList) {
-                							resultStr += '<div class="carousel-item" id="carousel-item">'
+                							resultStr += '<div class="carousel-item">'
                                             		  + '<img src="/redclip/'
                                             		  + fileList[j].replyFileName
                                             		  + '" alt="이미지' + fileList[j].replyFileNo + '"/></div>';
                 						}
-                                        		  
-                                        resultStr += '</div><a class="carousel-control-prev"'
+                                       
+                						resultStr += '</div>';
+                						
+                						if(fileList.length > 1) {
+                                        resultStr += '<a class="carousel-control-prev"'
                                         		  + 'href="#reply-img-' + result[i].replyNo + '" '
                                             	  + 'role="button" data-slide="prev">'
                                             	  + '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a>'
@@ -672,7 +676,10 @@
                                             	  + 'href="#reply-img-' + result[i].replyNo  
                                             	  + '" role="button" data-slide="next"> '
                                             	  + '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
-                                                  + '<span class="sr-only">Next</span></a></div></figure>';
+                                                  + '<span class="sr-only">Next</span></a>';
+                                        }      
+                						
+                                        resultStr += '</div></figure>';
                 						
                 						
                 						
@@ -704,8 +711,8 @@
                                     
                                     
                 				};
-                				resultStr += "<hr/>";
-                				 $('#reply-list').html(resultStr);
+                				if(result.length != 0) resultStr += "<hr/>";
+                				$('#reply-list').html(resultStr);
                 				
                 			}
                 			
@@ -721,7 +728,6 @@
                 			var formData = new FormData();
                 			var inputFile = $("#reply-file");
                 			var files = inputFile[0].files;
-                			console.log(files);
                 			
                 			for (var i=0; i<files.length; i++) {
                 				
@@ -871,30 +877,7 @@
 	
 	
 	
-		<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h1 class="modal-title fs-5" >수정</h1>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body">
-		        <form>
-		          <div class="mb-3">
-		            <textarea class="form-control" id="reply-content" style="resize:none; maxlength:200; height:200px;"></textarea>
-		          </div>
-		          <div class="mb-3">
-		           <!-- 파일 첨부? -->
-		          </div>
-		        </form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-		        <button type="button" class="btn btn-primary" onclick="editReply();">수정</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+
                 
             </section>
             <section id="page2" class="page">
@@ -991,11 +974,12 @@
         });
 
         
+        
+        
         function modalContent(track) {
+        	console.log('모달 동작');
             var innerContent = track.innerHTML;
             $('.carousel-inner.modal-inner').html(innerContent);
-            console.log($('.carousel-inner.modal-inner').html());
-            console.log($('.carousel-inner.modal-inner'));
             
             var child = track.length;
             
@@ -1007,8 +991,14 @@
            	
            	var child = track.childElementCount;
             $('#modal-indicators').children().eq(0).addClass('active');
+          
+            $('#barter-image-modal').modal('show');
            	
         };
+        
+        
+        
+        
     	
     	window.onload = function() {
     		$('.carousel').carousel({
@@ -1017,7 +1007,24 @@
     		
     		addActive();
     		
-
+    		/* $(document).on('click', '.carousel-inner', e => {
+    			console.log('modal content 수정');
+    			
+    			var innerContent = e.innerHTML;
+    			$('.carousel-inner.modal-inner').innerHTML = innerContent;
+    			
+    			var child = e.length;
+                
+               	let modalIndicators = '';
+               	for (var step = 0; step < child; step++ ) {
+               		let += '<li data-target="#carouselBarters-modal" data-slide-to="'
+               			 + step + '"></li>';
+               	}
+               	
+               	var child = e.childElementCount;
+                $('#modal-indicators').children().eq(0).addClass('active');
+    		});
+ */
             
     		
     	}
