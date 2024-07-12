@@ -99,7 +99,7 @@
         <div id="updateForm">
             <div>
                 <div class="userImg">
-                	<div id="changeName">
+                	<div id="profil">
 						<img alt="프로필 사진" src="">
 					</div>
 					<input type="file" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
@@ -232,6 +232,8 @@
    				}
    			});
    		};
+   		
+   		//프로필 사진 업데이트
 
    		//체크박스 체크 여부 확인(시간 남으면 구현)
    		//프로필 이미지 사진 바뀌면 미리 보이는 기능(시간 남으면 구현)
@@ -259,7 +261,7 @@
    			});
    			
    		};
-		
+   		
     </script>
 </body>
 </html>

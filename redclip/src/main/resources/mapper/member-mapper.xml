@@ -38,6 +38,7 @@
 			  STATUS status,
 			  CREATE_DATE createDate,
 			  VILLAGE_CODE villageCode
+			 <!-- PLOFIL profil  --> 
    		  FROM
 			  TB_MEMBER
 		 WHERE

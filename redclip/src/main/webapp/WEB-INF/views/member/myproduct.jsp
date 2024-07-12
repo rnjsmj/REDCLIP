@@ -88,7 +88,7 @@
             </thead>
             <tbody>
                 <!-- 반복문으로 회원 아이디와 일치하는 레코드를 전부 출력-->
-                <c:forEach items="list" var="barter">
+                <c:forEach items="list" var="barterVo">
 	                 <tr>
 	                    <td><div class="form-check">
 	                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -107,6 +107,10 @@
     </div>
     <script>
 
+    window.onload() => {
+    	
+    	console.log(barter);
+    };
 	//거래 상태 변경    
     
     //글 삭제
