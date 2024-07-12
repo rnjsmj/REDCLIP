@@ -50,17 +50,15 @@
 	<!-- 회원 정보 수정 -->
 	<update id="update" parameterType="member">
 		UPDATE
-			  MEMBER
+			  TB_MEMBER
 		   SET
-		   	  (
 		   	   USER_NAME = #{userName},
-		   	   NAICKNAME = #{nickname},
+		   	   NICKNAME = #{nickname},
 		   	   EMAIL = #{email},
 		   	   TEL = #{tel},
 		   	   POSTCODE = #{postCode},
 		   	   ADDRESS = #{address},
 		   	   VILLAGE_CODE = #{villageCode}
-		   	   )
 	  	 WHERE
 	  	  	   USER_ID = #{userId}
 	  	   AND
@@ -91,6 +89,19 @@
         WHERE 
         TOWN_CODE = #{townCode}
     </select>
+	
+	<!-- 회원상태 전환-->
+	<update id="changeStatus" parameterType="String">
+		UPDATE
+		   	  TB_MEMBER
+		   SET
+		   	  STATUS = 'N'
+		 WHERE
+		 	  USER_ID = #{userId}
+		   AND
+		   	  STATUS = 'Y'
+		   	  
+	</update>
 	
 	<insert id="insertMember" parameterType="member">
     INSERT INTO TB_MEMBER
