@@ -209,32 +209,39 @@
         });
 
         function updateRecentSearches() {
+        	console.log(recentSearches);
+        
             const recentSearchesList = $('#recent-searches-list');
             recentSearchesList.empty();
             if (recentSearches.length === 0) {
                 recentSearchesList.append('<li id="no-recent-searches">최근 검색어가 없습니다.</li>');
             } else {
                 recentSearches.forEach((search, index) => {
+                	console.log(index);
                     recentSearchesList.append(
                         '<li><span>'+search+'</span><span class="delete-btn" data-index="${index}">삭제</span></li>'
                     );
                 });
             }
             
+
+
             if (recentSearches.length > 0) {
+
                 const lastSearchTerm = recentSearches[recentSearches.length - 1];
                 $('.search-input').val(lastSearchTerm);
                 console.log("검색창에 표시된 단어: ", lastSearchTerm);
             } else {
                 $('.search-input').val('');
+
+            } 
+        };
+
+
             }
         }
         
-        //인기 검색어를 가져오는 코드를 추가
-        function fetchPopularSearches() {
-           
-           
-        }
+  
         
     });
 </script>
