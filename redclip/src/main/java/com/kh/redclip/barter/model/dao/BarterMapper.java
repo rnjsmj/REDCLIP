@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.redclip.barter.model.vo.Barter;
+import com.kh.redclip.barter.model.vo.BarterFile;
 import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterReplyFile;
 import com.kh.redclip.barter.model.vo.BarterVO;
@@ -17,8 +18,8 @@ public interface BarterMapper {
 	BarterVO findById(int barterNo);
 	//게시글 작성
 	int insert (Barter barter);
-	
-	
+	//게시글 등록
+	int barterInsert(BarterFile barterFile);
 	
 	
 	
@@ -38,6 +39,9 @@ public interface BarterMapper {
 	int increaseHit(int barterNo);
 	//하나의 답글
 	BarterReply getBarterReplyById(int replyNo);
+
 	//답글파일 입력
 	int replyFileInsert(BarterReplyFile replyFile);
+
+
 }

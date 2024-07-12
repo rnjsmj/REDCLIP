@@ -56,7 +56,7 @@
     <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <div class="container">
         <!-- breadcrumb -->
-        <section id="page1" class="page">
+        <section>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
@@ -69,13 +69,27 @@
             <div id="filter-info" class="clr-fix">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex">
-                        <select class="form-control" id="category">
-                            <option selected>전체보기</option>
-                            <option>전자기기</option>
-                            <option>가구</option>
-                            <option>의류</option>
-                            <option>도서</option>
-                        </select>
+                        <select class="form-control" id="categoryNo" name="categoryNo" style="max-width: 150px;" required>
+				           <option>카테고리</option>
+				           <option value="1">디지털기기</option>
+				           <option value="2">가구/인테리어</option>
+				           <option value="3">유아용품</option>
+				           <option value="4">여성의류</option>
+				           <option value="5">여성잡화</option>
+				           <option value="6">남성의류</option>
+				           <option value="7">남성잡화</option>
+				           <option value="8">생활가전</option>
+				           <option value="9">주방용품</option>
+				           <option value="10">스포츠/레저</option>
+				           <option value="11">게임/음반</option>
+				           <option value="12">뷰티/미용</option>
+				           <option value="13">식물</option>
+				           <option value="14">가공식품</option>
+				           <option value="15">건강기능식품</option>
+				           <option value="16">반려동물용품</option>
+				           <option value="17">티켓/교환권</option>
+				           <option value="18">도서</option>
+				        </select>
                         <select class="form-control" id="si">
                             <option selected>시</option>
                             <option value="1">서울특별시</option>
@@ -131,7 +145,6 @@
 	
     <script>
       	$(() => {
-		    const $categorySelect = $('#category');
         	const $siSelect = $('#si');
 		    const $guSelect = $('#gu');
 		    const $dongSelect = $('#dong');
@@ -183,71 +196,7 @@
 		    	}
 		    });
 		});
-
-        const cardContainer = document.getElementById('card-container');
-        const loadMoreBtn = document.getElementById('load-more-btn');
-        let cardCount = 0;
-
-        function createCard(item) {
-            const col = document.createElement('div');
-            col.className = 'col';
-            const card = document.createElement('div');
-            card.className = 'card shadow-sm';
-            const img = document.createElement('img');
-            img.className = 'bd-placeholder-img card-img-top';
-            img.setAttribute('width', '100%');
-            img.setAttribute('height', '200');
-            img.setAttribute('src', item.imgUrl);
-            img.setAttribute('alt', '상품 이미지');
-            card.appendChild(img);
-            const cardBody = document.createElement('div');
-            cardBody.className = 'card-body';
-            const cardText = document.createElement('p');
-            cardText.className = 'card-text';
-            cardText.textContent = item.title;
-            cardBody.appendChild(cardText);
-            const cardFooter = document.createElement('div');
-            cardFooter.className = 'd-flex justify-content-between align-items-center';
-            const btnGroup = document.createElement('div');
-            btnGroup.className = 'btn-group';
-            const viewBtn = document.createElement('button');
-            viewBtn.className = 'btn btn-sm btn-outline-secondary';
-            viewBtn.textContent = 'View';
-            viewBtn.onclick = function() {
-                showModal(item.title, item.writer, item.content, item.date);
-            };
-            btnGroup.appendChild(viewBtn);
-            cardFooter.appendChild(btnGroup);
-            const smallText = document.createElement('small');
-            smallText.className = 'text-body-secondary';
-            smallText.textContent = item.time;
-            cardFooter.appendChild(smallText);
-            cardBody.appendChild(cardFooter);
-            card.appendChild(cardBody);
-            col.appendChild(card);
-            return col;
-        }
-
-        function loadMoreCards() {
-            $.ajax({
-                url: '/redclip/barters/barter-registration',
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    data.forEach(item => {
-                        cardContainer.appendChild(createCard(item));
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error:', status, error);
-                }
-            });
-        }
-
-        loadMoreBtn.addEventListener('click', loadMoreCards);
-
-        // 초기 로드 시 카드 추가
-        loadMoreCards();
+		
     </script>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>

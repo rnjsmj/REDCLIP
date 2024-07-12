@@ -117,11 +117,28 @@
 	        	#{barterName},
 	        	#{barterContent},
 	        	#{barterWriter},
-	        	#{villageCode},
-	        	#{categoryNo}
+	        	#{villageCode, jdbcType=NUMERIC}, 
+        		#{categoryNo, jdbcType=NUMERIC}
 	    		)
 	</insert>
 
+	<insert id="barterInsert" parameterType="barterFile">
+	INSERT
+    			INTO
+TB_BARTER_FILE
+    			(
+    			BARTER_FILE_NO,
+ 			    BARTER_NO,
+    			BARTER_FILE_NAME
+    			)
+    	VALUES 
+    			(
+    			SEQ_BARTER_FILE.NEXTVAL,
+    			SEQ_BARTER.CURRVAL,
+    			#{barterFileName}
+    			)
+	</insert>
+	
 	<resultMap type="barterReply" id="replyResultSet">
 		<id column="REPLY_NO" property="replyNo"/>
 		<result column="REPLY_CONTENT" property="replyContent" />

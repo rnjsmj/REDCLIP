@@ -224,15 +224,24 @@
                 });
             }
             
-          /*   if (recentSearches.length > 0) {
+
+
+            if (recentSearches.length > 0) {
+
                 const lastSearchTerm = recentSearches[recentSearches.length - 1];
                 $('.search-input').val(lastSearchTerm);
                 console.log("검색창에 표시된 단어: ", lastSearchTerm);
             } else {
                 $('.search-input').val('');
-            } */
+
+            } 
         };
 
+
+            }
+        }
+        
+  
         
     });
 </script>

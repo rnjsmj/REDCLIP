@@ -3,6 +3,7 @@ package com.kh.redclip.barter.model.service;
 import java.util.List;
 
 import com.kh.redclip.barter.model.vo.Barter;
+import com.kh.redclip.barter.model.vo.BarterFile;
 import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterReplyFile;
 import com.kh.redclip.barter.model.vo.BarterVO;
@@ -13,8 +14,9 @@ public interface BarterService {
 	List<BarterVO> getAllBarters(Integer code);
 	BarterVO findById(int barterNo);
 	int insert(Barter barter);
-
 	
+	int barterInsert(BarterFile barterfile);
+
 	
 	
 	
@@ -32,6 +34,8 @@ public interface BarterService {
 	//하나의 답글 select
 	BarterReply getBarterReplyById(int replyNo);
 	
+
 	// 답글 파일 등록
 	int replyFileInsert(BarterReplyFile replyFile);
+
 }

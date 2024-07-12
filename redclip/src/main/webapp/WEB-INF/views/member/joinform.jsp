@@ -109,26 +109,65 @@
             <h2>회원가입</h2>
             <br>
 
-            <form action="member/join" method="post">
+            <form action="member/join" method="post" onsubmit="return ccc();">
                 <div class="form-group rel">
-                    <input type="text" class="form-control" id="userId" placeholder="아이디" name="userId" required>
+                    <input type="text" class="form-control" id="userId" placeholder="아이디" name="userId" >
                     <button type="button" class="btn btn-outline-secondary" id="checkId">중복체크</button>
                 </div>
 				
 				<div class="form-group">
-                    <input type="password" class="form-control" id="userPwd" name="userPwd" placeholder="비밀번호" name="" required>
+                    <input type="password" class="form-control" id="userPwd" name="userPwd"  placeholder="비밀번호" name="" >
                 </div>
 
                 <div class="form-group">
-                    <input type="password" class="form-control" id="checkPwd" placeholder="비밀번호확인" required>
+                    <input type="password" class="form-control" id="checkPwd" placeholder="비밀번호확인" >
                 </div>
-
+                <div id="pwdError" style="color: red; display: none;"></div>
+                <!-- 비밀번호 확일 일치여부  -->
+				<script>
+				let pwOk ='N'
+				$(()=>{
+					const $checkPwd = $('#checkPwd');
+					const $userPwd = $('#userPwd');
+				    const $pwdError = $('#pwdError');	
+					$checkPwd.blur( () => {
+						if($checkPwd.val() != $userPwd.val() ){
+							$pwdError.text("비밀번호확인이 일치하지 않습니다.").show();
+							pwOk ='N'
+						}else{
+							$pwdError.hide();
+							 pwOk ='Y'
+						}
+					});
+				});
+				
+				</script>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="userName" placeholder="이름" name="userName" required>
+                    <input type="text" class="form-control" id="userName" placeholder="이름" name="userName">
                 </div>
+                <div id="nameError" style="color: red; display: none;"></div>
+                <!-- 이름 정규식패턴   -->
+				<script>
+				let nameOk='N'
+				$(()=>{
+					const $userName =$('#userName');
+					const $pattern = /^[가-힣]{2,10}$/;
+					const $nameError =$('#nameError');
+					$userName.blur(() => {
+						if(!$pattern.test($userName.val())){
+							$nameError.html("이름을 한글 2~10글자로 작성해주세요").show();
+						}else{
+							$nameError.hide();
+							 nameOk='Y'
+						}
+					});
+					
+				});
+				
+				</script>
 
                 <div class="form-group rel">
-                    <input type="text" class="form-control" id="nickName" placeholder="닉네임" name="nickname" required>
+                    <input type="text" class="form-control" id="nickName" placeholder="닉네임" name="nickname" >
                     <button class="btn btn-outline-secondary" type="button" id="checkNickName">중복체크</button>
                 </div>
 
@@ -140,6 +179,24 @@
                 <div class="form-group">
                     <input type="tel" class="form-control" id="tel" placeholder="연락처" name="tel">
                 </div>
+                <div id="telError" style="color: red; display: none;"></div>
+                <script>
+                let telOk='N'
+                $(()=>{
+                	const $tel =$('#tel');
+                	const $pattern =/^(?=.{12,13}$)01[016789]-\d{3,4}-\d{4}$/;
+                	const $telError = $('#telError');
+                	$tel.blur(()=>{
+                		if(!$pattern.test($tel.val())){
+                			$telError.html("핸드폰번호 양식에 어긋납니다<br>(-를 포함한 12~13자리로 입력해주세요)").show();
+                			telOk='N'
+                		}else{
+                			$telError.hide();
+                			 telOk='Y'
+                		}
+                	});
+                });
+                </script>
                 
                 <!-- 시 구 동 정보가 담긴 selectbox  -->
                 <div class="form-group">
@@ -155,64 +212,70 @@
                         <option value="">동 선택</option>
                     </select>
                 </div>
+          
+                
                 
 				<script>
-				  // 시 선택 시 벨류 값을
-				$(() => {
-				    const $siSelect = $('#si');
-				    const $guSelect = $('#gu');
-				    const $dongSelect = $('#dong');
+					let villageOk = 'N';
+					$(() => {
+						const $siSelect = $('#si');
+						const $guSelect = $('#gu');
+						const $dongSelect = $('#dong');
 				
-				    $siSelect.change(() => {
-				        const siValue = $siSelect.val();  
-						console.log(siValue);
-						
-				        if (siValue !== null ) {
-				            // console.log("시밸류값:", siValue); 
-				            $.ajax({
-				                url: 'member/guSelect', 
-				                type: 'GET',
-				                data: { si: siValue },
-				                success: response => {
-				                	 console.log(response);
-				                	$guSelect.empty().append('<option value="">구 선택</option>');
-				                    response.forEach((a) => {
-				                    	$guSelect.append('<option value='+a.townCode+'>'+a.townName+'</option>');
-				                    });
-				                    $guSelect.prop('disabled', false); // 구 셀렉트 박스 활성화
-				                },
-				                error: function() {
-				                    alert('오류임 ㅉㅉ');
-				                }
-				            });
-				        }
-				    });
-				   
-				    $guSelect.change(() => {
-				    	 const guValue = $guSelect.val();
-				         console.log("선택한구벨류값:", guValue);
-				    	if (guValue !== null) {
-				    		$.ajax({
-					    		url: 'member/dongSelect',
-					    		type: 'GET',
-					    		data: { gu: guValue },
-					    		success: response => {
-					    			console.log(response);
-					    			$dongSelect.empty().append('<option value="">동 선택</option>')
-					    			response.forEach((a) => {
-					    				$dongSelect.append('<option value='+a.villageCode+'>'+a.villageName+'</option>');
-					    			});
-					    			$dongSelect.prop('disabled', false); // 동 셀렉트 박스 활성화
-					    		},
-					    		error: function() {
-					    			alert('오류임 키키 ');
-					    		}
-				    		});
-				    	}
-				    });
-				});
+						$siSelect.change(() => {
+							const siValue = $siSelect.val();
+							console.log(siValue);
+				
+							if (siValue !== null) {
+								$.ajax({
+									url: 'member/guSelect',
+									type: 'GET',
+									data: { si: siValue },
+									success: response => {
+										console.log(response);
+										$guSelect.empty().append('<option value="">구 선택</option>');
+										response.forEach((a) => {
+											$guSelect.append('<option value=' + a.townCode + '>' + a.townName + '</option>');
+										});
+										$guSelect.prop('disabled', false); // 구 셀렉트 박스 활성화
+									},
+									error: function () {
+										alert('오류임 ㅉㅉ');
+									}
+								});
+							}
+						});
+				
+						$guSelect.change(() => {
+							const guValue = $guSelect.val();
+							console.log("선택한구벨류값:", guValue);
+							if (guValue !== null) {
+								$.ajax({
+									url: 'member/dongSelect',
+									type: 'GET',
+									data: { gu: guValue },
+									success: response => {
+										console.log(response);
+										$dongSelect.empty().append('<option value="">동 선택</option>')
+										response.forEach((a) => {
+											$dongSelect.append('<option value=' + a.villageCode + '>' + a.villageName + '</option>');
+										});
+										$dongSelect.prop('disabled', false); // 동 셀렉트 박스 활성화
+									},
+									error: function () {
+										alert('오류임 키키 ');
+									}
+								});
+				
+								$dongSelect.change(() => {
+									if ($dongSelect.val() !== "") {
+										villageOk = 'Y';
+									}
+								}); 
+							}
+						});
+					});
 				</script>
-
 
                 <div class="form-group rel">
                     <input type="text" class="form-control" id="postcode" placeholder="우편번호" name="postCode">
@@ -226,57 +289,102 @@
                 <div class="form-group">
                     <input type="text" class="form-control" id="address2" placeholder="상세주소" name="addr2">
                 </div>
-				<script>
-			    $(() => {
-			        const $findaddr = $('#findaddr');
-			        
-			        $findaddr.click(() => {//주소찾기 버튼클릭
-			            new daum.Postcode({
-			                oncomplete: (result) => {
-			                	//통합 로딩 방식 : postcode.v2.js 라는 이름의 파일 로딩을 통해 우편번호 서비스를 이용하실 수 있습니다. 카카오 우편번호서비스 공식문서
-			                	// oncomplete: 우편번호 찾기가 완료되었을때 실행되는코드를 이후에 작성한다
-			                    var addr = '';
-			                    var extraAddr = '';
-			                    
-			                    if (result.userSelectedType === 'R') {//R은 도로명주소를 선택했을때 반환되는 값 
-			                        addr = result.roadAddress;
-			                    } else {
-			                        addr = result.jibunAddress;
-			                    }
+<script>
+    let addrOk = 'N';
+    $(() => {
+        const $findaddr = $('#findaddr');
+        const $postCode = $('#postcode');
+        const $addr1 = $('#address1');
+        const $addr2 = $('#address2');
 
-			                    if (result.userSelectedType === 'R') {
-			                        if (result.bname !== '' && /[동|로|가]$/g.test(result.bname)) {
-			                            // result.bname이 빈 문자열이 아니고, '동', '로', '가'로 끝나는지 확인
-				                        // 법정동명이 있는 경우 '삼성동', '종로', '경복궁가' 등으로 끝나는지 확인
-			                            extraAddr += result.bname;
-			                            // 추가 주소 변수(extraAddr)에 법정동명을 추가
-			                        }
-			                        if (result.buildingName !== '' && result.apartment === 'Y') {
-			                        	 // result.buildingName이 빈 문자열이 아니고, result.apartment가 'Y'인 경우 (아파트인 경우)
-			                            extraAddr += (extraAddr !== '' ? ', ' + result.buildingName : result.buildingName);
-			                            // 만약 extraAddr에 이미 동로가 이름이 있다면 쉼표와 함께 건물명을 적음 아니라면 그냥 건물명적음
-			                        }
-			                        if (extraAddr !== '') {
-			                            extraAddr = ' (' + extraAddr + ')';
-			                            // extraAddr이 빈 문자열이 아닌 경우 괄호로 감싼다(법정동명, 건물명)
-			                        }
-			                    } 
+        $findaddr.click(() => { // 주소찾기 버튼 클릭
+            new daum.Postcode({
+                oncomplete: (result) => {
+                    let addr = '';
+                    let extraAddr = '';
 
-			                    $('#postcode').val(result.zonecode);
-			                    //postcode의 값을 result.zonecod
-			                    $('#address1').val(addr + extraAddr);
-			                    //address1의 값을 addr+extraAddr로 함
-			                }
-			            }).open(); //우편번호 검색창을여는거
-			        });
-			    });
-			</script>
+                    if (result.userSelectedType === 'R') { // R은 도로명주소를 선택했을 때 반환되는 값
+                        addr = result.roadAddress;
+                    } else {
+                        addr = result.jibunAddress;
+                    }
+
+                    if (result.userSelectedType === 'R') {
+                        if (result.bname !== '' && /[동|로|가]$/g.test(result.bname)) {
+                            extraAddr += result.bname;
+                        }
+                        if (result.buildingName !== '' && result.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', ' + result.buildingName : result.buildingName);
+                        }
+                        if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                    }
+                    $('#postcode').val(result.zonecode);
+                    $('#address1').val(addr + extraAddr);
+
+                    // 이 부분은 주소가 선택된 후에도 검사
+                }
+            }).open(); // 우편번호 검색창을 여는 것
+        });
+
+        // 페이지 로드 시 값을 검사
+        if ($postCode.val() !== "" && $addr1.val() !== "" && $addr2.val() !== "") {
+            addrOk = 'Y';
+        } else {
+            addrOk = 'N';
+        }
+        console.log('페이지 로드 시 addrOk ',addrOk); // 페이지 로드 시 addrOk 값 출력
+
+        $addr2.blur(() => {
+        	 if ($postCode.val() !== "" && $addr1.val() !== "" && $addr2.val() !== "") {
+                 addrOk = 'Y';
+             } else {
+                 addrOk = 'N';
+             }
+            console.log(addrOk);
+        });
+    });
+</script>
+
 
 
                 <div class="buttonwrap">
-                    <button type="submit" class="btn btn-primary joinbtn" >회원가입</button>
+                    <button type="submit" class="btn btn-primary joinbtn" id="joinbtn" >회원가입</button>
                     <button type="reset" class="btn btn-secondary joinbtn">초기화</button>
                 </div>
+               <script>
+			               let idOkay = 'N';
+			               let nickOk = 'N';
+						  
+						function ccc(){
+							console.log("이거됨?");
+				        if (idOkay !== 'Y') {
+				            alert("아이디 중복 체크를 해주세요.");
+				           return false;
+				        } else if (pwOk !== 'Y') {
+				            alert("비밀번호가 일치하지 않습니다.");
+				        	return false;
+				        } else if (nameOk !== 'Y') {
+				            alert("이름을 확인해주세요.");
+				        	return false ;
+				        } else if (nickOk !== 'Y') {
+				            alert("닉네임 중복 체크를 해주세요.");
+				        	return false;
+				        } else if (telOk !== 'Y') {
+				            alert("핸드폰번호를 확인해주세요.");
+				        	return false;
+				        }else if (villageOk !=='Y'){
+				        	alert("관심지역을 선택해주세요.");
+				        	return false;
+				        }else if (addrOk !== 'Y') {
+				            alert("주소를 확인해주세요.");
+				        	return false;
+				        }
+				        return true;
+					}
+				</script>
+
             </form>
         </div>
         <br><br>
@@ -340,11 +448,14 @@
                             alert("중복된 아이디 입니다. 다른 아이디를 사용해주세요");
                         } else {
                             alert("사용 가능한 아이디 입니다.");
+                             idOkay ='Y'
                         }
+                        //console.log("아이디오케?",idOkay);
                     },
                     error: function() {
                         alert('오류 발생');
                     }
+                  
                 });
             });
         });
@@ -370,6 +481,7 @@
                             alert("중복된 닉네임 입니다. 다른 닉네임을 사용해주세요");
                         } else {
                             alert("사용 가능한 닉네임 입니다.");
+                            nickOk='Y'
                         }
                     },
                     error: function() {
@@ -378,7 +490,7 @@
                 });
             });
         });
-
+		 
     </script>
 </body>
 </html>
