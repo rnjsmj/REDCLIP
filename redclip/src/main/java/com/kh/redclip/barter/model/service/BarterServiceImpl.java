@@ -78,5 +78,17 @@ public class BarterServiceImpl implements BarterService{
 	public int replyFileInsert(BarterReplyFile replyFile) {
 		return barterMapper.replyFileInsert(replyFile);
 	}
+
+	@Override
+	public int barterDelete(int barterNo) {
+		return barterMapper.barterDelete(barterNo);
+	}
+
+	@Override
+	public int replyFileDelete(int replyNo) {
+		return barterMapper.replyFileDelete(replyNo);
+	}
+	
+	
 	
 }

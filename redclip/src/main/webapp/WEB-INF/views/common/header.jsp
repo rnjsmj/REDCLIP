@@ -75,7 +75,7 @@
    <h5 class="my-0 font-weight-normal"><a href="${requestScope.contextPath}">홈</a></h5>
 
    <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="barters">물물교환</a>
+      <a class="p-2 text-dark" href="/redclip/barters">물물교환</a>
       <a class="p-2 text-dark" href="#">체팅</a>
       <a class="p-2 text-dark" href="#">공지사항</a>
       <a class="p-2 text-dark" href="#">FAQ</a>
@@ -83,16 +83,21 @@
    <c:choose>
    <c:when test="${empty sessionScope.loginUser }">
    <nav class="btnbox">
-      <a class="btn btn-outline-primary" href="joinform" id="btn-sign">회원가입</a>
-      <a class="btn btn-outline-primary" href="loginform" id="btn-sign">로그인</a>
+      <a class="btn btn-outline-primary" href="/redclip/joinform" id="btn-sign">회원가입</a>
+      <a class="btn btn-outline-primary" href="/redclip/loginform" id="btn-sign">로그인</a>
    </nav>
    </c:when>
    <c:otherwise>
     <nav class="btnbox">
-      <a class="btn btn-outline-primary" href="myPage" id="btn-sign">마이페이지</a>
+      <a class="btn btn-outline-primary" href="/redclip/myPage" id="btn-sign">마이페이지</a>
       <a class="btn btn-outline-primary" href="#" id="btn-sign">로그아웃</a>
    </nav>
    </c:otherwise>
    </c:choose>
+   
+   <c:if test="${ not empty alertMsg }">
+   		<script>alert("${ alertMsg }")</script>
+   		<c:remove var="alertMsg" scope="session" />
+   </c:if>
 </div>    
 </html>
