@@ -37,4 +37,11 @@ public class MemberFowardController {
 		
 		return "member/myproduct";
 	}
+	
+	//차단 목록 페이지 이동
+	@GetMapping("/blockList")
+	public String blockList() {
+		
+		return "member/blockList";
+	}
 }

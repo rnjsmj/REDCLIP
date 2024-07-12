@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>내가 쓴 글</title>
+    <title>차단 유저 목록</title>
     <style>
-       body {
+        body {
             margin: 20px;
             line-height: 1.6;
             height: auto;
@@ -21,99 +21,76 @@
             width: 1200px;
             margin: 0 auto;
         }
-        
-        #content {
-        	width:100%;
-        	height: auto;
-        	margin-bottom: 300px;
-   			margin-top: 70px;
-        }
 
         #title {
              margin: 30px; 
              margin-left: 340px;
         }
-
-        #productList {
+        #blockList {
              margin: 0 auto; 
              width: 1200px;
-        }
+            }
 
-        #buttons {
+        #btn-none {
             float: right;
             margin-right: 330px;
-            margin-top: 20px;
-        }
+         }
     </style>
 </head>
 <body>
      <!-- 헤더 영역-->
      <header>
-        <jsp:include page="../common/header.jsp" />
+        <!-- 메뉴바 -->
+        <nav class="menuBar"></nav>
     </header>
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
           <li class="breadcrumb-item"><a href="#">마이페이지</a></li>
-          <li class="breadcrumb-item active" aria-current="page">내가 쓴 글</li>
+          <li class="breadcrumb-item active" aria-current="page">차단회원 관리</li>
         </ol>
     </nav>
      <!-- 탭 클릭 시 비동기식 요청으로 화면 전환 -->
      <div class="tab">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link" href="myPage">내 정보</a>
+              <a class="nav-link active" aria-current="page" href="#">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="bolockList">차단 목록</a>
+              <a class="nav-link" href="#">차단 목록</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">내가 쓴 글</a>
+              <a class="nav-link" href="#">내가 쓴 글</a>
             </li>
           </ul>
     </div>
     <div id="content">
 
-        <h3 id="title">내가 쓴 글 관리</h3>
+        <h3 id="title">차단 유저 관리</h3>
 
-        <table class="table" id="productList">
+        <table class="table" id="blockList">
             <thead>
                 <tr>
                     <th>선택</th>
-                    <th>게시글 제목</th>
-                    <th>작성일</th>
-                    <th>거래상태</th>
-                    <th>조회수</th>
+                    <th>차단한 회원</th>
+                    <th>차단한 날짜</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- 반복문으로 회원 아이디와 일치하는 레코드를 전부 출력-->
-                <c:forEach items="list" var="barter">
-	                 <tr>
-	                    <td><div class="form-check">
-	                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-	                      </div></td>
-	                      <td><a href="">${ barter.barterName }</a></td>
-	                      <td>${ barter.barterDate }</td>
-	                      <td>${ barter.baterStatus }</td>
-	                      <td>${ barter.hit }</td>
-	                 </tr>
-                 </c:forEach>
+                 <tr>
+                    <td><div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      </div></td>
+                      <td>blockuser3</td>
+                      <td>2024-06-26</td>
+                 </tr>
             </tbody>
         </table>
-        <div id="buttons">
-          <button id="btn-status" class="btn btn-success" onclick="">거래상태 변경</button> | <button id="btn-delete" class="btn btn-secondary">삭제</button>
-        </div>
+        <button type="button" id="btn-none" class="btn btn-success">차단해제</button>
     </div>
-    <script>
-
-	//거래 상태 변경    
-    
-    //글 삭제
-    
-    </script>
     <footer>
-        <jsp:include page="../common/footer.jsp" />
+        <!-- 푸터 영역 -->
     </footer>
 </body>
 </html>
