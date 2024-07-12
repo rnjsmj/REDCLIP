@@ -14,10 +14,7 @@ public interface BarterService {
 	List<BarterVO> getAllBarters(Integer code);
 	BarterVO findById(int barterNo);
 	int insert(Barter barter);
-	
 	int barterInsert(BarterFile barterfile);
-
-	
 	
 	
 	//댓글 목록
@@ -28,13 +25,10 @@ public interface BarterService {
 	int replyUpdate(BarterReply barterReply);
 	//댓글 삭제s
 	int replyDelete(int replyNo);
-	
 	//게시글 조회수 증가
 	int increaseHit(int barterNo);
 	//하나의 답글 select
 	BarterReply getBarterReplyById(int replyNo);
-	
-
 	// 답글 파일 등록
 	int replyFileInsert(BarterReplyFile replyFile);
 

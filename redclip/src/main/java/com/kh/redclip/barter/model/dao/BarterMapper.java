@@ -20,8 +20,7 @@ public interface BarterMapper {
 	int insert (Barter barter);
 	//게시글 등록
 	int barterInsert(BarterFile barterFile);
-	
-	
+	//게시글 업로드된? 목록
 	
 	
 	
@@ -42,6 +41,7 @@ public interface BarterMapper {
 
 	//답글파일 입력
 	int replyFileInsert(BarterReplyFile replyFile);
+	
 
 
 }

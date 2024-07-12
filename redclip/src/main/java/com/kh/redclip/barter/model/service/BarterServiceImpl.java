@@ -43,6 +43,8 @@ public class BarterServiceImpl implements BarterService{
 		return barterMapper.barterInsert(barterFile);
 	}
 
+	
+	
 	@Override
 	public List<BarterReply> getBarterReply(int barterNo) {
 		return barterMapper.getBarterReply(barterNo);

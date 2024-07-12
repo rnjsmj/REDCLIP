@@ -93,7 +93,6 @@ public class BarterController {
 	
 	//교환 게시글 글 등록하기
 	@PostMapping(value="barterFile")
-	@ResponseBody
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
 	    log.info("파일 배열 : {}", upfile);
 
@@ -109,9 +108,9 @@ public class BarterController {
 	            }
 	        }
 
-	        return fileCount == upfile.length ? "success" : "file upload error";
-	    } else {
-	        return "reply upload error";
+	        return fileCount == upfile.length ? "redirect:/" : "redirect:/registration";
+	       } else {
+	           return "redirect:/registration";
 	    }
 	}
 
