@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
 
@@ -30,7 +31,7 @@ public interface MemberMapper {
 	public int insertAdmin(Member member);
 	
 	// 내가 쓴 글 조회
-	String selectById(String userId);
+	List<Barter> selectById(String userId);
 	
 	// 차단한 회원 조회
 	// 신고 내역 조회 

@@ -88,7 +88,7 @@
               <a class="nav-link" id="bolockList">차단 목록</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="myProduct">내가 쓴 글</a>
+              <a class="nav-link" id="myProduct" href="myProduct">내가 쓴 글</a>
             </li>
           </ul>
     </div>
@@ -263,13 +263,15 @@
    		//차단 회원 페이지 이동
    		$('#blockList').click() => {
    			
-   			location.href = '/blockList';
+   			console.log(href);
+   			//location.href = '/blockList';
    		} 
    		
    		//내가 쓴 글 페이지 이동
    		$('#myProduct').click() => {
    			
-   			location.href = '/myProduct';
+   			console.log(href);
+   			//location.href = '/myProduct';
    		}
    		
     </script>

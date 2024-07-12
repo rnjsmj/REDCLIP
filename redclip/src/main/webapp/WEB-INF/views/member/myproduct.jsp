@@ -62,10 +62,10 @@
      <div class="tab">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link" id="myPage">내 정보</a>
+              <a class="nav-link" id="myPage" href="myPage">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="bolockList">차단 목록</a>
+              <a class="nav-link" id="bolockList" href="bolockList">차단 목록</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page"  href="#">내가 쓴 글</a>
@@ -81,26 +81,24 @@
                 <tr>
                     <th>선택</th>
                     <th>게시글 제목</th>
-                    <th>거래상태</th>
                     <th>작성일</th>
+                    <th>거래상태</th>
                     <th>조회수</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- 반복문으로 회원 아이디와 일치하는 레코드를 전부 출력-->
-               <%--  <c:if test="${ not empty sessionScope.loginUser }">
-                <c:forEach items="barter">
+                <c:forEach items="barterVo">
 	                 <tr>
 	                    <td><div class="form-check">
 	                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
 	                      </div></td>
 	                      <td>${ barter.barterName }</td>
-	                      <td>${ barter.baterStatus }</td>
 	                      <td>${ barter.barterDate }</td>
+	                      <td>${ barter.baterStatus }</td>
 	                      <td>${ barter.hit }</td>
 	                 </tr>
                  </c:forEach>
-                 </c:if> --%>
             </tbody>
         </table>
         <div id="buttons">
@@ -120,6 +118,7 @@
 			
 			location.href = '/myPage';
 		}
+		
     </script>
     <footer>
         <jsp:include page="../common/footer.jsp" />

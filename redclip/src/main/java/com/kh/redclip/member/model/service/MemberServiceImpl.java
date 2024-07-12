@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.dao.MemberMapper;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
@@ -73,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public String selectById(String userId) {
+	public List<Barter> selectById(String userId) {
 		return memberMapper.selectById(userId);
 	}
 

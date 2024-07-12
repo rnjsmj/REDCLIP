@@ -134,7 +134,6 @@
 	<select id="selectById" parameterType="String" resultType="barter">
 		SELECT
 		      BARTER_NAME,
-		      BARTER_NICKNAME,
 		      BARTER_DATE,
 		      BARTER_STATUS,
 		      HIT

@@ -3,6 +3,7 @@ package com.kh.redclip.member.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
 
@@ -27,7 +28,7 @@ public interface MemberService {
 	public int insertAdmin(Member member);
 	
 	// 내가 쓴 글 조회
-	public String selectById(String userId);
+	public List<Barter> selectById(String userId);
 	
 	// 차단한 회원 조회
 	// 신고 내역 조회 
