@@ -42,5 +42,8 @@ public interface MemberMapper {
 	int insertMember(Member member);
 
 
+	String searchid(Member member);
+
+
 	
 }

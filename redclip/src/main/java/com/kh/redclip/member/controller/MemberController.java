@@ -135,6 +135,18 @@ public class MemberController {
         }
   }
     
+
+    @ResponseBody
+    @GetMapping("/searchId")
+    public String searchId(Member member) {
+        String result = memberService.searchid(member);
+        
+        if (result != null ) {
+            return "회원님의 ID는 " + result + "입니다.";
+        } else {
+            return "해당 회원의 정보가 존재하지 않습니다.";
+        }
+    }
     //회원 상태 변경
     @ResponseBody
     @PutMapping("/{userId}")
