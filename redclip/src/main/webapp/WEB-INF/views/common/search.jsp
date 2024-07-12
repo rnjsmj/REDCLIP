@@ -219,26 +219,8 @@
                 });
             }
         }
-
-        function fetchPopularSearches() {
-            $.ajax({
-                url: '/api/popular_searches',
-                method: 'GET',
-                success: function (data) {
-                    const popularSearchesList = $('#popular-searches-list');
-                    popularSearchesList.empty();
-                    data.forEach(function (search) {
-                        popularSearchesList.append(`<li>${search.search_term}</li>`);
-                    });
-                },
-            });
-        }
-
-        // 페이지 로드 시 초기 인기 검색어를 가져옴
-        fetchPopularSearches();
-
-        // 주기적으로 15분마다 인기 검색어를 갱신
-        setInterval(fetchPopularSearches, 15 * 60 * 1000);
+		
+        
     });
 </script>
 </body>

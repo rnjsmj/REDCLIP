@@ -4,53 +4,56 @@
 <html>
 <head>
 <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상품 등록</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상품 등록</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <style>
-  	.container {margin-bottom: 80px;}
-  	.title {margin-top: 40px; margin-bottom: 20px;}
-	.image-placeholder {
-	  width: 100%;
-	  height: 150px;
-	  background-color: #ddd;
-	  border: 1px solid #ccc;
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
-	  margin-bottom: 10px;
-	  position: relative;
-	}
-	.image-preview {
-	  width: 100%;
-	  height: 100%;
-	  object-fit: cover;
-	  display: none;
-	}
-	.file-input {
-	  position: absolute;
-	  top: 0;
-	  left: 0;
-	  width: 100%;
-	  height: 100%;
-	  opacity: 0;
-	}
+  .container {margin-bottom: 80px;}
+  .title {margin-top: 40px; margin-bottom: 20px;}
+  .form-row {
+   display: flex;
+   padding: 0;
+   margin: 0;
+ }
+ .image-placeholder {
+   width: 100%;
+   height: 230px;
+   display: flex;
+   align-items: center;
+   overflow: hidden;
+   border: 1px solid #ddd;
+}
+ .image-preview {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   display: none;
+ }
+ .file-input {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   opacity: 0;
+ }
+
 </style>
 </head>
 <body>
   <jsp:include page="/WEB-INF/views/common/header.jsp" />
   <div class="container">
 	<!-- breadcrumb -->
-	<section id="page1" class="page">
-	    <nav aria-label="breadcrumb">
-	        <ol class="breadcrumb">
-		        <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
-		        <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
-		        <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
-		        <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
+	<section>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+	        <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
+	        <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
+	        <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
+	        <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
 	    </ol>
 	</nav>
     <h2 class="title">상품 등록하기</h2>
@@ -58,12 +61,26 @@
       <div class="form-group">
        <label for="name">상품명</label>
         <div class="input-group">
-          <select class="form-control" style="max-width: 150px;" required>
+          <select class="form-control" id="categoryNo" name="categoryNo" style="max-width: 150px;" required>
             <option>카테고리</option>
-            <option>전자기기</option>
-            <option>가구</option>
-            <option>의류</option>
-            <option>도서</option>
+            <option value="1">디지털기기</option>
+            <option value="2">가구/인테리어</option>
+            <option value="3">유아용품</option>
+            <option value="4">여성의류</option>
+            <option value="5">여성잡화</option>
+            <option value="6">남성의류</option>
+            <option value="7">남성잡화</option>
+            <option value="8">생활가전</option>
+            <option value="9">주방용품</option>
+            <option value="10">스포츠/레저</option>
+            <option value="11">게임/음반</option>
+            <option value="12">뷰티/미용</option>
+            <option value="13">식물</option>
+            <option value="14">가공식품</option>
+            <option value="15">건강기능식품</option>
+            <option value="16">반려동물용품</option>
+            <option value="17">티켓/교환권</option>
+            <option value="18">도서</option>
           </select>
           <input type="text" class="form-control" id="name" name="barterName" maxlength="250" placeholder="내용을 입력해주세요." required>
         </div>
@@ -88,7 +105,7 @@
             </select>
           </div>
           <div class="col">
-            <select class="form-control" id="dong" disabled>
+            <select class="form-control" id="dong" name="villageCode" disabled>
               <option value="">동 선택</option>
             </select>
           </div>
@@ -99,17 +116,29 @@
 	    <textarea class="form-control" id="barterContent" name="barterContent" rows="4" placeholder="내용을 입력해주세요."></textarea>
 	  </div>
       <div class="form-group">
-		<label>이미지 등록</label>
-		<div class="form-row">
-		    <div class="col image-placeholder">
-		        <img id="imagePreview1" class="image-preview" src="" alt="이미지 미리보기">
-		        <label for="upfile">첨부파일</label>
-		        <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this)">
-		    </div>
-		</div>
-	</div>
-    <button type="submit" class="btn btn-success" href="insert">등록하기</button>
-    </form>
+	    <label>이미지 등록</label>
+	    <div class="form-row">
+	        <div class="col image-placeholder">
+	            <img id="imagePreview1" class="image-preview" src="" alt="이미지 미리보기">
+	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 1)">
+	        </div>
+	        <div class="col image-placeholder">
+	            <img id="imagePreview2" class="image-preview" src="" alt="이미지 미리보기">
+	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 2)">
+	        </div>
+	        <div class="col image-placeholder">
+	            <img id="imagePreview3" class="image-preview" src="" alt="이미지 미리보기">
+	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 3)">
+	        </div>
+	        <div class="col image-placeholder">
+	            <img id="imagePreview4" class="image-preview" src="" alt="이미지 미리보기">
+	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 4)">
+	        </div>
+	    </div>
+	 </div>
+     <button type="submit" class="btn btn-success">등록하기</button>
+     </form>
+    </section>
   </div>
   <script>
   $(() => {
@@ -121,9 +150,9 @@
 	        const siValue = $siSelect.val();  
 			console.log(siValue);
 	        if (siValue !== null ) { //시벨류값이 널이 아닐때 실행)
-	            // console.log("시밸류값:", siValue); 
+	             console.log("시밸류값:", siValue); 
 	            $.ajax({
-	                url: 'guSelect', 
+	                url: '/redclip/member/guSelect', 
 	                type: 'GET',
 	                data: { si: siValue }, 
 	                success: response => {
@@ -146,7 +175,7 @@
 	         console.log("선택한구벨류값:", guValue);
 	    	if (guValue !== null) {
 	    		$.ajax({
-		    		url: 'dongSelect',
+		    		url: '/redclip/member/dongSelect',
 		    		type: 'GET',
 		    		data: { gu: guValue },
 		    		success: response => {
@@ -166,19 +195,22 @@
 	});
 	
     
-    function loadImg(inputFile) {
-        if (inputFile.files.length) {
-          const reader = new FileReader();
-          reader.readAsDataURL(inputFile.files[0]);
-          reader.onload = e => {
-            document.getElementById('imagePreview1').src = e.target.result;
-            document.getElementById('imagePreview1').style.display = 'block';
-          };
-        } else {
-          document.getElementById('imagePreview1').src = "https://t1.kakaocdn.net/friends/www/talk/kakaofriends_talk_2018.png";
-          document.getElementById('imagePreview1').style.display = 'none';
-        }
-      }
+	function loadImg(inputFile, index) {
+	    if (inputFile.files.length) {
+	        const reader = new FileReader();
+	        //console.log(inputFile.files[0]);
+	        
+	        reader.readAsDataURL(inputFile.files[0]);
+	        reader.onload = e => {
+	            const previewImage = document.getElementById('imagePreview' + index);
+	            previewImage.src = e.target.result;
+	            previewImage.style.display = 'block';
+	        };
+	    } else {
+	        const previewImage = document.getElementById('imagePreview' + index);
+	        previewImage.style.display = 'none';
+	    }
+	}
 
   </script>
   <jsp:include page="/WEB-INF/views/common/footer.jsp" />

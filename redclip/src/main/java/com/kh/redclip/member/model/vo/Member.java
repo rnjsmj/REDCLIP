@@ -30,5 +30,7 @@ public class Member {
 	private String status;				//회원상태
 	private Date createDate;		//가입일
 	private int villageCode;			//관심지역 코드
+	private String addr1;
+	private String addr2;
 
 }
