@@ -109,8 +109,9 @@ public class BarterController {
 	        }
 
 	        return fileCount == upfile.length ? "redirect:/" : "redirect:/registration";
-	    } else {
-	        return "redirect:/registration";
+
+	       } else {
+	           return "redirect:/registration";
 	    }
 	}
 

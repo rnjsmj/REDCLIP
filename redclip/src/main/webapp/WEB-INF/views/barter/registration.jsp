@@ -20,7 +20,7 @@
  }
  .image-placeholder {
    width: 100%;
-   height: 230px;
+   height: 260px;
    display: flex;
    align-items: center;
    overflow: hidden;
@@ -45,7 +45,7 @@
 </head>
 <body>
   <jsp:include page="/WEB-INF/views/common/header.jsp" />
-  <div class="container">
+  <div class="container" style="max-width: 1140px;">
 	<!-- breadcrumb -->
 	<section>
     <nav aria-label="breadcrumb">
