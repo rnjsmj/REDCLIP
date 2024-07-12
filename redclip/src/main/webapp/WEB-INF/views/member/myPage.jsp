@@ -85,10 +85,10 @@
               <a class="nav-link active" aria-current="page" href="#">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="bolockList">차단 목록</a>
+              <a class="nav-link" href="bolockList">차단 목록</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="myProduct" href="myProduct">내가 쓴 글</a>
+              <a class="nav-link" href="myProduct">내가 쓴 글</a>
             </li>
           </ul>
     </div>
@@ -260,20 +260,6 @@
    			
    		};
 		
-   		//차단 회원 페이지 이동
-   		$('#blockList').click() => {
-   			
-   			console.log(href);
-   			//location.href = '/blockList';
-   		} 
-   		
-   		//내가 쓴 글 페이지 이동
-   		$('#myProduct').click() => {
-   			
-   			console.log(href);
-   			//location.href = '/myProduct';
-   		}
-   		
     </script>
 </body>
 </html>
