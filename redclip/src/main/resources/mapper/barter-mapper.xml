@@ -189,6 +189,26 @@ TB_BARTER_FILE
 				)
 	</insert>
 	
+	<!-- 댓글 파일 입력 -->
+	<insert id="replyFileInsert" parameterType="barterReplyFile">
+		INSERT
+		  INTO
+		  		TB_BARTER_REPLY_FILE
+		  		(
+		  			REPLY_FILE_NO,
+		  			REPLY_NO,
+		  			REPLY_FILE_NAME
+		  		)
+		VALUES
+				(
+					SEQ_BREP_FILE.NEXTVAL,
+					SEQ_BREP.CURRVAL,
+					#{replyFileName}
+				)
+		
+	
+	</insert>
+	
 	<!-- 댓글 수정 -->
 	<update id="replyUpdate" parameterType="barterReply">
 		UPDATE

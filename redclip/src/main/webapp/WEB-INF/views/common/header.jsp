@@ -13,7 +13,7 @@
     <title>가격 예시 · Bootstrap v4.6</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/pricing/">
     <!-- Bootstrap 핵심 CSS -->
-    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/redclip/resources/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {

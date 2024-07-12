@@ -10,6 +10,7 @@ import com.kh.redclip.barter.model.dao.BarterMapper;
 import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterFile;
 import com.kh.redclip.barter.model.vo.BarterReply;
+import com.kh.redclip.barter.model.vo.BarterReplyFile;
 import com.kh.redclip.barter.model.vo.BarterVO;
 
 import lombok.RequiredArgsConstructor;
@@ -69,6 +70,11 @@ public class BarterServiceImpl implements BarterService{
 	@Override
 	public BarterReply getBarterReplyById(int replyNo) {
 		return barterMapper.getBarterReplyById(replyNo);
+	}
+	
+	@Override
+	public int replyFileInsert(BarterReplyFile replyFile) {
+		return barterMapper.replyFileInsert(replyFile);
 	}
 	
 }
