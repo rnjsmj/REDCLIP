@@ -27,6 +27,8 @@ public interface MemberService {
 	public int insertAdmin(Member member);
 	
 	// 내가 쓴 글 조회
+	public String selectById(String userId);
+	
 	// 차단한 회원 조회
 	// 신고 내역 조회 
 	//회원 아이디 검색

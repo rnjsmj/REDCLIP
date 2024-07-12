@@ -62,10 +62,10 @@
      <div class="tab">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link" href="myPage">내 정보</a>
+              <a class="nav-link" id="myPage">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="bolockList">차단 목록</a>
+              <a class="nav-link" id="bolockList">차단 목록</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page"  href="#">내가 쓴 글</a>
@@ -88,7 +88,7 @@
             </thead>
             <tbody>
                 <!-- 반복문으로 회원 아이디와 일치하는 레코드를 전부 출력-->
-                <c:if test="${ not empty sessionScope.loginUser }">
+               <%--  <c:if test="${ not empty sessionScope.loginUser }">
                 <c:forEach items="barter">
 	                 <tr>
 	                    <td><div class="form-check">
@@ -100,13 +100,27 @@
 	                      <td>${ barter.hit }</td>
 	                 </tr>
                  </c:forEach>
-                 </c:if>
+                 </c:if> --%>
             </tbody>
         </table>
         <div id="buttons">
           <button id="btn-status" class="btn btn-success">거래상태 변경</button> | <button id="btn-delete" class="btn btn-secondary">삭제</button>
         </div>
     </div>
+    <script>
+    
+ 	 	//차단 회원 페이지 이동
+		$('#blockList').click() => {
+			
+			location.href = '/blockList';
+		} 
+		
+		//정보 수정 페이지 이동
+		$('#myPage').click() => {
+			
+			location.href = '/myPage';
+		}
+    </script>
     <footer>
         <jsp:include page="../common/footer.jsp" />
     </footer>

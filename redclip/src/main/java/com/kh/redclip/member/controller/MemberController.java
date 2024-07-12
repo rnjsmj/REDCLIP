@@ -146,7 +146,7 @@ public class MemberController {
     
     //내가 쓴 글 조회
     @GetMapping("/{userId}")
-    public String findById(@PathVariable String userId) {
+    public String selectById(@PathVariable String userId) {
     	
     	
     	

@@ -129,5 +129,19 @@
             #{villageCode}
         )
 	</insert>
-
+	
+	<!-- 내가 쓴 글 조회 -->
+	<select id="selectById" parameterType="String" resultType="barter">
+		SELECT
+		      BARTER_NAME,
+		      BARTER_NICKNAME,
+		      BARTER_DATE,
+		      BARTER_STATUS,
+		      HIT
+		 FROM
+      		  VW_BARTER_DETAIL, TB_MEMBER
+		WHERE
+     		  BARTER_WRITER = #{userId}
+     		  
+	</select>
 </mapper>
