@@ -509,6 +509,7 @@
                         <c:if test="${ sessionScope.loginUser.userId eq barter.barterWriter }">
                         <form action="" method="post" id="postForm">
                         	<input type="hidden" id="barterNo" name="barterNo" value="${ barter.barterNo }">
+                        	<input type="hidden" name="fileExist"  />
                         </form>
                         
                         <div class="btn-group" id="writer-btn">
@@ -789,10 +790,22 @@
                 		
                 		if(confirm('삭제하시겠습니까?')) {
                 			
+	                		/* var deleteData = { fileExist : false }; */
+	                		var deleteData;
+	                		
+               				if($('#reply-img-'+no).length) {
+               					console.log('deleteData true로 변경');
+               					deleteData = { fileExist : true };
+               				} else {
+               					deleteData = { fileExist : false };
+               				}
+	                		
+	                			
                 			$.ajax({
                 				
                 				url : 'reply/' + no,
                 				type : 'delete',
+                				data : deleteData,
                 				success : result => {
                 					
                 					console.log(result);
@@ -1022,6 +1035,8 @@
             });
     		
     		addActive();
+    		
+    		
     		
     		/* $(document).on('click', '.carousel-inner', e => {
     			console.log('modal content 수정');

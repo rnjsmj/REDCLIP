@@ -265,4 +265,14 @@ TB_BARTER_FILE
 		 		BARTER_NO = #{barterNo}
 	</delete>
 	
+	<!-- 답글에 포함된 파일 삭제 -->
+	<delete id="replyFileDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER_REPLY_FILE
+		 WHERE
+		 		REPLY_NO = #{replyNo}
+	
+	</delete>
+	
 </mapper>

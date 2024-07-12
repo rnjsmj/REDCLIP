@@ -93,7 +93,6 @@ public class BarterController {
 	
 	//교환 게시글 글 등록하기
 	@PostMapping(value="barterFile")
-	@ResponseBody
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
 	    log.info("파일 배열 : {}", upfile);
 
@@ -109,9 +108,9 @@ public class BarterController {
 	            }
 	        }
 
-	        return fileCount == upfile.length ? "success" : "file upload error";
+	        return fileCount == upfile.length ? "redirect:/" : "redirect:/registration";
 	    } else {
-	        return "reply upload error";
+	        return "redirect:/registration";
 	    }
 	}
 
@@ -176,8 +175,17 @@ public class BarterController {
 	//답글 삭제
 	@DeleteMapping(value="reply/{replyNo}")
 	@ResponseBody
-	public String replyDelete(@PathVariable int replyNo) {
+	public String replyDelete(@PathVariable int replyNo, boolean fileExist) {
+		log.info("fileExist : {}", fileExist);
 		
+		if (fileExist == true) {
+			log.info("파일 존재 : {}");
+			if (barterService.replyFileDelete(replyNo) <= 0) {
+				return "file delete error";			
+			}
+			log.info("파일 삭제 완료");
+		}
+		log.info("답글 삭제 시도");
 		return barterService.replyDelete(replyNo) > 0 ? "success" : "error";
 	}
 	

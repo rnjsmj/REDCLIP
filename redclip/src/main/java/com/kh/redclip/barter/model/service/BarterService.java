@@ -40,4 +40,7 @@ public interface BarterService {
 
 	//게시글 삭제
 	int barterDelete(int barterNo);
+	
+	//답글에 포함된 파일 삭제
+	int replyFileDelete(int replyNo);
 }
