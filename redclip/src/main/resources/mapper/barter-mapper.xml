@@ -256,6 +256,13 @@ TB_BARTER_FILE
 		 		BARTER_NO = #{barterNo}
 	</update>
 	
-	
+	<!-- 게시글 삭제 처리 -->
+	<delete id="barterDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</delete>
 	
 </mapper>

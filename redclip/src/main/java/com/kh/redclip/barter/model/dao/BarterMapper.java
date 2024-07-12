@@ -43,5 +43,6 @@ public interface BarterMapper {
 	//답글파일 입력
 	int replyFileInsert(BarterReplyFile replyFile);
 
-
+	//게시글 삭제
+	int barterDelete(int barterNo);
 }

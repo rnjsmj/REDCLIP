@@ -214,6 +214,20 @@ public class BarterController {
 		
 		return "resources/upload/" + changeName;
 	}
+	
+	//게시글 삭제
+	@PostMapping("/delete")
+	public String barterDelete(int barterNo, HttpSession session) {
+		//log.info("삭제할 게시글 번호 : {}", barterNo);
+		
+		if(barterService.barterDelete(barterNo) > 0) {
+			session.setAttribute("alertMsg", "게시글이 삭제되었습니다.");
+			return "redirect:/barters";
+		} else {
+			session.setAttribute("alertMsg", "오류가 발생했습니다.");
+			return "redirect:/barters/" + barterNo;
+		}
+	}
 
 
 }

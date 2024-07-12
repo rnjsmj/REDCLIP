@@ -129,6 +129,8 @@
         }
         .btn-group #delbtn {
             color: #fff;
+            cursor:pointer;
+            
         }
 
         #reply-wrap {
@@ -502,11 +504,16 @@
                             </div>
                         </div>
                         <hr />
+                        
                         <!--글 작성자에게만 보여질 버튼-->
                         <c:if test="${ sessionScope.loginUser.userId eq barter.barterWriter }">
+                        <form action="" method="post" id="postForm">
+                        	<input type="hidden" id="barterNo" name="barterNo" value="${ barter.barterNo }">
+                        </form>
+                        
                         <div class="btn-group" id="writer-btn">
                             <a href="" id="updbtn">수정</a>
-                            <a onclick="" id="delbtn">삭제</a>
+                            <a onclick="deleteBarter();" id="delbtn">삭제</a>
                         </div>
                         </c:if>
                         <div class="btn-group" id="user-btn">
@@ -625,6 +632,15 @@
                 		addActive();
                 		
                 	});
+                	
+                	function deleteBarter() {
+                		
+                		if(confirm("글을 삭제하시겠습니까? 삭제된 게시글은 복구되지 않습니다.")) {
+                			$('#postForm').attr("action", "delete").submit();
+                		}
+                		
+                		
+                	};
                 	
                 	function addActive() {
                     	$('.carousel-item:first-child').addClass('active');

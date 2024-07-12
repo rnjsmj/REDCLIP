@@ -38,4 +38,6 @@ public interface BarterService {
 	// 답글 파일 등록
 	int replyFileInsert(BarterReplyFile replyFile);
 
+	//게시글 삭제
+	int barterDelete(int barterNo);
 }
