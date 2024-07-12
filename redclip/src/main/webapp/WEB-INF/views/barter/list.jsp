@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -113,15 +114,15 @@
 	            </c:if>
 	            <br>
 	            <div class="card-container">
-                    <c:forEach items="${barterList}" var="barter">
+                    <c:forEach items="${list}" var="barter">
                     <div class="card" style="width: 18rem;">
-                        <img src="${barter.imagePath}" class="card-img-top" alt="${barter.barterName}">
+                        <img src="${barter.barterFileList.barterFileName}" class="card-img-top" alt="${barter.barterName}">
                         <div class="card-body">
                             <h5 class="card-title">${barter.barterName}</h5>
                             <p class="card-text">${barter.barterWriter}</p>
                             <p class="card-text">${barter.region.cityName} ${barter.region.townName} ${barter.region.villageName}</p>
-                            <p class="card-text">${barter.createDate}</p>
-                            <a href="/redclip/barters/1" class="btn btn-primary">상세보기</a>
+                            <p class="card-text">${barter.barterDate}</p>
+                            <a href="/redclip/barters/${ barter.barterNo }" class="btn btn-primary">상세보기</a>
                         </div>
                     </div>
                 </c:forEach>
