@@ -4,13 +4,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.redclip.barter.model.service.BarterService;
+import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
@@ -33,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
     
     private final MemberService memberService;
+    private final BarterService barterService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @ResponseBody
     @PostMapping(value = "/check-id", produces = "text/html; charset=UTF-8")
@@ -82,20 +83,18 @@ public class MemberController {
    //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
     @ResponseBody
 	@PutMapping
-	public ResponseEntity<String> update(@RequestBody Member member) {
+	public String update(@RequestBody Member member, HttpSession session) {
 		
 		//log.info("입력한 정보 : {}", member);
-    	
-    	int result = memberService.update(member);
-    	
-    	if(result == 0) {
+    	if(memberService.update(member)>0) {
     		
-    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원정보 수정 실패");
+    		session.setAttribute("loginUser", memberService.login(member));
+    		return "success";
+    	} else {
+    		return "error";
     	}
     	
-    		return ResponseEntity.status(HttpStatus.OK).body("회원정보 수정 성공");
-		
-            
+    	
     }
     
     
@@ -135,5 +134,24 @@ public class MemberController {
         	 return "error";
         }
   }
+    
+    //회원 상태 변경
+    @ResponseBody
+    @PutMapping("/{userId}")
+    public String changeStatus(@PathVariable String userId) {
+    	  
+    	//log.info("탈주: {}", userId);
+    	return memberService.changeStatus(userId) > 0 ? "success" : "error";
+    }
+    
+    //내가 쓴 글 조회
+    @GetMapping("/{userId}")
+    public String findById(@PathVariable String userId) {
+    	
+    	
+    	
+    	return "redirect:/";
+    }
+    
     
 }

@@ -10,6 +10,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            clear: both;
         }
 
         footer {
@@ -66,7 +67,7 @@
 	<footer>
         <div class="footer-content">
             <div class="footer-left">
-                <a href="#">이용약관</a>
+                <a href="team">이용약관</a>
                 <a href="#">개인정보처리방침</a>
             </div>
             <div class="footer-right">
