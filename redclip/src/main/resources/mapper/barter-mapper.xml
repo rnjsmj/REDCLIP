@@ -25,15 +25,16 @@
 			<result column="VILLAGE_CODE" property="villageCode" />
 			<result column="VILLAGE_NAME" property="villageName"/>
 		</association>
+		<collection resultMap="barterFileResultSet" property="barterFileList" />
 	</resultMap>
 	
-	<resultMap type="barterReply" id="barterReplyResultSet">
-		<result column="REPLY_NO" property="replyNo" />
-		<result column="REPLY_CONTENT" property="replyContent" />
-		<result column="REPLY_NICKNAME" property="replyNickname" />
-		<result column="REPLY_DATE" property="replyDate" />
+	<resultMap type="barterFile" id="barterFileResultSet">
+		<result column="BARTER_FILE_NO" property="barterFileNo"/>
+		<result column="BARTER_NO" property="barterNo"/>	
+		<result column="BARTER_FILE_NAME" property="barterFileName"/>
 	</resultMap>
-
+	
+	
 	<select id="findById" parameterType="_int" resultType="barterVo" resultMap="barterResultSet">
 		<!-- resultMap 적용하여 수정 -->
 		SELECT
@@ -42,8 +43,11 @@
 				BARTER_CONTENT,
 				BARTER_WRITER,
 				BARTER_NICKNAME,
+				CITY_CODE,
 				CITY_NAME,
+				TOWN_CODE,
 				TOWN_NAME,
+				VILLAGE_CODE,
 				VILLAGE_NAME,
 				CATEGORY_NO,
 				CATEGORY_NAME,
@@ -52,10 +56,8 @@
 				WISH_COUNT,
 				BARTER_STATUS,
 				POINT,
-				REPLY_NO,
-				REPLY_CONTENT,
-				REPLY_NICKNAME,
-				REPLY_DATE
+				BARTER_FILE_NO,
+				BARTER_FILE_NAME
 		  FROM
 		  		VW_BARTER_DETAIL
 		 WHERE
@@ -83,7 +85,9 @@
 				TOWN_NAME
 				VILLAGE_NAME,
 				BARTER_DATE,
-				BARTER_STATUS
+				BARTER_STATUS,
+				BARTER_FILE_NO,
+				BARTER_FILE_NAME
 		  FROM
 		  		VW_BARTER_DETAIL
 
@@ -115,11 +119,28 @@
 	        	#{barterName},
 	        	#{barterContent},
 	        	#{barterWriter},
-	        	#{villageCode},
-	        	#{categoryNo}
+	        	#{villageCode, jdbcType=NUMERIC}, 
+        		#{categoryNo, jdbcType=NUMERIC}
 	    		)
 	</insert>
 
+	<insert id="barterInsert" parameterType="barterFile">
+	INSERT
+    			INTO
+TB_BARTER_FILE
+    			(
+    			BARTER_FILE_NO,
+ 			    BARTER_NO,
+    			BARTER_FILE_NAME
+    			)
+    	VALUES 
+    			(
+    			SEQ_BARTER_FILE.NEXTVAL,
+    			SEQ_BARTER.CURRVAL,
+    			#{barterFileName}
+    			)
+	</insert>
+	
 	<resultMap type="barterReply" id="replyResultSet">
 		<id column="REPLY_NO" property="replyNo"/>
 		<result column="REPLY_CONTENT" property="replyContent" />
@@ -170,6 +191,26 @@
 				)
 	</insert>
 	
+	<!-- 댓글 파일 입력 -->
+	<insert id="replyFileInsert" parameterType="barterReplyFile">
+		INSERT
+		  INTO
+		  		TB_BARTER_REPLY_FILE
+		  		(
+		  			REPLY_FILE_NO,
+		  			REPLY_NO,
+		  			REPLY_FILE_NAME
+		  		)
+		VALUES
+				(
+					SEQ_BREP_FILE.NEXTVAL,
+					SEQ_BREP.CURRVAL,
+					#{replyFileName}
+				)
+		
+	
+	</insert>
+	
 	<!-- 댓글 수정 -->
 	<update id="replyUpdate" parameterType="barterReply">
 		UPDATE
@@ -217,6 +258,23 @@
 		 		BARTER_NO = #{barterNo}
 	</update>
 	
+	<!-- 게시글 삭제 처리 -->
+	<delete id="barterDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</delete>
 	
+	<!-- 답글에 포함된 파일 삭제 -->
+	<delete id="replyFileDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER_REPLY_FILE
+		 WHERE
+		 		REPLY_NO = #{replyNo}
+	
+	</delete>
 	
 </mapper>

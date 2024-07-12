@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,7 +57,7 @@
     <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <div class="container">
         <!-- breadcrumb -->
-        <section id="page1" class="page">
+        <section>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
@@ -69,13 +70,27 @@
             <div id="filter-info" class="clr-fix">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex">
-                        <select class="form-control" id="category">
-                            <option selected>전체보기</option>
-                            <option>전자기기</option>
-                            <option>가구</option>
-                            <option>의류</option>
-                            <option>도서</option>
-                        </select>
+                        <select class="form-control" id="categoryNo" name="categoryNo" style="max-width: 150px;" required>
+				           <option>카테고리</option>
+				           <option value="1">디지털기기</option>
+				           <option value="2">가구/인테리어</option>
+				           <option value="3">유아용품</option>
+				           <option value="4">여성의류</option>
+				           <option value="5">여성잡화</option>
+				           <option value="6">남성의류</option>
+				           <option value="7">남성잡화</option>
+				           <option value="8">생활가전</option>
+				           <option value="9">주방용품</option>
+				           <option value="10">스포츠/레저</option>
+				           <option value="11">게임/음반</option>
+				           <option value="12">뷰티/미용</option>
+				           <option value="13">식물</option>
+				           <option value="14">가공식품</option>
+				           <option value="15">건강기능식품</option>
+				           <option value="16">반려동물용품</option>
+				           <option value="17">티켓/교환권</option>
+				           <option value="18">도서</option>
+				        </select>
                         <select class="form-control" id="si">
                             <option selected>시</option>
                             <option value="1">서울특별시</option>
@@ -91,47 +106,37 @@
                 </div>
             </div>
 
-        <div class="container">
-            <h5 style="font-weight: bold">추천 물물교환</h5>
-            <br>
-            <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-            <c:if test="${not empty sessionScope.loginUser }">
-                <a class="btn btn-secondary" style="float: right;" href="barters/registration">글쓰기</a> <br>
-            </c:if>
-            <br>
-            
-            <section id="portfolio" style="padding-top: 90px; padding-bottom: 0;">
-                <div class="container">
-                    <div class="card-container row row-cols-1 row-cols-sm-3 row-cols-md-4 g-4" id="card-container">
-                        <!-- JavaScript에 의해 동적으로 카드가 추가 -->
-                        <c:forEach items="${ baters}" var="img">
-                            <div class="col" onclick="func(this);">
-                                <input type="hidden" class="thumbnail-date" value="${ img.createDate}" />
-                                <input type="hidden" class="thumbnail-content" value="${ img.boardContent}" />
-                                <a class="portfolio-link" href="">
-                                    <div class="portfolio-hover">
-                                        <div class="portfolio-hover-content"></div>
-                                    </div>
-                                </a>
-                                <div class="portfolio-caption">
-                                    <h4 class="thumbnail-title">${ img.boardTitle}</h4>
-                                    <p class="text-muted thumbnail-writer">${ img.boardWriter }</p>
-                                    <span>${ img.region.cityName }&nbsp;${ img.region.townName }&nbsp;${ img.region.villageName }</span>
-                                </div>
-                            </div>
-                        </c:forEach>
+        <div class="container" style="max-width: 1200px;">
+	            <h5 style="font-weight: bold">추천 물물교환</h5>
+	            <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+	            <c:if test="${not empty sessionScope.loginUser }">
+	                <a class="btn btn-secondary" style="float: right;" href="barters/registration">글쓰기</a> <br>
+	            </c:if>
+	            <br>
+	            <div class="card-container">
+                    <c:forEach items="${list}" var="barter">
+                    <div class="card" style="width: 18rem;">
+                        <img src="${barter.barterFileList.barterFileName}" class="card-img-top" alt="${barter.barterName}">
+                        <div class="card-body">
+                            <h5 class="card-title">${barter.barterName}</h5>
+                            <p class="card-text">${barter.barterWriter}</p>
+                            <p class="card-text">${barter.region.cityName} ${barter.region.townName} ${barter.region.villageName}</p>
+                            <p class="card-text">${barter.barterDate}</p>
+                            <a href="/redclip/barters/${ barter.barterNo }" class="btn btn-primary">상세보기</a>
+                        </div>
                     </div>
-                    <div class="btn-container">
-                        <button id="load-more-btn" class="btn btn-danger load-more-btn">더보기</button>
-                    </div>
+                </c:forEach>
                 </div>
+                <div class="btn-container">
+                    <button id="load-more-btn" class="btn btn-danger load-more-btn">더보기</button>
+                </div>
+	        </div>
             </section>
         </div>
     </div>
 	
     <script>
       	$(() => {
-		    const $categorySelect = $('#category');
         	const $siSelect = $('#si');
 		    const $guSelect = $('#gu');
 		    const $dongSelect = $('#dong');
@@ -183,71 +188,31 @@
 		    	}
 		    });
 		});
+		
+		$(document).ready(function() {
+		    let page = 1;
 
-        const cardContainer = document.getElementById('card-container');
-        const loadMoreBtn = document.getElementById('load-more-btn');
-        let cardCount = 0;
+		    $('#load-more-btn').click(function() {
+		        page++;
+		        $.ajax({
+		            url: '/redclip/barters/list',  // 올바른 URL (서버의 데이터를 가져오는 API 경로)
+		            type: 'GET',
+		            data: { page: page },  // 현재 페이지 정보를 서버로 전달합니다.
+		            success: function(response) {
+		                $('.card-container').append(response);  // 서버로부터 받은 HTML 데이터를 추가합니다.
 
-        function createCard(item) {
-            const col = document.createElement('div');
-            col.className = 'col';
-            const card = document.createElement('div');
-            card.className = 'card shadow-sm';
-            const img = document.createElement('img');
-            img.className = 'bd-placeholder-img card-img-top';
-            img.setAttribute('width', '100%');
-            img.setAttribute('height', '200');
-            img.setAttribute('src', item.imgUrl);
-            img.setAttribute('alt', '상품 이미지');
-            card.appendChild(img);
-            const cardBody = document.createElement('div');
-            cardBody.className = 'card-body';
-            const cardText = document.createElement('p');
-            cardText.className = 'card-text';
-            cardText.textContent = item.title;
-            cardBody.appendChild(cardText);
-            const cardFooter = document.createElement('div');
-            cardFooter.className = 'd-flex justify-content-between align-items-center';
-            const btnGroup = document.createElement('div');
-            btnGroup.className = 'btn-group';
-            const viewBtn = document.createElement('button');
-            viewBtn.className = 'btn btn-sm btn-outline-secondary';
-            viewBtn.textContent = 'View';
-            viewBtn.onclick = function() {
-                showModal(item.title, item.writer, item.content, item.date);
-            };
-            btnGroup.appendChild(viewBtn);
-            cardFooter.appendChild(btnGroup);
-            const smallText = document.createElement('small');
-            smallText.className = 'text-body-secondary';
-            smallText.textContent = item.time;
-            cardFooter.appendChild(smallText);
-            cardBody.appendChild(cardFooter);
-            card.appendChild(cardBody);
-            col.appendChild(card);
-            return col;
-        }
-
-        function loadMoreCards() {
-            $.ajax({
-                url: '/redclip/barters/barter-registration',
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    data.forEach(item => {
-                        cardContainer.appendChild(createCard(item));
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error:', status, error);
-                }
-            });
-        }
-
-        loadMoreBtn.addEventListener('click', loadMoreCards);
-
-        // 초기 로드 시 카드 추가
-        loadMoreCards();
+		                // 페이지네이션을 위한 버튼 상태 업데이트
+		                if (response.length < 10) {  // 예: 데이터의 양에 따라
+		                    $('#load-more-btn').hide();  // 더 이상 데이터가 없으면 버튼 숨김
+		                }
+		            },
+		            error: function() {
+		                alert('오류가 발생했습니다.');  // 오류 발생 시 경고창 표시
+		            }
+		        });
+		    });
+		});
+		
     </script>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>

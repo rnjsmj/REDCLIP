@@ -3,123 +3,123 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>검색창</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        .search-container {
-            position: relative;
-            width: 400px;
-            margin: 0 auto;
-            margin-top: 80px;
-            margin-bottom: 80px;
-            display: flex;
-        }
-        .search-input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px 0 0 5px;
-            outline: none; /* Remove default focus border */
-        }
-        .search-input:focus {
-            border-color: rgb(238, 60, 60); /* Change border color on focus */
-        }
-        .search-button {
-            padding: 8px 16px;
-            border: 1px solid #ccc;
-            border-left: 0;
-            background-color: rgb(238, 60, 60);
-            color: white;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-        }
-        .search-results {
-            position: absolute;
-            top: 40px;
-            width: 100%;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            display: none;
-            z-index: 1000;
-        }
-        .search-results.active {
-            display: block;
-        }
-        .search-results .tab {
-            display: flex;
-            border-bottom: 1px solid #ccc;
-        }
-        .search-results .tab button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
-        .search-results .tab button.active {
-            border-bottom: 2px solid #858585;
-            font-weight: bold;
-        }
-        .search-results .content {
-            padding: 10px;
-        }
-        .search-results .content .recent-searches,
-        .search-results .content .popular-searches {
-            display: none;
-        }
-        .search-results .content .recent-searches.active,
-        .search-results .content .popular-searches.active {
-            display: block;
-        }
-        .search-results .content ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .search-results .content li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 5px 0;
-        }
-        .search-results .content li span {
-            flex: 1;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-        .search-results .content li .delete-btn {
-            cursor: pointer;
-            color: #aaa;
-            text-align: right;
-            margin-right: 5px;
-        }
-        .search-results .actions {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-        }
-        .search-results .actions button {
-            border: none;
-            background: none;
-            cursor: pointer;
-            color: #aaa;
-        }
-        .search-results .actions .clear-recent {
-            visibility: visible;
-        }
-        .search-results .actions .clear-recent.hidden {
-            visibility: hidden;
-        }
-        #no-recent-searches {
-            text-align: center;
-            padding: 10px 0;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>검색창</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    .search-container {
+        position: relative;
+        width: 400px;
+        margin: 0 auto;
+        margin-top: 80px;
+        margin-bottom: 80px;
+        display: flex;
+    }
+    .search-input {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+    }
+    .search-input:focus {
+        border-color: rgb(238, 60, 60);
+    }
+    .search-button {
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+        border-left: 0;
+        background-color: rgb(238, 60, 60);
+        color: white;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+    }
+    .search-results {
+        position: absolute;
+        top: 40px;
+        width: 100%;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: none;
+        z-index: 1000;
+    }
+    .search-results.active {
+        display: block;
+    }
+    .search-results .tab {
+        display: flex;
+        border-bottom: 1px solid #ccc;
+    }
+    .search-results .tab button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+    .search-results .tab button.active {
+        border-bottom: 2px solid #858585;
+        font-weight: bold;
+    }
+    .search-results .content {
+        padding: 10px;
+    }
+    .search-results .content .recent-searches,
+    .search-results .content .popular-searches {
+        display: none;
+    }
+    .search-results .content .recent-searches.active,
+    .search-results .content .popular-searches.active {
+        display: block;
+    }
+    .search-results .content ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .search-results .content li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
+    }
+    .search-results .content li span {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .search-results .content li .delete-btn {
+        cursor: pointer;
+        color: #aaa;
+        text-align: right;
+        margin-right: 5px;
+    }
+    .search-results .actions {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+    .search-results .actions button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: #aaa;
+    }
+    .search-results .actions .clear-recent {
+        visibility: visible;
+    }
+    .search-results .actions .clear-recent.hidden {
+        visibility: hidden;
+    }
+    #no-recent-searches {
+        text-align: center;
+        padding: 10px 0;
+    }
+</style>
 </head>
 <body>
     <div class="search-container">
@@ -174,10 +174,12 @@
 
         function addSearchTerm() {
             const searchTerm = $('.search-input').val();
+            console.log("입력한 단어: ", searchTerm);
             if (searchTerm) {
                 recentSearches.push(searchTerm);
                 updateRecentSearches();
-                $('.search-input').val(''); // 입력란 초기화
+                // 검색창을 비웁니다.
+                $('.search-input').val('');
             }
         }
 
@@ -207,19 +209,34 @@
         });
 
         function updateRecentSearches() {
+        	console.log(recentSearches);
+        
             const recentSearchesList = $('#recent-searches-list');
             recentSearchesList.empty();
             if (recentSearches.length === 0) {
                 recentSearchesList.append('<li id="no-recent-searches">최근 검색어가 없습니다.</li>');
             } else {
                 recentSearches.forEach((search, index) => {
+                	console.log(index);
                     recentSearchesList.append(
-                        `<li><span>${search}</span><span class="delete-btn" data-index="${index}">삭제</span></li>`
+                        '<li><span>'+search+'</span><span class="delete-btn" data-index="${index}">삭제</span></li>'
                     );
                 });
             }
-        }
-		
+            
+
+
+            if (recentSearches.length > 0) {
+
+                const lastSearchTerm = recentSearches[recentSearches.length - 1];
+                $('.search-input').val(lastSearchTerm);
+                console.log("검색창에 표시된 단어: ", lastSearchTerm);
+            } else {
+                $('.search-input').val('');
+
+            } 
+        };
+
         
     });
 </script>

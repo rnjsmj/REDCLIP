@@ -25,6 +25,10 @@
             content: '';
             display: block;
         }
+        
+        .breadcrumb {
+        	background-color:#fff;
+        }
         #hd {
             width: 100%;
             min-width: 960px;
@@ -75,7 +79,7 @@
             text-align: left;
         }
         #left-info h2 {
-            white-space: normal;
+            word-break: break-all;
         }
         #left-info span {
             color: #393939;
@@ -125,6 +129,8 @@
         }
         .btn-group #delbtn {
             color: #fff;
+            cursor:pointer;
+            
         }
 
         #reply-wrap {
@@ -175,6 +181,7 @@
             padding: 10px;
             min-height: 150px;
             position: relative;
+            display: flow-root;
         }
         .reply-img {
             width: 200px;
@@ -182,10 +189,16 @@
             margin-right: 20px;
             float: left;
             overflow:hidden;
+            
+            .carousel-item {
+            	overflow: hidden;
+   				 width: 200px;
+    			height: 200px;
+            }
         }
         
         .reply-img img {
-        	width:100;
+        	width:100%;
         	height:100%;
         	object-fit:cover;
         }
@@ -198,6 +211,7 @@
         .reply-list-content {
             display: inline-block;
             width: 100%;
+            word-wrap:break-word;
         }
         
         .reply-list-content:after {
@@ -310,6 +324,19 @@
         	color:#b6b9bf;
         	text-decoration:underline;
         }
+        .reply-pre-list {
+        	display:inline-block;
+        	width:200px;
+        	height:200px;
+        	overflow:hidden;
+        	
+        	
+        	> img {
+        		width:100%;
+        		height:100%;
+        		object-fit:cover;
+        	}	
+        }
     </style>
 </head>
 <body>
@@ -320,59 +347,44 @@
             <section id="page1" class="page">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                   <img src="/redclip/resources/img/house.svg" style="margin-right: 4px" />
+                   <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
                    <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
                    <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
                    <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
                </ol>
            </nav>
                 <div id="detail-wrap">
+                <c:if test="${ barter.barterFileList[0].barterFileNo != 0 }">
                     <div id="trade-image">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> -->
+                        <div id="carouselBarters" class="carousel slide" data-ride="carousel" data-interval="false">
                             <ol class="carousel-indicators">
-                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                                <!-- <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li> -->
+                                <c:forEach var="barterFile" items="${ barter.barterFileList }" varStatus="status">
+                                	<li data-target="#carouselBarters" data-slide-to="${ status.index }"></li>
+                                </c:forEach>
                             </ol>
                             <div
                                 class="carousel-inner"
                                 data-toggle="modal"
-                                data-target="#trade-image-modal"
-                                onclick="modalContent(this);"
-                            >
-                                <div class="carousel-item active">
-                                    <img
-                                        class="d-block w-100 img-fluid"
-                                        src="https://via.placeholder.com/800x400?auto=yes&bg=777&fg=555&text=First slide"
-                                        alt="First slide"
-                                    />
-                                </div>
-                                <div class="carousel-item">
-                                    <img
-                                        class="d-block w-100"
-                                        src="https://via.placeholder.com/800x400?auto=yes&bg=666&fg=444&text=Second slide"
-                                        alt="Second slide"
-                                    />
-                                </div>
-                                <div class="carousel-item">
-                                    <img
-                                        class="d-block w-100"
-                                        src="https://via.placeholder.com/800x400?auto=yes&bg=555&fg=333&text=Third slide"
-                                        alt="Third slide"
-                                    />
-                                </div>
-                                <div class="carousel-item">
-                                    <img
-                                        class="d-block w-100"
-                                        src="https://via.placeholder.com/800x400?auto=yes&bg=555&fg=333&text=Fourth slide"
-                                        alt="Fourth slide"
-                                    />
-                                </div>
+                                data-target="#barter-image-modal"
+                                onclick="modalContent(this);">
+                                <!-- <div class="carousel-item active"> -->
+                                <c:forEach var="barterFile" items="${ barter.barterFileList }" >
+                                
+	                                <div class="carousel-item">
+	                                    <img
+	                                        class="d-block w-100 img-fluid"
+	                                        src="${ barterFile.barterFileName }"
+	                                        alt="${ barterFile.barterFileNo }"
+	                                    />
+	                                </div>
+	                                
+                                </c:forEach>
                             </div>
                             <a
                                 class="carousel-control-prev"
-                                href="#carouselExampleIndicators"
+                                href="#carouselBarters"
                                 role="button"
                                 data-slide="prev"
                             >
@@ -381,7 +393,7 @@
                             </a>
                             <a
                                 class="carousel-control-next"
-                                href="#carouselExampleIndicators"
+                                href="#carouselBarters"
                                 role="button"
                                 data-slide="next"
                             >
@@ -390,55 +402,54 @@
                             </a>
                         </div>
                     </div>
+                   
+                    
 
-                    <!--이미지 모달 창-->
+                    
+ 					</c:if>
+ 					<!--이미지 모달 창-->
                     <div
                         class="modal fade"
-                        id="trade-image-modal"
+                        id="barter-image-modal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="exampleModalCenterTitle"
                         aria-hidden="true"
                     >
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="position: relative">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <div class="modal-body">
+                                	<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 20px; right: 20px; z-index: 999">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                </div>
-                                <div class="modal-body">
                                     <div
-                                        id="carouselExampleIndicators-modal"
+                                        id="carouselBarters-modal"
                                         class="carousel slide"
                                         data-ride="carousel"
                                     >
-                                        <ol class="carousel-indicators">
-                                            <li
-                                                data-target="#carouselExampleIndicators-modal"
+                                        <ol class="carousel-indicators" id="modal-indicators">
+                                            <!-- <li
+                                                data-target="#carouselBarters-modal"
                                                 data-slide-to="0"
                                                 class="active"
-                                            ></li>
-                                            <li data-target="#carouselExampleIndicators-modal" data-slide-to="1"></li>
-                                            <li data-target="#carouselExampleIndicators-modal" data-slide-to="2"></li>
-                                            <li data-target="#carouselExampleIndicators-modal" data-slide-to="3"></li>
+                                            ></li> -->
                                         </ol>
-                                        <div class="carousel-inner modal-inner"></div>
+                                        <div class="carousel-inner modal-inner">
+                                        
+                                        </div>
                                         <a
                                             class="carousel-control-prev"
-                                            href="#carouselExampleIndicators-modal"
+                                            href="#carouselBarters-modal"
                                             role="button"
-                                            data-slide="prev"
-                                        >
+                                            data-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Previous</span>
                                         </a>
                                         <a
                                             class="carousel-control-next"
-                                            href="#carouselExampleIndicators-modal"
+                                            href="#carouselBarters-modal"
                                             role="button"
-                                            data-slide="next"
-                                        >
+                                            data-slide="next">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Next</span>
                                         </a>
@@ -447,7 +458,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div id="trade-info">
                         <div id="main-info" class="clr-fix">
                             <div id="left-info">
@@ -494,11 +504,17 @@
                             </div>
                         </div>
                         <hr />
+                        
                         <!--글 작성자에게만 보여질 버튼-->
                         <c:if test="${ sessionScope.loginUser.userId eq barter.barterWriter }">
+                        <form action="" method="post" id="postForm">
+                        	<input type="hidden" id="barterNo" name="barterNo" value="${ barter.barterNo }">
+                        	<input type="hidden" name="fileExist"  />
+                        </form>
+                        
                         <div class="btn-group" id="writer-btn">
                             <a href="" id="updbtn">수정</a>
-                            <a onclick="" id="delbtn">삭제</a>
+                            <a onclick="deleteBarter();" id="delbtn">삭제</a>
                         </div>
                         </c:if>
                         <div class="btn-group" id="user-btn">
@@ -509,7 +525,7 @@
                 <!-- 로그인한 사용자만 reply-wrap 볼 수 있음-->
                 <div id="reply-wrap">
                 <c:if test="${ not empty sessionScope.loginUser.userId && sessionScope.loginUser.userId ne barter.barterWriter }">
-                    <div id="input-reply">
+                    <form id="input-reply" enctype="multipart/form-data">
                             <table id="reply-table">
                                 <tr>
                                     <td rowspan="2">
@@ -560,18 +576,50 @@
                                                     $(this).val($(this).val().substring(0, 199));
                                                 }
                                             });
+                                            
+                                            
+                                            
+                                            
                                         </script>
                                     </td>
                                 </tr>
                             </table>
-                            <input type="file" id="reply-file" />
-                        </div>
+                            <input type="file" id="reply-file" onchange="loadImg(this);" name="upfile" multiple/>
+                        </form>
                         <!--script로 선택한 사진들 li로 출력-->
-                       <div id="file-list"> 
-                       
+                       <div id="file-list-div"> 
+                       		<ul id="file-list">
+                       		
+                       		</ul>
                        </div>
+                       
+                       
+                       
                         </c:if>
-                    
+                    <script>
+                    	function loadImg(inputFile) {
+                    		
+                    		
+                    		$('#file-list').html('');
+        
+                    		
+                    		if(inputFile.files.length) {
+                    			for(let i=0; i < inputFile.files.length; i++) {
+                    				var reader = new FileReader();
+                        			reader.readAsDataURL(inputFile.files[i]);
+                        			reader.onload = e => {
+                        				let preImage = '<li class="reply-pre-list"><img src="' + e.target.result + '"></li>';
+                        				$('#file-list').append(preImage);
+                        			}
+                        			
+                        		}
+                    			
+                    		} else {
+                    			$('#file-list').html('');
+                    		}
+                    		
+                    	};
+                    </script>
                     <div id="reply-list">
                         <!--  답글 목록 -->
                 	</div>
@@ -582,8 +630,23 @@
                 	$(() => {
                 		
                 		selectReply();
+                		addActive();
                 		
                 	});
+                	
+                	function deleteBarter() {
+                		
+                		if(confirm("글을 삭제하시겠습니까? 삭제된 게시글은 복구되지 않습니다.")) {
+                			$('#postForm').attr("action", "delete").submit();
+                		}
+                		
+                		
+                	};
+                	
+                	function addActive() {
+                    	$('.carousel-item:first-child').addClass('active');
+                    	$('.reply-img .carousel-item:first-child').addClass('active');
+                	};
                 	
                 	function selectReply() {
                 		
@@ -609,27 +672,33 @@
                 					if(fileList.length != 0) {
                 						
                 						resultStr += '<figure class="reply-img">'
-                                            	  +'<div id="reply-img-' + result[i].replyNo + '" class="carousel slide" data-ride="carousel">'
-                                        		  + '<div class="carousel-inner" data-toggle="modal" data-target="#trade-image-modal" onclick="modalContent(this);">';
+                                            	  +'<div id="reply-img-' + result[i].replyNo + '" class="carousel slide" data-ride="carousel" data-interval="false">'
+                                        		  + '<div class="carousel-inner" data-toggle="modal" data-target="#barter-image-modal" onclick="modalContent(this);">';
                 						
                 						for (let j in fileList) {
                 							resultStr += '<div class="carousel-item">'
-                                            		  + '<img src="'
-                                            		  + fileList.replyFileName
-                                            		  + '" alt="' + fileList.replyFileNo + '"/></div>';
+                                            		  + '<img src="/redclip/'
+                                            		  + fileList[j].replyFileName
+                                            		  + '" alt="이미지' + fileList[j].replyFileNo + '"/></div>';
                 						}
-                                        		  
-                                        resultStr += '</div><a class="carousel-control-prev"'
+                                       
+                						resultStr += '</div>';
+                						
+                						if(fileList.length > 1) {
+                                        resultStr += '<a class="carousel-control-prev"'
                                         		  + 'href="#reply-img-' + result[i].replyNo + '" '
                                             	  + 'role="button" data-slide="prev">'
                                             	  + '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a>'
                                             	  + '<a class="carousel-control-next" '
-                                            	  + 'href="#reply-img-' + result[i].replyNo + 
+                                            	  + 'href="#reply-img-' + result[i].replyNo  
                                             	  + '" role="button" data-slide="next"> '
                                             	  + '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
-                                                  + '<span class="sr-only">Next</span></a></div></figure>';
+                                                  + '<span class="sr-only">Next</span></a>';
+                                        }      
                 						
-                						$('.reply-img .carousel-inner').addClass('active');
+                                        resultStr += '</div></figure>';
+                						
+                						
                 						
                 					}
                 					
@@ -659,8 +728,8 @@
                                     
                                     
                 				};
-                				resultStr += "<hr/>";
-                				 $('#reply-list').html(resultStr);
+                				if(result.length != 0) resultStr += "<hr/>";
+                				$('#reply-list').html(resultStr);
                 				
                 			}
                 			
@@ -673,16 +742,27 @@
                 		
                 		if($('#reply-content').val().trim() != '') {
                 			
+                			var formData = new FormData();
+                			var inputFile = $("#reply-file");
+                			var files = inputFile[0].files;
+                			
+                			for (var i=0; i<files.length; i++) {
+                				
+                				formData.append("upfiles", files[i]);
+                			}
+                			
+                			formData.append("barterNo", ${ barter.barterNo });
+                			formData.append("replyContent", $('#reply-content').val());
+                			formData.append("replyWriter", '${ sessionScope.loginUser.userId }');
+                			
+                			
                 			$.ajax({
                 				
                 				url : 'reply',
                 				type : 'post',
-                				//barterNo, replyContent, replyWriter
-                				data : {
-                					barterNo : ${ barter.barterNo },
-                					replyContent : $('#reply-content').val(),
-                					replyWriter : '${ sessionScope.loginUser.userId }'
-                				},
+                				data : formData,
+                				processData : false,
+                				contentType : false,
                 				success : result => {
                 					
                 					console.log(result);
@@ -690,6 +770,9 @@
                 						
                 						selectReply();
                 						$('#reply-content').val('');
+                						$('#reply-file').val('');
+                						$('#file-list').html('');
+                						
                 						
                 					}
                 					
@@ -707,10 +790,22 @@
                 		
                 		if(confirm('삭제하시겠습니까?')) {
                 			
+	                		/* var deleteData = { fileExist : false }; */
+	                		var deleteData;
+	                		
+               				if($('#reply-img-'+no).length) {
+               					console.log('deleteData true로 변경');
+               					deleteData = { fileExist : true };
+               				} else {
+               					deleteData = { fileExist : false };
+               				}
+	                		
+	                			
                 			$.ajax({
                 				
                 				url : 'reply/' + no,
                 				type : 'delete',
+                				data : deleteData,
                 				success : result => {
                 					
                 					console.log(result);
@@ -811,30 +906,7 @@
 	
 	
 	
-		<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h1 class="modal-title fs-5" >수정</h1>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body">
-		        <form>
-		          <div class="mb-3">
-		            <textarea class="form-control" id="reply-content" style="resize:none; maxlength:200; height:200px;"></textarea>
-		          </div>
-		          <div class="mb-3">
-		           <!-- 파일 첨부? -->
-		          </div>
-		        </form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-		        <button type="button" class="btn btn-primary" onclick="editReply();">수정</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+
                 
             </section>
             <section id="page2" class="page">
@@ -930,11 +1002,63 @@
             interval: false,
         });
 
+        
+        
+        
         function modalContent(track) {
+        	console.log('모달 동작');
             var innerContent = track.innerHTML;
-            $('.modal-inner').html(innerContent);
-            console.log($('.modal-inner').html());
-        }
+            $('.carousel-inner.modal-inner').html(innerContent);
+            
+            var child = track.length;
+            
+           	let modalIndicators = '';
+           	for (var step = 0; step < child; step++ ) {
+           		let += '<li data-target="#carouselBarters-modal" data-slide-to="'
+           			 + step + '"></li>';
+           	}
+           	
+           	var child = track.childElementCount;
+            $('#modal-indicators').children().eq(0).addClass('active');
+          
+            $('#barter-image-modal').modal('show');
+           	
+        };
+        
+        
+        
+        
+    	
+    	window.onload = function() {
+    		$('.carousel').carousel({
+                interval: false,
+            });
+    		
+    		addActive();
+    		
+    		
+    		
+    		/* $(document).on('click', '.carousel-inner', e => {
+    			console.log('modal content 수정');
+    			
+    			var innerContent = e.innerHTML;
+    			$('.carousel-inner.modal-inner').innerHTML = innerContent;
+    			
+    			var child = e.length;
+                
+               	let modalIndicators = '';
+               	for (var step = 0; step < child; step++ ) {
+               		let += '<li data-target="#carouselBarters-modal" data-slide-to="'
+               			 + step + '"></li>';
+               	}
+               	
+               	var child = e.childElementCount;
+                $('#modal-indicators').children().eq(0).addClass('active');
+    		});
+ */
+            
+    		
+    	}
     </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,10 +44,15 @@
              width: 1200px;
              margin-top: 30px;
             }
+        
+        #changeName {
+        	width: 100px;
+        	height: 100px;
+        	
+        }
 
         #buttons {
-        	width:100%;
-            float: right;
+        	float: right;
             margin-top: 60px;
          }
 
@@ -57,6 +63,8 @@
         #pointbar {
         	margin-top: 40px;
         }
+        
+        
 </style>
 </head>
 <body>
@@ -77,10 +85,10 @@
               <a class="nav-link active" aria-current="page" href="#">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">차단 목록</a>
+              <a class="nav-link" href="bolockList">차단 목록</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">내가 쓴 글</a>
+              <a class="nav-link" href="myProduct">내가 쓴 글</a>
             </li>
           </ul>
     </div>
@@ -90,7 +98,13 @@
     
         <div id="updateForm">
             <div>
-                <div class="form-group">
+                <div class="userImg">
+                	<div id="changeName">
+						<img alt="프로필 사진" src="">
+					</div>
+					<input type="file" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+				</div>
+                    
                     <label for="userId">* ID </label><br>
                     <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
                     
@@ -123,20 +137,15 @@
 	                        <div class="progress-bar" style="width: 0%"></div>
 	                    </div>
                     </div>
-                  </div>
-                </div>
-            </div>
-                     
-                <div id="buttons">
-                    <button type="button" id="userUpdate" class="btn btn-success" onclick="update()">수정</button>
-                    <button type="reset" class="btn btn-secondary">취소</button><br>
+               
+				<div id="buttons">
+                    <button type="button" id="userUpdate" class="btn btn-success" onclick="update();">수정</button>
+                    <button type="reset" class="btn btn-secondary" onclick="location.reloard">취소</button><br>
                     <button type="button" id="delete-btn" class="btn btn-secondary" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
-                </form>
-                </div>
+				</div>
+              </div>
             </div>
-            
         </div>
-    </div>
 	<footer>
         <jsp:include page="../common/footer.jsp"></jsp:include>
     </footer>
@@ -154,7 +163,7 @@
 
                 <div>
                 	<!-- 같은 조건의 pwd 값을 가진 모든 유저가 삭제 될 수 있으므로 행을 식별할 수 있는 값을 추가 -->
-                	<input type="hidden" value="${ sessionScope.loginUser.userId }" name="userId">
+                	<input type="hidden" value="${ sessionScope.loginUser.userId }" id="loginUserId" name="userId">
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div align="left">
@@ -180,7 +189,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="submit" id="delete" class="btn btn-secondary">탈퇴하기</button>
+                    	<button type="button" id="delete" class="btn btn-secondary" onclick="changeStatus();">탈퇴하기</button>
                     </div>
                 </div>
             </div>
@@ -189,7 +198,7 @@
 
    <script>
 	
-   	
+     	//회원정보 수정
    		function update() {
    			
    			var updateData = {
@@ -204,22 +213,55 @@
    					
    			};
    			
-   			// console.log(updateData);
+   			 //console.log(updateData);
 
    			$.ajax({
-   				url : 'member/'
-   				type : 'PUT',
-   				data : JSON.stringtify(updateData),
-   				dataType : 'json'
-   				success : result => {
+   				url : 'member/',
+   				type : 'put',
+   				data : JSON.stringify(updateData),
+   				contentType : 'application/json',
+   				success : function(result) {
    					
-   					console.log(result);
+   					//console.log(result);
+   					
+   						alert('회원 정보가 수정되었습니다.');
+   						
+   					},
+   				error : function(error) {
+   					alert('회원 정보 수정에 실패했습니다.');
    				}
    			});
-   		}
+   		};
 
+   		//체크박스 체크 여부 확인(시간 남으면 구현)
    		
+   		
+   		//회원 탈퇴
+   		function changeStatus() {
+   			
+   			const userId = $('#loginUserId').val();
+   			
+   			//console.log(userId);
+   			
+   			$.ajax({
+   				url: 'member/' + userId,
+   				type: 'put',
+   				success : result => {
+   					
+   					alert('회원 탈퇴에 성공했습니다.');
+   				},
+   				error : (e) => {
+   					
+   					//console.log("요청 실패");
+   					alert('회원 탈퇴에 실패했습니다.');
+   				}
+   			});
+   			
+   		};
 		
+   		//차단 회원 페이지 이동
+   		
+   		
     </script>
 </body>
 </html>
