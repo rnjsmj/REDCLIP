@@ -71,4 +71,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.insertMember(member);
 	}
 
+
+	@Override
+	public String searchid(Member member) {
+		return memberMapper.searchid(member);
+	}
+
 }

@@ -39,4 +39,7 @@ public interface MemberService {
 	List<Region> selectdong(int townCode);
 
 	int insert(Member member);
+	
+	//아이디찾기
+	public String searchid(Member member);
 }
