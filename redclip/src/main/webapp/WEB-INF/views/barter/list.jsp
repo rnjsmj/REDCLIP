@@ -33,7 +33,7 @@
         font-size: 22px;
         font-weight: bold;
     }
-    .d-flex { width: 1110px; margin-bottom: 40px;}
+    .d-flex { width: 1100px; margin-bottom: 40px;}
     .form-control { margin-right: 4px;}
     .filter-select {
         margin: 0 5px;
