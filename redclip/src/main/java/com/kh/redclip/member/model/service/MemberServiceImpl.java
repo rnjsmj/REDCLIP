@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.kh.redclip.barter.model.dao.BarterMapper;
 import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.dao.MemberMapper;
+import com.kh.redclip.member.model.vo.BlockMember;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
 
@@ -84,4 +85,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.searchid(member);
 	}
 
+
+	@Override
+	public List<BlockMember> selectByBlock(String userId) {
+		return memberMapper.selectByBlock(userId);
+	}
+
+	
 }

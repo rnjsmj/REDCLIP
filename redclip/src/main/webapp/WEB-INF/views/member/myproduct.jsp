@@ -97,10 +97,9 @@
 		                 <tr>
 		                    <td>
 		                    <div class="form-check">
-		                    	<input type="hidden" value="${barter.barterNo }" />
 		                        <input class="form-check-input" type="checkbox" value=""  id="flexCheckDefault">
 		                      </div></td>
-		                      <td><a id="barterNo" href="${pageContext.request.contextPath}/barters/${ barter.barterNo }">${ barter.barterName }</a></td>
+		                      <td><a data-barter-no="${barter.barterNo}" href="${pageContext.request.contextPath}/barters/${barter.barterNo}">${ barter.barterName }</a></td>
 		                      <td>${ barter.barterDate }</td>
 		                      <td>${ barter.barterStatus }</td>
 		                      <td>${ barter.hit }</td>
@@ -115,15 +114,14 @@
         </div>
     </div>
     <script>
-    
 	//거래 상태 변경    
-	
-	/*
 	function upStatus(barterNo) {
 		
-		
+		$.ajax({
+			url : '/member'
+			type : 'put'
+		});
 	}
-    */
     //글 삭제
     
     </script>

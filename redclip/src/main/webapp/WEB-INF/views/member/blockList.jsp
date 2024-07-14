@@ -54,13 +54,13 @@
      <div class="tab">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">내 정보</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/member/myPage">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">차단 목록</a>
+              <a class="nav-link active" aria-current="page"  href="#">차단 목록</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">내가 쓴 글</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/member/myProduct/${ sessionScope.loginUser.userId  }">내가 쓴 글</a>
             </li>
           </ul>
     </div>
@@ -78,13 +78,22 @@
             </thead>
             <tbody>
                 <!-- 반복문으로 회원 아이디와 일치하는 레코드를 전부 출력-->
-                 <tr>
-                    <td><div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      </div></td>
-                      <td>blockuser3</td>
-                      <td>2024-06-26</td>
-                 </tr>
+                <c:forEach items="${ list }" var="blockMember">
+	                <c:choose>
+	                	<c:when test="${ empty list }">
+	                		<td colspan="3" align="center">차단한 회원이 존재하지 않습니다.</td>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<tr>
+			                    <td><div class="form-check">
+			                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+			                      </div></td>
+			                      <td>${ blockMember.blockedId }</td>
+			                      <td>${ blockMember.blockDate }</td>
+			                 </tr>
+	                	</c:otherwise>
+	                </c:choose>
+                </c:forEach>
             </tbody>
         </table>
         <button type="button" id="btn-none" class="btn btn-success">차단해제</button>

@@ -156,5 +156,15 @@
     AND 
     		TEL = #{tel}
 	</select>
+	
+	<select id="selectByBlock" parameterType="string" resultType="block">
+		SELECT
+              BLOCKED_ID blockedId,
+              BLOCK_DATE blockDate
+         FROM
+              TB_MEM_BLOCK
+        WHERE
+              BLOCK_ID = #{userId}
+	</select>
 
 </mapper>
