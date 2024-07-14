@@ -35,6 +35,10 @@
             float: right;
             margin-right: 330px;
          }
+         
+         #content {
+         	height: 500px;
+         }
     </style>
 </head>
 <body>
@@ -105,16 +109,18 @@
     					"usesrId" : $('#userId').val()
     			};
     			
+    			//배열 선언
     			var blocks = [];
     			
+    			//체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
     			$('.form-check-input:checked').each(function() {
                     var block= $(this).closest('tr').find('#blockedId').text().trim();
 
                     blocks.push(block);
     			});
     			
-    			console.log(blocks);
-    			console.log(userId);
+    			//console.log(blocks);
+    			//console.log(userId);
     			
     			$.ajax({
     				
