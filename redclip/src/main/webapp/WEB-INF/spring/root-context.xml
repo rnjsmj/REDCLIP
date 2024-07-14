@@ -17,8 +17,6 @@
         dataSource.set{property의 name값}("{property의 value값)");
     -->
 
-<mybatis-spring:scan base-package="com.kh.redclip.sample.model.dao"/>
-<mybatis-spring:scan base-package="com.kh.redclip.member.model.dao"/>
 
 
     <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
