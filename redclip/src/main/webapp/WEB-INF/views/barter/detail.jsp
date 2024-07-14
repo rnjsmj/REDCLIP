@@ -7,8 +7,22 @@
     <meta charset="UTF-8">
     <title>Document</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+        $(document).ready(function(){
+          $('[data-toggle="popover"]').popover({
+            html: true,
+            content : function() {
+                let popoverContent = '<ul id="popover-list"><li><a ">회원페이지</a></li>'
+                                   + '<li><a href="/redclip/member/block">차단</a></li></ul>';
+                return popoverContent;
+            }
+          });   
+        });
+        </script>
 <style>
 * {
             padding: 0;
@@ -45,6 +59,21 @@
             background-color: #ececec;
             align-content: center;
             text-align: center;
+        }
+        
+        .popover-body {
+        	width:100px;
+        	ul {
+        		margin:0;
+        		list-style:none;
+        		a {
+        			color:#101010;
+        		}
+        		button {
+        			background-color:#fff;
+        			border:none;
+        		}
+        	}
         }
 
         #content {
@@ -93,9 +122,12 @@
             float: right;
             margin-left: 10px;
         }
-        #userNickname a {
+        #userNickname {
+        	a, span {
             font-weight: 600;
             color: #101010;
+            cursor:pointer;
+            }
         }
         #level {
             color: #149f55;
@@ -359,6 +391,25 @@
         		cursor:pointer;
         	}
         }
+        
+        #report-div {
+        	margin-top:20px;
+        	a {
+        		color:#999;
+        		text-decoration:underline;
+        		
+        	}
+        }
+        
+        #reportModal {
+        	input {
+        		margin-bottom:15px;
+        	}
+        	
+        	textarea {
+        		height:200px;
+        	}
+        }
     </style>
 </head>
 <body>
@@ -452,11 +503,7 @@
                                         
                                     >
                                         <ol class="carousel-indicators" id="modal-indicators">
-                                            <!-- <li
-                                                data-target="#carouselBarters-modal"
-                                                data-slide-to="0"
-                                                class="active"
-                                            ></li> -->
+                                           
                                         </ol>
                                         <div class="carousel-inner modal-inner" style="height:960px; margin:auto;">
                                         
@@ -499,7 +546,27 @@
                                     ></path>
                                 </svg>
                                 <ul>
-                                    <li id="userNickname"><a href="">${ barter.barterNickname }</a></li>
+                                    <li id="userNickname">
+                                    <c:choose>
+                                   		<c:when test="${ not empty barter.barterNickname }">
+                                   			<c:choose>
+		                                    	<c:when test="${ not empty sessionScope.loginUser.userId }">
+		                                    		<a tabindex="0" data-toggle="popover" data-placement="right" data-trigger="focus" data-container="body" data-html="true" >
+		                                        		${ barter.barterNickname }
+		                                        	</a>
+		                                    	</c:when>
+		                                    	<c:otherwise>
+		                                    		<span>${ barter.barterNickname }</span>
+		                                    	</c:otherwise>
+		                                    </c:choose>
+                                   		</c:when>
+                                   		<c:otherwise>
+                                   			<span>(알 수 없음)</span>
+                                   		</c:otherwise>
+                                   	</c:choose>
+                                    
+                                      
+                                    </li>
                                     <li id="level"><%-- ${ barter.point / 100 } 레벨 </li> --%>
                                     	<c:choose>
                                     		<c:when test="${ (barter.point / 100) lt '1'}">레벨1</c:when>
@@ -521,7 +588,35 @@
                                 </ul>
                             </div>
                         </div>
-                        <hr />
+                        
+                        
+                        <div class="modal fade reportModal" id="reportModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						  <div class="modal-dialog modal-dialog-centered">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h3 class="modal-title fs-5" id="reportModalLabel">게시글 신고</h3>
+						      </div>
+						      <form id="reportForm" method="post" action="report">
+						      <div class="modal-body report-body">
+						      	
+						      		<input class="form-control" id="report-no" name="referenceNo" value="${ barter.barterNo }" type="hidden" />
+						      		<input class="form-control" id="report-name"  value="${ barter.barterName }" type="hidden" />
+						      		<input class="form-control" id="reported-id" name="reportedId" value="${ barter.barterWriter }" type="hidden" />
+						      		<input class="form-control" id="report-type" name="reportType" value="게시글" type="hidden" />
+						      		<input class="form-control" id="report-title" name="reportTitle" type="text" maxlength="30" placeholder="신고 제목"/>
+						      		<textarea class="form-control" id="report-content" name="reportContent" cols="5" maxlength="200" placeholder="신고 사유" style="resize:none;"></textarea>
+						      	
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+						        <button type="submit" class="btn btn-primary" onclick="">신고하기</button>
+						      </div>
+						      </form>
+						    </div>
+						  </div>
+						</div>
+						
+						
                         <div id="content-info">
                             <div id="detail-data">
                                 <span>${ barter.barterDate }</span>
@@ -538,11 +633,16 @@
                             <div id="content-data">
                                 ${ barter.barterContent }
                             </div>
+                            <div id="report-div">
+                            <c:if test="${not empty sessionScope.loginUser.userId }">
+                            	<a type="button" data-toggle="modal" data-target="#reportModal">게시글신고</a>
+                            </c:if>
+                            </div>
                         </div>
                         <hr />
                         
                         <!--글 작성자에게만 보여질 버튼-->
-                        <c:if test="${ sessionScope.loginUser.userId eq barter.barterWriter }">
+                        <c:if test="${ (sessionScope.loginUser.userId eq barter.barterWriter) or (sessionScope.loginUser.status eq 'A')}">
                         <form action="" method="post" id="postForm">
                         	<input type="hidden" id="barterNo" name="barterNo" value="${ barter.barterNo }">
                         	<input type="hidden" name="fileExist" value="${barter.barterFileList[0].barterFileNo }" />

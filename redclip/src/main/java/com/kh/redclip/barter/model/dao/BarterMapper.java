@@ -10,6 +10,7 @@ import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterReplyFile;
 import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.barter.model.vo.Wishlist;
+import com.kh.redclip.member.model.vo.ReportMember;
 
 @Mapper
 public interface BarterMapper {
@@ -59,4 +60,10 @@ public interface BarterMapper {
 	int wishInsert(Wishlist wish);
 	// 좋아요 해제
 	int wishDelete(Wishlist wish);
+	//게시글 신고
+	int barterReport(ReportMember report);
+	// 게시글에 포함된 답글 개수
+	int replyCount(int barterNo);
+	// 게시글에 포함된 답글 삭제
+	int replyListDelete(int barterNo);
 }

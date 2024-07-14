@@ -339,4 +339,46 @@ TB_BARTER_FILE
 		 		WISH_USER = #{wishUser}
 	</delete>
 	
+	<!-- 게시글 신고 -->
+	<insert id="barterReport" parameterType="report">
+		INSERT
+		  INTO
+		  		TB_MEM_REPORT
+		 		(
+		 		 REPORT_NO,
+		 		 REPORT_TITLE,
+		 		 REPORT_CONTENT,
+		 		 REPORTED_ID,
+		 		 REPORT_TYPE,
+		 		 REFERENCE_NO
+		 		)
+		 VALUES
+		 		(
+		 		 SEQ_REPORT.NEXTVAL,
+		 		 #{reportTitle},
+		 		 #{reportContent},
+		 		 #{reportedId},
+		 		 #{reportType},
+		 		 #{referenceNo}
+		 		)
+	</insert>
+	
+	<!-- 게시글에 포함된 답글 개수 -->
+	<select id="replyCount" parameterType="_int" resultType="_int">
+		SELECT
+				COUNT(REPLY_NO)
+		  FROM
+		  		TB_BARTER_REPLY
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</select>
+	
+	<!-- 게시글에 포함된 답글 삭제 -->
+	<delete id="replyListDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER_REPLY
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</delete>
 </mapper>
