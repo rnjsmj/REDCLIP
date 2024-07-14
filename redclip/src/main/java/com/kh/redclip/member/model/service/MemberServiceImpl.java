@@ -91,5 +91,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.selectByBlock(userId);
 	}
 
+
+	@Override
+	public int deleteByBlock(String usreId) {
+		return memberMapper.	deleteByBlock(usreId);
+	}
+
 	
 }

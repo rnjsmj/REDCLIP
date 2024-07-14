@@ -48,10 +48,13 @@ public interface MemberMapper {
 
 	int insertMember(Member member);
 
-	
+	//차단 해제
+	int deleteByBlock(String usreId);
 
 
 	String searchid(Member member);
+
+
 
 
 	

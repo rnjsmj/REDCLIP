@@ -209,7 +209,7 @@
    					"tel" : $('#tel').val(),
    					"postCode" : $('#postCode').val(),
    					"address" : $('#address').val(),
-   					"villageCode" : $('#villageCode').val(),
+   					"villageCode" : $('#villageCode').val()
    					
    			};
    			

@@ -32,6 +32,9 @@ public interface MemberService {
 	
 	// 차단한 회원 조회
 	List<BlockMember> selectByBlock(String userId);
+	
+	//차단 해제
+	int deleteByBlock(String usreId);
 	// 신고 내역 조회 
 	//회원 아이디 검색
 	//누적 신고 횟수 조회
@@ -46,4 +49,6 @@ public interface MemberService {
 	
 	//아이디찾기
 	public String searchid(Member member);
+
+
 }

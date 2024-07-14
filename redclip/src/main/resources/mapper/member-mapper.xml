@@ -157,6 +157,12 @@
     		TEL = #{tel}
 	</select>
 	
+	<!-- 회원 차단 -->
+	<insert id="">
+	
+	</insert>
+	
+	<!-- 차단 회원 조회 -->
 	<select id="selectByBlock" parameterType="string" resultType="block">
 		SELECT
               BLOCKED_ID blockedId,
@@ -167,4 +173,16 @@
               BLOCK_ID = #{userId}
 	</select>
 
+	<!-- 차단 해제 -->
+	<delete id="deleteByBlock" parameterType="string">
+		    DELETE
+		      FROM
+		      			TB_MEM_BLOCK
+		     WHERE
+		     			BLOCKED_ID = #{blockedId}
+		     	AND
+		     			BLOCK_ID = #{userId}
+	</delete>
+	
+	
 </mapper>

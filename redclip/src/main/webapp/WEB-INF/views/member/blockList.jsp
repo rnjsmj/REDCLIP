@@ -40,8 +40,7 @@
 <body>
      <!-- 헤더 영역-->
      <header>
-        <!-- 메뉴바 -->
-        <nav class="menuBar"></nav>
+      		<jsp:include page="../common/header.jsp" />
     </header>
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -85,21 +84,55 @@
 	                	</c:when>
 	                	<c:otherwise>
 	                		<tr>
+	                		<input type="hidden"  value="${ sessionScope.loginUser.userId }"  id="userId" />
 			                    <td><div class="form-check">
 			                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
 			                      </div></td>
-			                      <td>${ blockMember.blockedId }</td>
-			                      <td>${ blockMember.blockDate }</td>
+			                      <td id="blockedId">${ blockMember.blockedId }</td>
+			                      <td id="blockId">${ blockMember.blockDate }</td>
 			                 </tr>
 	                	</c:otherwise>
 	                </c:choose>
                 </c:forEach>
             </tbody>
         </table>
-        <button type="button" id="btn-none" class="btn btn-success">차단해제</button>
+        <button type="button" id="btn-none" class="btn btn-success" onclick="deleteByBlock();">차단해제</button>
     </div>
+    <script>
+    		function deleteByBlock() {
+    		
+    			var userId = {
+    					"usesrId" : $('#userId').val()
+    			};
+    			
+    			var blocks = [];
+    			
+    			$('.form-check-input:checked').each(function() {
+                    var block= $(this).closest('tr').find('#blockedId').text().trim();
+
+                    blocks.push(block);
+    			});
+    			
+    			console.log(blocks);
+    			console.log(userId);
+    			
+    			$.ajax({
+    				
+    				url: '/member' + userId,
+    				type : 'delete',
+    				data : JSON.stringify(blocks),
+    				contentType : 'application/json',
+    				success : result => {
+    					console.log('차단 해제함', result);
+    				},
+    				error : e => {
+    					console.log('차단 해제 실패함', e)
+    				}
+    			});
+    		};
+    </script>
     <footer>
-        <!-- 푸터 영역 -->
+        <jsp:include page="../common/footer.jsp" />
     </footer>
 </body>
 </html>
