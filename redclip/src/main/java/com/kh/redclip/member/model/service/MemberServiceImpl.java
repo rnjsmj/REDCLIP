@@ -80,4 +80,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	
+	public String searchid(Member member) {
+		return memberMapper.searchid(member);
+	}
+
 }

@@ -25,7 +25,7 @@ public class Member {
 	private String email;				//이메일
 	private String tel;					//전화번호
 	private String address;			//주소
-	private int postCode;				//우편번호
+	private String postCode;				//우편번호
 	private int point;					//포인트
 	private String status;				//회원상태
 	private Date createDate;		//가입일

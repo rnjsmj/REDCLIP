@@ -85,7 +85,9 @@
 				TOWN_NAME
 				VILLAGE_NAME,
 				BARTER_DATE,
-				BARTER_STATUS
+				BARTER_STATUS,
+				BARTER_FILE_NO,
+				BARTER_FILE_NAME
 		  FROM
 		  		VW_BARTER_DETAIL
 
@@ -189,6 +191,26 @@ TB_BARTER_FILE
 				)
 	</insert>
 	
+	<!-- 댓글 파일 입력 -->
+	<insert id="replyFileInsert" parameterType="barterReplyFile">
+		INSERT
+		  INTO
+		  		TB_BARTER_REPLY_FILE
+		  		(
+		  			REPLY_FILE_NO,
+		  			REPLY_NO,
+		  			REPLY_FILE_NAME
+		  		)
+		VALUES
+				(
+					SEQ_BREP_FILE.NEXTVAL,
+					SEQ_BREP.CURRVAL,
+					#{replyFileName}
+				)
+		
+	
+	</insert>
+	
 	<!-- 댓글 수정 -->
 	<update id="replyUpdate" parameterType="barterReply">
 		UPDATE
@@ -236,6 +258,23 @@ TB_BARTER_FILE
 		 		BARTER_NO = #{barterNo}
 	</update>
 	
+	<!-- 게시글 삭제 처리 -->
+	<delete id="barterDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</delete>
 	
+	<!-- 답글에 포함된 파일 삭제 -->
+	<delete id="replyFileDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER_REPLY_FILE
+		 WHERE
+		 		REPLY_NO = #{replyNo}
+	
+	</delete>
 	
 </mapper>

@@ -48,5 +48,8 @@ public interface MemberMapper {
 	
 
 
+	String searchid(Member member);
+
+
 	
 }

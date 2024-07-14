@@ -13,7 +13,7 @@
     <title>가격 예시 · Bootstrap v4.6</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/pricing/">
     <!-- Bootstrap 핵심 CSS -->
-    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/redclip/resources/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -83,16 +83,21 @@
    <c:choose>
    <c:when test="${empty sessionScope.loginUser }">
    <nav class="btnbox">
-      <a class="btn btn-outline-primary" href="joinform" id="btn-sign">회원가입</a>
-      <a class="btn btn-outline-primary" href="loginform" id="btn-sign">로그인</a>
+      <a class="btn btn-outline-primary" href="/redclip/joinform" id="btn-sign">회원가입</a>
+      <a class="btn btn-outline-primary" href="/redclip/loginform" id="btn-sign">로그인</a>
    </nav>
    </c:when>
    <c:otherwise>
     <nav class="btnbox">
-      <a class="btn btn-outline-primary" href="myPage" id="btn-sign">마이페이지</a>
+      <a class="btn btn-outline-primary" href="/redclip/myPage" id="btn-sign">마이페이지</a>
       <a class="btn btn-outline-primary" href="#" id="btn-sign">로그아웃</a>
    </nav>
    </c:otherwise>
    </c:choose>
+   
+   <c:if test="${ not empty alertMsg }">
+   		<script>alert("${ alertMsg }")</script>
+   		<c:remove var="alertMsg" scope="session" />
+   </c:if>
 </div>    
 </html>
