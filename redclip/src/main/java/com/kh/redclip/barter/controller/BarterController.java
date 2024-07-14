@@ -57,7 +57,7 @@ public class BarterController {
 		
 		BarterVO barterDetail = barterService.findById(barterNo);
 		if (barterService.increaseHit(barterNo) > 0) {
-			log.info("상세정보 : {}", barterDetail);
+			//log.info("상세정보 : {}", barterDetail);
 			model.addAttribute("barter", barterDetail);
 			return "barter/detail";	
 			

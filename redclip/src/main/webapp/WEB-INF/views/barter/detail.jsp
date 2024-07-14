@@ -958,7 +958,6 @@
                 		
                 		if(confirm('삭제하시겠습니까?')) {
                 			
-	                		/* var deleteData = { fileExist : false }; */
 	                		var deleteData;
 	                		
                				if($('#reply-img-'+no).length) {
