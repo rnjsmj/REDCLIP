@@ -54,7 +54,7 @@
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">마이페이지</a></li>
+          <li class="breadcrumb-item"><a href=" myPage">마이페이지</a></li>
           <li class="breadcrumb-item active" aria-current="page">내가 쓴 글</li>
         </ol>
     </nav>
@@ -62,10 +62,10 @@
      <div class="tab">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link" href="myPage">내 정보</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/member/myPage">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="bolockList">차단 목록</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/member/bolockList/${ sessionScope.loginUser.userId }">차단 목록</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">내가 쓴 글</a>
@@ -95,10 +95,12 @@
                 <c:otherwise>
 	                <c:forEach items="${ list }" var="barter">
 		                 <tr>
-		                    <td><div class="form-check">
-		                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+		                    <td>
+		                    <div class="form-check">
+		                    	<input type="hidden" value="${barter.barterNo }" />
+		                        <input class="form-check-input" type="checkbox" value=""  id="flexCheckDefault">
 		                      </div></td>
-		                      <td><a href="#">${ barter.barterName }</a></td>
+		                      <td><a id="barterNo" href="${pageContext.request.contextPath}/barters/${ barter.barterNo }">${ barter.barterName }</a></td>
 		                      <td>${ barter.barterDate }</td>
 		                      <td>${ barter.barterStatus }</td>
 		                      <td>${ barter.hit }</td>
@@ -109,15 +111,19 @@
             </tbody>
         </table>
         <div id="buttons">
-          <button id="btn-status" class="btn btn-success" onclick="">거래상태 변경</button> | <button id="btn-delete" class="btn btn-secondary">삭제</button>
+          <button id="btn-status" class="btn btn-success" onclick="upStatus(barterNo);">거래상태 변경</button> | <button id="btn-delete" class="btn btn-secondary">삭제</button>
         </div>
     </div>
     <script>
     
-   // console.log(pr);
-    
 	//거래 상태 변경    
-    
+	
+	/*
+	function upStatus(barterNo) {
+		
+		
+	}
+    */
     //글 삭제
     
     </script>

@@ -31,16 +31,4 @@ public class MemberFowardController {
 		return "member/team";
 	}
 	
-	//내가 쓴 글 페이지 이동
-	/*
-	 * @GetMapping("/myProduct") public String myProduct() {
-	 * 
-	 * return "member/myproduct"; }
-	 */
-	//차단 목록 페이지 이동
-	@GetMapping("/blockList")
-	public String blockList() {
-		
-		return "member/blockList";
-	}
 }

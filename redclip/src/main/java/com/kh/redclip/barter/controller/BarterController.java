@@ -186,5 +186,5 @@ public class BarterController {
       return "resources/upload/" + changeName;
    }	
    
-
+   
 }

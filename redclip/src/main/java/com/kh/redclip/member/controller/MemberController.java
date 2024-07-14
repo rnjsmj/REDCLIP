@@ -145,12 +145,12 @@ public class MemberController {
     }
     
     //내가 쓴 글 조회
-    @GetMapping("/myProduct//{userId}")
+    @GetMapping("myProduct/{userId}")
     public String selectById(@PathVariable String userId, Model model) {
 		
     	List<Barter> products = memberService.selectById(userId);
     	//log.info("조회할 회원 : {}", userId);
-    	log.info("목록 : {}", products);
+    	//log.info("목록 : {}", products);
     	
     	model.addAttribute("list", products);
     	
@@ -158,5 +158,10 @@ public class MemberController {
     	
     }
     
-    
+    //마이페이지 이동
+    @GetMapping("/myPage")
+	public String myPage() {
+		
+		return "member/myPage";
+	}
 }
