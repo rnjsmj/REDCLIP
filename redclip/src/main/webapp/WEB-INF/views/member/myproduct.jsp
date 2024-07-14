@@ -79,6 +79,7 @@
         <table class="table" id="productList">
             <thead>
                 <tr>
+                	<th><input type="hidden" id="userId" value="${ sessionScope.loginUser.userId }" /></th>
                     <th>선택</th>
                     <th>게시글 제목</th>
                     <th>작성일</th>
@@ -114,19 +115,7 @@
     </div>
     <script>
     
-    $(() => {
-    	
-    	selectById();
-    });
-    
-    
-    function selectById(userId) {
-    	
-    	
-    }
-	
-   // const pr = $('#productList').value;
-    
+  
    // console.log(pr);
     
 	//거래 상태 변경    

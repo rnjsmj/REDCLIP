@@ -145,7 +145,7 @@ public class MemberController {
     }
     
     //내가 쓴 글 조회
-    @GetMapping("/{userId}")
+    @GetMapping("/myProduct/{userId}")
     public String selectById(@PathVariable String userId, Model model) {
 		
     	List<BarterVO> barter = memberService.selectById(userId);
@@ -153,7 +153,7 @@ public class MemberController {
     	
     	model.addAttribute("list", barter);
     	
-    	return "redirect:/myproduct";
+    	return "/myproduct";
     	
     }
     
