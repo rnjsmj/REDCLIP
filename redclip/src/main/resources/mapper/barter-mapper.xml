@@ -277,4 +277,66 @@ TB_BARTER_FILE
 	
 	</delete>
 	
+	<!-- 게시글에 포함된 파일 개수 select -->
+	<select id="getBarterFileCount" parameterType="_int" resultType="_int">
+		SELECT
+				COUNT(BARTER_FILE_NO)
+		  FROM
+		  		TB_BARTER_FILE
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</select>
+	
+	<!-- 게시글에 포함된 파일 삭제 -->
+	<delete id="barterFileDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER_FILE
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+			
+	</delete>
+	<!-- 좋아요 상태 확인 -->
+	<select id="wishStatus" parameterType="wish" resultType="wish">
+		SELECT
+				WISH_NO wishNo,
+				BARTER_NO barterNo,
+				WISH_USER wishUser
+		  FROM
+		  		TB_WISHLIST
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+		 		AND
+		 		WISH_USER = #{wishUser}
+	
+	</select>
+	<!-- 좋아요 등록 -->
+	<insert id="wishInsert" parameterType="wish">
+		INSERT
+		  INTO
+		  		TB_WISHLIST
+		 		(
+		 		 WISH_NO,
+		 		 BARTER_NO,
+		 		 WISH_USER
+		 		)
+		 VALUES
+		 		(
+		 		 SEQ_WISHLIST.NEXTVAL,
+		 		 #{barterNo},
+		 		 #{wishUser}
+		 		)
+	</insert>
+	
+	<!-- 좋아요 해제 -->
+	<delete id="wishDelete" parameterType="wish">
+		DELETE
+		  FROM
+		  		TB_WISHLIST
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+		 		AND
+		 		WISH_USER = #{wishUser}
+	</delete>
+	
 </mapper>

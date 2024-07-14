@@ -20,6 +20,7 @@
   		<typeAlias type="com.kh.redclip.member.model.vo.BlockMember" alias="block"/>
   		<typeAlias type="com.kh.redclip.member.model.vo.ReportMember" alias="report"/>
   		<typeAlias type="com.kh.redclip.member.model.vo.StatusMember" alias="status"/>
+  		<typeAlias type="com.kh.redclip.barter.model.vo.Wishlist" alias="wish"/>
   	</typeAliases>
   
   	<mappers>

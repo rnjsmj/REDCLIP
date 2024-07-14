@@ -9,6 +9,7 @@ import com.kh.redclip.barter.model.vo.BarterFile;
 import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterReplyFile;
 import com.kh.redclip.barter.model.vo.BarterVO;
+import com.kh.redclip.barter.model.vo.Wishlist;
 
 @Mapper
 public interface BarterMapper {
@@ -45,7 +46,17 @@ public interface BarterMapper {
 
 	//게시글 삭제
 	int barterDelete(int barterNo);
+	//게시글에 포함된 파일 갯수
+	int getBarterFileCount(int barterNo);
+	//게시글에 포함된 파일 삭제
+	int barterFileDelete(int barterNo);
 	
 	//답글에 포함된 파일 삭제
 	int replyFileDelete(int replyNo);
+	// 좋아요 상태 확인
+	Wishlist wishStatus(Wishlist wish);
+	// 좋아요 등록
+	int wishInsert(Wishlist wish);
+	// 좋아요 해제
+	int wishDelete(Wishlist wish);
 }

@@ -277,9 +277,7 @@
             display: block;
         }
 
-        .modal-content {
-            width: 100%;
-        }
+    
 
         .modal-dialog.modal-dialog-centered {
             width: 90%;
@@ -336,6 +334,30 @@
         		height:100%;
         		object-fit:cover;
         	}	
+        }
+        
+        .modal-content {
+        	background-color: unset;
+        	border : 0;
+        }
+        
+        #carouselBarters-modal .carousel-item {
+        	height:100%;
+        	align-content: center;
+        	
+        	img {
+        		object-fit: contain;
+        		width: 960px;
+        		height: 960px;
+        	}
+        }
+        #heart {
+        	float:right;
+        	
+        	svg:hover {
+        		fill : darkgray;
+        		cursor:pointer;
+        	}
         }
     </style>
 </head>
@@ -416,8 +438,8 @@
                         aria-labelledby="exampleModalCenterTitle"
                         aria-hidden="true"
                     >
-                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="position: relative">
-                            <div class="modal-content">
+                        <div class="modal-dialog modal-fullscreen-sm-down" role="document" style="position: relative; margin:auto; max-width:1200px; height:100%;">
+                            <div class="modal-content" style="background-color: unset; border : 0; height:100%;">
                                 <div class="modal-body">
                                 	<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 20px; right: 20px; z-index: 999">
                                         <span aria-hidden="true">&times;</span>
@@ -426,6 +448,8 @@
                                         id="carouselBarters-modal"
                                         class="carousel slide"
                                         data-ride="carousel"
+                                        style="height:100%;"
+                                        
                                     >
                                         <ol class="carousel-indicators" id="modal-indicators">
                                             <!-- <li
@@ -434,14 +458,15 @@
                                                 class="active"
                                             ></li> -->
                                         </ol>
-                                        <div class="carousel-inner modal-inner">
+                                        <div class="carousel-inner modal-inner" style="height:960px; margin:auto;">
                                         
                                         </div>
                                         <a
                                             class="carousel-control-prev"
                                             href="#carouselBarters-modal"
                                             role="button"
-                                            data-slide="prev">
+                                            data-slide="prev"
+                                            style="width:5%">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Previous</span>
                                         </a>
@@ -449,7 +474,8 @@
                                             class="carousel-control-next"
                                             href="#carouselBarters-modal"
                                             role="button"
-                                            data-slide="next">
+                                            data-slide="next"
+                                            style="width:5%">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Next</span>
                                         </a>
@@ -474,13 +500,18 @@
                                 </svg>
                                 <ul>
                                     <li id="userNickname"><a href="">${ barter.barterNickname }</a></li>
-                                    <li id="level">${ barter.point } 포인트</li>
+                                    <li id="level"><%-- ${ barter.point / 100 } 레벨 </li> --%>
+                                    	<c:choose>
+                                    		<c:when test="${ (barter.point / 100) lt '1'}">레벨1</c:when>
+                                    		<c:when test="${ (barter.point / 100) lt '2'}">레벨2</c:when>
+                                    	</c:choose>
+                                    </li> 
                                     <li style="float: right; margin-top: 5px">
                                         <div class="progress" style="height: 7px; width: 100px">
                                             <div
                                                 class="progress-bar"
                                                 role="progressbar"
-                                                style="width: ${ barter.point }%; background-color: #149f55"
+                                                style="width: ${ barter.point%100 }%; background-color: #149f55"
                                                 aria-valuenow="25"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
@@ -497,7 +528,12 @@
                                 <span> · </span>
                                 <span>조회 ${ barter.hit }</span>
                                 <span> · </span>
-                                <span>좋아요 ${ barter.wishCount }</span>
+                                <span>좋아요 <span id="wishcount">${ barter.wishCount }</span></span>
+                                <c:if test="${ not empty sessionScope.loginUser.userId }">
+                                <p id="heart"><svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+  												<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+												</svg></p>
+								</c:if>
                             </div>
                             <div id="content-data">
                                 ${ barter.barterContent }
@@ -509,7 +545,7 @@
                         <c:if test="${ sessionScope.loginUser.userId eq barter.barterWriter }">
                         <form action="" method="post" id="postForm">
                         	<input type="hidden" id="barterNo" name="barterNo" value="${ barter.barterNo }">
-                        	<input type="hidden" name="fileExist"  />
+                        	<input type="hidden" name="fileExist" value="${barter.barterFileList[0].barterFileNo }" />
                         </form>
                         
                         <div class="btn-group" id="writer-btn">
@@ -628,9 +664,10 @@
                 <script>
                 
                 	$(() => {
-                		
+                		console.log(${barter.barterFileList[0].barterFileNo });
                 		selectReply();
                 		addActive();
+                		wishState();
                 		
                 	});
                 	
@@ -646,6 +683,37 @@
                 	function addActive() {
                     	$('.carousel-item:first-child').addClass('active');
                     	$('.reply-img .carousel-item:first-child').addClass('active');
+                	};
+                	
+                	function wishState() {
+                		
+                		if('${sessionScope.loginUser.userId}' != '' ) {
+	                		$.ajax({
+	                			url:'wish',
+	                			type:'get',
+	                			data : {
+	                				barterNo : ${barter.barterNo},
+	                				wishUser : '${sessionScope.loginUser.userId}'
+	                			},
+	                			success : result => {
+	                				const $heart = $('#heart');
+	                				var svg;
+	                				
+	                				if(result === 'exist') {
+	                					svg = '<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(0)" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">'
+	                	    		  		+ '<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>';
+	                	        	
+	                					
+	                				} else {
+	                					svg = '<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">'
+	                						+ '<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>';
+	                	        	
+	                				}
+	                				
+	                				$heart.html(svg);
+	                			}
+	                		});
+                		}
                 	};
                 	
                 	function selectReply() {
@@ -795,17 +863,19 @@
 	                		
                				if($('#reply-img-'+no).length) {
                					console.log('deleteData true로 변경');
-               					deleteData = { fileExist : true };
+               					deleteData = true;
                				} else {
-               					deleteData = { fileExist : false };
+               					deleteData = false;
                				}
 	                		
+               				console.log(deleteData);
 	                			
                 			$.ajax({
                 				
                 				url : 'reply/' + no,
                 				type : 'delete',
-                				data : deleteData,
+                				data : JSON.stringify(deleteData),
+                    			contentType : 'application/json',
                 				success : result => {
                 					
                 					console.log(result);
@@ -1010,20 +1080,58 @@
             var innerContent = track.innerHTML;
             $('.carousel-inner.modal-inner').html(innerContent);
             
-            var child = track.length;
+            var child = track.childElementCount;
+            console.log(child);
             
            	let modalIndicators = '';
            	for (var step = 0; step < child; step++ ) {
-           		let += '<li data-target="#carouselBarters-modal" data-slide-to="'
+           		modalIndicators += '<li data-target="#carouselBarters-modal" data-slide-to="'
            			 + step + '"></li>';
            	}
            	
-           	var child = track.childElementCount;
+           	
+            $('#modal-indicators').html(modalIndicators);
             $('#modal-indicators').children().eq(0).addClass('active');
           
             $('#barter-image-modal').modal('show');
            	
         };
+        
+        function wish(state) {
+        	
+        	const $heart = $('#heart');
+        	const $wishcount = $('#wishcount');
+        	var wishcount;
+        	var svg;
+        	
+        		
+        	$.ajax({
+        		url : 'wish',
+        		type : 'post',
+        		data : { barterNo : ${barter.barterNo},
+        			wishUser : '${sessionScope.loginUser.userId}',
+        			state : state
+        			},
+        		success : result => {
+        			console.log(result);
+            		wishcount = result; //좋아요 개수 반환받기
+            		$wishcount.text(wishcount);
+        			}
+        		});
+        	
+        	if (state == 1) {
+        		svg = '<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(0)" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">'
+    		  		+ '<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>';
+        	} else {
+        		svg = '<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">'
+					+ '<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>';
+        		
+        	}
+        	
+        	$heart.html(svg);
+        	
+        	
+        }
         
         
         

@@ -29,6 +29,7 @@ import com.kh.redclip.barter.model.vo.BarterFile;
 import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterReplyFile;
 import com.kh.redclip.barter.model.vo.BarterVO;
+import com.kh.redclip.barter.model.vo.Wishlist;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +61,7 @@ public class BarterController {
 			return "barter/detail";	
 			
 		}
-		return "barter/list";
+		return "redirect:/barters";
 	}
 	
 	// 교환 게시글 등록 페이지 보기
@@ -176,11 +177,11 @@ public class BarterController {
 	//답글 삭제
 	@DeleteMapping(value="reply/{replyNo}")
 	@ResponseBody
-	public String replyDelete(@PathVariable int replyNo, boolean fileExist) {
+	public String replyDelete(@PathVariable int replyNo, @RequestBody boolean fileExist) {
 		log.info("fileExist : {}", fileExist);
 		
 		if (fileExist == true) {
-			log.info("파일 존재 : {}");
+			log.info("파일 존재 : {}", fileExist);
 			if (barterService.replyFileDelete(replyNo) <= 0) {
 				return "file delete error";			
 			}
@@ -226,16 +227,48 @@ public class BarterController {
 	
 	//게시글 삭제
 	@PostMapping("/delete")
-	public String barterDelete(int barterNo, HttpSession session) {
-		//log.info("삭제할 게시글 번호 : {}", barterNo);
+	public String barterDelete(int barterNo, int fileExist, HttpSession session) {
+		log.info("삭제할 게시글 번호 : {}", barterNo);
+		if (fileExist != 0) {
+			barterService.barterFileDelete(barterNo);
+		}
 		
-		if(barterService.barterDelete(barterNo) > 0) {
+		if (barterService.barterDelete(barterNo) > 0) {
 			session.setAttribute("alertMsg", "게시글이 삭제되었습니다.");
 			return "redirect:/barters";
 		} else {
 			session.setAttribute("alertMsg", "오류가 발생했습니다.");
 			return "redirect:/barters/" + barterNo;
 		}
+		
+		
+		
+	}
+	
+	//좋아요 상태 확인
+	@GetMapping("/wish")
+	@ResponseBody
+	public String barterWishState(Wishlist wish) {
+		log.info("요청 객체 : {}", wish);
+		Wishlist state = barterService.wishStatus(wish);
+		log.info("객체 : {}", state);
+		return state != null ? "exist" : "none";
+	}
+	
+	//좋아요 등록/해제
+	@PostMapping("/wish")
+	@ResponseBody
+	public String barterWish(Wishlist wish, int state, HttpSession session) {
+		int result = 0;
+		
+		if (state == 1) {
+			result = barterService.wishInsert(wish);
+		} else {
+			result = barterService.wishDelete(wish);
+		}
+		
+		return result > 0 ? Integer.toString(barterService.findById(wish.getBarterNo()).getWishCount()) : "error";
+		
 	}
 
 
