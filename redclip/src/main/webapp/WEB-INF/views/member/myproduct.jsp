@@ -79,7 +79,6 @@
         <table class="table" id="productList">
             <thead>
                 <tr>
-                	<th><input type="hidden" id="userId" value="${ sessionScope.loginUser.userId }" /></th>
                     <th>선택</th>
                     <th>게시글 제목</th>
                     <th>작성일</th>
@@ -94,15 +93,15 @@
 	                	<td colspan="5" align="center">글이 존재하지 않습니다.</td>
 	                </c:when>
                 <c:otherwise>
-	                <c:forEach items="${ list }" var="barterVo">
+	                <c:forEach items="${ list }" var="barter">
 		                 <tr>
 		                    <td><div class="form-check">
 		                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
 		                      </div></td>
-		                      <td><a href="#">${ barterVo.barterName }</a></td>
-		                      <td>${ barterVo.barterDate }</td>
-		                      <td>${ barterVo.baterStatus }</td>
-		                      <td>${ barterVo.hit }</td>
+		                      <td><a href="#">${ barter.barterName }</a></td>
+		                      <td>${ barter.barterDate }</td>
+		                      <td>${ barter.barterStatus }</td>
+		                      <td>${ barter.hit }</td>
 		                 </tr>
 	                 </c:forEach>
                  </c:otherwise>
@@ -115,7 +114,6 @@
     </div>
     <script>
     
-  
    // console.log(pr);
     
 	//거래 상태 변경    

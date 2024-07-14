@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.barter.model.service.BarterService;
-import com.kh.redclip.barter.model.vo.BarterVO;
+import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
@@ -145,15 +145,16 @@ public class MemberController {
     }
     
     //내가 쓴 글 조회
-    @GetMapping("/myProduct/{userId}")
+    @GetMapping("/myProduct//{userId}")
     public String selectById(@PathVariable String userId, Model model) {
 		
-    	List<BarterVO> barter = memberService.selectById(userId);
-    	log.info("목록 : {}", barter);
+    	List<Barter> products = memberService.selectById(userId);
+    	//log.info("조회할 회원 : {}", userId);
+    	log.info("목록 : {}", products);
     	
-    	model.addAttribute("list", barter);
+    	model.addAttribute("list", products);
     	
-    	return "/myproduct";
+    	return "member/myproduct";
     	
     }
     

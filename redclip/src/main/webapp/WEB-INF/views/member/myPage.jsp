@@ -88,7 +88,7 @@
               <a class="nav-link" href="bolockList">차단 목록</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="member/myProduct">내가 쓴 글</a>
+              <a class="nav-link"  href="member/myProduct/${ sessionScope.loginUser.userId  }">내가 쓴 글</a>
             </li>
           </ul>
     </div>
