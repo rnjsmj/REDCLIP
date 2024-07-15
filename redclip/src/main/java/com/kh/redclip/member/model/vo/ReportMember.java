@@ -18,4 +18,6 @@ public class ReportMember {
 	private String reportContent;	//신고 내용
 	private Date reportDate;		//신고 일자
 	private String reportedId;		//신고당한 사람
+	private String reportType;
+	private int referenceNo;
 }

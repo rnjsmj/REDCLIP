@@ -12,6 +12,8 @@ import com.kh.redclip.barter.model.vo.BarterFile;
 import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterReplyFile;
 import com.kh.redclip.barter.model.vo.BarterVO;
+import com.kh.redclip.barter.model.vo.Wishlist;
+import com.kh.redclip.member.model.vo.ReportMember;
 
 import lombok.RequiredArgsConstructor;
 
@@ -81,12 +83,49 @@ public class BarterServiceImpl implements BarterService{
 
 	@Override
 	public int barterDelete(int barterNo) {
-		return barterMapper.barterDelete(barterNo);
+		int replyCount = barterMapper.replyCount(barterNo);
+		if (barterMapper.replyListDelete(barterNo) == replyCount) {
+			return barterMapper.barterDelete(barterNo);
+		}
+		return 0;
+		
 	}
-
+	
+	@Override
+	public int getBarterFileCount(int barterNo) {
+		
+		return barterMapper.getBarterFileCount(barterNo);
+	}
+	
+	@Override
+	public int barterFileDelete(int barterNo) {
+		return barterMapper.barterFileDelete(barterNo);
+		
+	}
 	@Override
 	public int replyFileDelete(int replyNo) {
 		return barterMapper.replyFileDelete(replyNo);
+	}
+	
+	// 좋아요 상태 확인
+	@Override
+	public Wishlist wishStatus(Wishlist wish) {
+		return barterMapper.wishStatus(wish);
+	}
+
+	@Override
+	public int wishInsert(Wishlist wish) {
+		return barterMapper.wishInsert(wish);
+	}
+
+	@Override
+	public int wishDelete(Wishlist wish) {
+		return barterMapper.wishDelete(wish);
+	}
+
+	@Override
+	public int barterReport(ReportMember report) {
+		return barterMapper.barterReport(report);
 	}
 	
 	
