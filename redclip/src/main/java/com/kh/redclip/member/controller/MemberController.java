@@ -183,7 +183,7 @@ public class MemberController {
 	}
     
    //차단 목록 조회
-    @GetMapping("bolockList/{userId}")
+    @GetMapping("blockList/{userId}")
     public String selectByBlock(@PathVariable String userId, Model model) {
     	
     	List<BlockMember> blocks = memberService.selectByBlock(userId);
@@ -215,16 +215,18 @@ public class MemberController {
 
    }
    
-   
-
     
     //차단 해제
     @ResponseBody
-    @DeleteMapping("/{userId}")
-    public String deleteByBlock(@RequestBody String usreId) {
+    @DeleteMapping("blockList/{userId}")
+    public String deleteByBlock(@PathVariable("userId") String userId, @RequestBody List<String> blockMembers) {
     	
-    	return memberService.deleteByBlock(usreId) > 0 ? "success" : "error";
+    	log.info("차단 해제 할 아이디 : {}", blockMembers);
+    	log.info("차단 신청한 아이디 : {}", userId);
+    	
+    	return memberService.deleteByBlock(userId, blockMembers) > 0 ? "success" : "error";
     }
+    
     
 
 }

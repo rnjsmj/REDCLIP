@@ -105,9 +105,7 @@
     <script>
     		function deleteByBlock() {
     		
-    			var userId = {
-    					"usesrId" : $('#userId').val()
-    			};
+    			var userId = $('#userId').val();
     			
     			//배열 선언
     			var blockMembers = [];
@@ -119,15 +117,16 @@
                     blockMembers.push(block);
     			});
     			
-    			//console.log(blocks);
-    			//console.log(userId);
+    			console.log(blockMembers);
+    			console.log(userId);
     			
     			$.ajax({
     				
-    				url: '/member' + userId,
+    				url: userId,
     				type : 'delete',
     				data : JSON.stringify(blockMembers),
     				contentType : 'application/json',
+    				traditional: true,
     				success : result => {
     					console.log('차단 해제함', result);
     				},
