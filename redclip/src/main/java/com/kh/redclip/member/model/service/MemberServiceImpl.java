@@ -142,7 +142,7 @@ public class MemberServiceImpl implements MemberService {
 
 			return accessToken;
 
-
+	}
 	public List<BlockMember> selectByBlock(String userId) {
 		return memberMapper.selectByBlock(userId);
 
