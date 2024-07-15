@@ -1,7 +1,6 @@
 package com.kh.redclip.member.controller;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -39,6 +38,7 @@ public class MemberController {
     
     private final MemberService memberService;
     private final BarterService barterService;
+    
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @ResponseBody
     @PostMapping(value = "/check-id", produces = "text/html; charset=UTF-8")
@@ -142,12 +142,12 @@ public class MemberController {
     
 
     @ResponseBody
-    @GetMapping("/searchId")
+    @GetMapping(value="/searchId",produces = "text/html; charset=UTF-8")
     public String searchId(Member member) {
         String result = memberService.searchid(member);
         
         if (result != null ) {
-            return "회원님의 ID는 " + result + "입니다.";
+            return  result ;
         } else {
             return "해당 회원의 정보가 존재하지 않습니다.";
         }
@@ -183,7 +183,7 @@ public class MemberController {
 	}
     
    //차단 목록 조회
-    @GetMapping("bolockList/{userId}")
+    @GetMapping("blockList/{userId}")
     public String selectByBlock(@PathVariable String userId, Model model) {
     	
     	List<BlockMember> blocks = memberService.selectByBlock(userId);
@@ -194,7 +194,7 @@ public class MemberController {
     	return "member/blockList";
     }
 
-    //카카오 로그인 컨트롤러 
+    //카카오 로그인 컨트롤러(토근가져오기)
    @GetMapping("oauth")
    public void kakaoLogin(String code, HttpSession session) throws  IOException, ParseException, org.json.simple.parser.ParseException {
 	   
@@ -203,6 +203,7 @@ public class MemberController {
 	  
 	  memberService.getUserInfo(accessToken);
 	  log.info("토큰은?{}",accessToken);
+	  
    }
     //카카오 로그아웃 컨트롤러
    @GetMapping("kakao-logout")
@@ -216,15 +217,14 @@ public class MemberController {
    }
    
    
-
-    
-    //차단 해제
-    @ResponseBody
-    @DeleteMapping("/{userId}")
-    public String deleteByBlock(@RequestBody String usreId) {
-    	
-    	return memberService.deleteByBlock(usreId) > 0 ? "success" : "error";
-    }
-    
-
+   //차단 해제
+   @ResponseBody
+   @DeleteMapping("blockList/{userId}")
+   public String deleteByBlock(@PathVariable("userId") String userId, @RequestBody List<String> blockMembers) {
+      
+      log.info("차단 해제 할 아이디 : {}", blockMembers);
+      log.info("차단 신청한 아이디 : {}", userId);
+      
+      return "success";// memberService.deleteByBlock(userId, blockMembers) > 0 ? "success" : "error";
+   }
 }

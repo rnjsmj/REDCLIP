@@ -121,7 +121,7 @@
         $('#kakaoLogin').click(() => {
             location.href = 'https://kauth.kakao.com/oauth/authorize?' +
                 'client_id=dd2c51ceb08c2d3fd9f505935aa18931' +
-                '&redirect_uri=http://localhost:8080/redclip/member/oauth' +
+                '&redirect_uri=http://localhost/redclip/member/oauth' +
                 '&response_type=code' +
                 '&scope=profile_nickname,profile_image';
         });
@@ -171,15 +171,39 @@
           </div>
       </div>
   </div>
- 
-
- 
+ <!-- 결과창 모달 -->
+<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+                <h5 class="modal-title" id="resultModalLabel">아이디 찾기 결과</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                
+            </div>
+            <div class="modal-body" id="resultModalBody">
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="findAfterLongin">로그인</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 결과 모달 끝 -->
 <script>
 $(() => {
     const $inputName = $('#inputName');
     const $inputTel = $('#inputTel');
     const $searchId = $('#searchId');
-
+    const $resultModal = $('#resultModal');
+    const $resultModalBody = $('#resultModalBody');
+    const $findIdModal =$("#findIdModal");
+    const $findAfterLongin = $('#findAfterLongin')
+    let resp = "";
     $searchId.click(() => {
         if ($inputName.val() !== null && $inputTel.val() !== null) {
             $.ajax({
@@ -190,13 +214,21 @@ $(() => {
                     tel: $inputTel.val()
                 },
                 success: response => {
-                    console.log(response);
+                    $resultModalBody.html("회원님의 ID 는"+'<strong style="color: green;">'+response+'</strong>'+" 입니다."); 
+                    $findIdModal.modal('hide');
+                    $resultModal.modal('show');
+                    resp = response;
                 },
                 error: function () {
                     alert('오류임 똥멍청이야!!');
                 }
             });
         }
+    });
+    
+    $findAfterLongin.click(() => {
+    	// console.log(resp);	
+    	$('#userId').val(resp)
     });
 });
 </script>

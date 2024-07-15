@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.parser.ParseException;
 
@@ -63,6 +64,7 @@ public interface MemberService {
 	void kakaoLogout(String accessToken) throws IOException;
 
 	void getUserInfo(String accessToken);
+
 
 
 

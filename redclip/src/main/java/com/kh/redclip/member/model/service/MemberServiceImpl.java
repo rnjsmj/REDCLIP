@@ -84,7 +84,9 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insert(Member member) {
 		return memberMapper.insertMember(member);
+		
 	}
+	
 
 
 	@Override
@@ -115,7 +117,7 @@ public class MemberServiceImpl implements MemberService {
 		StringBuilder sb = new StringBuilder();
 		sb.append("client_id=dd2c51ceb08c2d3fd9f505935aa18931");
 		sb.append("&grant_type=authorization_code");
-		sb.append("&redirect_uri=http://localhost:8080/redclip/member/oauth");
+		sb.append("&redirect_uri=http://localhost/redclip/member/oauth");
 		sb.append("&code=");
 		sb.append(code);
 		
@@ -142,7 +144,7 @@ public class MemberServiceImpl implements MemberService {
 
 			return accessToken;
 
-
+	}
 	public List<BlockMember> selectByBlock(String userId) {
 		return memberMapper.selectByBlock(userId);
 
@@ -177,10 +179,9 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
-
+	//소셜로그인 유저 정보가져오기
 	@Override
 	public void getUserInfo(String accessToken) {
-		
 		
 		String userInfoUrl = "https://kapi.kakao.com/v2/user/me";
 
@@ -207,7 +208,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	public int deleteByBlock(String usreId) {
-		return memberMapper.	deleteByBlock(usreId);
+		return memberMapper.deleteByBlock(usreId);
 	}
 
 
