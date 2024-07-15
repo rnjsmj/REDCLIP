@@ -72,10 +72,10 @@
     </style>
 </head>
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm navbar">
-   <h5 class="my-0 font-weight-normal"><a href="${requestScope.contextPath}">홈</a></h5>
+   <h5 class="my-0 font-weight-normal"><a href="/redclip">홈</a></h5>
 
    <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="/redclip/barters">물물교환</a>
+      <a class="p-2 text-dark" href="${pageContext.request.contextPath}/barters">물물교환</a>
       <a class="p-2 text-dark" href="#">체팅</a>
       <a class="p-2 text-dark" href="#">공지사항</a>
       <a class="p-2 text-dark" href="#">FAQ</a>

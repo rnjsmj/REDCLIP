@@ -38,6 +38,7 @@
 			  STATUS status,
 			  CREATE_DATE createDate,
 			  VILLAGE_CODE villageCode
+			 <!-- PLOFIL profil  --> 
    		  FROM
 			  TB_MEMBER
 		 WHERE
@@ -130,6 +131,20 @@
         )
 	</insert>
 	
+	<!-- 내가 쓴 글 조회 -->
+	<select id="selectById" parameterType="String" resultType="barter">
+		SELECT
+		      BARTER_NAME barterName,
+		      BARTER_DATE barterDate,
+		      BARTER_STATUS barterStatus,
+		      HIT hit
+		 FROM
+      		  TB_BARTER
+		WHERE
+     		  BARTER_WRITER = #{userId}
+     		  
+	</select>
+
 	<select id="searchid" parameterType="member" resultType="string">
     SELECT
     		USER_ID
@@ -141,5 +156,33 @@
     AND 
     		TEL = #{tel}
 	</select>
+	
+	<!-- 회원 차단 -->
+	<insert id="">
+	
+	</insert>
+	
+	<!-- 차단 회원 조회 -->
+	<select id="selectByBlock" parameterType="string" resultType="block">
+		SELECT
+              BLOCKED_ID blockedId,
+              BLOCK_DATE blockDate
+         FROM
+              TB_MEM_BLOCK
+        WHERE
+              BLOCK_ID = #{userId}
+	</select>
 
+	<!-- 차단 해제 -->
+	<delete id="deleteByBlock" parameterType="string">
+		    DELETE
+		      FROM
+		      			TB_MEM_BLOCK
+		     WHERE
+		     			BLOCKED_ID = #{blockedId}
+		     	AND
+		     			BLOCK_ID = #{userId}
+	</delete>
+	
+	
 </mapper>

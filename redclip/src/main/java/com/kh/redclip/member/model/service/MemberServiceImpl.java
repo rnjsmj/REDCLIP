@@ -15,7 +15,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
+import com.kh.redclip.barter.model.dao.BarterMapper;
+import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.dao.MemberMapper;
+import com.kh.redclip.member.model.vo.BlockMember;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
 
@@ -27,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper memberMapper;
+	private final BarterMapper barterMapper;
 
 	@Override
 	public int idCheck(String userId) {
@@ -84,12 +88,18 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
+	public List<Barter> selectById(String userId) {
+		return memberMapper.selectById(userId);
+	}
+
+	
 	public String searchid(Member member) {
 		return memberMapper.searchid(member);
 	}
 
 
 	@Override
+
 	public String getToken(String code) throws IOException, ParseException  {
 	
 		String tokenUrl = "https://kauth.kakao.com/oauth/token";
@@ -132,12 +142,15 @@ public class MemberServiceImpl implements MemberService {
 
 			return accessToken;
 
-			
+
+	public List<BlockMember> selectByBlock(String userId) {
+		return memberMapper.selectByBlock(userId);
 
 	}
 
 
 	@Override
+
 	public void kakaoLogout(String accessToken) throws IOException {
 		String logoutUrl = "https://kapi.kakao.com/v1/user/logout";
 		URL url;
@@ -192,5 +205,11 @@ public class MemberServiceImpl implements MemberService {
 
 		
 	}
+
+	public int deleteByBlock(String usreId) {
+		return memberMapper.	deleteByBlock(usreId);
+	}
+
+
 	
 }
