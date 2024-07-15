@@ -110,13 +110,13 @@
     			};
     			
     			//배열 선언
-    			var blocks = [];
+    			var blockMembers = [];
     			
     			//체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
     			$('.form-check-input:checked').each(function() {
                     var block= $(this).closest('tr').find('#blockedId').text().trim();
 
-                    blocks.push(block);
+                    blockMembers.push(block);
     			});
     			
     			//console.log(blocks);
@@ -126,7 +126,7 @@
     				
     				url: '/member' + userId,
     				type : 'delete',
-    				data : JSON.stringify(blocks),
+    				data : JSON.stringify(blockMembers),
     				contentType : 'application/json',
     				success : result => {
     					console.log('차단 해제함', result);
