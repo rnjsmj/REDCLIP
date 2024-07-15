@@ -1,8 +1,9 @@
 package com.kh.redclip.member.model.service;
 
 import java.util.List;
-import java.util.Map;
 
+import com.kh.redclip.barter.model.vo.Barter;
+import com.kh.redclip.member.model.vo.BlockMember;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
 
@@ -27,7 +28,13 @@ public interface MemberService {
 	public int insertAdmin(Member member);
 	
 	// 내가 쓴 글 조회
+	public List<Barter> selectById(String userId);
+	
 	// 차단한 회원 조회
+	List<BlockMember> selectByBlock(String userId);
+	
+	//차단 해제
+	int deleteByBlock(String usreId);
 	// 신고 내역 조회 
 	//회원 아이디 검색
 	//누적 신고 횟수 조회
@@ -42,4 +49,6 @@ public interface MemberService {
 	
 	//아이디찾기
 	public String searchid(Member member);
+
+
 }

@@ -54,7 +54,7 @@
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">마이페이지</a></li>
+          <li class="breadcrumb-item"><a href=" myPage">마이페이지</a></li>
           <li class="breadcrumb-item active" aria-current="page">내가 쓴 글</li>
         </ol>
     </nav>
@@ -62,13 +62,13 @@
      <div class="tab">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link" href="myPage">내 정보</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/member/myPage">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="bolockList">차단 목록</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/member/bolockList/${ sessionScope.loginUser.userId }">차단 목록</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page"  href="#">내가 쓴 글</a>
+              <a class="nav-link active" aria-current="page" href="#">내가 쓴 글</a>
             </li>
           </ul>
     </div>
@@ -81,32 +81,50 @@
                 <tr>
                     <th>선택</th>
                     <th>게시글 제목</th>
-                    <th>거래상태</th>
                     <th>작성일</th>
+                    <th>거래상태</th>
                     <th>조회수</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- 반복문으로 회원 아이디와 일치하는 레코드를 전부 출력-->
-                <c:if test="${ not empty sessionScope.loginUser }">
-                <c:forEach items="barter">
-	                 <tr>
-	                    <td><div class="form-check">
-	                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-	                      </div></td>
-	                      <td>${ barter.barterName }</td>
-	                      <td>${ barter.baterStatus }</td>
-	                      <td>${ barter.barterDate }</td>
-	                      <td>${ barter.hit }</td>
-	                 </tr>
-                 </c:forEach>
-                 </c:if>
+                <c:choose>
+	                <c:when test="${ empty list }">
+	                	<td colspan="5" align="center">글이 존재하지 않습니다.</td>
+	                </c:when>
+                <c:otherwise>
+	                <c:forEach items="${ list }" var="barter">
+		                 <tr>
+		                    <td>
+		                    <div class="form-check">
+		                        <input class="form-check-input" type="checkbox" value=""  id="flexCheckDefault">
+		                      </div></td>
+		                      <td><a data-barter-no="${barter.barterNo}" href="${pageContext.request.contextPath}/barters/${barter.barterNo}">${ barter.barterName }</a></td>
+		                      <td>${ barter.barterDate }</td>
+		                      <td>${ barter.barterStatus }</td>
+		                      <td>${ barter.hit }</td>
+		                 </tr>
+	                 </c:forEach>
+                 </c:otherwise>
+                 </c:choose>
             </tbody>
         </table>
         <div id="buttons">
-          <button id="btn-status" class="btn btn-success">거래상태 변경</button> | <button id="btn-delete" class="btn btn-secondary">삭제</button>
+          <button id="btn-status" class="btn btn-success" onclick="upStatus(barterNo);">거래상태 변경</button> | <button id="btn-delete" class="btn btn-secondary">삭제</button>
         </div>
     </div>
+    <script>
+	//거래 상태 변경    
+	function upStatus(barterNo) {
+		
+		$.ajax({
+			url : '/member'
+			type : 'put'
+		});
+	}
+    //글 삭제
+    
+    </script>
     <footer>
         <jsp:include page="../common/footer.jsp" />
     </footer>

@@ -75,7 +75,7 @@
    <h5 class="my-0 font-weight-normal"><a href="/redclip">홈</a></h5>
 
    <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="/redclip/barters">물물교환</a>
+      <a class="p-2 text-dark" href="${pageContext.request.contextPath}/barters">물물교환</a>
       <a class="p-2 text-dark" href="#">체팅</a>
       <a class="p-2 text-dark" href="#">공지사항</a>
       <a class="p-2 text-dark" href="#">FAQ</a>

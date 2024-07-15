@@ -85,10 +85,10 @@
               <a class="nav-link active" aria-current="page" href="#">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="bolockList">차단 목록</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/member/bolockList/${ sessionScope.loginUser.userId }">차단 목록</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="myProduct">내가 쓴 글</a>
+              <a class="nav-link"  href="${pageContext.request.contextPath}/member/myProduct/${ sessionScope.loginUser.userId  }">내가 쓴 글</a>
             </li>
           </ul>
     </div>
@@ -99,7 +99,7 @@
         <div id="updateForm">
             <div>
                 <div class="userImg">
-                	<div id="changeName">
+                	<div id="profil">
 						<img alt="프로필 사진" src="">
 					</div>
 					<input type="file" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
@@ -209,7 +209,7 @@
    					"tel" : $('#tel').val(),
    					"postCode" : $('#postCode').val(),
    					"address" : $('#address').val(),
-   					"villageCode" : $('#villageCode').val(),
+   					"villageCode" : $('#villageCode').val()
    					
    			};
    			
@@ -232,8 +232,11 @@
    				}
    			});
    		};
+   		
+   		//프로필 사진 업데이트
 
    		//체크박스 체크 여부 확인(시간 남으면 구현)
+   		//프로필 이미지 사진 바뀌면 미리 보이는 기능(시간 남으면 구현)
    		
    		
    		//회원 탈퇴
@@ -258,9 +261,6 @@
    			});
    			
    		};
-		
-   		//차단 회원 페이지 이동
-   		
    		
     </script>
 </body>

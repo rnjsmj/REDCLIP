@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.barter.model.service.BarterService;
-import com.kh.redclip.barter.model.vo.BarterVO;
+import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.service.MemberService;
+import com.kh.redclip.member.model.vo.BlockMember;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
 
@@ -157,13 +159,44 @@ public class MemberController {
     }
     
     //내가 쓴 글 조회
-    @GetMapping("/{userId}")
-    public String findById(@PathVariable String userId) {
+    @GetMapping("myProduct/{userId}")
+    public String selectById(@PathVariable String userId, Model model) {
+		
+    	List<Barter> products = memberService.selectById(userId);
+    	//log.info("조회할 회원 : {}", userId);
+    	//log.info("목록 : {}", products);
     	
+    	model.addAttribute("list", products);
     	
+    	return "member/myproduct";
     	
-    	return "redirect:/";
     }
     
+    //마이페이지 이동
+    @GetMapping("/myPage")
+	public String myPage() {
+		
+		return "member/myPage";
+	}
+    
+   //차단 목록 조회
+    @GetMapping("bolockList/{userId}")
+    public String selectByBlock(@PathVariable String userId, Model model) {
+    	
+    	List<BlockMember> blocks = memberService.selectByBlock(userId);
+    	
+    	
+    	model.addAttribute("list", blocks);
+    	
+    	return "member/blockList";
+    }
+    
+    //차단 해제
+    @ResponseBody
+    @DeleteMapping("/{userId}")
+    public String deleteByBlock(@RequestBody String usreId) {
+    	
+    	return memberService.deleteByBlock(usreId) > 0 ? "success" : "error";
+    }
     
 }
