@@ -65,7 +65,7 @@
               <a class="nav-link" href="${pageContext.request.contextPath}/member/myPage">내 정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="${pageContext.request.contextPath}/member/bolockList/${ sessionScope.loginUser.userId }">차단 목록</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/member/blockList/${ sessionScope.loginUser.userId }">차단 목록</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">내가 쓴 글</a>

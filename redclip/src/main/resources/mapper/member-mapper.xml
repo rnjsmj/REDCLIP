@@ -45,6 +45,7 @@
 			  USER_ID = #{userId}
 		   AND
 			  STATUS ='Y'
+			  
 		<!-- AND USER_PWD = #{userPwd} AND STATUS = 'Y' -->
 	</select>
 	
@@ -157,6 +158,21 @@
     		TEL = #{tel}
 	</select>
 	
+	
+	<select id="searchpw" parameterType="member" resultType="_int"  >
+	SELECT 
+			COUNT(*)
+	FROM 
+			TB_MEMBER
+	WHERE	
+			USER_ID = #{userId}
+	AND
+			EMAIL= #{email}
+	
+	</select>
+	
+	
+	
 	<!-- 회원 차단 -->
 	<insert id="">
 	
@@ -183,6 +199,8 @@
 		     	AND
 		     			BLOCK_ID = #{userId}
 	</delete>
+	
+	
 	
 	
 </mapper>

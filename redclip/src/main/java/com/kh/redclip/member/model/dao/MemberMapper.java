@@ -54,6 +54,8 @@ public interface MemberMapper {
 
 	String searchid(Member member);
 
+	int searchpw(Member member);
+
 
 
 
