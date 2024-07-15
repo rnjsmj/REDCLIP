@@ -514,11 +514,16 @@
                     if (message.trim() !== '') {
                         const insValue = '<div class="message sender"><p>' + $('#chat-input').val() + '</p></div>';
 
-                        $('.chat-messages').append(insValue);
+                        const chatMessage = {
+                        	roomNo : ${ room.roomNo},
+                        	senderId : ${ sessionScope.loginUser.userId },
+                        	message : message
+                        };
 
                         $('#chat-input').val('');
 
                         scrollToBottom();
+                        $('#chat-input').focus();
                     }
                 }
 
@@ -536,6 +541,8 @@
                         submitMessage();
                     }
                 });
+                
+                
             </script>
 
             <section></section>

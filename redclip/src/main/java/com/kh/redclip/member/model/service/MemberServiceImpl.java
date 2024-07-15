@@ -141,6 +141,7 @@ public class MemberServiceImpl implements MemberService {
 			bw.close();
 
 			return accessToken;
+	}
 
 
 	public List<BlockMember> selectByBlock(String userId) {

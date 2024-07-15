@@ -881,7 +881,7 @@
                                     const userId = "${ sessionScope.loginUser.userId }";
                                     
                                     if( userId === "${ barter.barterWriter}") {
-                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo +'"><a href="'
+                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo +'"><a onclick="connect()'
                                     			  +'" id="chatbtn" class="btn btn-light">채팅하기</a></div>'
                                     			  +'</div></div>';
                                     } else if( userId === result[i].replyWriter) {
@@ -1232,7 +1232,18 @@
         	
         }
         
-        
+        function connect() {
+        	
+        	const uri = 'ws://localhost/redclip/chat';
+        	var chat = new WebSocket(uri);
+        	
+        	chat.onopen = () => {
+        		console.log('서버 연결');
+        	}
+        	
+        	location.href="/redclip/chatting/list";
+        	
+        }
         
         
     	

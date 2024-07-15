@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.redclip.chatting.model.dao.ChatMapper">
+	
+	<!-- 채팅 전송 -->
+	<insert id="insertMessage" parameterType="chatMessage">
+		INSERT 
+		  INTO
+		  		TB_CHAT_MESSAGE
+		  		(
+		  		 CHAT_NO,
+		  		 ROOM_NO,
+		  		 SENDER_ID,
+		  		 MESSAGE
+		  		)
+		 VALUES
+		 		(
+		 		 SEQ_MSG.NEXTVAL,
+		 		 #{roomNo},
+		 		 #{senderId},
+		 		 #{message}
+		 		)
+	</insert>
+	
+	<!-- 채팅 목록 -->
+	<select id="findAll" parameterType="String" resultType="chatRoomVo">
+		SELECT
+				ROOM_NO roomNo,
+				BARTER_NO barterNo,
+				BARTER_NAME barterName,
+				BARTER_PROFIL barterProfil,
+				REPLY_PROFIL replyProfil,
+				BARTER_WRITER barterWriter,
+				BARTER_NICKNAME barterNickname,
+				REPLY_WRITER replyWriter,
+				REPLY_NICKNAME replyNickname,
+				VILLAGE_NAME villageName, 
+				CHAT_DATE chatDate,
+				MESSAGE message,
+				SENDER_ID senderId
+		  FROM
+		  		VW_CHAT_ROOM_LIST
+		 WHERE
+		 		BARTER_WRITER = #{userId}
+		    OR
+		    	REPLY_WRITER = #{userId}
+	</select>
+	
+	<!-- 채팅방 생성 -->
+	<insert id="openChatRoom" useGeneratedKeys="true">
+		<selectKey keyProperty="roomNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_CHT.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT
+		  INTO
+		  		TB_CHAT_ROOM
+		  		(
+		  		 ROOM_NO,
+		  		 BARTER_NO,
+		  		 BARTER_WRITER,
+		  		 REPLY_WRITER
+		  		)
+		VALUES
+				(
+				 #{roomNo},
+				 #{barterNo},
+				 #{barterWriter},
+				 #{replyWriter}
+				)
+	</insert>
+</mapper>

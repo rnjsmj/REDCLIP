@@ -43,6 +43,7 @@ public class BarterController {
 	
 	private final BarterService barterService;
 	
+
 	//교환 게시글 목록보기
 	@GetMapping
 	public String getAllBarters(@RequestParam(value="code", defaultValue="0") Integer code, Model model) {
