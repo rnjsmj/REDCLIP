@@ -215,7 +215,6 @@ public class MemberController {
 
    }
    
-    
     //차단 해제
     @ResponseBody
     @DeleteMapping("blockList/{userId}")

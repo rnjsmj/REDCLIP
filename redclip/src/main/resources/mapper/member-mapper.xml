@@ -186,7 +186,6 @@
 				        <foreach item="id" collection="blockMembers" open="(" separator="," close=")">
             #{id}
         </foreach>
-		     			
 	</delete>
 	
 	
