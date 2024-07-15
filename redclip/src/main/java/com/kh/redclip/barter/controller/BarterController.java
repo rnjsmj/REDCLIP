@@ -29,6 +29,8 @@ import com.kh.redclip.barter.model.vo.BarterFile;
 import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterReplyFile;
 import com.kh.redclip.barter.model.vo.BarterVO;
+import com.kh.redclip.barter.model.vo.Wishlist;
+import com.kh.redclip.member.model.vo.ReportMember;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,12 +57,12 @@ public class BarterController {
 		
 		BarterVO barterDetail = barterService.findById(barterNo);
 		if (barterService.increaseHit(barterNo) > 0) {
-			log.info("상세정보 : {}", barterDetail);
+			//log.info("상세정보 : {}", barterDetail);
 			model.addAttribute("barter", barterDetail);
 			return "barter/detail";	
 			
 		}
-		return "barter/list";
+		return "redirect:/barters";
 	}
 	
 	// 교환 게시글 등록 페이지 보기
@@ -94,7 +96,7 @@ public class BarterController {
 	//교환 게시글 글 등록하기
 	@PostMapping(value="barterFile")
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
-	    log.info("파일 배열 : {}", upfile);
+	    //log.info("파일 배열 : {}", upfile);
 
 	    if (barterService.insert(barter) > 0) {
 	        int fileCount = 0;
@@ -142,8 +144,8 @@ public class BarterController {
 	@ResponseBody
 	public String replyInsert(BarterReply reply, MultipartFile[] upfiles, HttpSession session) {
 		
-		log.info("답글 : {}", reply);
-		log.info("파일 배열 : {}", upfiles);
+		//log.info("답글 : {}", reply);
+		//log.info("파일 배열 : {}", upfiles);
 		//barterNo, replyContent, replyWriter 필요
 		
 		
@@ -176,17 +178,17 @@ public class BarterController {
 	//답글 삭제
 	@DeleteMapping(value="reply/{replyNo}")
 	@ResponseBody
-	public String replyDelete(@PathVariable int replyNo, boolean fileExist) {
-		log.info("fileExist : {}", fileExist);
+	public String replyDelete(@PathVariable int replyNo, @RequestBody boolean fileExist) {
+		//log.info("fileExist : {}", fileExist);
 		
 		if (fileExist == true) {
-			log.info("파일 존재 : {}");
+			//log.info("파일 존재 : {}", fileExist);
 			if (barterService.replyFileDelete(replyNo) <= 0) {
 				return "file delete error";			
 			}
-			log.info("파일 삭제 완료");
+			//log.info("파일 삭제 완료");
 		}
-		log.info("답글 삭제 시도");
+		//log.info("답글 삭제 시도");
 		return barterService.replyDelete(replyNo) > 0 ? "success" : "error";
 	}
 	
@@ -226,17 +228,67 @@ public class BarterController {
 	
 	//게시글 삭제
 	@PostMapping("/delete")
-	public String barterDelete(int barterNo, HttpSession session) {
-		//log.info("삭제할 게시글 번호 : {}", barterNo);
+	public String barterDelete(int barterNo, int fileExist, HttpSession session) {
+		log.info("삭제할 게시글 번호 : {}", barterNo);
+		if (fileExist != 0) {
+			barterService.barterFileDelete(barterNo);
+		}
 		
-		if(barterService.barterDelete(barterNo) > 0) {
+		// 게시글에 포함된 답글을 삭제하기 위해 답글에 포함된 파일 삭제
+		List<BarterReply> replyList = barterService.getBarterReply(barterNo);
+		for ( BarterReply reply : replyList ) {
+			barterService.replyFileDelete(reply.getReplyNo());
+		}
+
+		// 게시글 삭제 service에서 포함된 답글 삭제 후 게시글 삭제
+		if (barterService.barterDelete(barterNo) > 0) {
 			session.setAttribute("alertMsg", "게시글이 삭제되었습니다.");
 			return "redirect:/barters";
 		} else {
 			session.setAttribute("alertMsg", "오류가 발생했습니다.");
 			return "redirect:/barters/" + barterNo;
 		}
+		
+		
+		
+	}
+	
+	//좋아요 상태 확인
+	@GetMapping("/wish")
+	@ResponseBody
+	public String barterWishState(Wishlist wish) {
+		//log.info("요청 객체 : {}", wish);
+		Wishlist state = barterService.wishStatus(wish);
+		//log.info("객체 : {}", state);
+		return state != null ? "exist" : "none";
+	}
+	
+	//좋아요 등록/해제
+	@PostMapping("/wish")
+	@ResponseBody
+	public String barterWish(Wishlist wish, int state, HttpSession session) {
+		int result = 0;
+		
+		if (state == 1) {
+			result = barterService.wishInsert(wish);
+		} else {
+			result = barterService.wishDelete(wish);
+		}
+		
+		return result > 0 ? Integer.toString(barterService.findById(wish.getBarterNo()).getWishCount()) : "error";
+		
 	}
 
+	//게시글 신고
+	@PostMapping("/report")
+	public String barterReport(ReportMember report, HttpSession session) {
+		if (barterService.barterReport(report) > 0) {
+			session.setAttribute("alertMsg", "신고가 접수되었습니다.");
+			return "redirect:/barters/" + report.getReferenceNo();
+		} else {
+			session.setAttribute("alertMsg", "오류가 발생했습니다.");
+			return "redirect:/barters/" + report.getReferenceNo();
+		}
+	}
 
 }
