@@ -112,11 +112,25 @@
   </div>
   <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
 
-  <button class="btn btn-custom kakao-button" type="button">
+  <button class="btn btn-custom kakao-button" type="button" id="kakaoLogin">
     <img src="" alt="카카오 로그인" class="icon">
     <span class="btn-text">카카오 로그인</span>
   </button>
+<script>
+    $(() => {
+        $('#kakaoLogin').click(() => {
+            location.href = 'https://kauth.kakao.com/oauth/authorize?' +
+                'client_id=dd2c51ceb08c2d3fd9f505935aa18931' +
+                '&redirect_uri=http://localhost:8080/redclip/member/oauth' +
+                '&response_type=code' +
+                '&scope=profile_nickname,profile_image';
+        });
+    });
+</script>
 
+
+
+	
   <button class="btn btn-custom naver-button" type="button">
     <img src="" alt="네이버 로그인" class="icon">
     <span class="btn-text">네이버 로그인</span>
@@ -157,7 +171,9 @@
           </div>
       </div>
   </div>
-  
+ 
+
+ 
 <script>
 $(() => {
     const $inputName = $('#inputName');

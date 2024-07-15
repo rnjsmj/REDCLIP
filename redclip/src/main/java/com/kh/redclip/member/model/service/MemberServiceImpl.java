@@ -1,7 +1,18 @@
 package com.kh.redclip.member.model.service;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 import com.kh.redclip.barter.model.dao.BarterMapper;
@@ -12,7 +23,8 @@ import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
 
 import lombok.RequiredArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -87,15 +99,117 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
+
+	public String getToken(String code) throws IOException, ParseException  {
+	
+		String tokenUrl = "https://kauth.kakao.com/oauth/token";
+		URL url = new URL(tokenUrl);
+		HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+		urlConnection.setRequestMethod("POST");
+		urlConnection.setDoOutput(true);
+		
+		BufferedWriter bw =
+							new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream()));
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("client_id=dd2c51ceb08c2d3fd9f505935aa18931");
+		sb.append("&grant_type=authorization_code");
+		sb.append("&redirect_uri=http://localhost:8080/redclip/member/oauth");
+		sb.append("&code=");
+		sb.append(code);
+		
+		bw.write(sb.toString());
+		bw.flush();
+		
+		BufferedReader br = 
+			    new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+			String line = "";
+			String responseData = "";
+
+			while ((line = br.readLine()) != null) {
+			    responseData += line;
+			}
+			
+			log.info("겟토큰 리스폰{}",responseData);
+			JSONParser parser = new JSONParser();
+			JSONObject element = (JSONObject)parser.parse(responseData);
+
+			String accessToken = element.get("access_token").toString();
+
+			br.close();
+			bw.close();
+
+			return accessToken;
+
+
 	public List<BlockMember> selectByBlock(String userId) {
 		return memberMapper.selectByBlock(userId);
+
 	}
 
 
 	@Override
+
+	public void kakaoLogout(String accessToken) throws IOException {
+		String logoutUrl = "https://kapi.kakao.com/v1/user/logout";
+		URL url;
+		HttpURLConnection conn;
+
+
+		    url = new URL(logoutUrl);
+		    conn = (HttpURLConnection)url.openConnection();
+		    conn.setRequestMethod("POST");
+		    conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+		    
+		    BufferedReader br = 
+		    		new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		    
+		    String responseData = "";
+		    String line = "";
+		    while((line = br.readLine()) != null) {
+		        responseData = line;
+		        
+		        log.info("로그아웃 리스폰스데이타{}",responseData);
+		    }
+
+
+
+	}
+
+
+	@Override
+	public void getUserInfo(String accessToken) {
+		
+		
+		String userInfoUrl = "https://kapi.kakao.com/v2/user/me";
+
+		try {
+		    URL url = new URL(userInfoUrl);
+		    HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+		    urlConnection.setRequestMethod("GET");
+		    urlConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+		    BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+		    String responseData = br.readLine();
+
+		    log.info("유저인포 {}",responseData);
+
+		    
+		} catch (MalformedURLException e) {
+		    e.printStackTrace();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+
+		
+	}
+
 	public int deleteByBlock(String usreId) {
 		return memberMapper.	deleteByBlock(usreId);
 	}
+
 
 	
 }

@@ -1,9 +1,16 @@
 package com.kh.redclip.member.model.service;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
+
+
+import org.json.simple.parser.ParseException;
+
 
 import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.vo.BlockMember;
+
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.region.model.vo.Region;
 
@@ -49,6 +56,14 @@ public interface MemberService {
 	
 	//아이디찾기
 	public String searchid(Member member);
+
+	//api 로그인 토큰 
+	String getToken(String code) throws  IOException, ParseException;
+
+	void kakaoLogout(String accessToken) throws IOException;
+
+	void getUserInfo(String accessToken);
+
 
 
 }

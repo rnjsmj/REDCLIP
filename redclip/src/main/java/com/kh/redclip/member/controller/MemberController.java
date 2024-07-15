@@ -1,5 +1,8 @@
 package com.kh.redclip.member.controller;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -190,6 +193,30 @@ public class MemberController {
     	
     	return "member/blockList";
     }
+
+    //카카오 로그인 컨트롤러 
+   @GetMapping("oauth")
+   public void kakaoLogin(String code, HttpSession session) throws  IOException, ParseException, org.json.simple.parser.ParseException {
+	   
+	  String accessToken = memberService.getToken(code);
+	  session.setAttribute("accessToken", accessToken);
+	  
+	  memberService.getUserInfo(accessToken);
+	  log.info("토큰은?{}",accessToken);
+   }
+    //카카오 로그아웃 컨트롤러
+   @GetMapping("kakao-logout")
+   public String kakaoLogout (HttpSession session) throws IOException {
+	   String accessToken = (String)session.getAttribute("accessToken");
+
+	   memberService.kakaoLogout(accessToken);
+	   
+	   return "redirect:loginform";
+
+   }
+   
+   
+
     
     //차단 해제
     @ResponseBody
@@ -199,4 +226,5 @@ public class MemberController {
     	return memberService.deleteByBlock(usreId) > 0 ? "success" : "error";
     }
     
+
 }
