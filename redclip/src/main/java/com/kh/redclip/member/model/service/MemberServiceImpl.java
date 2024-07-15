@@ -94,14 +94,19 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.selectById(userId);
 	}
 
-	
+	//아이디 찾기 서비스
 	public String searchid(Member member) {
 		return memberMapper.searchid(member);
 	}
-
-
+	
+	//비밀번호 찾기 서비스 
 	@Override
+	public int searchPw(Member member) {
+		return memberMapper.searchpw(member);
+	}
 
+	//소셜로그인 토큰가져오기
+	@Override
 	public String getToken(String code) throws IOException, ParseException  {
 	
 		String tokenUrl = "https://kauth.kakao.com/oauth/token";
@@ -211,6 +216,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.deleteByBlock(usreId);
 	}
 
+	
 
 	
 }

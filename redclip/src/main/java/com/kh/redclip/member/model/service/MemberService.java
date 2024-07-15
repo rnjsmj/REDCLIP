@@ -65,6 +65,8 @@ public interface MemberService {
 
 	void getUserInfo(String accessToken);
 
+	int searchPw(Member member);
+
 
 
 

@@ -38,8 +38,9 @@ public class MemberController {
     
     private final MemberService memberService;
     private final BarterService barterService;
-    
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    
+    //아이디 중복체크 컨트롤러
     @ResponseBody
     @PostMapping(value = "/check-id", produces = "text/html; charset=UTF-8")
     public String checkId(@RequestParam("userId") String userId) {
@@ -53,7 +54,7 @@ public class MemberController {
             return "N"; // 아니면 N을 리턴해준다
         }
     }
-    
+    //닉네임 중복체크 컨트롤러
     @ResponseBody
     @PostMapping(value = "/check-nick", produces = "text/html; charset=UTF-8")
     public String checkNick(@RequestParam("userNick") String userNick) {
@@ -67,7 +68,7 @@ public class MemberController {
             return "N"; // 아니면 N을 리턴해준다
         }
     }
-   
+   //로그인컨트롤러
     @PostMapping("/login")
     public String login(Member member, Model model, HttpSession session) {
         Member loginUser = memberService.login(member);
@@ -102,7 +103,7 @@ public class MemberController {
     	
     }
     
-    
+    //구선택컨트롤러
     @ResponseBody
     @GetMapping("/guSelect")
     public List<Region> getGuList(@RequestParam("si") int cityCode) {
@@ -113,7 +114,7 @@ public class MemberController {
         
         return guList;
     }
-    
+    //동선택 컨트롤러
     @ResponseBody
     @GetMapping("/dongSelect")
     public List<Region> getDongList(@RequestParam("gu") int townCode) {
@@ -124,7 +125,7 @@ public class MemberController {
         
         return dongList;
     }
-    
+    //로그인 컨트롤러
     @PostMapping("/join")
     public String join(Member member,Model model) {
     	 
@@ -140,7 +141,7 @@ public class MemberController {
         }
   }
     
-
+    //아이디 찾기 컨트롤러
     @ResponseBody
     @GetMapping(value="/searchId",produces = "text/html; charset=UTF-8")
     public String searchId(Member member) {
@@ -152,6 +153,20 @@ public class MemberController {
             return "해당 회원의 정보가 존재하지 않습니다.";
         }
     }
+    
+    // 비밀번호 찾기 컨트롤러
+    @ResponseBody
+    @GetMapping(value="/searchPw",produces = "text/html; charset=UTF-8")
+    public String searchPw(Member member) {
+        int result = memberService.searchPw(member);
+        
+        if (result > 0  ) {
+            return  "해당회원의 정보가 존재합니다.";
+        } else {
+            return "해당 회원의 정보가 존재하지 않습니다.";
+        }
+    }
+    
     //회원 상태 변경
     @ResponseBody
     @PutMapping("/{userId}")
