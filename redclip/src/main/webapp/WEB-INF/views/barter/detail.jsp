@@ -6,11 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <jsp:include page="/WEB-INF/views/common/head.jsp"></jsp:include>
 <script>
         $(document).ready(function(){
           $('[data-toggle="popover"]').popover({
@@ -764,7 +760,7 @@
                 <script>
                 
                 	$(() => {
-                		console.log(${barter.barterFileList[0].barterFileNo });
+                		
                 		selectReply();
                 		addActive();
                 		wishState();
@@ -881,7 +877,7 @@
                                     const userId = "${ sessionScope.loginUser.userId }";
                                     
                                     if( userId === "${ barter.barterWriter}") {
-                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo +'"><a onclick="openChat('+ result[i].replyWriter +');'
+                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo +'"><a onclick="openChat("'+result[i].replyWriter+'");'
                                     			  +'" id="chatbtn" class="btn btn-light">채팅하기</a></div>'
                                     			  +'</div></div>';
                                     } else if( userId === result[i].replyWriter) {
@@ -1166,14 +1162,12 @@
 	</div>
 	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	
 	<script>
         $('.carousel').carousel({
             interval: false,
         });
 
-        
-        
-        
         function modalContent(track) {
         	console.log('모달 동작');
             var innerContent = track.innerHTML;
@@ -1246,16 +1240,22 @@
         		url : 'find',
         		type : 'get',
         		data : {
+        			barterNo : ${ barter.barterNo },
         			barterWriter : '${ sessionScope.loginUser.userId }',
         			replyWriter : replyWriter
         		},
         		success : result => {
         			roomNo = result;
+        			connect(roomNo);
+                	location.href = 'view';
+        		}, error : err => {
+        			console.log('오류가 발생했습니다.');
+        			
         		}
         		
         	});
         	
-        	connect(roomNo);
+        	
         	
         }
         

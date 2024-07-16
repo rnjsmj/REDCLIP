@@ -11,11 +11,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.101.0">
     <title>가격 예시 · Bootstrap v4.6</title>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/pricing/">
-    <!-- Bootstrap 핵심 CSS -->
-    <link href="/redclip/resources/css/bootstrap.min.css" rel="stylesheet">
-	
+     
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -103,9 +99,9 @@
    
    <script>
    var socket = null;
-		$(document).ready( function() {
-			connect();
-		});
+	$(document).ready( function() {
+		connect();
+	});
 		
 		
    function connect(roomNo) {

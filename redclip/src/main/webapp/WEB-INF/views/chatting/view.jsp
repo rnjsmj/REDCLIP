@@ -311,6 +311,7 @@
 </style>
 </head>
 <body>
+	
 	<div id="hd">
 		<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	</div>
@@ -448,6 +449,8 @@
                 	var roomVar;
                     $(document).ready(function () {
                         $('.chat-item').on('click', function () {
+                        	socket.close();
+                        	
                             $('.chat-item').removeClass('active');
                             $(this).addClass('active');
 							
@@ -507,7 +510,7 @@
                     <!-- 채팅 입력창 -->
                     <div class="chat-input">
                         <input id="chat-input" type="text" placeholder="올바른 채팅 예절을 지켜주세요!" />
-                        <button onclick="submitMessage(1)" id="sendbtn">Send</button>
+                        <button onclick="submitMessage()" id="sendbtn">Send</button>
                     </div>
                 </div>
             </section>
@@ -519,32 +522,32 @@
             });
             
             	
-                function submitMessage(roomNo) {
-                    const message = $('#chat-input').val();
+            function submitMessage(roomNo) {
+                const message = $('#chat-input').val();
 
-                    if (message.trim() !== '') {
-                        const insValue = '<div class="message sender"><p>' + $('#chat-input').val() + '</p></div>';
+                if (message.trim() !== '') {
+                    const insValue = '<div class="message sender"><p>' + $('#chat-input').val() + '</p></div>';
 
-                        const chatMessage = {
-                        	roomNo : roomNo,
-                        	senderId : '${ sessionScope.loginUser.userId }',
-                        	message : message
-                        };
-                        
-                        
-                        if (socket) {
-                        	sendMessage = '' + roomNo+ '';
-                        	socket.send(sendMessage);
-                        }
-                        
-                        $('.chat-messages').append(insValue);
-
-                        $('#chat-input').val('');
-
-                        scrollToBottom();
-                        $('#chat-input').focus();
+                    const chatMessage = {
+                    	roomNo : roomNo,
+                    	senderId : '${ sessionScope.loginUser.userId }',
+                    	message : message
+                    };
+                    
+                    
+                    if (socket) {
+                    	sendMessage = roomNo + ', ' + '${ sessionScope.loginUser.userId }' + ', ' + message;
+                    	socket.send(sendMessage);
                     }
+                    
+                    $('.chat-messages').append(insValue);
+
+                    $('#chat-input').val('');
+
+                    scrollToBottom();
+                    $('#chat-input').focus();
                 }
+            }
 
                 function scrollToBottom() {
                     const chatContainer = $('.chat-messages');
@@ -566,6 +569,9 @@
 
             <section></section>
 	</div>
-	
+	<c:if test="${ not empty sessionScope.RoomNo}">
+   		<script>$('#${RoomNo}').addClass('active');</script>
+   		<c:remove var="RoomNo" scope="session" />
+   </c:if>
 </body>
 </html>

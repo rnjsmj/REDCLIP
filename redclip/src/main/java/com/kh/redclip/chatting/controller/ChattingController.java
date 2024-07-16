@@ -2,23 +2,25 @@ package com.kh.redclip.chatting.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.chatting.model.service.ChatService;
 import com.kh.redclip.chatting.model.vo.ChatRoom;
 import com.kh.redclip.chatting.model.vo.ChatRoomVO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/chatting")
 @RequiredArgsConstructor
-@SessionAttributes({"loginUser", "roomNo"})
+@Slf4j
 public class ChattingController {
 	
 	private final ChatService chatService;
@@ -35,18 +37,31 @@ public class ChattingController {
 		
 		List<ChatRoomVO> chatRoomList = chatService.findAll(userId);
 		model.addAttribute(chatRoomList);
+		log.info("목록: {}", chatRoomList);
 		return "chatting/view";
 	}
 	
-	//채팅방 만들기
-	@PostMapping("/openChatRoom")
-	public String openChatRoom(ChatRoom chatRoom) {
-		int roomNo = chatService.openChatRoom(chatRoom);
-		if(roomNo > 0) {
-			return "redirect:/redclip/chatting/" + roomNo;
+	//채팅방 찾기 (존재 유무에 따라 생성 / 게시글 제목 갱신)
+	@GetMapping("/find")
+	@ResponseBody
+	public int findChatRoom(ChatRoom cr, HttpSession session) {
+		ChatRoom chatRoom = chatService.findChatRoom(cr);
+		int roomNo = 0;
+		if(chatRoom == null) {
+			// 채팅방이 존재하지 않음
+			// 방이 생성된 경우 생성된 방의 값을 return
+			roomNo = chatService.newChatRoom(cr);
+			
 		} else {
-			return "redirect:/redclip/barters/" + chatRoom.getBarterNo();
+			// 채팅방 존재
+			// 해당 채팅방의 ChatRoom(cr) 객체로 넘겨받은 게시글번호를 수정
+			cr.setRoomNo(chatRoom.getRoomNo());
+			roomNo = (chatService.chatBarterUpdate(cr) > 0) ? chatRoom.getRoomNo() : 0;
 		}
+		
+		session.setAttribute("RoomNo", roomNo);
+		return roomNo;
+		
 	}
 	
 }

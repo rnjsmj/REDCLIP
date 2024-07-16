@@ -47,28 +47,58 @@
 		    OR
 		    	REPLY_WRITER = #{userId}
 	</select>
-	
-	<!-- 채팅방 생성 -->
-	<insert id="openChatRoom" useGeneratedKeys="true">
-		<selectKey keyProperty="roomNo" resultType="_int" order="BEFORE">
-			SELECT SEQ_CHT.NEXTVAL FROM DUAL
-		</selectKey>
-		
-		INSERT
-		  INTO
-		  		TB_CHAT_ROOM
-		  		(
-		  		 ROOM_NO,
-		  		 BARTER_NO,
-		  		 BARTER_WRITER,
-		  		 REPLY_WRITER
-		  		)
-		VALUES
-				(
-				 #{roomNo},
-				 #{barterNo},
-				 #{barterWriter},
-				 #{replyWriter}
-				)
-	</insert>
+
+	 <!-- 채팅방 존재 유무 확인 -->
+	 <select id="findChatRoom" parameterType="chatRoom" resultType="chatRoom">
+	 	SELECT
+	 			ROOM_NO,
+	 			BARTER_NO,
+	 			BARTER_WRITER,
+	 			REPLY_WRITER
+	 	  FROM
+	 	  		TB_CHAT_ROOM
+	 	 WHERE
+	 	 		BARTER_WRITER = #{barterWriter}
+	 	   AND
+	 	   		REPLY_WRITER = #{replyWriter}
+	 </select>
+	 
+	 <!-- 채팅방 생성 및 시퀀스 반환 -->
+	 <insert id="newChatRoom" parameterType="chatRoom" >
+	 	<selectKey keyProperty="roomNo" resultType="_int" order="BEFORE">
+	 		SELECT
+	 				SEQ_CHT.NEXTVAL
+	 		  FROM
+	 		  		DUAL
+	 	</selectKey>
+	 	INSERT
+	 	  INTO
+	 	  		TB_CHAT_ROOM
+	 	  		(
+	 	  			ROOM_NO,
+	 	  			BARTER_NO,
+	 	  			BARTER_WRITER,
+	 	  			REPLY_WRITER
+	 	  		)
+	 	 VALUES
+	 	 		(
+	 	 			#{roomNo},
+	 	 			#{barterNo},
+	 	 			#{barterWriter},
+	 	 			#{replyWriter}
+	 	 		)
+	 </insert>
+	 
+	 <!-- 채팅방 게시글번호 갱신 (게시글 변경 시 새 채팅방 생성 방지) -->
+	 <update id="chatBarterUpdate" parameterType="chatRoom">
+	 	UPDATE
+	 			TB_CHAT_ROOM
+	 	   SET
+	 	   		BARTER_NO = #{barterNo}
+	 	 WHERE
+	 	 		ROOM_NO = #{roomNo}
+	 </update>
+	 
+	 
+	 
 </mapper>
