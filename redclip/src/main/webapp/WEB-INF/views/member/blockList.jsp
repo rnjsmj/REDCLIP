@@ -88,9 +88,9 @@
 	                	</c:when>
 	                	<c:otherwise>
 	                		<tr>
-	                		<input type="hidden"  value="${ sessionScope.loginUser.userId }"  id="userId" />
+	                		<input type="hidden" value="${ sessionScope.loginUser.userId }" id="userId" />
 			                    <td><div class="form-check">
-			                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+			                        <input class="form-check-input" type="checkbox" id="flexCheckDefault">
 			                      </div></td>
 			                      <td id="blockedId">${ blockMember.blockedId }</td>
 			                      <td id="blockId">${ blockMember.blockDate }</td>

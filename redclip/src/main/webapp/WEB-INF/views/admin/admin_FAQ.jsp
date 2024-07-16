@@ -95,7 +95,7 @@
           </table>
           <!-- 수정 | 삭제 버튼 -->
             <div id="buttons" style="margin-top: 30px;">
-                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm">수정</button> | <button type="submit" id="delete" class="btn btn-secondary">삭제</button>
+                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" onclick="selectNo();">수정</button> | <button type="submit" id="delete" class="btn btn-secondary">삭제</button>
             </div>
     </div>
     
@@ -152,29 +152,32 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <form action="" method="post">
                     <div class="modal-body">
+                   		<div>
+                    		<input type="hidden" id="userId" value="${ sessionScope.loginUser.userId }" />
+                    		<input type="hidden" id="faqNo" value="${ faq.faqNo }" />
+                    	</div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">제목</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" value="비밀번호를 잊어버렸어요">
+                            <input type="text" class="form-control" id="exampleFormControlInput1" value="${ faq.question }">
                         </div>
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>시스템</option>
-                                <option value="1">시스템</option>
-                                <option value="2">회원</option>
-                                <option value="3">등급</option>
+                            <select class="form-select" aria-label="Default select example" id="faqType">
+                                <option selected value="${ faq.faqType }">글 분류</option>
+                                <option value="시스템">시스템</option>
+                                <option value="회원">회원</option>
+                                <option value="등급">등급</option>
                               </select>
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">비밀번호 찾기는 로그인 페이지의 '비밀번호 찾기'를 이용해주세요.</textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="${ faq.answer }"></textarea>
                         </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="button" class="btn btn-success">수정</button>
+                        <button type="button" class="btn btn-success" onclick="update();">수정</button>
                         <button type="reset" class="btn btn-secondary">취소</button>
                     </div>
                 </form>
@@ -183,6 +186,18 @@
     </div>
 
 	<script>
+	
+		//체크 박스에 체크 된 글번호 가져오기
+		function selectNo() {
+			
+			$('.form-check-input:checked').each(function() {
+                var faqNo= $(this).closest('tr').find('#faqNo').value;
+
+			});
+			
+			console.log(faqNo);
+		}
+		//글 추가
 		function insert() {
 			
 			const newFaq = {
@@ -214,6 +229,23 @@
 			});
 		};
 	
+		//글 수정
+		function update() {
+			
+			
+			
+			const updateData = {
+					"question" : $('#exampleFormControlInput2').val(),
+					"answer" : $('#exampleFormControlTextarea2').val(),
+					"faqType" : $('#faqType').val(),
+					"userId" : $('#userId').val()
+				};
+			
+			console.log(faqNo);
+			console.log(updateData);
+			
+			
+		};
 	</script>
     <footer>
         <jsp:include page="../common/footer.jsp" />
