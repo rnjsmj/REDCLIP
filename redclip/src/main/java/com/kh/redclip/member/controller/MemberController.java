@@ -167,6 +167,24 @@ public class MemberController {
         }
     }
     
+   //비밀번호 찾기후 변경 컨트롤러 
+    @ResponseBody
+    @GetMapping(value="/changePw",produces = "text/html; charset=UTF-8")
+    public String changePw(Member member) {
+    	
+    	 String encodePw = bCryptPasswordEncoder.encode(member.getUserPwd());
+    	 member.setUserPwd(encodePw);
+    	int result = memberService.changePw(member);
+    		
+    	if (result>0 ) {
+    		return "비밀번호가 변경되었습니다.";
+    	}else {
+    		return "비밀번호 변경에 실패하였습니다.";
+    	}
+    	
+    }
+   
+    
     //회원 상태 변경
     @ResponseBody
     @PutMapping("/{userId}")
