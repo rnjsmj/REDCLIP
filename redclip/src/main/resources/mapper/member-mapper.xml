@@ -45,6 +45,8 @@
 			  USER_ID = #{userId}
 		   AND
 			  STATUS ='Y'
+		   OR
+		   	  STATUS = 'A'
 		<!-- AND USER_PWD = #{userPwd} AND STATUS = 'Y' -->
 	</select>
 	

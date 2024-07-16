@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.faq.model.service.FaqService;
 import com.kh.redclip.faq.model.vo.FAQ;
@@ -31,6 +34,14 @@ public class FaqController {
 		model.addAttribute("list", faqList);
 		
 		return "faq/faqList";
+	}
+	
+	@ResponseBody
+	@PostMapping()
+	public String faqInsert(@RequestBody FAQ faq) {
+		
+		return faqService.faqInsert(faq) > 0 ? "success" : "error";
+		
 	}
 	
 	

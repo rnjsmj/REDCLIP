@@ -10,4 +10,6 @@ import com.kh.redclip.faq.model.vo.FAQ;
 public interface FaqMapper {
 
 	List<FAQ> selectAll();
+
+	int faqInsert(FAQ faq);
 }

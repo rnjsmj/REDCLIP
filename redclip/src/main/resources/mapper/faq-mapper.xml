@@ -9,10 +9,31 @@
 		  FAQ_NO faqNo,
 	      QUESTION question,
 	      ANSWER answer,
+	      USER_ID userId,
 	      FAQ_TYPE faqType
 	  FROM
 	      TB_FAQ
 	</select>
 	
+	<insert id="faqInsert" parameterType="faq">
+		INSERT
+		  INTO
+		      TB_FAQ
+		      (
+		      FAQ_NO,
+		      USER_ID,
+		      QUESTION,
+		      ANSWER,
+		      FAQ_TYPE
+		      )
+		VALUES
+		      (
+		      SEQ_FAQ.NEXTVAL,
+		      #{userId},
+		      #{question},
+		      #{answer},
+		      #{faqType}
+		      )
+	</insert>
 	
 </mapper>
