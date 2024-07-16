@@ -190,12 +190,7 @@ public class MemberController {
     	
     }
     
-    //마이페이지 이동
-    @GetMapping("/myPage")
-	public String myPage() {
-		
-		return "member/myPage";
-	}
+    
     
    //차단 목록 조회
     @GetMapping("blockList/{userId}")
