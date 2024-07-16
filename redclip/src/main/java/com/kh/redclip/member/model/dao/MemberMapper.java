@@ -56,6 +56,8 @@ public interface MemberMapper {
 
 	int searchpw(Member member);
 
+	int changepw(Member member);
+
 
 
 

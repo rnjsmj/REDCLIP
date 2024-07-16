@@ -67,6 +67,8 @@ public interface MemberService {
 
 	int searchPw(Member member);
 
+	int changePw(Member member);
+
 
 
 

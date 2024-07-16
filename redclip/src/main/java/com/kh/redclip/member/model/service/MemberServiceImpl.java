@@ -216,6 +216,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.deleteByBlock(usreId);
 	}
 
+	@Override
+	public int changePw(Member member) {
+		return memberMapper.changepw(member);
+	}
+
 	
 
 	
