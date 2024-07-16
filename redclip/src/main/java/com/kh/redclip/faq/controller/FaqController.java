@@ -37,7 +37,7 @@ public class FaqController {
 	}
 	
 	@ResponseBody
-	@PostMapping()
+	@PostMapping
 	public String faqInsert(@RequestBody FAQ faq) {
 		
 		return faqService.faqInsert(faq) > 0 ? "success" : "error";

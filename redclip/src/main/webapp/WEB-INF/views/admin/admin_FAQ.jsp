@@ -192,16 +192,24 @@
 				"userId" : $('#userId').val()
 			};
 			
+			console.log(newFaq);
+			
 			$.ajax({
-				url : '/faq',
+				url : '/redclip/faq',
 				type : 'post',
+				contentType: 'application/json',
 				data : JSON.stringify(newFaq),
-				contentType : 'application/json',
 				success : result => {
-					console.log('작성 성공');
+					//console.log('작성 성공');
+					alert('FAQ가 추가되었습니다.');
+					location.reload();
 				},
-				error : e => {
-					console.log('작성 실패');
+				error : (xhr, status, error) => {
+					//console.log('작성 실패');
+					//console.log('상태: ', status);
+					//console.log('오류: ', error);
+					//console.log('응답: ', xhr.responseText);
+					alert('FAQ 추가에 실패했습니다.');
 				}
 			});
 		};
