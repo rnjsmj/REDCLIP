@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +15,7 @@
         }
 
         .container {
-            width:  60%;
+            width: 60%;
             height: 500px;
             margin: 0 auto;
         }
@@ -59,12 +59,36 @@
             text-align: center;
         }
 
-        .pagination button {
-            background-color: #f5f5f5;
-            border: none;
-            padding: 10px 15px;
+        .pagination ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pagination li {
+            display: inline;
             margin: 0 2px;
-            cursor: pointer;
+        }
+
+        .pagination a, .pagination span {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            text-decoration: none;
+        }
+
+        .pagination a:hover {
+            background-color: #e9ecef;
+        }
+
+        .pagination .active span {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .pagination .disabled span {
+            color: #ccc;
         }
     </style>
     
@@ -100,27 +124,21 @@
                             <th>분류</th>
                             <th>제목</th>
                             <th>등록날짜</th>
-                            <th>조회수</th>
+                            <th>작성자</th>
                             <th>선택</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>공지</td>
-                            <td><a href="#">공지 </a></td>
-                            <td>2024.01.01</td>
-                            <td>9999</td>
-                            <td><input type="checkbox" checked></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>이벤트</td>
-                            <td>이벤트공지</td>
-                            <td>2024.01.01</td>
-                            <td>9999</td>
-                            <td><input type="checkbox" checked></td>
-                        </tr>
+                        <c:forEach var="notice" items="${noticeList}">
+                            <tr>
+                                <td>${notice.noticeNo}</td>
+                                <td>${notice.type}</td>
+                                <td><a href="noticeDetail?boardNo=${notice.boardNo}">${notice.title}</a></td>
+                                <td>${notice.createDate}</td>
+                                <td>${notice.userId}</td>
+                                <td><input type="checkbox"></td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
@@ -131,12 +149,35 @@
             </div>
         
             <div class="pagination">
-                <button class="btn btn-light">&lt;</button>
-                <button class="btn btn-light">1</button>
-                <button class="btn btn-light">2</button>
-                <button class="btn btn-light">3</button>
-                <button class="btn btn-light">4</button>
-                <button class="btn btn-light">&gt;</button>
+                <ul>
+                    <!-- 이전 페이지 링크 -->
+                    <c:if test="${pageInfo.currentPage > 1}">
+                        <li class="page-item">
+                            <a class="page-link" href="boardlist?page=${pageInfo.currentPage - 1}">&lt;</a>
+                        </li>
+                    </c:if>
+                    <!-- 페이지 번호 -->
+                    <c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" var="p">
+                        <c:choose>
+                            <c:when test="${pageInfo.currentPage == p}">
+                                <li class="page-item active">
+                                    <span class="page-link">${p}</span>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-item">
+                                    <a class="page-link" href="boardlist?page=${p}">${p}</a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <!-- 다음 페이지 링크 -->
+                    <c:if test="${pageInfo.currentPage < pageInfo.maxPage}">
+                        <li class="page-item">
+                            <a class="page-link" href="boardlist?page=${pageInfo.currentPage + 1}">&gt;</a>
+                        </li>
+                    </c:if>
+                </ul>
             </div>
         </div>
     </div>
