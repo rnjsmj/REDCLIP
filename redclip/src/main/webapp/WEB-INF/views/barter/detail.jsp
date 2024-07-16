@@ -881,7 +881,7 @@
                                     const userId = "${ sessionScope.loginUser.userId }";
                                     
                                     if( userId === "${ barter.barterWriter}") {
-                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo +'"><a onclick="connect()'
+                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo +'"><a onclick="openChat('+ result[i].replyWriter +');'
                                     			  +'" id="chatbtn" class="btn btn-light">채팅하기</a></div>'
                                     			  +'</div></div>';
                                     } else if( userId === result[i].replyWriter) {
@@ -1232,19 +1232,32 @@
         	
         }
         
-        function connect() {
+       
+        function openChat(replyWriter) {
+        	// 채팅하기 버튼을 누르면 컨트롤러로 이동
+        	// => 채당 글 작성자, 답글 작성자로 채팅방 목록을 select
+        	// 존재 하면 현재 글 번호로 글 번호 update 수행 후 채팅방 번호를 반환함
+        	// 존재 하지 않으면 새로운 채팅방을 insert 하여 새로 추가된 채팅방 번호를 반환
+        	//  => 방 번호를 파라미터로 WebSocket 주소를 지정하여 connect 수행 
+        	var roomNo;
         	
-        	const uri = 'ws://localhost/redclip/chat';
-        	var chat = new WebSocket(uri);
+        	$.ajax({
+        		
+        		url : 'find',
+        		type : 'get',
+        		data : {
+        			barterWriter : '${ sessionScope.loginUser.userId }',
+        			replyWriter : replyWriter
+        		},
+        		success : result => {
+        			roomNo = result;
+        		}
+        		
+        	});
         	
-        	chat.onopen = () => {
-        		console.log('서버 연결');
-        	}
-        	
-        	location.href="/redclip/chatting/list";
+        	connect(roomNo);
         	
         }
-        
         
     	
     	window.onload = function() {

@@ -32,12 +32,11 @@
 	<beans:bean class="com.kh.redclip.chatting.handler.ChatHandler" id="chatHandler" ></beans:bean>
 	
 	<websocket:handlers>
-		<websocket:mapping handler="chatHandler" path="chat" />
+		<websocket:mapping handler="chatHandler" path="/chatting/**" />
 		<websocket:handshake-interceptors>
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 		</websocket:handshake-interceptors>
 		
-		<websocket:sockjs/>
 	</websocket:handlers>
 	
 </beans:beans>

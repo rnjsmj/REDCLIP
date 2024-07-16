@@ -334,7 +334,7 @@
                     <!-- 채팅방 목록 -->
                     <div class="chat-room-list">
                         <ul class="chat-list">
-                            <li class="chat-item">
+                            <li class="chat-item" id="1">
                                 <!-- <img src="profile1.jpg" alt="Profile Picture 1"> -->
                                 <div class="list-img">프사</div>
                                 <div class="chat-details">
@@ -350,7 +350,7 @@
                                     </p>
                                 </div>
                             </li>
-                            <li class="chat-item">
+                            <li class="chat-item" id="2">
                                 <div class="list-img">프사</div>
                                 <div class="chat-details">
                                     <h5>
@@ -363,7 +363,7 @@
                                     <p class="latest-message">Are you coming tomorrow?</p>
                                 </div>
                             </li>
-                            <li class="chat-item">
+                            <li class="chat-item" id="3">
                                 <div class="list-img">프사</div>
                                 <div class="chat-details">
                                     <h5>
@@ -445,18 +445,23 @@
                     </div>
                 </div>
                 <script>
+                	var roomVar;
                     $(document).ready(function () {
                         $('.chat-item').on('click', function () {
                             $('.chat-item').removeClass('active');
                             $(this).addClass('active');
+							
+                            const roomNo = $(this).attr("id");
+                            let onclick = 'submitMessage(' + roomNo + ')';
+                            $('#sendbtn').attr("onclick", onclick);
+                            
+                            var socketAddress = "ws://localhost/redclip/chatting/" + roomNo;
+                            roomVar = roomNo;
+                            connect(roomNo);
+                            
+                            $('.chat-area').show();
 
-                            const nickname = $(this).children(1).find('.nickname').text();
-
-                            if (nickname === 'User 2') {
-                                $('.chat-area').show();
-                            } else {
-                                $('.chat-area').hide();
-                            }
+                            
                         });
                     });
                 </script>
@@ -502,23 +507,37 @@
                     <!-- 채팅 입력창 -->
                     <div class="chat-input">
                         <input id="chat-input" type="text" placeholder="올바른 채팅 예절을 지켜주세요!" />
-                        <button onclick="submitMessage()">Send</button>
+                        <button onclick="submitMessage(1)" id="sendbtn">Send</button>
                     </div>
                 </div>
             </section>
-
-            <script>
-                function submitMessage() {
+			<script>
+			   		
+			   		
+            $(document).ready( function() {
+            	
+            });
+            
+            	
+                function submitMessage(roomNo) {
                     const message = $('#chat-input').val();
 
                     if (message.trim() !== '') {
                         const insValue = '<div class="message sender"><p>' + $('#chat-input').val() + '</p></div>';
 
                         const chatMessage = {
-                        	roomNo : ${ room.roomNo},
-                        	senderId : ${ sessionScope.loginUser.userId },
+                        	roomNo : roomNo,
+                        	senderId : '${ sessionScope.loginUser.userId }',
                         	message : message
                         };
+                        
+                        
+                        if (socket) {
+                        	sendMessage = '' + roomNo+ '';
+                        	socket.send(sendMessage);
+                        }
+                        
+                        $('.chat-messages').append(insValue);
 
                         $('#chat-input').val('');
 
@@ -538,7 +557,7 @@
 
                 $('#chat-input').on('keypress', (e) => {
                     if (e.which === 13) {
-                        submitMessage();
+                        submitMessage(roomVar);
                     }
                 });
                 
