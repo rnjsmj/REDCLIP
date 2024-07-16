@@ -30,7 +30,7 @@ public class AdminController {
 	@GetMapping("/adminFaq")
 	public String adminFaq(Model model) {
 		
-List<FAQ> faqList = faqService.selectAll();
+		List<FAQ> faqList = faqService.selectAll();
 		
 		model.addAttribute("list", faqList);
 		
