@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.redclip.member.model.dao.MemberMapper">
+
+   <select id="checkId" parameterType="string" resultType="_int">
+	    SELECT 
+	    		COUNT(*)
+	    FROM 
+	    		TB_MEMBER
+	    WHERE 
+	    		USER_ID = #{userId}
+	</select>
+	
+	<select id="checkNick" parameterType="string" resultType="_int">
+	  SELECT 
+	    		COUNT(*)
+	    FROM 
+	    		TB_MEMBER
+	    WHERE 
+	    		NICKNAME = #{userNick}
+	
+	
+	</select>
+	
+	<select id="login" parameterType="member" resultType="member">
+		SELECT
+			  USER_ID userId,
+			  USER_PWD userPwd,
+			  USER_NAME userName,
+			  NICKNAME nickname,
+			  EMAIL email,
+			  TEL tel,
+			  ADDRESS address,
+			  POSTCODE postCode,
+			  POINT point,
+			  STATUS status,
+			  CREATE_DATE createDate,
+			  VILLAGE_CODE villageCode
+			 <!-- PLOFIL profil  --> 
+   		  FROM
+			  TB_MEMBER
+		 WHERE
+			  USER_ID = #{userId}
+		   AND
+			  STATUS ='Y'
+			  
+		<!-- AND USER_PWD = #{userPwd} AND STATUS = 'Y' -->
+	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="update" parameterType="member">
+		UPDATE
+			  TB_MEMBER
+		   SET
+		   	   USER_NAME = #{userName},
+		   	   NICKNAME = #{nickname},
+		   	   EMAIL = #{email},
+		   	   TEL = #{tel},
+		   	   POSTCODE = #{postCode},
+		   	   ADDRESS = #{address},
+		   	   VILLAGE_CODE = #{villageCode}
+	  	 WHERE
+	  	  	   USER_ID = #{userId}
+	  	   AND
+	  	  	   STATUS = 'Y' 	  
+	</update>
+	
+	<select id="selectgu" parameterType="int" resultType="region">
+        SELECT 
+        DISTINCT 
+        TOWN_CODE townCode, 
+        TOWN_NAME townName
+        FROM VW_REGION
+        WHERE 
+        CITY_CODE = #{cityCode}
+    </select>
+	
+	<select id="selectdong" parameterType="int" resultType="region">
+        SELECT 
+        DISTINCT 
+        CITY_CODE cityCode,
+        CITY_NAME cityName,
+        TOWN_CODE townCode, 
+        TOWN_NAME townName,
+        VILLAGE_CODE villageCode,
+        VILLAGE_NAME villageName
+        
+        FROM VW_REGION
+        WHERE 
+        TOWN_CODE = #{townCode}
+    </select>
+	
+	<!-- 회원상태 전환-->
+	<update id="changeStatus" parameterType="String">
+		UPDATE
+		   	  TB_MEMBER
+		   SET
+		   	  STATUS = 'N'
+		 WHERE
+		 	  USER_ID = #{userId}
+		   AND
+		   	  STATUS = 'Y'
+		   	  
+	</update>
+	
+	<insert id="insertMember" parameterType="member">
+    INSERT INTO TB_MEMBER
+        (
+            USER_ID,
+            USER_PWD,
+            USER_NAME,
+            NICKNAME,
+            EMAIL,
+            TEL,
+            POSTCODE,
+            ADDRESS,
+            VILLAGE_CODE
+        )
+    VALUES
+        (
+            #{userId},
+            #{userPwd},
+            #{userName},
+            #{nickname},
+            #{email},
+            #{tel},
+            #{postCode},
+            #{address},
+            #{villageCode}
+        )
+	</insert>
+	
+	<!-- 내가 쓴 글 조회 -->
+	<select id="selectById" parameterType="String" resultType="barter">
+		SELECT
+		      BARTER_NAME barterName,
+		      BARTER_DATE barterDate,
+		      BARTER_STATUS barterStatus,
+		      HIT hit
+		 FROM
+      		  TB_BARTER
+		WHERE
+     		  BARTER_WRITER = #{userId}
+     		  
+	</select>
+
+	<select id="searchid" parameterType="member" resultType="string">
+    SELECT
+    		USER_ID
+    	
+    FROM
+    		TB_MEMBER
+    WHERE 
+    		USER_NAME = #{userName}
+    AND 
+    		TEL = #{tel}
+	</select>
+	
+	
+	<select id="searchpw" parameterType="member" resultType="_int"  >
+	SELECT 
+			COUNT(*)
+	FROM 
+			TB_MEMBER
+	WHERE	
+			USER_ID = #{userId}
+	AND
+			EMAIL= #{email}
+	
+	</select>
+	
+	
+	
+	<!-- 회원 차단 -->
+	<insert id="">
+	
+	</insert>
+	
+	<!-- 차단 회원 조회 -->
+	<select id="selectByBlock" parameterType="string" resultType="block">
+		SELECT
+              BLOCKED_ID blockedId,
+              BLOCK_DATE blockDate
+         FROM
+              TB_MEM_BLOCK
+        WHERE
+              BLOCK_ID = #{userId}
+	</select>
+
+	<!-- 차단 해제 -->
+	<delete id="deleteByBlock" parameterType="string">
+		    DELETE
+		      FROM
+		      			TB_MEM_BLOCK
+		     WHERE
+		     			BLOCKED_ID = #{blockedId}
+		     	AND
+		     			BLOCK_ID = #{userId}
+	</delete>
+	
+	
+	
+	
+</mapper>

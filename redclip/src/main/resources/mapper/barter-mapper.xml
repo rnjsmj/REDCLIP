@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.redclip.barter.model.dao.BarterMapper">
+
+	<resultMap type="barterVo" id="barterResultSet">
+		<id column="BARTER_NO" property="barterNo" />
+		<result column="BARTER_NAME" property="barterName" />
+		<result column="BARTER_CONTENT" property="barterContent" />
+		<result column="BARTER_NICKNAME" property="barterNickname" />
+		<result column="BARTER_WRITER" property="barterWriter" />
+		<result column="CATEGORY_NO" property="categoryNo" />
+		<result column="CATEGORY_NAME" property="categoryName" />
+		<result column="HIT" property="hit" />
+		<result column="BARTER_DATE" property="barterDate" />
+		<result column="WISH_COUNT" property="wishCount" />
+		<result column="BARTER_STATUS" property="barterStatus" />
+		<result column="POINT" property="point" />
+		<association javaType="region" property="region">
+			<result column="CITY_CODE" property="cityCode" />
+			<result column="CITY_NAME" property="cityName" />
+			<result column="TOWN_CODE" property="townCode" />
+			<result column="TOWN_NAME" property="townName" />
+			<result column="VILLAGE_CODE" property="villageCode" />
+			<result column="VILLAGE_NAME" property="villageName"/>
+		</association>
+		<collection resultMap="barterFileResultSet" property="barterFileList" />
+	</resultMap>
+	
+	<resultMap type="barterFile" id="barterFileResultSet">
+		<result column="BARTER_FILE_NO" property="barterFileNo"/>
+		<result column="BARTER_NO" property="barterNo"/>	
+		<result column="BARTER_FILE_NAME" property="barterFileName"/>
+	</resultMap>
+	
+	
+	<select id="findById" parameterType="_int" resultType="barterVo" resultMap="barterResultSet">
+		<!-- resultMap 적용하여 수정 -->
+		SELECT
+				BARTER_NO,
+				BARTER_NAME,
+				BARTER_CONTENT,
+				BARTER_WRITER,
+				BARTER_NICKNAME,
+				CITY_CODE,
+				CITY_NAME,
+				TOWN_CODE,
+				TOWN_NAME,
+				VILLAGE_CODE,
+				VILLAGE_NAME,
+				CATEGORY_NO,
+				CATEGORY_NAME,
+				HIT,
+				BARTER_DATE,
+				WISH_COUNT,
+				BARTER_STATUS,
+				POINT,
+				BARTER_FILE_NO,
+				BARTER_FILE_NAME
+		  FROM
+		  		VW_BARTER_DETAIL
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	
+	</select>
+	
+	<resultMap type="barterVO" id="barterListResultSet">
+		<id column="BARTER_NO" property="barterNo" />
+		<result column="BARTER_NAME" property="barterName" />
+		<result column="BARTER_DATE" property="barterDate" />
+		<result column="BARTER_STATUS" property="barterStatus" />
+		<association javaType="region" property="region">
+			<result column="CITY_NAME" property="cityName" />
+			<result column="TOWN_NAME" property="townName" />
+			<result column="VILLAGE_NAME" property="villageName"/>
+		</association>
+	</resultMap>
+	
+	<select id="getAllBarters" parameterType="int" resultType="barterVO" resultMap="barterListResultSet">
+		SELECT
+				BARTER_NO,
+				BARTER_NAME,
+				CITY_NAME,
+				TOWN_NAME
+				VILLAGE_NAME,
+				BARTER_DATE,
+				BARTER_STATUS,
+				BARTER_FILE_NO,
+				BARTER_FILE_NAME
+		  FROM
+		  		VW_BARTER_DETAIL
+
+		<if test='value != 0'>
+		 WHERE
+		 		TO_CHAR(VILLAGE_CODE) LIKE '+||#{value}%'
+	    </if>
+		 ORDER
+		    BY
+		    	BARTER_STATUS DESC,
+		    	BARTER_NO DESC
+	</select>
+	
+	<insert id="insert" parameterType="barter">
+	    INSERT
+	      		INTO
+	 TB_BARTER
+	  			(
+	       		BARTER_NO,
+	       		BARTER_NAME,
+	      		BARTER_CONTENT,
+	      		BARTER_WRITER,
+	      		VILLAGE_CODE,
+	      		CATEGORY_NO
+	    		)
+	   VALUES
+	    		(
+	        	SEQ_BARTER.NEXTVAL,
+	        	#{barterName},
+	        	#{barterContent},
+	        	#{barterWriter},
+	        	#{villageCode, jdbcType=NUMERIC}, 
+        		#{categoryNo, jdbcType=NUMERIC}
+	    		)
+	</insert>
+
+	<insert id="barterInsert" parameterType="barterFile">
+	INSERT
+    			INTO
+TB_BARTER_FILE
+    			(
+    			BARTER_FILE_NO,
+ 			    BARTER_NO,
+    			BARTER_FILE_NAME
+    			)
+    	VALUES 
+    			(
+    			SEQ_BARTER_FILE.NEXTVAL,
+    			SEQ_BARTER.CURRVAL,
+    			#{barterFileName}
+    			)
+	</insert>
+	
+	<resultMap type="barterReply" id="replyResultSet">
+		<id column="REPLY_NO" property="replyNo"/>
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="REPLY_WRITER" property="replyWriter" />
+		<result column="REPLY_NICKNAME" property="replyNickname" />
+		<result column="REPLY_DATE" property="replyDate" />
+		<collection resultMap="replyFileResultSet" property="replyFileList"/>
+	</resultMap>
+	<resultMap type="barterReplyFile" id="replyFileResultSet">
+		<result column="REPLY_FILE_NO" property="replyFileNo"/>
+		<result column="REPLY_FILE_NAME" property="replyFileName"/>
+	</resultMap>
+	<!-- 댓글 목록 (파일 포함) -->
+	<select id="getBarterReply" parameterType="_int" resultType="barterReply" resultMap="replyResultSet">
+		SELECT
+				REPLY_NO,
+				REPLY_CONTENT,
+				REPLY_WRITER,
+				REPLY_NICKNAME,
+				REPLY_DATE,
+				REPLY_FILE_NO,
+				REPLY_FILE_NAME
+		  FROM
+		  		VW_REPLY_LIST
+		 WHERE
+		 		BARTER_NO = #{barterNo}	
+		 ORDER
+		 	BY
+		 		REPLY_NO DESC
+	</select>
+	<!-- 댓글 입력 -->
+	<insert id="replyInsert" parameterType="barterReply">
+		INSERT
+		  INTO
+	  			TB_BARTER_REPLY
+	  			(
+	  			REPLY_NO,
+	  			BARTER_NO,
+	  			REPLY_CONTENT,
+	  			REPLY_WRITER
+	  			)
+		VALUES
+				(
+				SEQ_BREP.NEXTVAL,
+				#{barterNo},
+				#{replyContent},
+				#{replyWriter}
+				)
+	</insert>
+	
+	<!-- 댓글 파일 입력 -->
+	<insert id="replyFileInsert" parameterType="barterReplyFile">
+		INSERT
+		  INTO
+		  		TB_BARTER_REPLY_FILE
+		  		(
+		  			REPLY_FILE_NO,
+		  			REPLY_NO,
+		  			REPLY_FILE_NAME
+		  		)
+		VALUES
+				(
+					SEQ_BREP_FILE.NEXTVAL,
+					SEQ_BREP.CURRVAL,
+					#{replyFileName}
+				)
+		
+	
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="replyUpdate" parameterType="barterReply">
+		UPDATE
+				TB_BARTER_REPLY
+		   SET
+		   		REPLY_CONTENT = #{replyContent}
+		 WHERE
+		 		REPLY_NO = #{replyNo}
+	
+	</update>
+	
+	
+	<!-- 댓글 삭제 -->
+	<delete id="replyDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER_REPLY
+		 WHERE
+		 		REPLY_NO = #{replyNo}
+	</delete>
+	
+	<!-- 하나의 답글 -->
+	<select id="getBarterReplyById" parameterType="_int" resultType="barterReply" resultMap="replyResultSet">
+		SELECT
+				REPLY_NO,
+				REPLY_CONTENT,
+				REPLY_WRITER,
+				REPLY_NICKNAME,
+				REPLY_DATE,
+				REPLY_FILE_NO,
+				REPLY_FILE_NAME
+		  FROM
+		  		VW_REPLY_LIST
+		 WHERE
+		 		REPLY_NO = #{replyNo}	 
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="increaseHit" parameterType="_int">
+		UPDATE
+				TB_BARTER
+		   SET
+		   		HIT = HIT + 1
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</update>
+	
+	<!-- 게시글 삭제 처리 -->
+	<delete id="barterDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</delete>
+	
+	<!-- 답글에 포함된 파일 삭제 -->
+	<delete id="replyFileDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER_REPLY_FILE
+		 WHERE
+		 		REPLY_NO = #{replyNo}
+	
+	</delete>
+	
+	<!-- 게시글에 포함된 파일 개수 select -->
+	<select id="getBarterFileCount" parameterType="_int" resultType="_int">
+		SELECT
+				COUNT(BARTER_FILE_NO)
+		  FROM
+		  		TB_BARTER_FILE
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</select>
+	
+	<!-- 게시글에 포함된 파일 삭제 -->
+	<delete id="barterFileDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER_FILE
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+			
+	</delete>
+	<!-- 좋아요 상태 확인 -->
+	<select id="wishStatus" parameterType="wish" resultType="wish">
+		SELECT
+				WISH_NO wishNo,
+				BARTER_NO barterNo,
+				WISH_USER wishUser
+		  FROM
+		  		TB_WISHLIST
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+		 		AND
+		 		WISH_USER = #{wishUser}
+	
+	</select>
+	<!-- 좋아요 등록 -->
+	<insert id="wishInsert" parameterType="wish">
+		INSERT
+		  INTO
+		  		TB_WISHLIST
+		 		(
+		 		 WISH_NO,
+		 		 BARTER_NO,
+		 		 WISH_USER
+		 		)
+		 VALUES
+		 		(
+		 		 SEQ_WISHLIST.NEXTVAL,
+		 		 #{barterNo},
+		 		 #{wishUser}
+		 		)
+	</insert>
+	
+	<!-- 좋아요 해제 -->
+	<delete id="wishDelete" parameterType="wish">
+		DELETE
+		  FROM
+		  		TB_WISHLIST
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+		 		AND
+		 		WISH_USER = #{wishUser}
+	</delete>
+	
+	<!-- 게시글 신고 -->
+	<insert id="barterReport" parameterType="report">
+		INSERT
+		  INTO
+		  		TB_MEM_REPORT
+		 		(
+		 		 REPORT_NO,
+		 		 REPORT_TITLE,
+		 		 REPORT_CONTENT,
+		 		 REPORTED_ID,
+		 		 REPORT_TYPE,
+		 		 REFERENCE_NO
+		 		)
+		 VALUES
+		 		(
+		 		 SEQ_REPORT.NEXTVAL,
+		 		 #{reportTitle},
+		 		 #{reportContent},
+		 		 #{reportedId},
+		 		 #{reportType},
+		 		 #{referenceNo}
+		 		)
+	</insert>
+	
+	<!-- 게시글에 포함된 답글 개수 -->
+	<select id="replyCount" parameterType="_int" resultType="_int">
+		SELECT
+				COUNT(REPLY_NO)
+		  FROM
+		  		TB_BARTER_REPLY
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</select>
+	
+	<!-- 게시글에 포함된 답글 삭제 -->
+	<delete id="replyListDelete" parameterType="_int">
+		DELETE
+		  FROM
+		  		TB_BARTER_REPLY
+		 WHERE
+		 		BARTER_NO = #{barterNo}
+	</delete>
+</mapper>

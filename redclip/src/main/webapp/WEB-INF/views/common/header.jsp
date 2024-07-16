@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,7 @@
     <title>가격 예시 · Bootstrap v4.6</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/pricing/">
     <!-- Bootstrap 핵심 CSS -->
-    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/redclip/resources/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -70,19 +71,33 @@
       }
     </style>
 </head>
-<body>
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm navbar">
-    <h5 class="my-0 font-weight-normal">회사이름이던 로고던 암거나</h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="#">물물교환</a>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm navbar">
+   <h5 class="my-0 font-weight-normal"><a href="/redclip">홈</a></h5>
+
+   <nav class="my-2 my-md-0 mr-md-3">
+      <a class="p-2 text-dark" href="${pageContext.request.contextPath}/barters">물물교환</a>
       <a class="p-2 text-dark" href="#">체팅</a>
       <a class="p-2 text-dark" href="#">공지사항</a>
       <a class="p-2 text-dark" href="#">FAQ</a>
-    </nav>
+   </nav>
+   <c:choose>
+   <c:when test="${empty sessionScope.loginUser }">
+   <nav class="btnbox">
+      <a class="btn btn-outline-primary" href="/redclip/joinform" id="btn-sign">회원가입</a>
+      <a class="btn btn-outline-primary" href="/redclip/loginform" id="btn-sign">로그인</a>
+   </nav>
+   </c:when>
+   <c:otherwise>
     <nav class="btnbox">
-      <a class="btn btn-outline-primary" href="#" id="btn sign">회원가입</a>
-      <a class="btn btn-outline-primary" href="#" id="btn sign">로그인</a>
-    </nav>
-  </div>    
-  </body>
+      <a class="btn btn-outline-primary" href="/redclip/myPage" id="btn-sign">마이페이지</a>
+      <a class="btn btn-outline-primary" href="#" id="btn-sign">로그아웃</a>
+   </nav>
+   </c:otherwise>
+   </c:choose>
+   
+   <c:if test="${ not empty alertMsg }">
+         <script>alert("${ alertMsg }")</script>
+         <c:remove var="alertMsg" scope="session" />
+   </c:if>
+</div>    
 </html>
