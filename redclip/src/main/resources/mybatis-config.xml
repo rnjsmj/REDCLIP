@@ -21,12 +21,14 @@
   		<typeAlias type="com.kh.redclip.member.model.vo.ReportMember" alias="report"/>
   		<typeAlias type="com.kh.redclip.member.model.vo.StatusMember" alias="status"/>
   		<typeAlias type="com.kh.redclip.barter.model.vo.Wishlist" alias="wish"/>
+  		<typeAlias type="com.kh.redclip.faq.model.vo.FAQ" alias="faq"/>
   	</typeAliases>
   
   	<mappers>
   		<mapper resource="/mapper/sample-mapper.xml" />
   		<mapper resource="/mapper/member-mapper.xml" />
   		<mapper resource="/mapper/barter-mapper.xml" />
+  		<mapper resource="/mapper/faq-mapper.xml"/>
   	</mappers>
   	
 </configuration>
