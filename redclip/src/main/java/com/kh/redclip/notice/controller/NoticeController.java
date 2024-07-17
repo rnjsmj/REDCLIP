@@ -23,8 +23,9 @@ public class NoticeController {
 	
 	private final NoticeService noticeService;
 	// 공지 페이지 이동 컨트롤러 
-	@GetMapping("/noticeform")
-	public String noticeform(@RequestParam(value="page",defaultValue = "1")int page,
+	@GetMapping("noticeform")
+	public String noticeform(@RequestParam(value="page",defaultValue = "1")  int page,
+			  			@RequestParam(value = "type", defaultValue = "1")  int type,
 			Model model) {
 		 
 		int listCount; //총 게시물 갯수
@@ -71,11 +72,17 @@ public class NoticeController {
 			int startValue = (currentPage -1) * boardLimit +1; //boardLimit 한페이지에보여질 최대글
 			int endValue = startValue + boardLimit -1; 
 			
+			map.put("type",type);
 			map.put("startValue", startValue);
 			map.put("endValue", endValue);
 			
-			List<Notice> boardList = noticeService.findAllNotice(map); //sqlmapper에서 startValu랑 endValue로 목록을 가져와야댐
-		
+			List<Notice> noticeList = noticeService.findAllNotice(map); //sqlmapper에서 startValu랑 endValue로 목록을 가져와야댐
+			
+			  model.addAttribute("noticeList", noticeList);
+			    model.addAttribute("pageInfo", pageInfo);
+		 log.info("왜안뜨냐:{}",noticeList);
+		 log.info("페이지인포{}",pageInfo);
+		 log.info("start/end : {}, {}", startValue, endValue);
 		 return "notice/noticeform";
 	}	
 

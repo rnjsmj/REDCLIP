@@ -11,39 +11,46 @@
 	</select> 
 	
 	
-	<select id="selectNotice"  parameterType="map" resultType="notice">
-	SELECT
-		    NOTICE_NO,
-		    NOTICE_TITLE,
-		    NOTICE_CONTENT,
-		    NOTICE_DATE,
-		    NOTICE_TYPE,
-		    USER_ID
-	 FROM
-	(SELECT
-		    NOTICE_NO,
-		    NOTICE_TITLE,
-		    NOTICE_CONTENT,
-		    NOTICE_DATE,
-		    NOTICE_TYPE,
-		    USER_ID,
-		    ROWNUM RNUM
-	FROM
-	(SELECT
-		    NOTICE_NO,
-		    NOTICE_TITLE,
-		    NOTICE_CONTENT,
-		    NOTICE_DATE,
-		    NOTICE_TYPE,
-		    USER_ID
-	FROM
-			TB_NOTICE
-	ORDER
-	   BY 
-			NOTICE_NO DESC))
-	WHERE 
-			ROWNUM BETWEEN {#startValue} and {#endValue}
-	</select> 
+<select id="selectNotice" parameterType="map" resultType="notice">
+    SELECT
+        NOTICE_NO noticeNo,
+        NOTICE_TITLE noticeTitle,
+        NOTICE_CONTENT noticeContent,
+        NOTICE_DATE noticeDate,
+        NOTICE_TYPE noticeType,
+        USER_ID userId
+    FROM
+    (
+        SELECT
+            NOTICE_NO,
+            NOTICE_TITLE,
+            NOTICE_CONTENT,
+            NOTICE_DATE,
+            NOTICE_TYPE,
+            USER_ID,
+            ROWNUM RNUM
+        FROM
+        (
+            SELECT
+                NOTICE_NO,
+                NOTICE_TITLE,
+                NOTICE_CONTENT,
+                NOTICE_DATE,
+                NOTICE_TYPE,
+                USER_ID
+            FROM
+                TB_NOTICE
+            <if test="type == 2">
+                WHERE NOTICE_TYPE = '공지'
+            </if>
+            <if test="type == 3">
+                WHERE NOTICE_TYPE = '이벤트'
+            </if>
+            ORDER BY NOTICE_NO DESC
+        )
+    )
+    WHERE RNUM BETWEEN #{startValue} AND #{endValue}
+</select>
 	
 	
 	

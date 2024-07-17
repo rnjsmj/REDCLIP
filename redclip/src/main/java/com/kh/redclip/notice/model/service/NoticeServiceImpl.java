@@ -14,13 +14,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
 	 private final NoticeMapper noticeMapper;
+	 
 	@Override
 	public int noticeCount() {
-		return noticeMapper.noticeCount;
+		return noticeMapper.noticeCount();
 	}
 	@Override
 	public List<Notice> findAllNotice(Map<String, Integer> map) {
-		return noticeMapper.selectNotice;
+		
+		return noticeMapper.selectNotice(map);
 	}
 
 
