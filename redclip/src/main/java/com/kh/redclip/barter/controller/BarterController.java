@@ -118,7 +118,6 @@ public class BarterController {
 	}
 
 	
-	
 	//답글 목록
 	@GetMapping(value="reply", produces="application/json; charset=UTF-8")
 	@ResponseBody

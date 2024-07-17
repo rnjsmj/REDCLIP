@@ -16,8 +16,8 @@
         font-size: 16px;
     }
     .btn-container {
-        display: flex;
-        justify-content: center;
+    display: flex;
+    align-items: center;
     }
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -50,6 +50,10 @@
     .card-container {
         display: flex;
         flex-wrap: wrap;
+    }
+    .filter-info-container {
+        display: flex;
+        align-items: center;
     }
 </style>
 </head>
@@ -136,83 +140,56 @@
     </div>
 	
     <script>
-      	$(() => {
-        	const $siSelect = $('#si');
-		    const $guSelect = $('#gu');
-		    const $dongSelect = $('#dong');
-		
-		    $siSelect.change(() => {
-		        const siValue = $siSelect.val();  
-				console.log(siValue);
-		        if (siValue !== null ) { //시벨류값이 널이 아닐때 실행)
-		             console.log("시밸류값:", siValue); 
-		            $.ajax({
-		                url: 'member/guSelect', 
-		                type: 'GET',
-		                data: { si: siValue }, 
-		                success: response => {
-		                	 console.log(response);
-		                	$guSelect.empty().append('<option value="">구 선택</option>');
-		                    response.forEach((a) => { 
-		                    	$guSelect.append('<option value='+a.townCode+'>'+a.townName+'</option>');
-		                    });
-		                    $guSelect.prop('disabled', false); // 구 셀렉트 박스 활성화
-		                },
-		                error: function() {
-		                    alert('오류가 발생했습니다.');
-		                }
-		            });
-		        }
-		    });
-		   
-		    $guSelect.change(() => {
-		    	 const guValue = $guSelect.val();
-		         console.log("선택한구벨류값:", guValue);
-		    	if (guValue !== null) {
-		    		$.ajax({
-			    		url: 'member/dongSelect',
-			    		type: 'GET',
-			    		data: { gu: guValue },
-			    		success: response => {
-			    			console.log(response);
-			    			$dongSelect.empty().append('<option value="">동 선택</option>')
-			    			response.forEach((a) => {
-			    				$dongSelect.append('<option value='+a.villageCode+'>'+a.villageName+'</option>');
-			    			});
-			    			$dongSelect.prop('disabled', false); // 동 셀렉트 박스 활성화
-			    		},
-			    		error: function() {
-			    			alert('오류가 발생했습니다.');
-			    		}
-		    		});
-		    	}
-		    });
-		});
-		
-		$(document).ready(function() {
-		    let page = 1;
+    $(document).ready(function() {
+        const $siSelect = $('#si');
+        const $guSelect = $('#gu');
+        const $dongSelect = $('#dong');
 
-		    $('#load-more-btn').click(function() {
-		        page++;
-		        $.ajax({
-		            url: '/redclip/barters/list',  // 올바른 URL (서버의 데이터를 가져오는 API 경로)
-		            type: 'GET',
-		            data: { page: page },  // 현재 페이지 정보를 서버로 전달합니다.
-		            success: function(response) {
-		                $('.card-container').append(response);  // 서버로부터 받은 HTML 데이터를 추가합니다.
+        $siSelect.change(() => {
+            const siValue = $siSelect.val();
+            console.log(siValue);
+            if (siValue !== null) {
+                $.ajax({
+                    url: '/redclip/member/guSelect',
+                    type: 'GET',
+                    data: { si: siValue },
+                    success: response => {
+                        console.log(response);
+                        $guSelect.empty().append('<option value="">구 선택</option>');
+                        response.forEach((a) => {
+                            $guSelect.append('<option value='+a.townCode+'>'+a.townName+'</option>');
+                        });
+                        $guSelect.prop('disabled', false); // 구 셀렉트 박스 활성화
+                    },
+                    error: function() {
+                        alert('오류가 발생했습니다.');
+                    }
+                });
+            }
+        });
 
-		                // 페이지네이션을 위한 버튼 상태 업데이트
-		                if (response.length < 10) {  // 예: 데이터의 양에 따라
-		                    $('#load-more-btn').hide();  // 더 이상 데이터가 없으면 버튼 숨김
-		                }
-		            },
-		            error: function() {
-		                alert('오류가 발생했습니다.');  // 오류 발생 시 경고창 표시
-		            }
-		        });
-		    });
-		});
-		
+        $guSelect.change(() => {
+            const guValue = $guSelect.val();
+            console.log("선택한 구 값:", guValue);
+            if (guValue !== null) {
+                $.ajax({
+                    url: '/redclip/member/dongSelect',
+                    type: 'GET',
+                    data: { gu: guValue },
+                    success: response => {
+                        console.log(response);
+                        $dongSelect.empty().append('<option value="">동 선택</option>');
+                        response.forEach((a) => {
+                            $dongSelect.append('<option value='+a.villageCode+'>'+a.villageName+'</option>');
+                        });
+                        $dongSelect.prop('disabled', false); // 동 셀렉트 박스 활성화
+                    },
+                    error: function() {
+                        alert('오류가 발생했습니다.');
+                    }
+                });
+            }
+        });
     </script>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
