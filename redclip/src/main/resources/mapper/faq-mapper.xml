@@ -4,13 +4,16 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.redclip.faq.model.dao.FaqMapper">
 
-	<select id="selectAll" resultType="faq">
+	<sql id="selectFaq">
 		SELECT
 		  FAQ_NO faqNo,
 	      QUESTION question,
 	      ANSWER answer,
 	      USER_ID userId,
-	      FAQ_TYPE faqType
+	      FAQ_TYPE faqType	
+	</sql>
+	<select id="selectAll" resultType="faq">
+		<include refid="selectFaq" />
 	  FROM
 	      TB_FAQ
 	</select>
@@ -36,4 +39,11 @@
 		      )
 	</insert>
 	
+	<select id="selectByNo" parameterType="_int" resultType="faq">
+		<include refid="selectFaq" />
+		FROM
+			TB_FAQ
+	   WHERE
+	   		FAQ_NO = #{faqNo}
+	</select>
 </mapper>

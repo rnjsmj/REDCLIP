@@ -36,4 +36,10 @@ public class AdminController {
 		
 		return "admin/admin_FAQ";
 	}
+	
+	@GetMapping("/{faqNo}")
+	public String selectByNo(FAQ faq) {
+		
+		return faqService.selectByNo(faq) > 0? "success" : "error";
+	}
 }

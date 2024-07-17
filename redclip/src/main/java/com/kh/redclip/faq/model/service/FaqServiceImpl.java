@@ -21,8 +21,13 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public int faqInsert(FAQ faq) {
+	public FAQ faqInsert(FAQ faq) {
 		return faqMapper.faqInsert(faq);
+	}
+
+	@Override
+	public int selectByNo(FAQ faq) {
+		return faqMapper.selectByNo(faq);
 	}
 
 	

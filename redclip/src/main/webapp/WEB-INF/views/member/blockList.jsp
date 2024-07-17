@@ -105,14 +105,14 @@
     <script>
     		function deleteByBlock() {
     		
-    			var userId = $('#userId').val();
+    			const userId = $('#userId').val();
     			
     			//배열 선언
-    			var blockMembers = [];
+    			const blockMembers = [];
     			
     			//체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
     			$('.form-check-input:checked').each(function() {
-                    var block= $(this).closest('tr').find('#blockedId').text().trim();
+    				const block= $(this).closest('tr').find('#blockedId').text().trim();
 
                     blockMembers.push(block);
     			});

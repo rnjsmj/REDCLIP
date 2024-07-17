@@ -197,8 +197,17 @@
 			
 			console.log(faqNo);
 			
+			$.ajax({
+				url : {faqNo},
+				type : 'get',
+				success : resulr => {
+					console.log('요청 성공');
+				},
+				error : e => {
+					console.log('요청 실패')
+				}
+			});
 			
-	
 		};
 				
 		//글 추가
@@ -236,7 +245,9 @@
 		//글 수정
 		function update() {
 			
+			const faqNo = selectNo(this);
 			
+			console.log(faqNo);
 			
 			const updateData = {
 					"question" : $('#exampleFormControlInput2').val(),
