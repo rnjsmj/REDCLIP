@@ -81,7 +81,7 @@
             	<tr>
 	                <td>
 	                <div class="form-check">
-	                    <input class="form-check-input" type="checkbox" value="${ faq.faqNo }" id="flexCheckDefault">
+	                    <input class="form-check-input" type="checkbox" value="${ faq.faqNo }" id="flexCheckDefault" name="faqNo" onclick="selectNo(this);">
 	                </div>
 	                </td>
 	                <td>${ faq.faqType }</td>
@@ -95,7 +95,7 @@
           </table>
           <!-- 수정 | 삭제 버튼 -->
             <div id="buttons" style="margin-top: 30px;">
-                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" onclick="selectNo();">수정</button> | <button type="submit" id="delete" class="btn btn-secondary">삭제</button>
+                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm">수정</button> | <button type="submit" id="delete" class="btn btn-secondary">삭제</button>
             </div>
     </div>
     
@@ -180,23 +180,27 @@
                         <button type="button" class="btn btn-success" onclick="update();">수정</button>
                         <button type="reset" class="btn btn-secondary">취소</button>
                     </div>
-                </form>
             </div>
         </div>
     </div>
 
 	<script>
-	
+	 
 		//체크 박스에 체크 된 글번호 가져오기
+			
 		function selectNo() {
 			
-			$('.form-check-input:checked').each(function() {
-                var faqNo= $(this).closest('tr').find('#faqNo').value;
-
-			});
+			
+			const faqNo = $("input[name='faqNo']:checked").val();
+			
+			//const numbers = Array.from(faqNo).map(checkbox => parseInt(checkbox.value, 10));
 			
 			console.log(faqNo);
-		}
+			
+			
+	
+		};
+				
 		//글 추가
 		function insert() {
 			
@@ -241,7 +245,6 @@
 					"userId" : $('#userId').val()
 				};
 			
-			console.log(faqNo);
 			console.log(updateData);
 			
 			

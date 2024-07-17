@@ -89,7 +89,7 @@
 	              </h2>
 	           </div>
 	      
-	           <div id="collapse-${ faq.faqNo }" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+	           <div id="collapse-${ faq.faqNo }" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
 	              <div class="card-body">
 	                  ${ faq.answer }
 	              </div>
