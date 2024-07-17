@@ -198,13 +198,13 @@
 			console.log(faqNo);
 			
 			$.ajax({
-				url : {faqNo},
+				url : faqNo,
 				type : 'get',
-				success : resulr => {
+				success : result => {
 					console.log('요청 성공');
 				},
 				error : e => {
-					console.log('요청 실패')
+					console.log('요청 실패');
 				}
 			});
 			

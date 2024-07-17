@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.redclip.faq.model.service.FaqService;
@@ -12,10 +13,12 @@ import com.kh.redclip.faq.model.vo.FAQ;
 import com.kh.redclip.member.model.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@Slf4j
 public class AdminController {
 
 	private final FaqService faqService;
@@ -38,8 +41,10 @@ public class AdminController {
 	}
 	
 	@GetMapping("/{faqNo}")
-	public String selectByNo(FAQ faq) {
+	public String selectByNo(@PathVariable int faqNo) {
 		
-		return faqService.selectByNo(faq) > 0? "success" : "error";
+		log.info("받아온 번호 : {}", faqNo);
+		
+		return /*faqService.selectByNo() > 0? "success" :*/ "error";
 	}
 }
