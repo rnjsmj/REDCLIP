@@ -98,9 +98,11 @@
    </c:if>
    
    <script>
+   var roomVar;
+   
    var socket = null;
 	$(document).ready( function() {
-		connect();
+		connect(roomVar);
 	});
 		
 		
@@ -113,7 +115,7 @@
 			socket = ws;
 			
 			ws.onopen = function() {
-				console.log("소켓 open");
+				console.log("소켓 open : ", socketAddress);
 			};
 			
 			ws.onmessage = function(event) {

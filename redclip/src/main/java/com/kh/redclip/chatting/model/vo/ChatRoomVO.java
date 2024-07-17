@@ -21,6 +21,6 @@ public class ChatRoomVO {
 	private String replyNickname;
 	private String villageName;
 	private String chatDate;
-	private String message;
+	private String chatMessage;
 	private String senderId;
 }

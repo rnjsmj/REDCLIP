@@ -35,7 +35,8 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public int newChatRoom(ChatRoom cr) {
-		return chatMapper.newChatRoom(cr);
+		chatMapper.newChatRoom(cr);
+		return cr.getRoomNo();
 	}
 
 	@Override

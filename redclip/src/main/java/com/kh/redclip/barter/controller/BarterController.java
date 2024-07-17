@@ -52,6 +52,15 @@ public class BarterController {
 	return "barter/list";
     }
 	
+	/*
+	@GetMapping("/{category}/{code}")
+	public String getFilterBarters(@PathVariable("category") int categoryNo, ...) {
+		
+		
+		location.href = '카테고리/지역코드'
+	}
+	*/
+	
 	// 교환 게시글 상세보기
 	@GetMapping("/{barterNo}")
 	public String findByNo(@PathVariable int barterNo, Model model) {

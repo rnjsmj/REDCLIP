@@ -6,9 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<jsp:include page="/WEB-INF/views/common/head.jsp"></jsp:include>
 <style>
 	.clr-fix::after {
             clear: both;
@@ -263,6 +261,10 @@
         }
         .chat-details {
             flex-grow: 1;
+            
+            .badge {
+            	background-color: #007300;
+            }
         }
         .nickname {
             font-weight: bold;
@@ -283,6 +285,7 @@
         .chat-link {
             color: #fff;
             text-decoration: none;
+             
         }
 
         .chat-link:hover {
@@ -335,8 +338,8 @@
                     <!-- 채팅방 목록 -->
                     <div class="chat-room-list">
                         <ul class="chat-list">
-                            <li class="chat-item" id="1">
-                                <!-- <img src="profile1.jpg" alt="Profile Picture 1"> -->
+                            <!-- <li class="chat-item" id="11">
+                                <img src="profile1.jpg" alt="Profile Picture 1">
                                 <div class="list-img">프사</div>
                                 <div class="chat-details">
                                     <h5>
@@ -441,32 +444,47 @@
                                     <span class="small-detail">OO동 · 07.04</span>
                                     <p class="latest-message">Thank you for the help!</p>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
                 <script>
-                	var roomVar;
+                	
                     $(document).ready(function () {
-                        $('.chat-item').on('click', function () {
-                        	socket.close();
-                        	
-                            $('.chat-item').removeClass('active');
-                            $(this).addClass('active');
-							
-                            const roomNo = $(this).attr("id");
-                            let onclick = 'submitMessage(' + roomNo + ')';
-                            $('#sendbtn').attr("onclick", onclick);
-                            
-                            var socketAddress = "ws://localhost/redclip/chatting/" + roomNo;
-                            roomVar = roomNo;
-                            connect(roomNo);
-                            
-                            $('.chat-area').show();
-
-                            
-                        });
+                    	
+                    	if( '${ sessionScope.RoomNo }' != '' ) {
+                    		const id= '#' + '${ sessionScope.RoomNo }';
+                    		$(id).trigger('onclick');
+                    		console.log(id + '로 트리거 동작');
+                    	}
+                    	
+                    	
+                         
                     });
+                    
+                    window.onload = function() {
+                    	
+                    };
+                   
+                    
+                    /* function chatView(e) {
+                    	socket.close();
+                    	
+                    	console.log(e.target.id);
+                        $('.chat-item').removeClass('active');
+                        e.addClass('active');
+						
+                        const roomNo = e.attr("id");
+                        let onclick = 'submitMessage(' + roomNo + ')';
+                        $('#sendbtn').attr("onclick", onclick);
+                        
+                        var socketAddress = "ws://localhost/redclip/chatting/" + roomNo;
+                        connect(roomNo);
+                        
+                        // 선택한 채팅방 채팅내역 select 해오는 ajax 필요!
+                        
+                        $('.chat-area').show(); */
+                    
                 </script>
                 <!-- 오른쪽 영역 -->
                 <div class="chat-area" style="display: none">
@@ -518,12 +536,38 @@
 			   		
 			   		
             $(document).ready( function() {
+            	selectList();
+            	openedChat();
             	
+            	$(document).on('click', '.chat-item',function () {
+                	socket.close();
+                	
+                    $('.chat-item').removeClass('active');
+                    $(this).addClass('active');
+					
+                    const roomNo = $(this).attr("id");
+                    let onclick = 'submitMessage(' + roomNo + ')';
+                    $('#sendbtn').attr("onclick", onclick);
+                    
+                    var socketAddress = "ws://localhost/redclip/chatting/" + roomNo;
+                    connect(roomNo);
+                    roomVar = roomNo;
+                    
+                    // 선택한 채팅방 채팅내역 select 해오는 ajax 필요!
+                    
+                    $('.chat-area').show();
+
+                    
+                }); 
             });
             
             	
             function submitMessage(roomNo) {
+            	
+            
                 const message = $('#chat-input').val();
+                
+                
 
                 if (message.trim() !== '') {
                     const insValue = '<div class="message sender"><p>' + $('#chat-input').val() + '</p></div>';
@@ -538,7 +582,7 @@
                     if (socket) {
                     	sendMessage = roomNo + ', ' + '${ sessionScope.loginUser.userId }' + ', ' + message;
                     	socket.send(sendMessage);
-                    }
+                    } 
                     
                     $('.chat-messages').append(insValue);
 
@@ -560,17 +604,87 @@
 
                 $('#chat-input').on('keypress', (e) => {
                     if (e.which === 13) {
+                    	console.log('roomVar : ', roomVar);
                         submitMessage(roomVar);
                     }
                 });
+               
+                function selectList() {
+                	$.ajax({
+                		
+                		url : 'list',
+                		type: 'get',
+                		data : {
+                			userId : '${ sessionScope.loginUser.userId }'
+                		},
+                		success : result => {
+                			console.log(result);
+                			let chatItems = '';
+                			result.map((room) => {
+                				chatItems += '<li class="chat-item" id="' + room.roomNo +'">'
+                						   + '<div class="list-img">프사</div>'
+                                    	   + '<div class="chat-details">'
+                                           + '<h5><span class="badge text-bg-secondary">'
+                                           + '<a class="chat-link" href="/redclip/barters/' + room.barterNo + '">' + room.barterName + '</a></span>'
+                                           + '</h5><p class="nickname">';
+                                chatItems += ( room.barterWriter === "${ sessionScope.loginUser.userId }" ) ? room.replyNickname : room.barterNickname; 
+                                chatItems += '</p><span class="small-detail">' + room.villageName + ' · ' + room.chatDate + '</span>'
+                                		   + '<p class="latest-message">' + room.chatMessage + '</p></div></li>';
+                                        		
+                                        		
+                        
+                				
+                			});
+                			$('.chat-list').html(chatItems);
+                		}
+                		
+                	});
+                	
+                	
+                	
+                	
+                	
+                	
+                	
+                	
+                	
+                	
+                	
+                	
+                	/* 
+                	<li class="chat-item" id="11">
+                    <!-- <img src="profile1.jpg" alt="Profile Picture 1"> -->
+                    <div class="list-img">프사</div>
+                    <div class="chat-details">
+                        <h5>
+                            <span class="badge text-bg-secondary"
+                                ><a class="chat-link" href="#">교환 게시글 제목</a></span
+                            >
+                        </h5>
+                        <p class="nickname">User 1</p>
+                        <span class="small-detail">OO동 · 4시간 전</span>
+                        <p class="latest-message" style="color: #303030; font-weight: bold">
+                            Hello! How are you?
+                        </p>
+                    </div>
+                </li> */
+                };
                 
+                function openedChat() {
+                	
+                };
                 
             </script>
 
             <section></section>
 	</div>
 	<c:if test="${ not empty sessionScope.RoomNo}">
-   		<script>$('#${RoomNo}').addClass('active');</script>
+   		<script>
+   			const id= '#' + '${ sessionScope.RoomNo }';
+   			console.log(id);
+   			//$(id).addClass('active');
+   			$(id).trigger('onclick');
+   		</script>
    		<c:remove var="RoomNo" scope="session" />
    </c:if>
 </body>

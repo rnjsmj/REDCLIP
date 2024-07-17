@@ -13,7 +13,7 @@ public class ChatMessage {
 	private int chatNo;
 	private int roomNo;
 	private String senderId;
-	private String message;
+	private String chatMessage;
 	private String chatDate;
 	private char chatRead;
 }

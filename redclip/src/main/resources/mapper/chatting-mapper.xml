@@ -13,14 +13,14 @@
 		  		 CHAT_NO,
 		  		 ROOM_NO,
 		  		 SENDER_ID,
-		  		 MESSAGE
+		  		 CHAT_MESSAGE
 		  		)
 		 VALUES
 		 		(
 		 		 SEQ_MSG.NEXTVAL,
 		 		 #{roomNo},
 		 		 #{senderId},
-		 		 #{message}
+		 		 #{chatMessage}
 		 		)
 	</insert>
 	
@@ -38,7 +38,7 @@
 				REPLY_NICKNAME replyNickname,
 				VILLAGE_NAME villageName, 
 				CHAT_DATE chatDate,
-				MESSAGE message,
+				CHAT_MESSAGE chatMessage,
 				SENDER_ID senderId
 		  FROM
 		  		VW_CHAT_ROOM_LIST
@@ -46,15 +46,18 @@
 		 		BARTER_WRITER = #{userId}
 		    OR
 		    	REPLY_WRITER = #{userId}
+		 ORDER
+		    BY
+		    	CHAT_DATE DESC
 	</select>
 
 	 <!-- 채팅방 존재 유무 확인 -->
 	 <select id="findChatRoom" parameterType="chatRoom" resultType="chatRoom">
 	 	SELECT
-	 			ROOM_NO,
-	 			BARTER_NO,
-	 			BARTER_WRITER,
-	 			REPLY_WRITER
+	 			ROOM_NO roomNo,
+	 			BARTER_NO barterNo,
+	 			BARTER_WRITER barterWriter,
+	 			REPLY_WRITER replyWriter
 	 	  FROM
 	 	  		TB_CHAT_ROOM
 	 	 WHERE
@@ -65,12 +68,6 @@
 	 
 	 <!-- 채팅방 생성 및 시퀀스 반환 -->
 	 <insert id="newChatRoom" parameterType="chatRoom" >
-	 	<selectKey keyProperty="roomNo" resultType="_int" order="BEFORE">
-	 		SELECT
-	 				SEQ_CHT.NEXTVAL
-	 		  FROM
-	 		  		DUAL
-	 	</selectKey>
 	 	INSERT
 	 	  INTO
 	 	  		TB_CHAT_ROOM
@@ -82,12 +79,20 @@
 	 	  		)
 	 	 VALUES
 	 	 		(
-	 	 			#{roomNo},
+	 	 			SEQ_CHT.NEXTVAL,
 	 	 			#{barterNo},
 	 	 			#{barterWriter},
 	 	 			#{replyWriter}
 	 	 		)
+	 	 <selectKey keyColumn="ROOM_NO" keyProperty="roomNo" resultType="_int" order="AFTER">
+	 		SELECT
+	 				SEQ_CHT.CURRVAL
+	 		  FROM
+	 		  		DUAL
+	 	</selectKey>
+	 	
 	 </insert>
+	 
 	 
 	 <!-- 채팅방 게시글번호 갱신 (게시글 변경 시 새 채팅방 생성 방지) -->
 	 <update id="chatBarterUpdate" parameterType="chatRoom">

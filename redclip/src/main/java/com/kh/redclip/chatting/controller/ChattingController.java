@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,12 +35,13 @@ public class ChattingController {
 	
 	//채팅방 목록 조회
 	@GetMapping("/list") 
-	public String chattingList(Model model, String userId) {
+	@ResponseBody
+	public ResponseEntity<List<ChatRoomVO>> chattingList(Model model, String userId) {
 		
 		List<ChatRoomVO> chatRoomList = chatService.findAll(userId);
 		model.addAttribute(chatRoomList);
 		log.info("목록: {}", chatRoomList);
-		return "chatting/view";
+		return ResponseEntity.status(HttpStatus.OK).body(chatRoomList);
 	}
 	
 	//채팅방 찾기 (존재 유무에 따라 생성 / 게시글 제목 갱신)
@@ -46,6 +49,7 @@ public class ChattingController {
 	@ResponseBody
 	public int findChatRoom(ChatRoom cr, HttpSession session) {
 		ChatRoom chatRoom = chatService.findChatRoom(cr);
+		log.info("find 결과 : {}", chatRoom);
 		int roomNo = 0;
 		if(chatRoom == null) {
 			// 채팅방이 존재하지 않음
@@ -60,6 +64,8 @@ public class ChattingController {
 		}
 		
 		session.setAttribute("RoomNo", roomNo);
+		log.info("세션에 저장된 값 : {}", session.getAttribute("RoomNo") );
+		log.info("roomNo : {}", roomNo);
 		return roomNo;
 		
 	}
