@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>메인페이지</title>
+	<jsp:include page="/WEB-INF/views/common/head.jsp"></jsp:include>
 	<style>
 	.content{
 	 width :1200px;

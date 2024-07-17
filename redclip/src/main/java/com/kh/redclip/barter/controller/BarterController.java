@@ -45,6 +45,7 @@ public class BarterController {
 	
 	private final BarterService barterService;
 	
+
 	//교환 게시글 목록보기
 	@GetMapping
 	public String getAllBarters(@RequestParam(value="code", defaultValue="0") Integer code, Model model) {
@@ -52,6 +53,15 @@ public class BarterController {
 	model.addAttribute("list", barters);
 	return "barter/list";
     }
+	
+	/*
+	@GetMapping("/{category}/{code}")
+	public String getFilterBarters(@PathVariable("category") int categoryNo, ...) {
+		
+		
+		location.href = '카테고리/지역코드'
+	}
+	*/
 	
 	// 교환 게시글 상세보기
 	@GetMapping("/{barterNo}")
