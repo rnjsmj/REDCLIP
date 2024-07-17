@@ -11,7 +11,11 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.101.0">
     <title>가격 예시 · Bootstrap v4.6</title>
-     
+    
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/pricing/">
+    <!-- Bootstrap 핵심 CSS -->
+    <link href="/redclip/resources/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -74,7 +78,7 @@
    <nav class="my-2 my-md-0 mr-md-3">
       <a class="p-2 text-dark" href="${pageContext.request.contextPath}/barters">물물교환</a>
       <a class="p-2 text-dark" href="#">체팅</a>
-      <a class="p-2 text-dark" href="#">공지사항</a>
+      <a class="p-2 text-dark" href="noticeform">공지사항</a>
       <a class="p-2 text-dark" href="#">FAQ</a>
    </nav>
    <c:choose>
@@ -93,8 +97,8 @@
    </c:choose>
    
    <c:if test="${ not empty alertMsg }">
-   		<script>alert("${ alertMsg }")</script>
-   		<c:remove var="alertMsg" scope="session" />
+         <script>alert("${ alertMsg }")</script>
+         <c:remove var="alertMsg" scope="session" />
    </c:if>
    
    <script>
