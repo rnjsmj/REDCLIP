@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -116,7 +118,17 @@ public class BarterController {
 	           return "redirect:/registration";
 	    }
 	}
-
+	
+	//게시글 검색 조회
+	@GetMapping("/{category}/{code}")
+    @ResponseBody
+    public List<BarterVO> getFilteredBarters(@PathVariable("category") Integer categoryNo, @PathVariable("code") Integer code) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("categoryNo", categoryNo);
+        params.put("code", code);
+        log.info("뭐냐묘{}",barterService.getFilteredBarters(params));
+        return barterService.getFilteredBarters(params);
+    }
 	
 	//답글 목록
 	@GetMapping(value="reply", produces="application/json; charset=UTF-8")

@@ -1,6 +1,7 @@
 package com.kh.redclip.barter.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -24,7 +25,7 @@ public interface BarterMapper {
 	//게시글 등록
 	int barterInsert(BarterFile barterFile);
 	//검색 조회
-	List<BarterVO> getFilteredBarters(@Param("categoryNo") String categoryNo, @Param("si") String si, @Param("gu") String gu, @Param("dong") String dong);
+	List<BarterVO> getFilteredBarters(Map<String, Integer> params);
 	
 	
 	
@@ -68,5 +69,6 @@ public interface BarterMapper {
 	int replyCount(int barterNo);
 	// 게시글에 포함된 답글 삭제
 	int replyListDelete(int barterNo);
+	
 	
 }
