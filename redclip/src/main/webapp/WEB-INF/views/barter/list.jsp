@@ -118,9 +118,10 @@
 	            </c:if>
 	            <br>
 	            <div class="card-container">
+	            <!--
                     <c:forEach items="${list}" var="barter">
                     <div class="card" style="width: 270px; height:300px;">
-                        <img src="${barter.barterFileList.barterFileName}" class="card-img-top" alt="${barter.barterName}">
+                        <img src="${barter.barterFileList[0].barterFileName}" class="card-img-top" alt="${barter.barterName}">
                         <div class="card-body">
                             <h5 class="card-title">${barter.barterName}</h5>
                             <p class="card-text">${barter.barterWriter}</p>
@@ -130,6 +131,7 @@
                         </div>
                     </div>
                 </c:forEach>
+                 -->
                 </div>
                 <div class="btn-container">
                     <button id="load-more-btn" class="btn btn-danger load-more-btn">더보기</button>
@@ -215,18 +217,22 @@
                 type: 'GET',
                 success: function(response) {
                     // 필터링된 결과를 기존 카드 목록에 추가
+                    console.log('카테고리번호:', categoryNo);
+                    console.log('지역코드번호:', code);
                     response.forEach(barter => {
+                    	console.log(barter);
                         const card =
                         	'<div class="card" style="width: 270px; height:300px;">'
-                        	 +'<img src="' +barter.barterFileList.barterFileName+ '" class="card-img-top" alt="' +barter.barterName+ '">'
+                        	 +'<img src="' + barter.barterFileList[0].barterFileName+ '" class="card-img-top" alt="' +barter.barterName+ '">'
                              +'<div class="card-body">'
                              +'<h5 class="card-title">' +barter.barterName+ '</h5>'
                              +'<p class="card-text">' +barter.barterWriter+' </p>'
                              +'<p class="card-text">' +barter.region.cityName+' '+barter.region.townName+' '+barter.region.villageName+ '</p>'
                              +'<p class="card-text">' +barter.barterDate+ '</p>'
-                             +'<a href="/redclip/barters/barter.barterNo class="btn btn-primary">상세보기</a>'
+                             +'<a href="/redclip/barters/' + barter.barterNo+ '" class="btn btn-primary">상세보기</a>'
                              +'</div>'
                              +'</div>';
+                             console.log(response);
                         $cardContainer.append(card); // 기존 카드 목록에 추가
                     });
 
