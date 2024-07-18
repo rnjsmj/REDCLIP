@@ -35,38 +35,51 @@ public class ChatHandler extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
 		log.info("연결 : {}", getId(session));
+		log.info("세션번호 : {}", session.getId());
 		sessions.add(session);
 		
 		super.afterConnectionEstablished(session);
 		boolean flag = false;
 		String url = session.getUri().toString();
 		String roomNo = url.split("/chatting/")[1];
+		log.info("핸들러 연결 : {}", roomNo);
 		
 		int idx = roomSessions.size();
 		if(idx > 0) {
 			for(int i=0; i<idx; i++) {
+				
+				// List를 순회하면서 방번호와 해당 로그인유저가 일치하는 roomSession 정보가 있는지 확인
 				String rN = (String) roomSessions.get(i).get("roomNo");
-				if(rN.equals(roomNo)) {
+				String uId = (String) roomSessions.get(i).get("userId");
+				if(rN.equals(roomNo) && uId.equals(getId(session))) {
 					flag = true;
 					idx = i;
+					log.info("플래그 true");
 					break;
 				}
 			}
 		}
 		
-		if(flag) {
+		// 방이 존재하는지 확인 -> 존재하면 db에서 userid를 select 하여 두 명의 userid를 각 맵에 put
+		// 나중에 들어와도 같은 회원이면 wss만 덮어쓰기 할 수 있음
+		
+		
+		if(flag) { // List에 존재하는 경우 현재 값으로 갱신
 			HashMap<String, Object> map = roomSessions.get(idx);
 			map.put("roomNo", roomNo);
-			map.put(session.getId(), session);
-		} else {
+			map.put("socketSession", session);
+			map.put("userId", getId(session));
+		} else {  // List에 존재하지 않는 경우 새로운 세션 정보 추가
+			log.info("플래그 false");
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("roomNo", roomNo);
-			map.put(session.getId(), session);
+			map.put("socketSession", session);
+			map.put("userId", getId(session));
 			roomSessions.add(map);
 		}
 		
 		
-//		연결 -> 채팅방 존재 여부 확인해서 세션에 
+
 	}
 
 	@Override
@@ -96,31 +109,32 @@ public class ChatHandler extends TextWebSocketHandler{
 //				
 //			}
 			
-			HashMap<String, Object> temp  = new HashMap<String, Object>();
+			HashMap<String, Object> recieveSession  = new HashMap<String, Object>();
 			if(roomSessions.size() > 0) {
 				for (int i=0; i<roomSessions.size(); i++) {
-					String recentRoom = (String) roomSessions.get(i).get("roomNo");
-					if(recentRoom.equals(roomNo)) {
-						temp = roomSessions.get(i);
+					String rN = (String) roomSessions.get(i).get("roomNo");
+					String uId = (String) roomSessions.get(i).get("userId");
+					if(rN.equals(roomNo) && !(uId.equals(getId(session)))) {
+						recieveSession = roomSessions.get(i);
 						break;
 					}
 				}
 				
 				if(chatMessage.length() > 0) {
-					for (String k : temp.keySet()) {
-						if(k.equals("roomNo")) {
-							continue;
-						}
-						
-						WebSocketSession wss = (WebSocketSession) temp.get(k);
-						if(wss != null) {
-							try {
+					WebSocketSession wss = (WebSocketSession) recieveSession.get("socketSession");
+					if (wss != null) {
+						log.info("리시브 세션 존재 : {} - {}", recieveSession , wss);
+						try {
 								wss.sendMessage(new TextMessage(chatMessage));
 							} catch (IOException e) {
+								log.info("아...왜저래");
 								e.printStackTrace();
 							}
-						}
+					} else {
+						log.info("리시브 세션 없음..");
 					}
+					
+					
 				}
 			}
 			
@@ -145,7 +159,7 @@ public class ChatHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessions.remove(session);
-		log.info("사용자 접속 종료");
+		log.info("사용자 접속 종료 : {}", getId(session));
 	}
 	
 	
