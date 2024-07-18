@@ -151,18 +151,19 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                     <div class="modal-body">
+                    
                    		<div>
-                    		<input type="hidden" id="userId" value="${ sessionScope.loginUser.userId }" />
-                    		<input type="hidden" id="faqNo" value="${ faq.faqNo }" />
+                    		<input type="hidden" id="userId" value="${ detail.userId }" />
+                    		<input type="hidden" id="faqNo" value="${ detail.faqNo }" />
                     	</div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">제목</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" value="${ faq.question }">
+                            <input type="text" class="form-control" id="exampleFormControlInput1" value="${ detail.question }">
                         </div>
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
                             <select class="form-select" aria-label="Default select example" id="faqType">
-                                <option selected value="${ faq.faqType }"></option>
+                                <option selected>${ detail.faqType }</option>
                                 <option value="시스템">시스템</option>
                                 <option value="회원">회원</option>
                                 <option value="등급">등급</option>
@@ -170,8 +171,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="${ faq.answer }"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${ detail.answer }</textarea>
                         </div>
+                    
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
@@ -200,6 +202,11 @@
 				type : 'get',
 				success : result => {
 					console.log('글이 있져');
+					console.log(result);
+					$('#exampleFormControlInput1').val(result.question);
+					$('#exampleFormControlTextarea1').val(result.answer);
+					$('#faqType').text(result.faqType);
+					
 				},
 				error : e => {
 					console.log('글이 없져');
@@ -238,6 +245,11 @@
 					alert('FAQ 추가에 실패했습니다.');
 				}
 			});
+		};
+		
+		function updateForm() {
+			
+			
 		};
 		
 		//이 밑으로는 분석 좀 해야됑

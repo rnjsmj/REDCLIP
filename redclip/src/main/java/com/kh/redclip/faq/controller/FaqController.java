@@ -47,7 +47,7 @@ public class FaqController {
 	
 	@ResponseBody
 	@GetMapping("/{faqNo}")
-	public String selectByNo(@PathVariable int faqNo, Model model) {
+	public FAQ selectByNo(@PathVariable int faqNo, Model model) {
 		
 		log.info("받아온 번호 : {}", faqNo);
 		
@@ -55,9 +55,9 @@ public class FaqController {
 		
 		log.info("가져온 정보 : {}", faq);
 		
-		model.addAttribute("faq", faq);
+		model.addAttribute("detail", faq);
 		
-		return "".equals(faq)? "error" : "success";
+		return faq;
 		
 		/*
 		 * if("".equals(faq)) { return "error"; }
