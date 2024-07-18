@@ -226,7 +226,6 @@
                         	 +'<img src="' + barter.barterFileList[0].barterFileName+ '" class="card-img-top" alt="' +barter.barterName+ '">'
                              +'<div class="card-body">'
                              +'<h5 class="card-title">' +barter.barterName+ '</h5>'
-                             +'<p class="card-text">' +barter.barterWriter+' </p>'
                              +'<p class="card-text">' +barter.region.cityName+' '+barter.region.townName+' '+barter.region.villageName+ '</p>'
                              +'<p class="card-text">' +barter.barterDate+ '</p>'
                              +'<a href="/redclip/barters/' + barter.barterNo+ '" class="btn btn-primary">상세보기</a>'
