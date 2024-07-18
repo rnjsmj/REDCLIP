@@ -133,7 +133,7 @@ public class BarterController {
 	@GetMapping("/{category}/{code}")
     @ResponseBody
     public List<BarterVO> getFilteredBarters(@PathVariable("category") Integer categoryNo, @PathVariable("code") Integer code) {
-        Map<String, Integer> params = new HashMap<>();
+        Map<String, Integer> params = new HashMap<String, Integer>();
         params.put("categoryNo", categoryNo);
         params.put("code", code);
         log.info("뭐냐묘{}",barterService.getFilteredBarters(params));

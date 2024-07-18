@@ -29,7 +29,7 @@ public class ChatHandler extends TextWebSocketHandler{
 	//WebSocketSession 정보를 통해 연결된 클라이언트 확인
 	//private Set<Map<Integer, WebSocketSession>> sessions = new CopyOnWriteArraySet();
 	private Set<WebSocketSession> sessions = new CopyOnWriteArraySet();
-	private List<HashMap<String, Object>> roomSessions = new ArrayList<>();
+	private List<HashMap<String, Object>> roomSessions = new ArrayList<HashMap<String, Object>>();
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {

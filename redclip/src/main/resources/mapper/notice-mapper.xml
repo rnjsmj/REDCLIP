@@ -52,7 +52,29 @@
     WHERE RNUM BETWEEN #{startValue} AND #{endValue}
 </select>
 	
-	
+<insert id="insertNotice" parameterType="notice" >
+    INSERT 
+      INTO 
+      		TB_NOTICE
+    (
+			NOTICE_NO,
+	        NOTICE_TITLE,
+	        NOTICE_CONTENT,
+	        USER_ID,
+	        NOTICE_TYPE,
+	        NOTICE_DATE
+    )
+    VALUES
+    (
+    	SEQ_NOTICE.NEXTVAL,
+    	  #{noticeTitle},
+    	  #{noticeContent},
+    	  #{userId},
+    	  #{noticeType},
+    	  SYSDATE
+    )
+
+</insert>
 	
 	
 </mapper>

@@ -24,8 +24,10 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return noticeMapper.selectNotice(map);
 	}
-
-
-
+	@Override
+	public int insertNotice(Notice notice) {
+		
+		return noticeMapper.insertNotice(notice);
+	}
 
 }

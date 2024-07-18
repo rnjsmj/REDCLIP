@@ -11,5 +11,7 @@ public interface NoticeService {
 
 	List<Notice> findAllNotice(Map<String, Integer> map);
 
+	int insertNotice(Notice notice);
+
 
 }

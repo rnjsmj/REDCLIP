@@ -50,8 +50,12 @@
         }
 
         .buttons {
-            margin-bottom: 20px;
-            text-align: right;
+        margin-bottom: 20px;
+        margin-top:20px;
+	    display: flex;
+	    justify-content: flex-end;
+	    gap: 10px; 
+	    
         }
 
         .pagination {
@@ -94,6 +98,7 @@
         .tatable {
         height:500px
         }
+        
     </style>
     
     <meta charset="UTF-8">
@@ -134,9 +139,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="notice" items="${noticeList}">
+                        <c:forEach var="notice" items="${noticeList}" varStatus ='status'>
                             <tr>
-                                <td>${notice.noticeNo}</td>
+                                <td>${(pageInfo.currentPage - 1) * 10 + status.count}</td>
                                 <td>${notice.noticeType}</td>
                                 <td><a href="noticeDetail?boardNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
                                 <td>${notice.noticeDate}</td>
@@ -147,12 +152,14 @@
                     </tbody>
                 </table>
             </div>
-            
-            <div class="buttons">
-                <button class="btn btn-primary write-button">글쓰기</button>
-                <button class="btn btn-danger delete-button">글삭제</button>
-            </div>
-        
+	            <div class="buttons">
+		             <c:if test="${sessionScope.loginUser != null && sessionScope.loginUser.status == 'A'}">
+		             	<form action="insertNoticeform" method="post">
+		                    <button class="btn btn-primary write-button" >글쓰기</button>
+		              	</form>      
+		             	    <button class="btn btn-danger delete-button">글삭제</button>
+		             </c:if>
+	            </div>
 		     <div class="pagination">
 		        <ul>
 		            <!-- 이전 페이지 링크 -->
