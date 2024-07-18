@@ -83,7 +83,7 @@ public class BarterController {
 			return "barter/registration";
 		}
 	
-
+/*
 	// 교환 게시글 글 입력하기
 	@PostMapping("/insert")
 		public String insert(Barter barter, MultipartFile upfile, HttpSession session, Model model) {
@@ -104,27 +104,28 @@ public class BarterController {
 		    
 		    return "redirect:/barters/registration";
 		}	
-	
+*/	
 	//교환 게시글 글 등록하기
-	@PostMapping(value="barterFile")
+	@PostMapping(value="/insert")
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
 	    //log.info("파일 배열 : {}", upfile);
-
 	    if (barterService.insert(barter) > 0) {
 	        int fileCount = 0;
-
-	        if (upfile.length > 0) {
+	        boolean fileSuccess =false;
+	        if (upfile != null) {
 	            for (MultipartFile file : upfile) {
 	                    BarterFile uploadFile = new BarterFile();
-	                    uploadFile.setBarterFileName(file.getOriginalFilename());
+	                    uploadFile.setBarterFileName(saveFile(file, session));;
 
 	                    fileCount += barterService.barterInsert(uploadFile);
 	            }
+	             fileSuccess = (fileCount == upfile.length ? true : false); 
 	        }
-
-	        return fileCount == upfile.length ? "redirect:/" : "redirect:/registration";
+	        	
+	        return fileSuccess == true ? "redirect:/barters" : "redirect:/registration";
 
 	       } else {
+	    	   session.setAttribute("alertMsg", "너 등록망함");
 	           return "redirect:/registration";
 	    }
 	}
@@ -188,7 +189,6 @@ public class BarterController {
 			}
 			
 			return fileSuccess == true ? "success" : "file upload error"; 
-			
 		
 		} else {
 			
