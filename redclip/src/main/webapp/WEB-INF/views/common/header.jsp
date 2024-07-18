@@ -77,7 +77,7 @@
 
    <nav class="my-2 my-md-0 mr-md-3">
       <a class="p-2 text-dark" href="${pageContext.request.contextPath}/barters">물물교환</a>
-      <a class="p-2 text-dark" href="#">체팅</a>
+      <a class="p-2 text-dark" href="${pageContext.request.contextPath}/chatting/view">체팅</a>
       <a class="p-2 text-dark" href="noticeform">공지사항</a>
       <a class="p-2 text-dark" href="#">FAQ</a>
    </nav>
@@ -114,7 +114,7 @@
 			console.log("연결 시도");
 			
 			var socketAddress = "ws://localhost/redclip/chatting";
-			roomNo != null ? socketAddress += ("/" + roomNo) : socketAddress += "/";
+			roomNo != null ? socketAddress += ("/" + roomNo) : socketAddress += "/0";
 			var ws = new WebSocket(socketAddress);
 			socket = ws;
 			
