@@ -206,38 +206,6 @@
 				}
 			});
 			
-
-			//글수정 입력창 띄우기
-			function updateForm() {
-				
-				console.log(faq);
-				
-		/* 		selectNo(function(faq) {
-					if(faq) {
-						const value += '<div class="mb-3">'
-							+	'<label for="exampleFormControlInput1" class="form-label">제목</label>'
-							+	'<input type="text" class="form-control" id="exampleFormControlInput1" value="'
-							+ 	${ faq.question } +'">'
-							+	'</div>'
-							+	'<div class="mb-3">'
-							+	'<label for="Default select example" class="form-label">분류</label>'
-							+	'<select class="form-select" aria-label="Default select example" id="faqType">'
-							+	'<option selected value="' + ${ faq.faqType } + '"></option>'
-							+	'<option value="시스템">시스템</option>'
-							+	'<option value="회원">회원</option>'
-							+	'<option value="등급">등급</option>'
-							+	'</select>'
-							+	'</div>'
-							+	'<div class="mb-3">'
-	              			+	'<label for="exampleFormControlTextarea1" class="form-label">내용</label>'
-	              			+	'<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="' + ${ faq.answer } + '"></textarea>'
-							+	'</div>'
-							
-						
-						
-					}
-				}); */
-			
 		};
 						
 		//글 추가
@@ -272,14 +240,43 @@
 			});
 		};
 		
+		//이 밑으로는 분석 좀 해야됑
+		/* //글수정 입력창 띄우기
+		function updateForm() {
+			
+			selectNo(function(faq) {
+				if(faq) {
+					const value += '<div class="mb-3">'
+						+	'<label for="exampleFormControlInput1" class="form-label">제목</label>'
+						+	'<input type="text" class="form-control" id="exampleFormControlInput1" value="'
+						+ 	${ faq.question } +'">'
+						+	'</div>'
+						+	'<div class="mb-3">'
+						+	'<label for="Default select example" class="form-label">분류</label>'
+						+	'<select class="form-select" aria-label="Default select example" id="faqType">'
+						+	'<option selected value="' + ${ faq.faqType } + '"></option>'
+						+	'<option value="시스템">시스템</option>'
+						+	'<option value="회원">회원</option>'
+						+	'<option value="등급">등급</option>'
+						+	'</select>'
+						+	'</div>'
+						+	'<div class="mb-3">'
+              			+	'<label for="exampleFormControlTextarea1" class="form-label">내용</label>'
+              			+	'<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="' + ${ faq.answer } + '"></textarea>'
+						+	'</div>'           
+					
+				}
+			});
 
 			
 			
 		};
 		
 		
-	/* 	//글 수정
+		//글 수정
 		function update() {
+			
+			
 			
 			const updateData = {
 					"question" : $('#exampleFormControlInput2').val(),
