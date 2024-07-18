@@ -82,47 +82,24 @@ public class BarterController {
 		public String barterForwarding() {
 			return "barter/registration";
 		}
-	
-/*
-	// 교환 게시글 글 입력하기
-	@PostMapping("/insert")
-		public String insert(Barter barter, MultipartFile upfile, HttpSession session, Model model) {
-		    log.info("게시글정보 : {}", barter);
-		    log.info("파일의 정보 : {}", upfile.getOriginalFilename());
-		    
-		    if (!upfile.isEmpty()) {
-		    	BarterFile barterFile = new BarterFile();
-		        barterFile.setBarterFileName(upfile.getOriginalFilename());
-		    }
-		    
-		    if (barterService.insert(barter) > 0) {
-		        session.setAttribute("alertMsg", "게시물 등록 완료");
-		        return "redirect:/barters";
-		    } else {
-		        model.addAttribute("alertMsg", "게시물 등록을 실패했습니다.");
-		    }
-		    
-		    return "redirect:/barters/registration";
-		}	
-*/	
+		
 	//교환 게시글 글 등록하기
 	@PostMapping(value="/insert")
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
 	    //log.info("파일 배열 : {}", upfile);
 	    if (barterService.insert(barter) > 0) {
-	        int fileCount = 0;
-	        boolean fileSuccess =false;
+	        
 	        if (upfile != null) {
 	            for (MultipartFile file : upfile) {
+	            		if(!file.isEmpty()) {
 	                    BarterFile uploadFile = new BarterFile();
 	                    uploadFile.setBarterFileName(saveFile(file, session));;
-
-	                    fileCount += barterService.barterInsert(uploadFile);
-	            }
-	             fileSuccess = (fileCount == upfile.length ? true : false); 
+	                    barterService.barterInsert(uploadFile);
+	            	}
+	            }     
 	        }
 	        	
-	        return fileSuccess == true ? "redirect:/barters" : "redirect:/registration";
+	        return "redirect:/barters";
 
 	       } else {
 	    	   session.setAttribute("alertMsg", "너 등록망함");
