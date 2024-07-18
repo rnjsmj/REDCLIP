@@ -9,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.chatting.model.service.ChatService;
+import com.kh.redclip.chatting.model.vo.ChatMessageVO;
 import com.kh.redclip.chatting.model.vo.ChatRoom;
 import com.kh.redclip.chatting.model.vo.ChatRoomVO;
 
@@ -68,6 +70,16 @@ public class ChattingController {
 		log.info("roomNo : {}", roomNo);
 		return roomNo;
 		
+	}
+	
+	// 채팅방 별 채팅 내역 select (시간순으로 출력하여 최신 채팅을 아래부터)
+	@GetMapping("/{roomNo}")
+	@ResponseBody
+	public ResponseEntity<ChatMessageVO> chatMessageList(@PathVariable int roomNo) {
+		
+		ChatMessageVO chatRoom = chatService.chatListByRoomNo(roomNo); 
+		log.info("채팅내역 : {}", chatRoom);
+		return ResponseEntity.status(HttpStatus.OK).body(chatRoom);
 	}
 	
 }

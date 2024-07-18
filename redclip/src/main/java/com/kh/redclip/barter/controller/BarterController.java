@@ -178,13 +178,13 @@ public class BarterController {
 			if (upfiles != null) {
 				
 				for(MultipartFile file : upfiles) {
-					
-					BarterReplyFile replyFile = new BarterReplyFile();
-					replyFile.setReplyFileName(saveFile(file, session));
-					fileCount += barterService.replyFileInsert(replyFile);
-					
+					if( !file.isEmpty()) {
+						BarterReplyFile replyFile = new BarterReplyFile();
+						replyFile.setReplyFileName(saveFile(file, session));
+						barterService.replyFileInsert(replyFile);
+					}
 				}
-				fileSuccess = (fileCount == upfiles.length ? true : false); 
+				
 			}
 			
 			return fileSuccess == true ? "success" : "file upload error"; 
@@ -226,7 +226,7 @@ public class BarterController {
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
 		String fileName = upfile.getOriginalFilename();
-		String ext = fileName.substring(fileName.lastIndexOf("."));
+		String ext = fileName.substring(fileName.lastIndexOf('.'));
 		
 		int num = (int) (Math.random() * 900) + 100; 
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());

@@ -15,6 +15,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.kh.redclip.chatting.model.service.ChatService;
+import com.kh.redclip.chatting.model.vo.ChatMessage;
 import com.kh.redclip.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -126,6 +127,14 @@ public class ChatHandler extends TextWebSocketHandler{
 						log.info("리시브 세션 존재 : {} - {}", recieveSession , wss);
 						try {
 								wss.sendMessage(new TextMessage(chatMessage));
+								
+								// 서비스 호출하여 DB에 저장
+								ChatMessage cm = new ChatMessage();
+								cm.setRoomNo(Integer.parseInt(roomNo));
+								cm.setSenderId(senderId);
+								cm.setChatMessage(chatMessage);
+								chatService.insertMessage(cm);
+								
 							} catch (IOException e) {
 								log.info("아...왜저래");
 								e.printStackTrace();

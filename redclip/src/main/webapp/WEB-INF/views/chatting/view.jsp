@@ -553,7 +553,17 @@
                     connect(roomNo);
                     roomVar = roomNo;
                     
-                    // 선택한 채팅방 채팅내역 select 해오는 ajax 필요!
+                    // 선택한 채팅방 채팅내역 select
+                    $.ajax({
+                    	
+                    	url : roomNo,
+                    	type : 'get',
+                    	success : result => {
+                    		console.log(result);
+                    	}
+                    
+                    });
+                    
                     
                     $('.chat-area').show();
 
@@ -627,12 +637,15 @@
                                            + '<h5><span class="badge text-bg-secondary">'
                                            + '<a class="chat-link" href="/redclip/barters/' + room.barterNo + '">' + room.barterName + '</a></span>'
                                            + '</h5><p class="nickname">';
-                                chatItems += ( room.barterWriter === "${ sessionScope.loginUser.userId }" ) ? room.replyNickname : room.barterNickname; 
-                                chatItems += '</p><span class="small-detail">' + room.villageName + ' · ' + room.chatDate + '</span>'
-                                		   + '<p class="latest-message">' + room.chatMessage + '</p></div></li>';
-                                        		
-                                        		
-                        
+                                           
+                                chatItems += ( room.barterWriter === "${ sessionScope.loginUser.userId }" ) 
+                                			? room.replyNickname + '</p><span class="small-detail">' + room.replyVillageName 
+                                			: room.barterNickname + '</p><span class="small-detail">' + room.barterVillageName; 
+                                			
+                                chatItems +=  ( room.chatDate != null || room.chatMessage != null)
+                                			 ? ' · ' + room.chatDate + '</span><p class="latest-message">' + room.chatMessage + '</p></div></li>'
+                                			 : '</div></li>';
+                                  
                 				
                 			});
                 			$('.chat-list').html(chatItems);
