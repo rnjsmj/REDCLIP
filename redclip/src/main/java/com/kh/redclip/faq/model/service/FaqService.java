@@ -8,8 +8,8 @@ public interface FaqService {
 
 	List<FAQ> selectAll();
 
-	FAQ faqInsert(FAQ faq);
+	int faqInsert(FAQ faq);
 
-	int selectByNo(FAQ faq);
+	FAQ selectByNo(int faqNo);
 
 }

@@ -11,7 +11,7 @@ public interface FaqMapper {
 
 	List<FAQ> selectAll();
 
-	FAQ faqInsert(FAQ faq);
+	int faqInsert(FAQ faq);
 
-	int selectByNo(FAQ faq);
+	FAQ selectByNo(int faq);
 }

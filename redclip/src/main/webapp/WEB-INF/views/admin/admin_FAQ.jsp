@@ -95,7 +95,7 @@
           </table>
           <!-- 수정 | 삭제 버튼 -->
             <div id="buttons" style="margin-top: 30px;">
-                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm">수정</button> | <button type="submit" id="delete" class="btn btn-secondary">삭제</button>
+                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" onclick="updateForm();">수정</button> | <button type="submit" id="delete" class="btn btn-secondary">삭제</button>
             </div>
     </div>
     
@@ -121,10 +121,9 @@
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
                             <select class="form-select" aria-label="Default select example" id="faqType">
-                                <option selected>글 분류</option>
-                                <option value="시스템">시스템</option>
-                                <option value="회원">회원</option>
-                                <option value="등급">등급</option>
+                                <option selected>시스템</option>
+                                <option>회원</option>
+                                <option>등급</option>
                               </select>
                         </div>
                         <div class="mb-3">
@@ -151,7 +150,6 @@
                     <h4 class="modal-title">FAQ 수정</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-
                     <div class="modal-body">
                    		<div>
                     		<input type="hidden" id="userId" value="${ sessionScope.loginUser.userId }" />
@@ -164,7 +162,7 @@
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
                             <select class="form-select" aria-label="Default select example" id="faqType">
-                                <option selected value="${ faq.faqType }">글 분류</option>
+                                <option selected value="${ faq.faqType }"></option>
                                 <option value="시스템">시스템</option>
                                 <option value="회원">회원</option>
                                 <option value="등급">등급</option>
@@ -198,18 +196,50 @@
 			console.log(faqNo);
 			
 			$.ajax({
-				url : faqNo,
+				url : '/redclip/faq/' + faqNo,
 				type : 'get',
 				success : result => {
-					console.log('요청 성공');
+					console.log('글이 있져');
 				},
 				error : e => {
-					console.log('요청 실패');
+					console.log('글이 없져');
 				}
 			});
 			
-		};
+
+			//글수정 입력창 띄우기
+			function updateForm() {
 				
+				console.log(faq);
+				
+		/* 		selectNo(function(faq) {
+					if(faq) {
+						const value += '<div class="mb-3">'
+							+	'<label for="exampleFormControlInput1" class="form-label">제목</label>'
+							+	'<input type="text" class="form-control" id="exampleFormControlInput1" value="'
+							+ 	${ faq.question } +'">'
+							+	'</div>'
+							+	'<div class="mb-3">'
+							+	'<label for="Default select example" class="form-label">분류</label>'
+							+	'<select class="form-select" aria-label="Default select example" id="faqType">'
+							+	'<option selected value="' + ${ faq.faqType } + '"></option>'
+							+	'<option value="시스템">시스템</option>'
+							+	'<option value="회원">회원</option>'
+							+	'<option value="등급">등급</option>'
+							+	'</select>'
+							+	'</div>'
+							+	'<div class="mb-3">'
+	              			+	'<label for="exampleFormControlTextarea1" class="form-label">내용</label>'
+	              			+	'<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="' + ${ faq.answer } + '"></textarea>'
+							+	'</div>'
+							
+						
+						
+					}
+				}); */
+			
+		};
+						
 		//글 추가
 		function insert() {
 			
@@ -241,13 +271,15 @@
 				}
 			});
 		};
-	
-		//글 수정
+		
+
+			
+			
+		};
+		
+		
+	/* 	//글 수정
 		function update() {
-			
-			const faqNo = selectNo(this);
-			
-			console.log(faqNo);
 			
 			const updateData = {
 					"question" : $('#exampleFormControlInput2').val(),
@@ -258,8 +290,20 @@
 			
 			console.log(updateData);
 			
+			$.ajax({
+				url : faqNo,
+				type : 'put',
+				data : JSON.stringify(updateData),
+				contentType : 'application.json',
+				success : result => {
+					console.log('요청 성공');
+				},
+				error : e => {
+					console.log('요청 실패');
+				}
+			});
 			
-		};
+		}; */
 	</script>
     <footer>
         <jsp:include page="../common/footer.jsp" />

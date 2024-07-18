@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.faq.model.service.FaqService;
 import com.kh.redclip.faq.model.vo.FAQ;
@@ -40,11 +42,5 @@ public class AdminController {
 		return "admin/admin_FAQ";
 	}
 	
-	@GetMapping("/{faqNo}")
-	public String selectByNo(@PathVariable int faqNo) {
-		
-		log.info("받아온 번호 : {}", faqNo);
-		
-		return /*faqService.selectByNo() > 0? "success" :*/ "error";
-	}
+	
 }

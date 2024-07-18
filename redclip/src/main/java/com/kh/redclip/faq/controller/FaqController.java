@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,12 +39,31 @@ public class FaqController {
 	
 	@ResponseBody
 	@PostMapping
-	public FAQ faqInsert(@RequestBody FAQ faq) {
+	public String faqInsert(@RequestBody FAQ faq) {
 		
-		faqService.faqInsert(faq);
+		return faqService.faqInsert(faq) > 0 ? "success" : "error";
 		
-		return  faq;
+	}
+	
+	@ResponseBody
+	@GetMapping("/{faqNo}")
+	public String selectByNo(@PathVariable int faqNo, Model model) {
 		
+		log.info("받아온 번호 : {}", faqNo);
+		
+		FAQ faq = faqService.selectByNo(faqNo);
+		
+		log.info("가져온 정보 : {}", faq);
+		
+		model.addAttribute("faq", faq);
+		
+		return "".equals(faq)? "error" : "success";
+		
+		/*
+		 * if("".equals(faq)) { return "error"; }
+		 * 
+		 * return "succes";
+		 */
 	}
 	
 	
