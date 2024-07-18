@@ -151,6 +151,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	
+
 	public List<BlockMember> selectByBlock(String userId) {
 		return memberMapper.selectByBlock(userId);
 

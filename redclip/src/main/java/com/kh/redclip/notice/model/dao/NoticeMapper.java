@@ -14,5 +14,7 @@ public interface NoticeMapper {
 
 	List<Notice> selectNotice(Map<String, Integer> map);
 
+	int insertNotice(Notice notice);
+
 	
 }

@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.redclip.notice.model.service.NoticeService;
@@ -85,5 +88,19 @@ public class NoticeController {
 		 log.info("start/end : {}, {}", startValue, endValue);
 		 return "notice/noticeform";
 	}	
-
+	
+	
+	@PostMapping("insertNoticeform")
+	public String insertNoticeform(HttpSession session ) {
+	
+		return "notice/insertNoticeform";
+	}
+	
+	@PostMapping("insertNotice")
+	public String insertNotice(Notice notice) {
+		 log.info("여기보세요여기{}",notice);
+	    noticeService.insertNotice(notice);
+	    log.info(notice.getUserId());
+	    return "redirect:/noticeform";
+	}
 }
