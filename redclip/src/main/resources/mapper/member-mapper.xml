@@ -38,13 +38,12 @@
 			  STATUS status,
 			  CREATE_DATE createDate,
 			  VILLAGE_CODE villageCode
-			 <!-- PLOFIL profil  --> 
    		  FROM
 			  TB_MEMBER
 		 WHERE
 			  USER_ID = #{userId}
 		   AND
-			  STATUS ='Y' OR STATUS ='A'
+			  (STATUS ='Y' OR STATUS ='A')
 			  
 		<!-- AND USER_PWD = #{userPwd} AND STATUS = 'Y' -->
 	</select>
