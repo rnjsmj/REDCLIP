@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -43,6 +45,7 @@ public class BarterController {
 	
 	private final BarterService barterService;
 	
+
 	//교환 게시글 목록보기
 	@GetMapping
 	public String getAllBarters(@RequestParam(value="code", defaultValue="0") Integer code, Model model) {
@@ -50,6 +53,15 @@ public class BarterController {
 	model.addAttribute("list", barters);
 	return "barter/list";
     }
+	
+	/*
+	@GetMapping("/{category}/{code}")
+	public String getFilterBarters(@PathVariable("category") int categoryNo, ...) {
+		
+		
+		location.href = '카테고리/지역코드'
+	}
+	*/
 	
 	// 교환 게시글 상세보기
 	@GetMapping("/{barterNo}")
@@ -71,7 +83,7 @@ public class BarterController {
 			return "barter/registration";
 		}
 	
-
+/*
 	// 교환 게시글 글 입력하기
 	@PostMapping("/insert")
 		public String insert(Barter barter, MultipartFile upfile, HttpSession session, Model model) {
@@ -92,32 +104,42 @@ public class BarterController {
 		    
 		    return "redirect:/barters/registration";
 		}	
-	
+*/	
 	//교환 게시글 글 등록하기
-	@PostMapping(value="barterFile")
+	@PostMapping(value="/insert")
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
 	    //log.info("파일 배열 : {}", upfile);
-
 	    if (barterService.insert(barter) > 0) {
 	        int fileCount = 0;
-
-	        if (upfile.length > 0) {
+	        boolean fileSuccess =false;
+	        if (upfile != null) {
 	            for (MultipartFile file : upfile) {
 	                    BarterFile uploadFile = new BarterFile();
-	                    uploadFile.setBarterFileName(file.getOriginalFilename());
+	                    uploadFile.setBarterFileName(saveFile(file, session));;
 
 	                    fileCount += barterService.barterInsert(uploadFile);
 	            }
+	             fileSuccess = (fileCount == upfile.length ? true : false); 
 	        }
-
-	        return fileCount == upfile.length ? "redirect:/" : "redirect:/registration";
+	        	
+	        return fileSuccess == true ? "redirect:/barters" : "redirect:/registration";
 
 	       } else {
+	    	   session.setAttribute("alertMsg", "너 등록망함");
 	           return "redirect:/registration";
 	    }
 	}
-
 	
+	//게시글 검색 조회
+	@GetMapping("/{category}/{code}")
+    @ResponseBody
+    public List<BarterVO> getFilteredBarters(@PathVariable("category") Integer categoryNo, @PathVariable("code") Integer code) {
+        Map<String, Integer> params = new HashMap<String, Integer>();
+        params.put("categoryNo", categoryNo);
+        params.put("code", code);
+        log.info("뭐냐묘{}",barterService.getFilteredBarters(params));
+        return barterService.getFilteredBarters(params);
+    }
 	
 	//답글 목록
 	@GetMapping(value="reply", produces="application/json; charset=UTF-8")
@@ -167,7 +189,6 @@ public class BarterController {
 			}
 			
 			return fileSuccess == true ? "success" : "file upload error"; 
-			
 		
 		} else {
 			
@@ -202,7 +223,7 @@ public class BarterController {
 	
 	
 	// 파일 업로드 메서드
-	public String saveFile(MultipartFile upfile, HttpSession session) {
+	public String saveFile(MultipartFile upfile, HttpSession session) throws IllegalArgumentException {
 		
 		String fileName = upfile.getOriginalFilename();
 		String ext = fileName.substring(fileName.lastIndexOf("."));

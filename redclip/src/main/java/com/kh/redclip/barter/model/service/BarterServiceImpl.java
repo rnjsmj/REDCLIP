@@ -44,7 +44,7 @@ public class BarterServiceImpl implements BarterService{
 	public int barterInsert(BarterFile barterFile) {
 		return barterMapper.barterInsert(barterFile);
 	}
-
+	
 	
 	
 	@Override
@@ -127,6 +127,12 @@ public class BarterServiceImpl implements BarterService{
 	public int barterReport(ReportMember report) {
 		return barterMapper.barterReport(report);
 	}
+
+	@Override
+	public List<BarterVO> getFilteredBarters(Map<String, Integer> params) {
+		return barterMapper.getFilteredBarters(params);
+	}
+
 	
 	
 	

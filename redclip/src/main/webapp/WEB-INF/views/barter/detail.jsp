@@ -6,11 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <jsp:include page="/WEB-INF/views/common/head.jsp"></jsp:include>
 <script>
         $(document).ready(function(){
           $('[data-toggle="popover"]').popover({
@@ -764,7 +760,7 @@
                 <script>
                 
                 	$(() => {
-                		console.log(${barter.barterFileList[0].barterFileNo });
+                		
                 		selectReply();
                 		addActive();
                 		wishState();
@@ -881,8 +877,8 @@
                                     const userId = "${ sessionScope.loginUser.userId }";
                                     
                                     if( userId === "${ barter.barterWriter}") {
-                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo +'"><a href="'
-                                    			  +'" id="chatbtn" class="btn btn-light">채팅하기</a></div>'
+                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo +'"><button onclick="openChat(\'' +result[i].replyWriter+ '\');"'
+                                    			  +' id="chatbtn" class="btn btn-light">채팅하기</button></div>'
                                     			  +'</div></div>';
                                     } else if( userId === result[i].replyWriter) {
                                     	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo + '"><button id="updbtn" class="btn btn-light" data-toggle="modal" href="#updateModal"'
@@ -1166,14 +1162,12 @@
 	</div>
 	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	
 	<script>
         $('.carousel').carousel({
             interval: false,
         });
 
-        
-        
-        
         function modalContent(track) {
         	console.log('모달 동작');
             var innerContent = track.innerHTML;
@@ -1232,8 +1226,40 @@
         	
         }
         
-        
-        
+       
+        function openChat(replyWriter) {
+        	// 채팅하기 버튼을 누르면 컨트롤러로 이동
+        	// => 채당 글 작성자, 답글 작성자로 채팅방 목록을 select
+        	// 존재 하면 현재 글 번호로 글 번호 update 수행 후 채팅방 번호를 반환함
+        	// 존재 하지 않으면 새로운 채팅방을 insert 하여 새로 추가된 채팅방 번호를 반환
+        	//  => 방 번호를 파라미터로 WebSocket 주소를 지정하여 connect 수행 
+        	console.log(replyWriter);
+        	var roomNo;
+        	
+        	$.ajax({
+        		
+        		url : '../chatting/find',
+        		type : 'get',
+        		data : {
+        			barterNo : ${ barter.barterNo },
+        			barterWriter : '${ sessionScope.loginUser.userId }',
+        			replyWriter : replyWriter
+        		},
+        		success : result => {
+        			roomNo = result;
+        			roomVar = roomNo;
+        			connect(roomNo);
+                	location.href = '../chatting/view';
+        		}, error : err => {
+        			console.log('오류가 발생했습니다.');
+        			
+        		}
+        		
+        	});
+        	
+        	
+        	
+        };
         
     	
     	window.onload = function() {
@@ -1261,8 +1287,8 @@
                	
                	var child = e.childElementCount;
                 $('#modal-indicators').children().eq(0).addClass('active');
-    		});
- */
+    		}); */
+
             
     		
     	}

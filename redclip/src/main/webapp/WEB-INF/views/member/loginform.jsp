@@ -238,7 +238,7 @@
             </div>
             
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="findAfterRecovery">새 비밀번호 변경</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="findAfterRecovery" style="display:none">새 비밀번호 변경</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
             </div>
         </div>
@@ -324,10 +324,11 @@ $(() => {
     const $resultPwModalBody = $('#resultPwModalBody');
     const $findPwModal = $("#findPwModal");
     const $findAfterRecovery = $('#findAfterRecovery');
-	const $recoveryPwModal =$('#recoveryPwModal');
-	const $newPassword=$('#newPassword');
-	const $confirmPassword =$('#confirmPassword');
-	const pattern = /^[a-z0-9]{5,12}$/;
+    const $recoveryPwModal = $('#recoveryPwModal');
+    const $newPassword = $('#newPassword');
+    const $confirmPassword = $('#confirmPassword');
+    const pattern = /^[a-z0-9]{5,12}$/;
+    
     $searchPw.click(() => {
         if ($inputId.val() !== null && $inputEmail.val() !== null) {
             $.ajax({
@@ -341,6 +342,11 @@ $(() => {
                     $resultPwModalBody.html(response);
                     $findPwModal.modal('hide');
                     $resultPwModal.modal('show');
+                    if(response === "해당회원의 정보가 존재합니다.") {
+                        $findAfterRecovery.show();
+                    } else {
+                        $findAfterRecovery.hide();
+                    }
                 },
                 error: function () {
                     alert('오류임 똥멍청이야!!');
@@ -352,13 +358,34 @@ $(() => {
     $findAfterRecovery.click(() => {
         $resultPwModal.modal('hide');
         $recoveryPwModal.modal('show');
-        if ($newPassword.val() === $confirmPassword.val() && pattern.test($newPassword.val())) {
-        	
-        	
+    });
+
+    $('#updatePassword').click(() => {
+        if (pattern.test($newPassword.val()) && $newPassword.val() === $confirmPassword.val()) {
+            $.ajax({
+                url: 'member/changePw',
+                type: 'GET',
+                data: { 
+                    userPwd: $confirmPassword.val(),
+                    userId: $inputId.val()
+                },
+                success: response => {
+                    location.href = 'loginform';
+                    alert('비밀번호 변경에 성공하였습니다.');
+                },
+                error: function() {
+                    alert('오류래용 메롱메롱');
+                }
+            });
+        } else if (!pattern.test($newPassword.val())) {
+            alert('비밀번호는 영문,숫자를 사용하여 5~12자리로 입력해주세용');
+        } else if ($newPassword.val() !== $confirmPassword.val()) {
+            alert('비밀번호 확인이 일치하지 않습니다.');
         }
     });
 });
 </script>
+
 
 </body>
 </html>

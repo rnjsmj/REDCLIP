@@ -193,21 +193,20 @@
 	    	}
 	    });
 	});
-	
-    
+
 	function loadImg(inputFile, index) {
+	    const previewImage = document.getElementById('imagePreview' + index);
+
 	    if (inputFile.files.length) {
 	        const reader = new FileReader();
-	        //console.log(inputFile.files[0]);
 	        
 	        reader.readAsDataURL(inputFile.files[0]);
-	        reader.onload = e => {
-	            const previewImage = document.getElementById('imagePreview' + index);
+	        reader.onload = function (e) {
 	            previewImage.src = e.target.result;
 	            previewImage.style.display = 'block';
 	        };
 	    } else {
-	        const previewImage = document.getElementById('imagePreview' + index);
+	        previewImage.src = "";
 	        previewImage.style.display = 'none';
 	    }
 	}
