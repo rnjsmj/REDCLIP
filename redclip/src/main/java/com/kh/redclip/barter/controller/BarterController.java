@@ -223,7 +223,7 @@ public class BarterController {
 	
 	
 	// 파일 업로드 메서드
-	public String saveFile(MultipartFile upfile, HttpSession session) {
+	public String saveFile(MultipartFile upfile, HttpSession session) throws IllegalArgumentException {
 		
 		String fileName = upfile.getOriginalFilename();
 		String ext = fileName.substring(fileName.lastIndexOf("."));
