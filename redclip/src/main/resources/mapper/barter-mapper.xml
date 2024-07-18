@@ -103,6 +103,7 @@
 			<result column="TOWN_NAME" property="townName" />
 			<result column="VILLAGE_NAME" property="villageName"/>
 		</association>
+		<collection resultMap="barterFileResultSet" property="barterFileList" />
 	</resultMap>
 	
 	<select id="getAllBarters" parameterType="int" resultType="barterVO" resultMap="barterListResultSet">
