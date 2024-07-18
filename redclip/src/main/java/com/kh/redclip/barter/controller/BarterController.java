@@ -109,9 +109,6 @@ public class BarterController {
 	@PostMapping(value="/insert")
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
 	    //log.info("파일 배열 : {}", upfile);
-
-		
-
 	    if (barterService.insert(barter) > 0) {
 	        int fileCount = 0;
 	        boolean fileSuccess =false;
