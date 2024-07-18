@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.redclip.barter.model.service.BarterService;
 import com.kh.redclip.barter.model.vo.Barter;
@@ -127,6 +128,47 @@ public class BarterController {
 		return ResponseEntity.status(HttpStatus.OK).body(replyList);
 	}
 	
+	//게시글 수정
+	@PostMapping("update")
+	public ModelAndView updateForm(ModelAndView mv, int barterNo) {
+	    mv.addObject("barter", barterService.findById(barterNo))
+	      .setViewName("barter/update");
+	    return mv;
+	}
+	
+	//
+	@PostMapping("barter-update")
+	public String update(Barter barter,MultipartFile reupFile,HttpSession session) {
+		if (!reupFile.getOriginalFilename().equals("")) {
+		    barter.setChangeName(saveFile(reupFile, session));
+		}
+
+		if (barterService.update(barter) > 0) {
+		    session.setAttribute("alertMsg", "게시물 수정 완료");
+		    return "redirect:board-detail?boardNo=" + barter.getBarterNo();
+		}else {
+			 session.setAttribute("alertMsg", "게시물 수정 실패다 이자식아");
+			 return "common/errorPage";
+		}	
+	}
+	//파일업로드의 메서드를 만들어줌 
+	public String updateFile(MultipartFile updatefile,HttpSession session) {
+		  String originName = updatefile.getOriginalFilename();
+	         String ext = originName.substring(originName.lastIndexOf("."));
+	         int num = (int) (Math.random() * 900) + 100;
+	         String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+	         String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+	         String changeName = "KH_" +currentTime +"_" +num +ext;
+	         
+	         try {
+	        	  updatefile.transferTo(new File(savePath + changeName));
+	            } catch (IllegalStateException e) {
+	                e.printStackTrace();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	    return "resources/upload/" +changeName;
+	}
 	
 	//하나의 답글
 	@GetMapping(value="reply/{replyNo}", produces="application/json; charset=UTF-8")
