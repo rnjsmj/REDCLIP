@@ -4,25 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.redclip.chatting.model.dao.ChatMapper">
 	
-	<!-- 채팅 전송 -->
-	<insert id="insertMessage" parameterType="chatMessage">
-		INSERT 
-		  INTO
-		  		TB_CHAT_MESSAGE
-		  		(
-		  		 CHAT_NO,
-		  		 ROOM_NO,
-		  		 SENDER_ID,
-		  		 CHAT_MESSAGE
-		  		)
-		 VALUES
-		 		(
-		 		 SEQ_MSG.NEXTVAL,
-		 		 #{roomNo},
-		 		 #{senderId},
-		 		 #{chatMessage}
-		 		)
-	</insert>
+	
 	
 	<!-- 채팅 목록 -->
 	<select id="findAll" parameterType="String" resultType="chatRoomVo">
@@ -104,6 +86,24 @@
 	 	 		ROOM_NO = #{roomNo}
 	 </update>
 	 
-	 
+	 <!-- 채팅 전송 -->
+	<insert id="insertMessage" parameterType="chatMessage">
+		INSERT 
+		  INTO
+		  		TB_CHAT_MESSAGE
+		  		(
+		  		 CHAT_NO,
+		  		 ROOM_NO,
+		  		 SENDER_ID,
+		  		 CHAT_MESSAGE
+		  		)
+		 VALUES
+		 		(
+		 		 SEQ_MSG.NEXTVAL,
+		 		 #{roomNo},
+		 		 #{senderId},
+		 		 #{chatMessage}
+		 		)
+	</insert>
 	 
 </mapper>
