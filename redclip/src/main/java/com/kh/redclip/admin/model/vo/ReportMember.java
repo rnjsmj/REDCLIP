@@ -1,4 +1,4 @@
-package com.kh.redclip.admin.model.vo;
+package com.kh.redclip.member.model.vo;
 
 import java.sql.Date;
 
