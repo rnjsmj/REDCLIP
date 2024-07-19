@@ -3,6 +3,7 @@ package com.kh.redclip.faq.model.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.kh.redclip.faq.model.vo.FAQ;
 
@@ -17,5 +18,5 @@ public interface FaqMapper {
 
 	int update(FAQ faq);
 
-	int delete(List<Integer> numbers);
+	int delete(@Param("numbers") List<Integer> numbers);
 }

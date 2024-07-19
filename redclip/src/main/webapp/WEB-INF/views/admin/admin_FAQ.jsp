@@ -95,7 +95,7 @@
           </table>
           <!-- 수정 | 삭제 버튼 -->
             <div id="buttons" style="margin-top: 30px;">
-                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" onclick="updateForm();">수정</button> | <button type="submit" id="delete" class="btn btn-secondary" onclick="deleteFaq();">삭제</button>
+                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" >수정</button> | <button type="submit" id="delete" class="btn btn-secondary" onclick="deleteFaq();">삭제</button>
             </div>
     </div>
     
@@ -306,13 +306,16 @@
 			$.ajax({
 				url : '/redclip/faq',
 				type : 'delete',
-				data : numbers,
+				data : JSON.stringify(numbers),
 				contentType : 'application/json',
 				success : result => {
-					console.log('요청 성공', result);
+					//console.log('요청 성공', result);
+					alert('글을 삭제했습니다.');
+					location.reload();
 				},
 				error : e => {
-					console.log('요청 실패', e);
+					//console.log('요청 실패', e);
+					alert('글을 삭제하지 못했습니다.');
 				}
 			});
 			

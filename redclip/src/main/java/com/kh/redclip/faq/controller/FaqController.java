@@ -81,9 +81,7 @@ public class FaqController {
 		
 		log.info("받아온 번호 : {}", numbers);
 		
-		faqService.delete(numbers);
-		
-		return "success";
+		return faqService.delete(numbers) > 0? "success" : "error";
 	}
 	
 	
