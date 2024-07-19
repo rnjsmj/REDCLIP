@@ -16,4 +16,6 @@ public interface FaqMapper {
 	FAQ selectByNo(int faq);
 
 	int update(FAQ faq);
+
+	int delete(List<Integer> numbers);
 }

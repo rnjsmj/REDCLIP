@@ -62,4 +62,16 @@
 		   	  'admin%'
 	</update>
 	
+	<delete id="delete">
+		DELETE
+		  FROM
+		  		TB_FAQ
+		 WHERE
+		 		FAQ_NO
+		 	IN
+		 		<foreach collection="numbers" item="faqNo" open="(" separator="," close=")">
+		 			#{faqNo}
+		 		</foreach>
+	</delete>
+	
 </mapper>

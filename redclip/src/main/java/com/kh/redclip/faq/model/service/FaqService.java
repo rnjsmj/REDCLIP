@@ -14,4 +14,6 @@ public interface FaqService {
 
 	int update(FAQ faq);
 
+	int delete(List<Integer> numbers);
+
 }

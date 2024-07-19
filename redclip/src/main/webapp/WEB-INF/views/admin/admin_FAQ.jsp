@@ -95,7 +95,7 @@
           </table>
           <!-- 수정 | 삭제 버튼 -->
             <div id="buttons" style="margin-top: 30px;">
-                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" onclick="updateForm();">수정</button> | <button type="submit" id="delete" class="btn btn-secondary">삭제</button>
+                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" onclick="updateForm();">수정</button> | <button type="submit" id="delete" class="btn btn-secondary" onclick="deleteFaq();">삭제</button>
             </div>
     </div>
     
@@ -289,6 +289,37 @@
 			});
 			
 		};
+		
+		//글 삭제
+		function deleteFaq() {
+			
+			const numbers = []
+			
+			$("input[name='faqNo']:checked").each(function() {
+				const faqNo = $(this).val();
+				
+				numbers.push(faqNo);
+			});			
+			
+			console.log(numbers);
+			
+			$.ajax({
+				url : '/redclip/faq',
+				type : 'delete',
+				data : numbers,
+				contentType : 'application/json',
+				success : result => {
+					console.log('요청 성공', result);
+				},
+				error : e => {
+					console.log('요청 실패', e);
+				}
+			});
+			
+		}
+		
+		
+		
 	</script>
     <footer>
         <jsp:include page="../common/footer.jsp" />
