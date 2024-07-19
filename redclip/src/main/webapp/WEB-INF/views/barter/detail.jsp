@@ -155,7 +155,7 @@
             padding: 8px 0;
             border-radius: 5px;
         }
-        .btn-group #delbtn {
+        .btn-group #delbtn, #updbtn {
             color: #fff;
             cursor:pointer;
             
@@ -645,7 +645,7 @@
                         </form>
                         
                         <div class="btn-group" id="writer-btn">
-                            <a href="" id="updbtn">수정</a>
+                            <a onclick="updateBarter();" id="updbtn">수정</a>
                             <a onclick="deleteBarter();" id="delbtn">삭제</a>
                         </div>
                         </c:if>
@@ -767,13 +767,15 @@
                 		
                 	});
                 	
+                	function updateBarter() {
+                		$('#postForm').attr("action", "update").submit();
+                	};
+                		
                 	function deleteBarter() {
                 		
                 		if(confirm("글을 삭제하시겠습니까? 삭제된 게시글은 복구되지 않습니다.")) {
                 			$('#postForm').attr("action", "delete").submit();
                 		}
-                		
-                		
                 	};
                 	
                 	function addActive() {

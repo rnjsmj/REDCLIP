@@ -139,7 +139,16 @@ public class MemberController {
         	 model.addAttribute("errorMessage", "회원 가입에 실패했습니다. 다시 시도해 주세요.");
         	 return "error";
         }
-  }
+    }
+    
+    //로그아웃 컨트롤러
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("loginUser"); 
+        session.removeAttribute("alertMsg");
+        log.info("/logout");
+        return "redirect:/"; // 홈 화면으로 리다이렉트
+    }
     
     //아이디 찾기 컨트롤러
     @ResponseBody
@@ -184,7 +193,6 @@ public class MemberController {
     	
     }
    
-    
     //회원 상태 변경
     @ResponseBody
     @PutMapping("/{userId}")
@@ -249,15 +257,15 @@ public class MemberController {
 
    }
    
-   
-   //차단 해제
-   @ResponseBody
-   @DeleteMapping("blockList/{userId}")
-   public String deleteByBlock(@PathVariable("userId") String userId, @RequestBody List<String> blockMembers) {
-      
-      log.info("차단 해제 할 아이디 : {}", blockMembers);
-      log.info("차단 신청한 아이디 : {}", userId);
-      
-      return "success";// memberService.deleteByBlock(userId, blockMembers) > 0 ? "success" : "error";
-   }
+    //차단 해제
+    @ResponseBody
+    @DeleteMapping("blockList/{userId}")
+    public String deleteByBlock(@PathVariable("userId") String userId, @RequestBody List<String> blockMembers) {
+    	
+    	log.info("차단 해제 할 아이디 : {}", blockMembers);
+    	log.info("차단 신청한 아이디 : {}", userId);
+    	
+    	return memberService.deleteByBlock(userId, blockMembers) > 0 ? "success" : "error";
+    }
+    
 }

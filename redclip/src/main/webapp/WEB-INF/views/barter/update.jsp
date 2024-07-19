@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>상품 등록</title>
+<title>상품 수정</title>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -53,15 +53,15 @@
 	        <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
 	        <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
 	        <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
-	        <li class="breadcrumb-item active" aria-current="page">게시글 등록</li>
+	        <li class="breadcrumb-item active" aria-current="page">게시글 수정</li>
 	    </ol>
 	</nav>
-    <h2 class="title">게시글 등록</h2>
-    <form id="enrollForm" method="post" action="${pageContext.request.contextPath}/barters/insert" enctype="multipart/form-data">
+    <h2 class="title">게시글 수정</h2>
+    <form id="updateForm" method="post" action="${pageContext.request.contextPath}/barters/update" enctype="multipart/form-data">
       <div class="form-group">
        <label for="name">상품명</label>
         <div class="input-group">
-          <select class="form-control" id="categoryNo" name="categoryNo" style="max-width: 150px;" required>
+          <select class="form-control" id="categoryNo" name="categoryNo" style="max-width: 150px;" required >
             <option>카테고리</option>
             <option value="1">디지털기기</option>
             <option value="2">가구/인테리어</option>
@@ -82,12 +82,12 @@
             <option value="17">티켓/교환권</option>
             <option value="18">도서</option>
           </select>
-          <input type="text" class="form-control" id="name" name="barterName" maxlength="250" placeholder="내용을 입력해주세요." required>
+          <input type="text" class="form-control" id="name" name="barterName" value="${barter.barterName}" maxlength="250" placeholder="내용을 입력해주세요." required>
         </div>
       </div>
       <div class="form-group">
         <label for="writer">작성자</label>
-        <input type="text" id="writer" class="form-control" value="${sessionScope.loginUser.userId }" name="barterWriter" readonly>
+        <input type="text" id="writer" class="form-control" value="${barter.barterWriter}" name="barterWriter" readonly>
       </div>
       <div class="form-group">
         <label>주소 입력</label>
@@ -113,7 +113,7 @@
       </div>
       <div class="form-group">
 	    <label for="productDescription">상세 설명</label>
-	    <textarea class="form-control" id="barterContent" name="barterContent" rows="4" placeholder="내용을 입력해주세요."></textarea>
+	    <textarea class="form-control" id="barterContent" name="barterContent" rows="4" placeholder="내용을 입력해주세요.">${barter.barterContent }</textarea>
 	  </div>
       <div class="form-group">
 	    <label>이미지 등록</label>
@@ -136,7 +136,8 @@
 	        </div>
 	    </div>
 	 </div>
-     <button type="submit" class="btn btn-success">등록하기</button>
+     <button type="submit" class="btn btn-success">수정하기</button>
+     <button type="submit" class="btn btn-danger">취소하기</button>
      </form>
     </section>
   </div>

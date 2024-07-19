@@ -79,7 +79,7 @@
       <a class="p-2 text-dark" href="${pageContext.request.contextPath}/barters">물물교환</a>
       <a class="p-2 text-dark" href="${pageContext.request.contextPath}/chatting/view">체팅</a>
       <a class="p-2 text-dark" href="noticeform">공지사항</a>
-      <a class="p-2 text-dark" href="#">FAQ</a>
+      <a class="p-2 text-dark" href="${pageContext.request.contextPath}/faq">FAQ</a>
    </nav>
    <c:choose>
    <c:when test="${empty sessionScope.loginUser }">
@@ -90,8 +90,9 @@
    </c:when>
    <c:otherwise>
     <nav class="btnbox">
+      <label>${sessionScope.loginUser.userName}님 환영합니다</label> &nbsp;&nbsp;
       <a class="btn btn-outline-primary" href="/redclip/myPage" id="btn-sign">마이페이지</a>
-      <a class="btn btn-outline-primary" href="#" id="btn-sign">로그아웃</a>
+      <a class="btn btn-outline-primary" href="/redclip/member/logout" id="btn-sign">로그아웃</a>
    </nav>
    </c:otherwise>
    </c:choose>
