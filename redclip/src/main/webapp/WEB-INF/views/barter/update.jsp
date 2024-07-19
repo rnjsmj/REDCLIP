@@ -61,7 +61,7 @@
       <div class="form-group">
        <label for="name">상품명</label>
         <div class="input-group">
-          <select class="form-control" id="categoryNo" name="categoryNo" style="max-width: 150px;" required>
+          <select class="form-control" id="categoryNo" name="categoryNo" style="max-width: 150px;" required >
             <option>카테고리</option>
             <option value="1">디지털기기</option>
             <option value="2">가구/인테리어</option>
@@ -82,12 +82,12 @@
             <option value="17">티켓/교환권</option>
             <option value="18">도서</option>
           </select>
-          <input type="text" class="form-control" id="name" name="barterName" maxlength="250" placeholder="내용을 입력해주세요." required>
+          <input type="text" class="form-control" id="name" name="barterName" value="${barter.barterName}" maxlength="250" placeholder="내용을 입력해주세요." required>
         </div>
       </div>
       <div class="form-group">
         <label for="writer">작성자</label>
-        <input type="text" id="writer" class="form-control" value="${sessionScope.loginUser.userId }" name="barterWriter" readonly>
+        <input type="text" id="writer" class="form-control" value="${barter.barterWriter}" name="barterWriter" readonly>
       </div>
       <div class="form-group">
         <label>주소 입력</label>
@@ -113,7 +113,7 @@
       </div>
       <div class="form-group">
 	    <label for="productDescription">상세 설명</label>
-	    <textarea class="form-control" id="barterContent" name="barterContent" rows="4" placeholder="내용을 입력해주세요."></textarea>
+	    <textarea class="form-control" id="barterContent" name="barterContent" rows="4" placeholder="내용을 입력해주세요.">${barter.barterContent }</textarea>
 	  </div>
       <div class="form-group">
 	    <label>이미지 등록</label>
