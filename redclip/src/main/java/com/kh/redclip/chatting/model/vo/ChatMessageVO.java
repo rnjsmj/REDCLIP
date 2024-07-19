@@ -1,5 +1,9 @@
 package com.kh.redclip.chatting.model.vo;
 
+
+
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +13,8 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class ChatRoomVO {
+public class ChatMessageVO {
+	private int chatNo;
 	private int roomNo;
 	private int barterNo;
 	private String barterName;
@@ -21,8 +26,7 @@ public class ChatRoomVO {
 	private String replyNickname;
 	private String barterVillageName;
 	private String replyVillageName;
-	private String chatDate;
-	private String chatMessage;
-	private String senderId;
-	private char chatRead;
+	private List<ChatMessage> chatMessageList;
+	//추후에 지역정보를 포함한 MemberVO 생성되면 barter, reply로 분리하여
+	//Member 객체 -> association으로 받을 예정
 }

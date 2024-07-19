@@ -214,13 +214,13 @@ public class BarterController {
 			if (upfiles != null) {
 				
 				for(MultipartFile file : upfiles) {
-					
-					BarterReplyFile replyFile = new BarterReplyFile();
-					replyFile.setReplyFileName(saveFile(file, session));
-					fileCount += barterService.replyFileInsert(replyFile);
-					
+					if( !file.isEmpty()) {
+						BarterReplyFile replyFile = new BarterReplyFile();
+						replyFile.setReplyFileName(saveFile(file, session));
+						barterService.replyFileInsert(replyFile);
+					}
 				}
-				fileSuccess = (fileCount == upfiles.length ? true : false); 
+				
 			}
 			
 			return fileSuccess == true ? "success" : "file upload error"; 
@@ -256,6 +256,7 @@ public class BarterController {
 		return barterService.replyUpdate(reply) > 0 ? "success" : "error";
 	}
 	
+
 	//게시글 삭제
 	@PostMapping("/delete")
 	public String barterDelete(int barterNo, int fileExist, HttpSession session) {
