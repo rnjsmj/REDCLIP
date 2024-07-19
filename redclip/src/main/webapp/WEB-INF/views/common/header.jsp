@@ -90,10 +90,17 @@
    </c:when>
    <c:otherwise>
     <nav class="btnbox">
-      <label>${sessionScope.loginUser.userName}님 환영합니다</label> &nbsp;&nbsp;
-      <a class="btn btn-outline-primary" href="/redclip/myPage" id="btn-sign">마이페이지</a>
-      <a class="btn btn-outline-primary" href="/redclip/member/logout" id="btn-sign">로그아웃</a>
-   </nav>
+            <label>${sessionScope.loginUser.userName}님 환영합니다</label> &nbsp;&nbsp;
+            <c:choose>
+                <c:when test="${sessionScope.loginUser.status == 'A'}">
+                    <a class="btn btn-outline-primary" href="/redclip/admin" id="btn-sign">관리자 페이지</a>
+                </c:when>
+                <c:otherwise>
+                    <a class="btn btn-outline-primary" href="/redclip/myPage" id="btn-sign">마이페이지</a>
+                </c:otherwise>
+            </c:choose>
+            <a class="btn btn-outline-primary" href="/redclip/member/logout" id="btn-sign">로그아웃</a>
+        </nav>
    </c:otherwise>
    </c:choose>
    

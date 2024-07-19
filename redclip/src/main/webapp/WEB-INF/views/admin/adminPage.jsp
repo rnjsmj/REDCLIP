@@ -73,10 +73,10 @@
             </tbody>
           </table>
           <div class="icon" align="center" style="margin-top: 40px; ">
-            <a href=""><i class="bi bi-megaphone" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
+            <a href="${pageContext.request.contextPath}/noticeform"><i class="bi bi-megaphone" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href="${pageContext.request.contextPath}/admin/adminFaq"><i class="bi bi-patch-question" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href=""><i class="bi bi-person-lines-fill" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
-            <a href=""><i class="bi bi-person-exclamation" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
+            <a href="${pageContext.request.contextPath}/noticeform"><i class="bi bi-person-exclamation" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
           </div>
     </div>
     <footer>
