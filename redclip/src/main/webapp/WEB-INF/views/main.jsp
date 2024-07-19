@@ -3,9 +3,9 @@
 <html>
 <head>
 	<title>메인페이지</title>
-	<jsp:include page="/WEB-INF/views/common/head.jsp" />
+	<jsp:include page="/WEB-INF/views/common/head.jsp"></jsp:include>
 	<style>
-	.content {
+	.content{
 	 width :1200px;
 	 height : 1000px !important;
 	 margin : auto;
