@@ -53,10 +53,10 @@
 	        <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
 	        <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
 	        <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
-	        <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
+	        <li class="breadcrumb-item active" aria-current="page">게시글 등록</li>
 	    </ol>
 	</nav>
-    <h2 class="title">상품 등록하기</h2>
+    <h2 class="title">게시글 등록</h2>
     <form id="enrollForm" method="post" action="${pageContext.request.contextPath}/barters/insert" enctype="multipart/form-data">
       <div class="form-group">
        <label for="name">상품명</label>
