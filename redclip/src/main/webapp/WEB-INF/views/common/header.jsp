@@ -79,7 +79,7 @@
       <a class="p-2 text-dark" href="${pageContext.request.contextPath}/barters">물물교환</a>
       <a class="p-2 text-dark" href="${pageContext.request.contextPath}/chatting/view">체팅</a>
       <a class="p-2 text-dark" href="noticeform">공지사항</a>
-      <a class="p-2 text-dark" href="#">FAQ</a>
+      <a class="p-2 text-dark" href="${pageContext.request.contextPath}/faq">FAQ</a>
    </nav>
    <c:choose>
    <c:when test="${empty sessionScope.loginUser }">

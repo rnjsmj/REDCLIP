@@ -43,8 +43,11 @@
 		 WHERE
 			  USER_ID = #{userId}
 		   AND
-			  (STATUS ='Y' OR STATUS ='A')
-			  
+
+			  STATUS ='Y'
+		   OR
+		   	  STATUS = 'A'
+
 		<!-- AND USER_PWD = #{userPwd} AND STATUS = 'Y' -->
 	</select>
 	
@@ -189,14 +192,18 @@
 	</select>
 
 	<!-- 차단 해제 -->
-	<delete id="deleteByBlock" parameterType="string">
+	<delete id="deleteByBlock">
 		    DELETE
 		      FROM
 		      			TB_MEM_BLOCK
 		     WHERE
-		     			BLOCKED_ID = #{blockedId}
-		     	AND
 		     			BLOCK_ID = #{userId}
+		     	AND
+		     			BLOCKED_ID
+		     	 IN
+				        <foreach item="id" collection="blockMembers" open="(" separator="," close=")">
+            #{id}
+        </foreach>
 	</delete>
 	
 	<!-- 비밀번호변경 -->

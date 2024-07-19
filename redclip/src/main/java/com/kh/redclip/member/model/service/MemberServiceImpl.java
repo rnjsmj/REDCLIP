@@ -148,6 +148,7 @@ public class MemberServiceImpl implements MemberService {
 			bw.close();
 
 			return accessToken;
+
 	}
 
 
@@ -215,8 +216,10 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
-	public int deleteByBlock(String usreId) {
-		return memberMapper.deleteByBlock(usreId);
+
+	public int deleteByBlock(String usreId, List<String> blockMembers) {
+		return memberMapper.deleteByBlock(usreId, blockMembers);
+
 	}
 
 	@Override

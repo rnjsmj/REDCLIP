@@ -257,15 +257,15 @@ public class MemberController {
 
    }
    
-   
-   //차단 해제
-   @ResponseBody
-   @DeleteMapping("blockList/{userId}")
-   public String deleteByBlock(@PathVariable("userId") String userId, @RequestBody List<String> blockMembers) {
-      
-      log.info("차단 해제 할 아이디 : {}", blockMembers);
-      log.info("차단 신청한 아이디 : {}", userId);
-      
-      return "success";// memberService.deleteByBlock(userId, blockMembers) > 0 ? "success" : "error";
-   }
+    //차단 해제
+    @ResponseBody
+    @DeleteMapping("blockList/{userId}")
+    public String deleteByBlock(@PathVariable("userId") String userId, @RequestBody List<String> blockMembers) {
+    	
+    	log.info("차단 해제 할 아이디 : {}", blockMembers);
+    	log.info("차단 신청한 아이디 : {}", userId);
+    	
+    	return memberService.deleteByBlock(userId, blockMembers) > 0 ? "success" : "error";
+    }
+    
 }
