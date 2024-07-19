@@ -64,6 +64,35 @@
 		 		BARTER_NO = #{barterNo}
 	
 	</select>
+	<!-- 검색 조회 -->
+	<select id="getFilteredBarters" parameterType="map" resultType="barterVO" resultMap="barterListResultSet">
+	    SELECT
+		        BARTER_NO,
+		        BARTER_NAME,
+		        CITY_NAME,
+		        TOWN_NAME,
+		        VILLAGE_NAME,
+		        BARTER_DATE,
+		        BARTER_STATUS,
+		        BARTER_FILE_NO,
+		        BARTER_FILE_NAME
+	    FROM
+	       		VW_BARTER_DETAIL
+	    <where>
+	        <if test="categoryNo != 0">
+	            AND CATEGORY_NO = #{categoryNo, jdbcType=INTEGER}
+	        </if>
+	        <if test="code != null and code != ''">
+	            AND VILLAGE_CODE LIKE CONCAT(#{code}, '%')
+	        </if>
+	    </where>
+	    ORDER BY
+	       		BARTER_STATUS DESC,
+	        	BARTER_NO DESC
+	</select>
+
+
+	
 	
 	<resultMap type="barterVO" id="barterListResultSet">
 		<id column="BARTER_NO" property="barterNo" />
@@ -75,6 +104,7 @@
 			<result column="TOWN_NAME" property="townName" />
 			<result column="VILLAGE_NAME" property="villageName"/>
 		</association>
+		<collection resultMap="barterFileResultSet" property="barterFileList" />
 	</resultMap>
 	
 	<select id="getAllBarters" parameterType="int" resultType="barterVO" resultMap="barterListResultSet">

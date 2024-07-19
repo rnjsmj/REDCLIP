@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.redclip.barter.model.service.BarterService;
 import com.kh.redclip.barter.model.vo.Barter;
@@ -43,6 +46,7 @@ public class BarterController {
 	
 	private final BarterService barterService;
 	
+
 	//교환 게시글 목록보기
 	@GetMapping
 	public String getAllBarters(@RequestParam(value="code", defaultValue="0") Integer code, Model model) {
@@ -50,7 +54,7 @@ public class BarterController {
 	model.addAttribute("list", barters);
 	return "barter/list";
     }
-	
+
 	// 교환 게시글 상세보기
 	@GetMapping("/{barterNo}")
 	public String findByNo(@PathVariable int barterNo, Model model) {
@@ -70,54 +74,41 @@ public class BarterController {
 		public String barterForwarding() {
 			return "barter/registration";
 		}
-	
-
-	// 교환 게시글 글 입력하기
-	@PostMapping("/insert")
-		public String insert(Barter barter, MultipartFile upfile, HttpSession session, Model model) {
-		    log.info("게시글정보 : {}", barter);
-		    log.info("파일의 정보 : {}", upfile.getOriginalFilename());
-		    
-		    if (!upfile.isEmpty()) {
-		    	BarterFile barterFile = new BarterFile();
-		        barterFile.setBarterFileName(upfile.getOriginalFilename());
-		    }
-		    
-		    if (barterService.insert(barter) > 0) {
-		        session.setAttribute("alertMsg", "게시물 등록 완료");
-		        return "redirect:/barters";
-		    } else {
-		        model.addAttribute("alertMsg", "게시물 등록을 실패했습니다.");
-		    }
-		    
-		    return "redirect:/barters/registration";
-		}	
-	
+		
 	//교환 게시글 글 등록하기
-	@PostMapping(value="barterFile")
+	@PostMapping(value="/insert")
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
 	    //log.info("파일 배열 : {}", upfile);
-
 	    if (barterService.insert(barter) > 0) {
-	        int fileCount = 0;
-
-	        if (upfile.length > 0) {
+	        
+	        if (upfile != null) {
 	            for (MultipartFile file : upfile) {
+	            		if(!file.isEmpty()) {
 	                    BarterFile uploadFile = new BarterFile();
-	                    uploadFile.setBarterFileName(file.getOriginalFilename());
-
-	                    fileCount += barterService.barterInsert(uploadFile);
-	            }
+	                    uploadFile.setBarterFileName(saveFile(file, session));;
+	                    barterService.barterInsert(uploadFile);
+	            	}
+	            }     
 	        }
-
-	        return fileCount == upfile.length ? "redirect:/" : "redirect:/registration";
+	        	
+	        return "redirect:/barters";
 
 	       } else {
+	    	   session.setAttribute("alertMsg", "너 등록망함");
 	           return "redirect:/registration";
 	    }
 	}
-
 	
+	//게시글 검색 조회
+	@GetMapping("/{category}/{code}")
+    @ResponseBody
+    public List<BarterVO> getFilteredBarters(@PathVariable("category") Integer categoryNo, @PathVariable("code") Integer code) {
+        Map<String, Integer> params = new HashMap<String, Integer>();
+        params.put("categoryNo", categoryNo);
+        params.put("code", code);
+        log.info("뭐냐묘{}",barterService.getFilteredBarters(params));
+        return barterService.getFilteredBarters(params);
+    }
 	
 	//답글 목록
 	@GetMapping(value="reply", produces="application/json; charset=UTF-8")
@@ -128,6 +119,72 @@ public class BarterController {
 		return ResponseEntity.status(HttpStatus.OK).body(replyList);
 	}
 	
+	//게시글 수정 페이지 보기
+	@PostMapping("update")
+	public ModelAndView updateForm(ModelAndView mv, int barterNo) {
+	    mv.addObject("barter", barterService.findById(barterNo))
+	      .setViewName("barter/update");
+	    return mv;
+	}
+	
+	//게시글 수정
+	@PostMapping("barter-update")
+	public String update(Barter barter,MultipartFile reupFile,HttpSession session) {
+		if (!reupFile.getOriginalFilename().equals("")) {
+		    barter.setChangeName(saveFile(reupFile, session));
+		}
+
+		if (barterService.update(barter) > 0) {
+		    session.setAttribute("alertMsg", "게시물 수정 완료");
+		    return "redirect:board-detail?boardNo=" + barter.getBarterNo();
+		}else {
+			 session.setAttribute("alertMsg", "게시물 수정 실패");
+			 return "common/errorPage";
+		}	
+	}
+	//파일업로드의 메서드를 만들어줌 
+	public String updateFile(MultipartFile updatefile,HttpSession session) {
+		  String originName = updatefile.getOriginalFilename();
+	         String ext = originName.substring(originName.lastIndexOf("."));
+	         int num = (int) (Math.random() * 900) + 100;
+	         String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+	         String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+	         String changeName = "KH_" +currentTime +"_" +num +ext;
+	         
+	         try {
+	        	  updatefile.transferTo(new File(savePath + changeName));
+	            } catch (IllegalStateException e) {
+	                e.printStackTrace();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	    return "resources/upload/" +changeName;
+	}
+	
+	// 파일 업로드 메서드
+	public String saveFile(MultipartFile upfile, HttpSession session) {
+		
+		String fileName = upfile.getOriginalFilename();
+		String ext = fileName.substring(fileName.lastIndexOf("."));
+		
+		int num = (int) (Math.random() * 900) + 100; 
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		String savePath = session.getServletContext().getRealPath("/resources/upload/");	
+		
+		String changeName = "REDCLIP_" + currentTime + "_" + num + ext;
+		
+		//파일 업로드
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return "resources/upload/" + changeName;
+	}
 	
 	//하나의 답글
 	@GetMapping(value="reply/{replyNo}", produces="application/json; charset=UTF-8")
@@ -167,7 +224,6 @@ public class BarterController {
 			}
 			
 			return fileSuccess == true ? "success" : "file upload error"; 
-			
 		
 		} else {
 			
@@ -200,32 +256,6 @@ public class BarterController {
 		return barterService.replyUpdate(reply) > 0 ? "success" : "error";
 	}
 	
-	
-	// 파일 업로드 메서드
-	public String saveFile(MultipartFile upfile, HttpSession session) {
-		
-		String fileName = upfile.getOriginalFilename();
-		String ext = fileName.substring(fileName.lastIndexOf("."));
-		
-		int num = (int) (Math.random() * 900) + 100; 
-		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		
-		String savePath = session.getServletContext().getRealPath("/resources/upload/");	
-		
-		String changeName = "REDCLIP_" + currentTime + "_" + num + ext;
-		
-		//파일 업로드
-		try {
-			upfile.transferTo(new File(savePath + changeName));
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return "resources/upload/" + changeName;
-	}
-	
 	//게시글 삭제
 	@PostMapping("/delete")
 	public String barterDelete(int barterNo, int fileExist, HttpSession session) {
@@ -247,10 +277,7 @@ public class BarterController {
 		} else {
 			session.setAttribute("alertMsg", "오류가 발생했습니다.");
 			return "redirect:/barters/" + barterNo;
-		}
-		
-		
-		
+		}	
 	}
 	
 	//좋아요 상태 확인

@@ -84,7 +84,9 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insert(Member member) {
 		return memberMapper.insertMember(member);
+		
 	}
+	
 
 
 	@Override
@@ -92,14 +94,19 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.selectById(userId);
 	}
 
-	
+	//아이디 찾기 서비스
 	public String searchid(Member member) {
 		return memberMapper.searchid(member);
 	}
-
-
+	
+	//비밀번호 찾기 서비스 
 	@Override
+	public int searchPw(Member member) {
+		return memberMapper.searchpw(member);
+	}
 
+	//소셜로그인 토큰가져오기
+	@Override
 	public String getToken(String code) throws IOException, ParseException  {
 	
 		String tokenUrl = "https://kauth.kakao.com/oauth/token";
@@ -115,7 +122,7 @@ public class MemberServiceImpl implements MemberService {
 		StringBuilder sb = new StringBuilder();
 		sb.append("client_id=dd2c51ceb08c2d3fd9f505935aa18931");
 		sb.append("&grant_type=authorization_code");
-		sb.append("&redirect_uri=http://localhost:8080/redclip/member/oauth");
+		sb.append("&redirect_uri=http://localhost/redclip/member/oauth");
 		sb.append("&code=");
 		sb.append(code);
 		
@@ -141,9 +148,11 @@ public class MemberServiceImpl implements MemberService {
 			bw.close();
 
 			return accessToken;
-			
+
 	}
 
+
+	
 
 	public List<BlockMember> selectByBlock(String userId) {
 		return memberMapper.selectByBlock(userId);
@@ -179,10 +188,9 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
-
+	//소셜로그인 유저 정보가져오기
 	@Override
 	public void getUserInfo(String accessToken) {
-		
 		
 		String userInfoUrl = "https://kapi.kakao.com/v2/user/me";
 
@@ -208,10 +216,18 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+
 	public int deleteByBlock(String usreId, List<String> blockMembers) {
 		return memberMapper.deleteByBlock(usreId, blockMembers);
+
 	}
 
+	@Override
+	public int changePw(Member member) {
+		return memberMapper.changepw(member);
+	}
+
+	
 
 	
 }

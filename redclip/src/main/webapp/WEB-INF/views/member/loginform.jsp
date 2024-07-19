@@ -121,7 +121,7 @@
         $('#kakaoLogin').click(() => {
             location.href = 'https://kauth.kakao.com/oauth/authorize?' +
                 'client_id=dd2c51ceb08c2d3fd9f505935aa18931' +
-                '&redirect_uri=http://localhost:8080/redclip/member/oauth' +
+                '&redirect_uri=http://localhost/redclip/member/oauth' +
                 '&response_type=code' +
                 '&scope=profile_nickname,profile_image';
         });
@@ -139,23 +139,23 @@
   <div class="link-container">
     <a href="#" data-toggle="modal" data-target="#findIdModal">아이디 찾기</a>
     <span>|</span>
-    <a href="#">비밀번호 찾기</a>
+    <a href="#" data-toggle="modal" data-target="#findPwModal">비밀번호 찾기</a>
     <span>|</span>
     <a href="#">회원가입</a>
   </div>
 </form>
-<!-- 모달 시작 -->
+<!-- 아이디찾기 모달 시작 -->
   <div class="modal fade" id="findIdModal" tabindex="-1" role="dialog" aria-labelledby="findIdModal" aria-hidden="true">
       <div class="modal-dialog modal-md" role="document">
           <div class="modal-content">
-              <!-- 모달 헤더 -->
+              
               <div class="modal-header">
                   <h5 class="modal-title" id="emailModalLabel">아이디 찾기</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
               </div>
-              <!-- 모달 본문 -->
+              
               <div class="modal-body">
                   <div class="form-group">
                       <div class="input-group">
@@ -171,15 +171,123 @@
           </div>
       </div>
   </div>
- 
-
- 
+ <!--아이디찾기 결과창 모달 -->
+<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+                <h5 class="modal-title" id="resultModalLabel">아이디 찾기 결과</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                
+            </div>
+            <div class="modal-body" id="resultModalBody">
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="findAfterLongin">로그인</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 결과 모달 끝 -->
+<!--  비밀번호 찾기 모달 -->
+<div class="modal fade" id="findPwModal" tabindex="-1" role="dialog" aria-labelledby="findPwModal" aria-hidden="true">
+      <div class="modal-dialog modal-md" role="document">
+          <div class="modal-content">
+              
+              <div class="modal-header">
+                  <h5 class="modal-title" id="emailModalLabel">비밀번호 찾기</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              
+              <div class="modal-body">
+                  <div class="form-group">
+                      <div class="input-group">
+                          <input type="text" class="form-control" placeholder="아이디입력" id="inputId" name="">
+                      </div>
+                      <div class="input-group">
+                      <input type="text" class="form-control" placeholder="이메일입력" id="inputEmail" name="">
+                      </div>
+                  </div>
+                  <button type="button" class="btn btn-secondary " id="searchPw">검색</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+              </div>
+          </div>
+      </div>
+  </div>
+ <!-- 비밀번호찾기 모달끝  -->
+ <!-- 비밀번호찾기 결과창 모달 -->
+ <div class="modal fade" id="resultPwModal" tabindex="-1" role="dialog" aria-labelledby="resultPwModal" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+                <h5 class="modal-title" id="resultPwModalLabel">비밀번호 찾기 결과</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                
+            </div>
+            <div class="modal-body" id="resultPwModalBody">
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="findAfterRecovery" style="display:none">새 비밀번호 변경</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <!-- 비밀번호찾기 결과창 모달 끝 -->
+ <!-- 비밀번호 변경 모달창 시작 -->
+ <div class="modal fade" id="recoveryPwModal" tabindex="-1" role="dialog" aria-labelledby="recoveryPwModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+                <h5 class="modal-title" id="recoveryPwModalLabel">비밀번호 변경</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="password" class="form-control" placeholder="새 비밀번호 입력" id="newPassword" name="newPassword">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" class="form-control" placeholder="새 비밀번호 확인" id="confirmPassword" name="confirmPassword">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="updatePassword">변경</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <!-- 비밀번호 변경 모달창 끝끝끝 -->
 <script>
+// 아이디 찾기 스크립트
 $(() => {
     const $inputName = $('#inputName');
     const $inputTel = $('#inputTel');
     const $searchId = $('#searchId');
-
+    const $resultModal = $('#resultModal');
+    const $resultModalBody = $('#resultModalBody');
+    const $findIdModal = $("#findIdModal");
+    const $findAfterLongin = $('#findAfterLongin');
+    let resp = "";
+    
     $searchId.click(() => {
         if ($inputName.val() !== null && $inputTel.val() !== null) {
             $.ajax({
@@ -190,12 +298,89 @@ $(() => {
                     tel: $inputTel.val()
                 },
                 success: response => {
-                    console.log(response);
+                    $resultModalBody.html("회원님의 ID는 " + '<strong style="color: green;">' + response + '</strong>' + " 입니다."); 
+                    $findIdModal.modal('hide');
+                    $resultModal.modal('show');
+                    resp = response;
                 },
                 error: function () {
                     alert('오류임 똥멍청이야!!');
                 }
             });
+        }
+    });
+    
+    $findAfterLongin.click(() => {
+        $('#userId').val(resp);
+    });
+});
+
+// 비밀번호 찾기 스크립트
+$(() => {
+    const $inputId = $('#inputId');
+    const $inputEmail = $('#inputEmail');
+    const $searchPw = $('#searchPw');
+    const $resultPwModal = $('#resultPwModal');
+    const $resultPwModalBody = $('#resultPwModalBody');
+    const $findPwModal = $("#findPwModal");
+    const $findAfterRecovery = $('#findAfterRecovery');
+    const $recoveryPwModal = $('#recoveryPwModal');
+    const $newPassword = $('#newPassword');
+    const $confirmPassword = $('#confirmPassword');
+    const pattern = /^[a-z0-9]{5,12}$/;
+    
+    $searchPw.click(() => {
+        if ($inputId.val() !== null && $inputEmail.val() !== null) {
+            $.ajax({
+                url: 'member/searchPw',
+                type: 'GET',
+                data: {
+                    userId: $inputId.val(),
+                    email: $inputEmail.val()
+                },
+                success: response => {
+                    $resultPwModalBody.html(response);
+                    $findPwModal.modal('hide');
+                    $resultPwModal.modal('show');
+                    if(response === "해당회원의 정보가 존재합니다.") {
+                        $findAfterRecovery.show();
+                    } else {
+                        $findAfterRecovery.hide();
+                    }
+                },
+                error: function () {
+                    alert('오류임 똥멍청이야!!');
+                }
+            });
+        }
+    });
+
+    $findAfterRecovery.click(() => {
+        $resultPwModal.modal('hide');
+        $recoveryPwModal.modal('show');
+    });
+
+    $('#updatePassword').click(() => {
+        if (pattern.test($newPassword.val()) && $newPassword.val() === $confirmPassword.val()) {
+            $.ajax({
+                url: 'member/changePw',
+                type: 'GET',
+                data: { 
+                    userPwd: $confirmPassword.val(),
+                    userId: $inputId.val()
+                },
+                success: response => {
+                    location.href = 'loginform';
+                    alert('비밀번호 변경에 성공하였습니다.');
+                },
+                error: function() {
+                    alert('오류래용 메롱메롱');
+                }
+            });
+        } else if (!pattern.test($newPassword.val())) {
+            alert('비밀번호는 영문,숫자를 사용하여 5~12자리로 입력해주세용');
+        } else if ($newPassword.val() !== $confirmPassword.val()) {
+            alert('비밀번호 확인이 일치하지 않습니다.');
         }
     });
 });

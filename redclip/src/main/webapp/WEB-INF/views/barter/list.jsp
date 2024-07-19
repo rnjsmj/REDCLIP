@@ -12,12 +12,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
-    .card-text {
-        font-size: 16px;
-    }
     .btn-container {
-        display: flex;
-        justify-content: center;
+    display: flex;
+    align-items: center;
     }
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -47,9 +44,16 @@
         display: block;
         margin: 20px auto;
     }
+    .card-text {
+        font-size: 16px;
+    }
     .card-container {
         display: flex;
         flex-wrap: wrap;
+    }
+    .filter-info-container {
+        display: flex;
+        align-items: center;
     }
 </style>
 </head>
@@ -71,7 +75,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex">
                         <select class="form-control" id="categoryNo" name="categoryNo" style="max-width: 150px;" required>
-				           <option>카테고리</option>
+				           <option value="0">카테고리</option>
 				           <option value="1">디지털기기</option>
 				           <option value="2">가구/인테리어</option>
 				           <option value="3">유아용품</option>
@@ -92,15 +96,15 @@
 				           <option value="18">도서</option>
 				        </select>
                         <select class="form-control" id="si">
-                            <option selected>시</option>
+                            <option selected value="0">시</option>
                             <option value="1">서울특별시</option>
                             <option value="2">인천광역시</option>
                         </select>
                         <select class="form-control" id="gu" disabled>
-                            <option selected>구</option>
+                            <option selected value="0">구</option>
                         </select>
                         <select class="form-control" id="dong" disabled>
-                            <option selected>동</option>
+                            <option selected value="0">동</option>
                         </select>
                     </div>
                 </div>
@@ -114,9 +118,10 @@
 	            </c:if>
 	            <br>
 	            <div class="card-container">
+	            <!--
                     <c:forEach items="${list}" var="barter">
-                    <div class="card" style="width: 18rem;">
-                        <img src="${barter.barterFileList.barterFileName}" class="card-img-top" alt="${barter.barterName}">
+                    <div class="card" style="width: 270px; height:300px;">
+                        <img src="${barter.barterFileList[0].barterFileName}" class="card-img-top" alt="${barter.barterName}">
                         <div class="card-body">
                             <h5 class="card-title">${barter.barterName}</h5>
                             <p class="card-text">${barter.barterWriter}</p>
@@ -126,6 +131,7 @@
                         </div>
                     </div>
                 </c:forEach>
+                 -->
                 </div>
                 <div class="btn-container">
                     <button id="load-more-btn" class="btn btn-danger load-more-btn">더보기</button>
@@ -136,83 +142,119 @@
     </div>
 	
     <script>
-      	$(() => {
-        	const $siSelect = $('#si');
-		    const $guSelect = $('#gu');
-		    const $dongSelect = $('#dong');
-		
-		    $siSelect.change(() => {
-		        const siValue = $siSelect.val();  
-				console.log(siValue);
-		        if (siValue !== null ) { //시벨류값이 널이 아닐때 실행)
-		             console.log("시밸류값:", siValue); 
-		            $.ajax({
-		                url: 'member/guSelect', 
-		                type: 'GET',
-		                data: { si: siValue }, 
-		                success: response => {
-		                	 console.log(response);
-		                	$guSelect.empty().append('<option value="">구 선택</option>');
-		                    response.forEach((a) => { 
-		                    	$guSelect.append('<option value='+a.townCode+'>'+a.townName+'</option>');
-		                    });
-		                    $guSelect.prop('disabled', false); // 구 셀렉트 박스 활성화
-		                },
-		                error: function() {
-		                    alert('오류가 발생했습니다.');
-		                }
-		            });
-		        }
-		    });
-		   
-		    $guSelect.change(() => {
-		    	 const guValue = $guSelect.val();
-		         console.log("선택한구벨류값:", guValue);
-		    	if (guValue !== null) {
-		    		$.ajax({
-			    		url: 'member/dongSelect',
-			    		type: 'GET',
-			    		data: { gu: guValue },
-			    		success: response => {
-			    			console.log(response);
-			    			$dongSelect.empty().append('<option value="">동 선택</option>')
-			    			response.forEach((a) => {
-			    				$dongSelect.append('<option value='+a.villageCode+'>'+a.villageName+'</option>');
-			    			});
-			    			$dongSelect.prop('disabled', false); // 동 셀렉트 박스 활성화
-			    		},
-			    		error: function() {
-			    			alert('오류가 발생했습니다.');
-			    		}
-		    		});
-		    	}
-		    });
-		});
-		
-		$(document).ready(function() {
-		    let page = 1;
+    $(document).ready(function() {
+        const $categorySelect = $('#categoryNo');
+        const $siSelect = $('#si');
+        const $guSelect = $('#gu');
+        const $dongSelect = $('#dong');
+        const $cardContainer = $('.card-container');
 
-		    $('#load-more-btn').click(function() {
-		        page++;
-		        $.ajax({
-		            url: '/redclip/barters/list',  // 올바른 URL (서버의 데이터를 가져오는 API 경로)
-		            type: 'GET',
-		            data: { page: page },  // 현재 페이지 정보를 서버로 전달합니다.
-		            success: function(response) {
-		                $('.card-container').append(response);  // 서버로부터 받은 HTML 데이터를 추가합니다.
+        // 시 선택 시 구 목록 로드
+        $siSelect.change(() => {
+            const siValue = $siSelect.val();
+            if (siValue !== "") {
+                $.ajax({
+                    url: '/redclip/member/guSelect',
+                    type: 'GET',
+                    data: { si: siValue },
+                    success: response => {
+                        $guSelect.empty().append('<option value="">구 선택</option>');
+                        response.forEach(a => {
+                            $guSelect.append('<option value=' + a.townCode + '>' + a.townName + '</option>');
+                        });
+                        $guSelect.prop('disabled', false); // 구 셀렉트 박스 활성화
+                        $dongSelect.prop('disabled', true).empty().append('<option value="">동 선택</option>'); // 동 셀렉트 박스 비활성화 및 초기화
+                    },
+                    error: function() {
+                        alert('오류가 발생했습니다.');
+                    }
+                });
+            }
+        });
 
-		                // 페이지네이션을 위한 버튼 상태 업데이트
-		                if (response.length < 10) {  // 예: 데이터의 양에 따라
-		                    $('#load-more-btn').hide();  // 더 이상 데이터가 없으면 버튼 숨김
-		                }
-		            },
-		            error: function() {
-		                alert('오류가 발생했습니다.');  // 오류 발생 시 경고창 표시
-		            }
-		        });
-		    });
-		});
-		
+        // 구 선택 시 동 목록 로드
+        $guSelect.change(() => {
+            const guValue = $guSelect.val();
+            if (guValue !== "") {
+                $.ajax({
+                    url: '/redclip/member/dongSelect',
+                    type: 'GET',
+                    data: { gu: guValue },
+                    success: response => {
+                        $dongSelect.empty().append('<option value="">동 선택</option>');
+                        response.forEach(a => {
+                            $dongSelect.append('<option value=' + a.villageCode + '>' + a.villageName + '</option>');
+                        });
+                        $dongSelect.prop('disabled', false); // 동 셀렉트 박스 활성화
+                    },
+                    error: function() {
+                        alert('오류가 발생했습니다.');
+                    }
+                });
+            }
+        });
+
+        // 필터링된 바터 목록 로드
+        function loadFilteredBarters() {
+            const categoryNo = $categorySelect.val();
+            const si = $siSelect.val();
+            const gu = $guSelect.val();
+            const dong = $dongSelect.val();
+            const $cardContainer = $('.card-container');
+            console.log(dong);
+            let code;
+
+            if (dong != 0) {
+                code = dong;
+            } else if (gu != 0) {
+                code = gu;
+            } else if (si) {
+                code = si;
+            }
+
+            $.ajax({
+                url: '/redclip/barters/' + categoryNo + '/' + code,
+                type: 'GET',
+                success: function(response) {
+                    // 필터링된 결과를 기존 카드 목록에 추가
+                    console.log('카테고리번호:', categoryNo);
+                    console.log('지역코드번호:', code);
+                    response.forEach(barter => {
+                    	console.log(barter);
+                        const card =
+                        	'<div class="card" style="width: 270px; height:440px;">'
+                        	 +'<img src="' + barter.barterFileList[0].barterFileName+ '" class="card-img-top" alt="' +barter.barterName+ '">'
+                             +'<div class="card-body">'
+                             +'<h5 class="card-title">' +barter.barterName+ '</h5>'
+                             +'<p class="card-text">' +barter.region.cityName+' '+barter.region.townName+' '+barter.region.villageName+ '</p>'
+                             +'<p class="card-text">' +barter.barterDate+ '</p>'
+                             +'<a href="/redclip/barters/' + barter.barterNo+ '" class="btn btn-primary">상세보기</a>'
+                             +'</div>'
+                             +'</div>';
+                             console.log(response);
+                        $cardContainer.append(card); // 기존 카드 목록에 추가
+                    });
+
+                    // 결과가 없을 때 처리 (예: 아무 항목도 찾지 못했을 때)
+                    if (response.length === 0) {
+                        $cardContainer.html('<p class="text-center">검색 결과가 없습니다.</p>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('항목을 불러오는데 실패했습니다. 에러 메시지: ' + xhr.status + ' ' + error);
+                }
+            });
+        }
+
+        // 카테고리 및 위치 변경 시 필터링된 목록 로드
+        $('#categoryNo, #si, #gu, #dong').change(function() {
+            $cardContainer.empty(); // 기존 카드 목록 비우기
+            loadFilteredBarters(); // 필터링된 목록 다시 로드
+        });
+
+        // 페이지 로드시 처음 필터링된 목록 로드
+        loadFilteredBarters();
+    });
     </script>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>

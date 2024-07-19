@@ -37,14 +37,14 @@
          }
          
          #content {
-         	height: 500px;
+            height: 500px;
          }
     </style>
 </head>
 <body>
      <!-- 헤더 영역-->
      <header>
-      		<jsp:include page="../common/header.jsp" />
+            <jsp:include page="../common/header.jsp" />
     </header>
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
