@@ -121,9 +121,9 @@
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
                             <select class="form-select" aria-label="Default select example" id="faqType">
-                                <option selected>시스템</option>
-                                <option>회원</option>
-                                <option>등급</option>
+                                <option value="시스템" selected>시스템</option>
+                                <option value="회원">회원</option>
+                                <option value="등급">등급</option>
                               </select>
                         </div>
                         <div class="mb-3">
@@ -151,19 +151,18 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                     <div class="modal-body">
-                    
                    		<div>
                     		<input type="hidden" id="userId" value="${ detail.userId }" />
                     		<input type="hidden" id="faqNo" value="${ detail.faqNo }" />
                     	</div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">제목</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" value="${ detail.question }">
+                            <input type="text" class="form-control" id="exampleFormControlInput1">
                         </div>
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
-                            <select class="form-select" aria-label="Default select example" id="faqType">
-                                <option selected>${ detail.faqType }</option>
+                            <select class="form-select" aria-label="Default select example" value="${ detail.faqType }" id="faqType">
+                                <option selected></option>
                                 <option value="시스템">시스템</option>
                                 <option value="회원">회원</option>
                                 <option value="등급">등급</option>
@@ -171,9 +170,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${ detail.answer }</textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
-                    
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
@@ -203,9 +201,12 @@
 				success : result => {
 					console.log('글이 있져');
 					console.log(result);
+					console.log(result.faqType);
 					$('#exampleFormControlInput1').val(result.question);
 					$('#exampleFormControlTextarea1').val(result.answer);
-					$('#faqType').text(result.faqType);
+					$('#faqType option').filter(function() {
+		                return $(this).text() === result.faqType;
+		            }).prop('selected', true);
 					
 				},
 				error : e => {
