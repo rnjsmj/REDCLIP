@@ -120,19 +120,19 @@
 	    <div class="form-row">
 	        <div class="col image-placeholder">
 	            <img id="imagePreview1" class="image-preview" src="" alt="이미지 미리보기">
-	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 1)">
+	            <input type="file" id="upfile" class="file-input" name="upfile" value="reupfile" onchange="loadImg(this, 1)">
 	        </div>
 	        <div class="col image-placeholder">
 	            <img id="imagePreview2" class="image-preview" src="" alt="이미지 미리보기">
-	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 2)">
+	            <input type="file" id="upfile" class="file-input" name="upfile" value="reupfile" onchange="loadImg(this, 2)">
 	        </div>
 	        <div class="col image-placeholder">
 	            <img id="imagePreview3" class="image-preview" src="" alt="이미지 미리보기">
-	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 3)">
+	            <input type="file" id="upfile" class="file-input" name="upfile" value="reupfile" onchange="loadImg(this, 3)">
 	        </div>
 	        <div class="col image-placeholder">
 	            <img id="imagePreview4" class="image-preview" src="" alt="이미지 미리보기">
-	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 4)">
+	            <input type="file" id="upfile" class="file-input" name="upfile" value="reupfile" onchange="loadImg(this, 4)">
 	        </div>
 	    </div>
 	 </div>
@@ -194,7 +194,30 @@
 	    	}
 	    });
 	});
-
+	
+	function enteredData() {
+		$.ajax({
+			url : '/redclip/barters',
+			type : 'get',
+			success : result => {
+				console.log(result);
+				$('#categoryNo').val(result.categoryNo).filter(function() {
+	                return $(this).text() === result.categoryNo;
+				$('#si').val(result.si).filter(function() {
+	                return $(this).text() === result.si;
+				$('#gu').val(result.gu).filter(function() {
+	                return $(this).text() === result.gu;
+				$('#dong').val(result.dong).filter(function() {
+	                return $(this).text() === result.dong;
+	            }).prop('selected', true);
+				
+			},
+			error : e => {
+				console.log('글이 없져');
+			}
+		});	
+	};
+	
 	function loadImg(inputFile, index) {
 	    const previewImage = document.getElementById('imagePreview' + index);
 
