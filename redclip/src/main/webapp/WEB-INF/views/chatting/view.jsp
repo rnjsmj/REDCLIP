@@ -591,6 +591,7 @@
                     		
                     		
                     		
+                    		
                     		// 채팅 내역
                     		(result.chatMessageList).map(( message ) => {
                     			let type = (message.senderId === '${sessionScope.loginUser.userId}') ? 'send' : 'receive';
@@ -604,28 +605,13 @@
                     							: messageData + dateData;
                     			messageList +=  '</div>';
                     			
-                        					/* + '<span class="' + type + '-date">' + message.chatDate + '</span>'
-                        					+ '<div class="message ' + type + '"><p>' + message.chatMessage + '</p>'
-                        					+  */
+                        			
                     		});
                     		
                     		$('.chat-messages').html(messageList);
                     		
                     		
                     		
-                    		/* <div class="send-div chat-div">
-		                    	<span class="send-date">09.15 17:55</span>
-		                        <div class="message sender">
-		                            <p>Sender message 1 Sender message 1 Sender message 1 Sender message 1Sender message 1</p>
-		                        </div>
-                        	</div>
-                        	
-                        	<div class="receiver-div">
-	                            <div class="message receiver">
-	                                <p>Receiver message 1</p>
-	                            </div>
-	                            <span class="receive-date">09.15 17:56</span>
-                            </div> */
                     	}
                     
                     });
