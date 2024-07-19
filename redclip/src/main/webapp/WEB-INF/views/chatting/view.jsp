@@ -168,6 +168,7 @@
             background-color: #f1f1f1;
         }
 
+
         .message {
             margin: 10px 0;
             padding: 10px;
@@ -180,19 +181,35 @@
             	word-break: break-all;
             }
         }
+        
+        .chat-div {
+        	font-size: 13px;
+		    color: gray;
+        }
+        .send-div {
+        	text-align:right;
+        	
+        }
+       
 
-        .sender {
+        .send {
             align-self: flex-end;
             background-color: #11aa00;
             color: #fff;
             text-align: left;
+            margin-left : 5px;
+        }
+        
+        .receive-div {
+        
         }
 
-        .receiver {
+        .receive {
             align-self: flex-start;
             background-color: #ffffff;
             color: #000;
             border: 1px solid #ccc;
+            margin-right: 5px;
         }
 
         .chat-input input {
@@ -503,11 +520,18 @@
                     </div>
                     <!-- 채팅 내역 -->
                     <div class="chat-messages">
-                        <div class="message sender">
-                            <p>Sender message 1 Sender message 1 Sender message 1 Sender message 1Sender message 1</p>
+                    	<div class="send-div chat-div">
+	                    	<span class="send-date">09.15 17:55</span>
+	                        <div class="message sender">
+	                            <p>Sender message 1 Sender message 1 Sender message 1 Sender message 1Sender message 1</p>
+	                        </div>
+                        
                         </div>
+                        <div class="receiver-div">
                         <div class="message receiver">
                             <p>Receiver message 1</p>
+                        </div>
+                        <span class="receive-date">09.15 17:56</span>
                         </div>
                         <div class="message sender">
                             <p>Sender message 2</p>
@@ -553,19 +577,65 @@
                     connect(roomNo);
                     roomVar = roomNo;
                     
+                    let messageList = '';
+                    
                     // 선택한 채팅방 채팅내역 select
                     $.ajax({
                     	
-                    	url : roomNo,
+                    	url : 'view/' + roomNo,
                     	type : 'get',
                     	success : result => {
                     		console.log(result);
+                    		
+                    		// 채팅 상대 (채팅창 헤더)
+                    		
+                    		
+                    		
+                    		// 채팅 내역
+                    		(result.chatMessageList).map(( message ) => {
+                    			let type = (message.senderId === '${sessionScope.loginUser.userId}') ? 'send' : 'receive';
+                    			messageList += '<div class="'+ type + '-div chat-div">'
+                    			
+                    			let dateData = '<span class="' + type + '-date">' + message.chatDate + '</span>';
+                    			let messageData = '<div class="message ' + type + '"><p>' + message.chatMessage + '</p></div>'
+                    			
+                    			messageList += (message.senderId === '${sessionScope.loginUser.userId}') 
+                    							? dateData + messageData
+                    							: messageData + dateData;
+                    			messageList +=  '</div>';
+                    			
+                        					/* + '<span class="' + type + '-date">' + message.chatDate + '</span>'
+                        					+ '<div class="message ' + type + '"><p>' + message.chatMessage + '</p>'
+                        					+  */
+                    		});
+                    		
+                    		$('.chat-messages').html(messageList);
+                    		
+                    		
+                    		
+                    		/* <div class="send-div chat-div">
+		                    	<span class="send-date">09.15 17:55</span>
+		                        <div class="message sender">
+		                            <p>Sender message 1 Sender message 1 Sender message 1 Sender message 1Sender message 1</p>
+		                        </div>
+                        	</div>
+                        	
+                        	<div class="receiver-div">
+	                            <div class="message receiver">
+	                                <p>Receiver message 1</p>
+	                            </div>
+	                            <span class="receive-date">09.15 17:56</span>
+                            </div> */
                     	}
                     
                     });
                     
                     
+                    
+                    
+                    
                     $('.chat-area').show();
+                    
 
                     
                 }); 
@@ -577,10 +647,14 @@
             
                 const message = $('#chat-input').val();
                 
+                let today = new Date();
+                
                 
 
                 if (message.trim() !== '') {
-                    const insValue = '<div class="message sender"><p>' + $('#chat-input').val() + '</p></div>';
+                    const insValue = '<div class="send-div chat-div">'
+                    				+ '<span class="send-date">' + today.getHours() + ':' + today.getMinutes() + '</span>'
+                    				+ '<div class="message send"><p>' + $('#chat-input').val() + '</p></div></div>';
 
                     const chatMessage = {
                     	roomNo : roomNo,
@@ -588,7 +662,7 @@
                     	message : message
                     };
                     
-                    
+            	
                     if (socket) {
                     	sendMessage = roomNo + ', ' + '${ sessionScope.loginUser.userId }' + ', ' + message;
                     	socket.send(sendMessage);
@@ -601,6 +675,8 @@
                     scrollToBottom();
                     $('#chat-input').focus();
                 }
+                
+                selectList();
             }
 
                 function scrollToBottom() {

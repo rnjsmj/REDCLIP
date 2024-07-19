@@ -92,8 +92,8 @@ public class ChatHandler extends TextWebSocketHandler{
 		String[] messageInfo = fullMessage.split(",");
 		if ( messageInfo != null && messageInfo.length == 3) {
 			String roomNo = messageInfo[0];
-			String senderId = messageInfo[1];
-			String chatMessage = messageInfo[2];
+			String senderId = messageInfo[1].trim();
+			String chatMessage = messageInfo[2].substring(1);
 			
 			/*
 			 * ChatMessage chatMessageData = new ChatMessage();
@@ -109,6 +109,13 @@ public class ChatHandler extends TextWebSocketHandler{
 //				}
 //				
 //			}
+			
+			// 서비스 호출하여 DB에 저장
+			ChatMessage cm = new ChatMessage();
+			cm.setRoomNo(Integer.parseInt(roomNo));
+			cm.setSenderId(senderId);
+			cm.setChatMessage(chatMessage);
+			chatService.insertMessage(cm);
 			
 			HashMap<String, Object> recieveSession  = new HashMap<String, Object>();
 			if(roomSessions.size() > 0) {
@@ -128,12 +135,7 @@ public class ChatHandler extends TextWebSocketHandler{
 						try {
 								wss.sendMessage(new TextMessage(chatMessage));
 								
-								// 서비스 호출하여 DB에 저장
-								ChatMessage cm = new ChatMessage();
-								cm.setRoomNo(Integer.parseInt(roomNo));
-								cm.setSenderId(senderId);
-								cm.setChatMessage(chatMessage);
-								chatService.insertMessage(cm);
+								
 								
 							} catch (IOException e) {
 								log.info("아...왜저래");

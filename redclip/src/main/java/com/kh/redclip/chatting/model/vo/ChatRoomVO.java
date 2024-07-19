@@ -24,4 +24,5 @@ public class ChatRoomVO {
 	private String chatDate;
 	private String chatMessage;
 	private String senderId;
+	private char chatRead;
 }

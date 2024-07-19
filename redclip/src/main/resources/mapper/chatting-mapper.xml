@@ -6,7 +6,7 @@
 	
 	
 	
-	<!-- 채팅 목록 -->
+	<!-- 채팅방 목록 -->
 	<select id="findAll" parameterType="String" resultType="chatRoomVo">
 		SELECT
 				ROOM_NO roomNo,
@@ -22,16 +22,14 @@
 				REPLY_VILLAGE_NAME replyVillageName,
 				CHAT_DATE chatDate,
 				CHAT_MESSAGE chatMessage,
-				SENDER_ID senderId
+				SENDER_ID senderId,
+				CHAT_READ chatRead
 		  FROM
 		  		VW_CHAT_ROOM_LIST
 		 WHERE
 		 		BARTER_WRITER = #{userId}
 		    OR
 		    	REPLY_WRITER = #{userId}
-		 ORDER
-		    BY
-		    	CHAT_DATE DESC
 	</select>
 
 	 <!-- 채팅방 존재 유무 확인 -->
@@ -127,8 +125,9 @@
 		<result column="CHAT_MESSAGE" property="chatMessage"/>
 		<result column="CHAT_DATE" property="chatDate"/>	
 		<result column="SENDER_ID" property="senderId"/>
+		<result column="CHAT_READ" property="chatRead" />
 	</resultMap>
-	<select id="chatListByRoomNo" parameterType="_int" resultType="chatMessageVo">
+	<select id="chatListByRoomNo" parameterType="_int" resultType="chatMessageVo" resultMap="chatMessageResultSet">
 		SELECT
 				ROOM_NO,
 				BARTER_NO,
@@ -143,7 +142,8 @@
 				CHAT_NO,
 				CHAT_MESSAGE,
 				CHAT_DATE,
-				SENDER_ID
+				SENDER_ID,
+				CHAT_READ
 		  FROM
 		  		VW_CHAT_MESSAGE
 		 WHERE

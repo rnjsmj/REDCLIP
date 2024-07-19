@@ -73,13 +73,16 @@ public class ChattingController {
 	}
 	
 	// 채팅방 별 채팅 내역 select (시간순으로 출력하여 최신 채팅을 아래부터)
-	@GetMapping("/{roomNo}")
-	@ResponseBody
-	public ResponseEntity<ChatMessageVO> chatMessageList(@PathVariable int roomNo) {
-		
-		ChatMessageVO chatRoom = chatService.chatListByRoomNo(roomNo); 
-		log.info("채팅내역 : {}", chatRoom);
-		return ResponseEntity.status(HttpStatus.OK).body(chatRoom);
-	}
+	
+	 @GetMapping("/view/{roomNo}")
+	 @ResponseBody 
+	 public ResponseEntity<ChatMessageVO> chatMessageList(@PathVariable int roomNo) {
+	 
+	 ChatMessageVO chatRoom = chatService.chatListByRoomNo(roomNo);
+	 log.info("채팅내역 : {}", chatRoom); 
+	 return ResponseEntity.status(HttpStatus.OK).body(chatRoom); 
+	 
+	 }
+	 
 	
 }
