@@ -76,5 +76,15 @@
 
 </insert>
 	
-	
+	<delete id="deleteNotice" parameterType="list">
+    DELETE 
+    FROM
+        TB_NOTICE
+    WHERE 
+        NOTICE_NO 
+    IN 
+    <foreach item="noticedel" collection="list" open="(" separator="," close=")">
+        #{noticedel}
+    </foreach>
+</delete>
 </mapper>

@@ -143,7 +143,7 @@
                             <tr>
                                 <td>${(pageInfo.currentPage - 1) * 10 + status.count}</td>
                                 <td>${notice.noticeType}</td>
-                                <td><a href="noticeDetail?boardNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
+                                <td><a href="noticeDetail?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
                                 <td>${notice.noticeDate}</td>
                                 <td>${notice.userId}</td>
                                 <td><input type="checkbox" name="noticeNo" value="${notice.noticeNo}"></td>
@@ -157,7 +157,8 @@
 		             	<form action="insertNoticeform" method="post">
 		                    <button class="btn btn-primary write-button" >글쓰기</button>
 		              	</form>      
-		             	 <form id="deleteForm" action="deleteNotice" method="">
+		             	 <form id="deleteForm" action="deleteNotice" method="post">
+		             	 	<input type="hidden" name="deleteNo" id="deleteNoInput">
 				            <button class="btn btn-danger delete-button" type="button" id="deleteBtn">글삭제</button>
 				        </form>
 		             </c:if>
@@ -165,7 +166,7 @@
 	            
 	         <script>
 			    $(() => {
-			        $('#deleteBtn').click(function() {
+			        $('#deleteBtn').click(() => {
 			            let deleteNo = [];
 			            $('input[type=checkbox]:checked').each(function() {
 			                deleteNo.push($(this).val());
@@ -174,7 +175,9 @@
 			            console.log("잘나오냐{} ", deleteNo); 
 			
 			            if (deleteNo.length > 0) {
-			             //   $('#deleteForm').submit();
+			            	$('#deleteNoInput').val(deleteNo);
+			              $('#deleteForm').submit();
+			              
 			            } else {
 			                alert("삭제할 항목을 선택해주세요.");
 			            }

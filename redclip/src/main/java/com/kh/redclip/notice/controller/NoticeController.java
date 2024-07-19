@@ -9,7 +9,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.redclip.notice.model.service.NoticeService;
@@ -96,6 +98,7 @@ public class NoticeController {
 		return "notice/insertNoticeform";
 	}
 	
+	//글등록
 	@PostMapping("insertNotice")
 	public String insertNotice(Notice notice) {
 		 log.info("여기보세요여기{}",notice);
@@ -103,4 +106,37 @@ public class NoticeController {
 	    log.info(notice.getUserId());
 	    return "redirect:/noticeform";
 	}
+	//글삭제 (체크박스)
+	
+	@PostMapping("deleteNotice")
+	public String deleteNotice(@RequestParam List<Integer> deleteNo, HttpSession session) {
+		
+		 //log.info("이거 배열잘가져옴?!?!?{}",deleteNo);
+	    int result = noticeService.deleteNotice(deleteNo);
+        
+	    if (result > 0) {
+	        session.setAttribute("sussessMsg", "삭제성공.");
+	        return "redirect:/noticeform";
+	    } else {
+	        session.setAttribute("failMsg", "삭제실패");
+	        return "redirect:/noticeform";
+	    }
+	}
+	//공지사항 상세보기
+	@GetMapping("noticeDatail/{noticeNo}")
+	public String noticeDetail(@PathVariable  int noticeNo, Notice notice) {
+		
+		int result =noticeService.noticeDetail(noticeNo);
+		
+		if(result> 0) {
+			return "noticeDetailform";
+		} else {
+			return "errorPage";
+		}
+		
+	}
+	
+	
+	
+
 }

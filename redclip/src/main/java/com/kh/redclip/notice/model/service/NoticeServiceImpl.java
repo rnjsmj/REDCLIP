@@ -29,5 +29,13 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return noticeMapper.insertNotice(notice);
 	}
+	@Override
+	public int deleteNotice(List<Integer> deleteNo) {
+		return noticeMapper.deleteNotice(deleteNo);
+	}
+	@Override
+	public int noticeDetail(int noticeNo) {
+		return noticeMapper.selectNotice(noticeNo);
+	}
 
 }

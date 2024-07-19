@@ -16,5 +16,10 @@ public interface NoticeMapper {
 
 	int insertNotice(Notice notice);
 
+	int deleteNotice(List<Integer> deleteNo);
+	
+	
+	int selectNotice(int noticeNo);
+
 	
 }
