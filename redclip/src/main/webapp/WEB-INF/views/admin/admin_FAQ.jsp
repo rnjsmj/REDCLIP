@@ -201,7 +201,8 @@
 				success : result => {
 					console.log('글이 있져');
 					console.log(result);
-					console.log(result.faqType);
+					$('#userId').val(result.userId);
+					$('#faqNo').val(result.faqNo);
 					$('#exampleFormControlInput1').val(result.question);
 					$('#exampleFormControlTextarea1').val(result.answer);
 					$('#faqType option').filter(function() {
@@ -253,47 +254,16 @@
 			
 		};
 		
-		//이 밑으로는 분석 좀 해야됑
-		/* //글수정 입력창 띄우기
-		function updateForm() {
-			
-			selectNo(function(faq) {
-				if(faq) {
-					const value += '<div class="mb-3">'
-						+	'<label for="exampleFormControlInput1" class="form-label">제목</label>'
-						+	'<input type="text" class="form-control" id="exampleFormControlInput1" value="'
-						+ 	${ faq.question } +'">'
-						+	'</div>'
-						+	'<div class="mb-3">'
-						+	'<label for="Default select example" class="form-label">분류</label>'
-						+	'<select class="form-select" aria-label="Default select example" id="faqType">'
-						+	'<option selected value="' + ${ faq.faqType } + '"></option>'
-						+	'<option value="시스템">시스템</option>'
-						+	'<option value="회원">회원</option>'
-						+	'<option value="등급">등급</option>'
-						+	'</select>'
-						+	'</div>'
-						+	'<div class="mb-3">'
-              			+	'<label for="exampleFormControlTextarea1" class="form-label">내용</label>'
-              			+	'<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="' + ${ faq.answer } + '"></textarea>'
-						+	'</div>'           
-					
-				}
-			});
-
-			
-			
-		};
-		
-		
 		//글 수정
 		function update() {
 			
+			const faqNo = $("input[name='faqNo']:checked").val();
 			
+			console.log(faqNo);
 			
 			const updateData = {
-					"question" : $('#exampleFormControlInput2').val(),
-					"answer" : $('#exampleFormControlTextarea2').val(),
+					"question" : $('#exampleFormControlInput1').val(),
+					"answer" : $('#exampleFormControlTextarea1').val(),
 					"faqType" : $('#faqType').val(),
 					"userId" : $('#userId').val()
 				};
@@ -301,7 +271,7 @@
 			console.log(updateData);
 			
 			$.ajax({
-				url : faqNo,
+				url : '/redclip/faq/' + faqNo,
 				type : 'put',
 				data : JSON.stringify(updateData),
 				contentType : 'application.json',
@@ -309,11 +279,11 @@
 					console.log('요청 성공');
 				},
 				error : e => {
-					console.log('요청 실패');
+					console.log('요청 실패', e);
 				}
 			});
 			
-		}; */
+		};
 	</script>
     <footer>
         <jsp:include page="../common/footer.jsp" />

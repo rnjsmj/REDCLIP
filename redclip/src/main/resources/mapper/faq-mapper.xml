@@ -46,4 +46,20 @@
 	   WHERE
 	   		FAQ_NO = #{faqNo}
 	</select>
+	
+	<update id="update" parameterType="faq">
+		UPDATE
+			  TB_FAQ
+		   SET
+		   	  QUESTION = #{question},
+		   	  ANSWER = #{answer},
+		   	  FAQ_TYPE = #{faqType}
+		 WHERE
+		 	  FAQ_NO = #{faqNo}
+		   AND
+		   	  USER_ID
+		  LIKE
+		   	  'admin%'
+	</update>
+	
 </mapper>

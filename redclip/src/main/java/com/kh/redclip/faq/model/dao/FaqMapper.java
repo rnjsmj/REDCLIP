@@ -14,4 +14,6 @@ public interface FaqMapper {
 	int faqInsert(FAQ faq);
 
 	FAQ selectByNo(int faq);
+
+	int update(FAQ faq);
 }

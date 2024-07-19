@@ -30,6 +30,11 @@ public class FaqServiceImpl implements FaqService {
 		return faqMapper.selectByNo(faq);
 	}
 
+	@Override
+	public int update(FAQ faq) {
+		return faqMapper.update(faq);
+	}
+
 	
 	
 }

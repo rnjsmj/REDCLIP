@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,21 +50,29 @@ public class FaqController {
 	@GetMapping("/{faqNo}")
 	public FAQ selectByNo(@PathVariable int faqNo, Model model) {
 		
-		log.info("받아온 번호 : {}", faqNo);
+		//log.info("받아온 번호 : {}", faqNo);
 		
 		FAQ faq = faqService.selectByNo(faqNo);
 		
-		log.info("가져온 정보 : {}", faq);
+		//log.info("가져온 정보 : {}", faq);
 		
 		model.addAttribute("detail", faq);
 		
 		return faq;
 		
-		/*
-		 * if("".equals(faq)) { return "error"; }
-		 * 
-		 * return "succes";
-		 */
+	}
+	
+	@ResponseBody
+	@PutMapping("/{faqNo}")
+	public String update(@PathVariable int faqNo, FAQ faq) {
+		
+		log.info("받아온 번호 : {}", faqNo);
+		
+		faqService.update(faq) > 0? "success" : "error" ;
+		
+		log.info("입력한 값 : {}", faq);
+
+		return "success";
 	}
 	
 	
