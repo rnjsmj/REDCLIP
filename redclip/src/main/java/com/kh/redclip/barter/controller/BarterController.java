@@ -33,7 +33,7 @@ import com.kh.redclip.barter.model.vo.BarterReply;
 import com.kh.redclip.barter.model.vo.BarterReplyFile;
 import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.barter.model.vo.Wishlist;
-import com.kh.redclip.member.model.vo.ReportMember;
+import com.kh.redclip.admin.model.vo.ReportMember;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
