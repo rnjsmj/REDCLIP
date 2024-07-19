@@ -64,15 +64,15 @@ public class FaqController {
 	
 	@ResponseBody
 	@PutMapping("/{faqNo}")
-	public String update(@PathVariable int faqNo, FAQ faq) {
+	public String update(@PathVariable int faqNo, @RequestBody FAQ faq) {
 		
 		log.info("받아온 번호 : {}", faqNo);
 		
-		faqService.update(faq) > 0? "success" : "error" ;
-		
 		log.info("입력한 값 : {}", faq);
+		
+		return faqService.update(faq) > 0? "success" : "error";
+		
 
-		return "success";
 	}
 	
 	

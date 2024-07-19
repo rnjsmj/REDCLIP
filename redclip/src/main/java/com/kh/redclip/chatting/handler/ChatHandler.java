@@ -35,15 +35,15 @@ public class ChatHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
-		log.info("연결 : {}", getId(session));
-		log.info("세션번호 : {}", session.getId());
+		//log.info("연결 : {}", getId(session));
+		//log.info("세션번호 : {}", session.getId());
 		sessions.add(session);
 		
 		super.afterConnectionEstablished(session);
 		boolean flag = false;
 		String url = session.getUri().toString();
 		String roomNo = url.split("/chatting/")[1];
-		log.info("핸들러 연결 : {}", roomNo);
+		//log.info("핸들러 연결 : {}", roomNo);
 		
 		int idx = roomSessions.size();
 		if(idx > 0) {
@@ -55,7 +55,7 @@ public class ChatHandler extends TextWebSocketHandler{
 				if(rN.equals(roomNo) && uId.equals(getId(session))) {
 					flag = true;
 					idx = i;
-					log.info("플래그 true");
+					//log.info("플래그 true");
 					break;
 				}
 			}
@@ -71,7 +71,7 @@ public class ChatHandler extends TextWebSocketHandler{
 			map.put("socketSession", session);
 			map.put("userId", getId(session));
 		} else {  // List에 존재하지 않는 경우 새로운 세션 정보 추가
-			log.info("플래그 false");
+			//log.info("플래그 false");
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("roomNo", roomNo);
 			map.put("socketSession", session);
@@ -131,18 +131,18 @@ public class ChatHandler extends TextWebSocketHandler{
 				if(chatMessage.length() > 0) {
 					WebSocketSession wss = (WebSocketSession) recieveSession.get("socketSession");
 					if (wss != null) {
-						log.info("리시브 세션 존재 : {} - {}", recieveSession , wss);
+						//log.info("리시브 세션 존재 : {} - {}", recieveSession , wss);
 						try {
 								wss.sendMessage(new TextMessage(chatMessage));
 								
 								
 								
 							} catch (IOException e) {
-								log.info("아...왜저래");
+								//log.info("아...왜저래");
 								e.printStackTrace();
 							}
 					} else {
-						log.info("리시브 세션 없음..");
+						//log.info("리시브 세션 없음..");
 					}
 					
 					

@@ -262,6 +262,7 @@
 			console.log(faqNo);
 			
 			const updateData = {
+					"faqNo" : $('#faqNo').val(),
 					"question" : $('#exampleFormControlInput1').val(),
 					"answer" : $('#exampleFormControlTextarea1').val(),
 					"faqType" : $('#faqType').val(),
@@ -274,12 +275,16 @@
 				url : '/redclip/faq/' + faqNo,
 				type : 'put',
 				data : JSON.stringify(updateData),
-				contentType : 'application.json',
+				contentType : 'application/json',
 				success : result => {
 					console.log('요청 성공');
+					//console.log(result);
+					alert('faq 정보가 수정되었습니다.');
+					location.reload();
 				},
 				error : e => {
 					console.log('요청 실패', e);
+					alert('정보 수정에 실패했습니다.')
 				}
 			});
 			
