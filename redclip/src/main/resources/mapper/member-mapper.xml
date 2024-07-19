@@ -170,8 +170,23 @@
 	
 	
 	<!-- 회원 차단 -->
-	<insert id="">
-	
+	<insert id="blockMember">
+		INSERT
+		 INTO
+        		 TB_MEM_BLOCK
+		          (
+		          BLOCK_NO,
+		          BLOCKED_ID,
+		          BLOCK_ID,
+		          BLOCK_DATE
+		          )
+	VALUES
+		          (
+		          SEQ_MEM_BLOCK.NEXTVAL,
+		          #{blockedId},
+		          #{blockId},
+		          DEFAULT
+		          )
 	</insert>
 	
 	<!-- 차단 회원 조회 -->
