@@ -27,6 +27,8 @@
   		<typeAlias type="com.kh.redclip.chatting.model.vo.ChatRoomVO" alias="chatRoomVo"/>
   		<typeAlias type="com.kh.redclip.notice.model.vo.Notice" alias="notice"/>
   		<typeAlias type="com.kh.redclip.chatting.model.vo.ChatMessageVO" alias="chatMessageVo"/>
+  		<typeAlias type="com.kh.redclip.admin.model.vo.ReportMember" alias="report"/>
+  		<typeAlias type="com.kh.redclip.admin.model.vo.StatusMember" alias="status"/>
   	</typeAliases>
   
   	<mappers>
@@ -36,6 +38,7 @@
   		<mapper resource="/mapper/faq-mapper.xml"/>
   		<mapper resource="/mapper/chatting-mapper.xml" />
   		<mapper resource="/mapper/notice-mapper.xml"/>
+  		<mapper resource="/mapper/admin-mapper.xml"/>
   	</mappers>
   	
 </configuration>
