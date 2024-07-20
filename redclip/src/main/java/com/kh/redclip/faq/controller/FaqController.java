@@ -69,8 +69,6 @@ public class FaqController {
 		
 		//log.info("받아온 번호 : {}", faqNo);
 		
-		//log.info("입력한 값 : {}", faq);
-		
 		return faqService.update(faq) > 0? "success" : "error";
 		
 	}
