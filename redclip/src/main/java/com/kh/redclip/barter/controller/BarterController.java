@@ -147,7 +147,7 @@ public class BarterController {
 	@GetMapping
 	public ResponseEntity<BarterVO> enteredData(int barterNo) {
 		 barterService.findById(barterNo);
-		return ResponseEntity.status(HttpStatus.OK).body();
+		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
 	
 	//파일업로드의 메서드를 만들어줌 
