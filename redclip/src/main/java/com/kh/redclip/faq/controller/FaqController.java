@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,12 +69,19 @@ public class FaqController {
 		
 		log.info("받아온 번호 : {}", faqNo);
 		
-		faqService.update(faq) > 0? "success" : "error" ;
-		
 		log.info("입력한 값 : {}", faq);
-
-		return "success";
+		
+		return faqService.update(faq) > 0? "success" : "error" ;
+		
 	}
 	
+	@ResponseBody
+	@DeleteMapping
+	public String delete(@RequestBody List<Integer> numbers) {
+		
+		log.info("받아온 번호 : {}", numbers);
+		
+		return faqService.delete(numbers) > 0? "success" : "error";
+	}
 	
 }
