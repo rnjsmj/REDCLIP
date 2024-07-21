@@ -256,6 +256,7 @@
    				success : result => {
    					
    					alert('회원 탈퇴에 성공했습니다.');
+   					location.reload();
    				},
    				error : (e) => {
    					

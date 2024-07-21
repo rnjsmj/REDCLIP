@@ -26,6 +26,7 @@
   #memberList {
        margin: 0 auto; 
        width: 1200px;
+       text-align: center;
       }
 
   #btn-none {
@@ -62,13 +63,13 @@
             <c:choose>
             <c:when test="${ empty list }">
             <tr>
-            	<td colspan="3" align="center">신고 내역이 존재하지 않습니다.</td>
+            	<td colspan="4" align="center">신고 내역이 존재하지 않습니다.</td>
             </tr>
             </c:when>
             <c:otherwise>
            	<c:forEach items="${ list }" var="report">
            	<tr>
-           		<td id="reportTitle">${ report.reportTitle }</td>
+           		<td id="reportTitle"><a data-bs-toggle="modal" data-bs-target="#exampleModal">${ report.reportTitle }</a></td>
            		<td id="reportType">${ report.reportType }</td>
            		<td id="reportDate">${ report.reportedId }</td>
            		<td id="reportDate">${ report.reportDate }</td>
@@ -81,25 +82,31 @@
           <div class="icon" align="center" style="margin-top: 40px; ">
             <a href="${pageContext.request.contextPath}/noticeform"><i class="bi bi-megaphone" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href="${pageContext.request.contextPath}/admin/adminFaq"><i class="bi bi-patch-question" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
-            <a href=""><i class="bi bi-person-lines-fill" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
+            <a href="${pageContext.request.contextPath}/admin/memList"><i class="bi bi-person-lines-fill" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href=""><i class="bi bi-person-exclamation" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
           </div>
     </div>
+    
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
     <script>
-    $(document).ready(() => {
-    	
-    	$.ajax({
-    		url : 'admin/reports',
-    		type : 'get',
-    		success : result => {
-    			console.log('요청 성공', result);
-    			
-    		},
-    		error : e => {
-    			console.log('요청 실패');
-    		}
-    	});
-    }); 
+    
     </script>
     
     <footer>
