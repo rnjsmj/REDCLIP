@@ -140,7 +140,7 @@
         </div>
     </div>
 
-    <!-- 게시글 수정 모달창 -->
+ <!-- 게시글 수정 모달창 -->
     <div class="modal fade" id="updateForm">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -151,10 +151,10 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                     <div class="modal-body">
-                   		<div>
-                    		<input type="hidden" id="userId" value="${ detail.userId }" />
-                    		<input type="hidden" id="faqNo" value="${ detail.faqNo }" />
-                    	</div>
+                         <div>
+                          <input type="hidden" id="userId" value="${ detail.userId }" />
+                          <input type="hidden" id="faqNo" value="${ detail.faqNo }" />
+                       </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">제목</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1">
@@ -181,6 +181,7 @@
             </div>
         </div>
     </div>
+
 
 	<script>
 	 
@@ -249,46 +250,42 @@
 			});
 		};
 		
-		function updateForm() {
-			
-			
-		};
-		
 		//글 수정
-		function update() {
-			
-			const faqNo = $("input[name='faqNo']:checked").val();
-			
-			console.log(faqNo);
-			
-			const updateData = {
-					"faqNo" : $('#faqNo').val(),
-					"question" : $('#exampleFormControlInput1').val(),
-					"answer" : $('#exampleFormControlTextarea1').val(),
-					"faqType" : $('#faqType').val(),
-					"userId" : $('#userId').val()
-				};
-			
-			console.log(updateData);
-			
-			$.ajax({
-				url : '/redclip/faq/' + faqNo,
-				type : 'put',
-				data : JSON.stringify(updateData),
-				contentType : 'application/json',
-				success : result => {
-					console.log('요청 성공');
-					//console.log(result);
-					alert('faq 정보가 수정되었습니다.');
-					location.reload();
-				},
-				error : e => {
-					console.log('요청 실패', e);
-					alert('정보 수정에 실패했습니다.')
-				}
-			});
-			
-		};
+	      function update() {
+	         
+	         const faqNo = $("input[name='faqNo']:checked").val();
+	         
+	         console.log(faqNo);
+	         
+	         const updateData = {
+	               "faqNo" : $('#faqNo').val(),
+	               "question" : $('#exampleFormControlInput1').val(),
+	               "answer" : $('#exampleFormControlTextarea1').val(),
+	               "faqType" : $('#faqType').val(),
+	               "userId" : $('#userId').val()
+	            };
+	         
+	         console.log(updateData);
+	         
+	         $.ajax({
+	            url : '/redclip/faq/' + faqNo,
+	            type : 'put',
+	            data : JSON.stringify(updateData),
+	            contentType : 'application/json',
+	            success : result => {
+	               console.log('요청 성공');
+	               //console.log(result);
+	               alert('faq 정보가 수정되었습니다.');
+	               location.reload();
+	            },
+	            error : e => {
+	               console.log('요청 실패', e);
+	               alert('정보 수정에 실패했습니다.')
+	            }
+	         });
+	         
+	      };
+
 		
 		//글 삭제
 		function deleteFaq() {

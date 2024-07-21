@@ -65,7 +65,7 @@ public class FaqController {
 	
 	@ResponseBody
 	@PutMapping("/{faqNo}")
-	public String update(@PathVariable int faqNo, FAQ faq) {
+	public String update(@PathVariable int faqNo, @RequestBody FAQ faq) {
 		
 		log.info("받아온 번호 : {}", faqNo);
 		
