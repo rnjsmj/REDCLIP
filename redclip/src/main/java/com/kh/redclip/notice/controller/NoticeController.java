@@ -115,7 +115,7 @@ public class NoticeController {
 	    int result = noticeService.deleteNotice(deleteNo);
         
 	    if (result > 0) {
-	        session.setAttribute("sussessMsg", "삭제성공.");
+	        session.setAttribute("successMsg", "삭제성공.");
 	        return "redirect:/noticeform";
 	    } else {
 	        session.setAttribute("failMsg", "삭제실패");
@@ -123,20 +123,46 @@ public class NoticeController {
 	    }
 	}
 	//공지사항 상세보기
-	@GetMapping("noticeDatail/{noticeNo}")
-	public String noticeDetail(@PathVariable  int noticeNo, Notice notice) {
+	@GetMapping("noticeDetail")
+	public String noticeDetail(@RequestParam int noticeNo, Model model) {
 		
-		int result =noticeService.noticeDetail(noticeNo);
-		
-		if(result> 0) {
-			return "noticeDetailform";
-		} else {
-			return "errorPage";
-		}
-		
+		log.info("글번호잘가져옴?{}",noticeNo);
+	    Notice notice = noticeService.noticeDetail(noticeNo);
+	    log.info("노티스를알려달라{}",notice);
+	    
+	    if (notice != null) {
+	        model.addAttribute("notice", notice);
+	        return "notice/noticeDetailform";
+	    } else {
+	        return "errorPage";
+	    }
 	}
 	
+	//공지사항수정페이지 
+	@GetMapping("noticeUpdateform")
+    public String noticeUpdateform(@RequestParam int noticeNo, Model model) {
+		
+		
+		 Notice notice = noticeService.noticeDetail(noticeNo);
 	
-	
-
+		  if (notice != null) {
+		        model.addAttribute("notice", notice);
+		        return "notice/noticeUpdateform";
+		    } else {
+		        return "errorPage";
+		    }
+	}
+	  // 공지사항 수정 처리
+	  @PostMapping("updateNotice")
+	    public String updateNotice(Notice notice, HttpSession session) {
+	        int result = noticeService.updateNotice(notice);
+	        
+	        if (result > 0) {
+	            session.setAttribute("alertMsg", "공지사항 수정성공.");
+	            return "redirect:/noticeDetail?noticeNo=" + notice.getNoticeNo();
+	        } else {
+	            session.setAttribute("elertMsg", "공지사항 수정에 실패했습니다.");
+	            return "errorPage";
+	        }
+	    }
 }

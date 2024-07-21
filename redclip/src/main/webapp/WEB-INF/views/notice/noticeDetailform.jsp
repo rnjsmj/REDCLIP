@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,86 +8,95 @@
 <title>글 상세보기</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-   
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
 
-        .container {
-            width: 60%;
-            margin: 0 auto;
-            margin-top: 20px;
-        }
+    .container {
+        width: 60%;
+        margin: 0 auto;
+        margin-top: auto;
+        min-height: 700px;
+        padding-top:100px;
+    }
 
-        h1 {
-            margin-bottom: 20px;
-            text-align: center;
-        }
+    h1 {
+    	
+        margin-bottom: 50px;
+        text-align: center;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+     	margin-top: 50px
+    }
 
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-            vertical-align: top;
-        }
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+        vertical-align: top;
+    }
 
-        th {
-            background-color: #f5f5f5;
-            width: 20%;
-        }
+    th {
+        background-color: #f5f5f5;
+        width: 20%;
+    }
 
-        .content-cell {
-            height: 150px;
-        }
+    .content-cell {
+        height: 150px;
+    }
 
-        .buttons {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .buttons {
+        text-align: right;
+        margin-bottom: 20px;
+    }
 
-        .btn-custom {
-            margin: 0 5px;
-        }
-    </style>
+    .btn-custom {
+        margin: 0 5px;
+    }
+</style>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+	<c:if test="${ not empty alertMsg }">
+         <script>alert("${ alertMsg }")</script>
+         <c:remove var="alertMsg" scope="session" />
+ 	</c:if>
     <div class="container">
         <h1>게시글 상세보기</h1>
         <table>
             <tr>
                 <th>글 유형</th>
-                <td>공지</td>
+                <td>${notice.noticeType}</td>
                 <th>등록일</th>
-                <td>날짜</td>
+                <td>${notice.noticeDate}</td>
             </tr>
             <tr>
                 <th>제목</th>
-                <td colspan="3">공지사항 제목입니다.</td>
+                <td colspan="3">${notice.noticeTitle}</td>
             </tr>
             <tr>
                 <th>이름</th>
-                <td colspan="3">작성자이름</td>
+                <td colspan="3">${notice.userId}</td>
             </tr>
             <tr>
                 <th>내용</th>
-                <td colspan="3" class="content-cell">공지사항 내용입니다.</td>
+                <td colspan="3" class="content-cell">${notice.noticeContent}</td>
             </tr>
         </table>
         
         <div class="buttons">
-            <button class="btn btn-success btn-custom">수정</button>
-            <button class="btn btn-danger btn-custom">삭제</button>
-            <button class="btn btn-secondary btn-custom" onclick="history.back()">뒤로</button>
+        <c:if test="${sessionScope.loginUser != null && sessionScope.loginUser.status == 'A'}">
+            <a class="btn btn-success btn-custom" href="noticeUpdateform?noticeNo=${notice.noticeNo}">수정</a>
+        </c:if>    
+            <a class="btn btn-secondary btn-custom" href="noticeform">목록으로</a>
         </div>
     </div>
-    
-  
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
+
 </html>

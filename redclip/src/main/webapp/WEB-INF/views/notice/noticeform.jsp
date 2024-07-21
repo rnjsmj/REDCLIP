@@ -135,7 +135,9 @@
                             <th>제목</th>
                             <th>등록날짜</th>
                             <th>작성자</th>
-                            <th>선택</th>
+                           	<c:if test="${sessionScope.loginUser != null && sessionScope.loginUser.status == 'A'}">
+                                <th>선택</th>
+                            </c:if>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,10 +145,12 @@
                             <tr>
                                 <td>${(pageInfo.currentPage - 1) * 10 + status.count}</td>
                                 <td>${notice.noticeType}</td>
-                                <td><a href="noticeDetail?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
+                      		    <td><a href="noticeDetail?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
                                 <td>${notice.noticeDate}</td>
                                 <td>${notice.userId}</td>
-                                <td><input type="checkbox" name="noticeNo" value="${notice.noticeNo}"></td>
+                                <c:if test="${sessionScope.loginUser != null && sessionScope.loginUser.status == 'A'}">
+                                    <td><input type="checkbox" name="noticeNo" value="${notice.noticeNo}"></td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                     </tbody>
