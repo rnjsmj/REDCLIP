@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.redclip.admin.model.service.AdminService;
 import com.kh.redclip.faq.model.service.FaqService;
 import com.kh.redclip.faq.model.vo.FAQ;
 import com.kh.redclip.member.model.service.MemberService;
+import com.kh.redclip.member.model.vo.ReportMember;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +25,23 @@ public class AdminController {
 
 	private final FaqService faqService;
 	private final MemberService memberService;
+	private final AdminService adminService;
 	
+	//관리자 페이지로 이동
 	@GetMapping
-	public String adminPage() {
+	public String adminPage(Model model) {
+		
+		List<ReportMember> reports = adminService.findAll();
+		
+		log.info("물어와! : {}", reports);
+		
+		model.addAttribute("list", reports);
+		
 		
 		return "admin/adminPage";
 	}
 	
+	//faq 관리 페이지 이동
 	@GetMapping("/adminFaq")
 	public String adminFaq(Model model) {
 		
@@ -41,6 +51,7 @@ public class AdminController {
 		
 		return "admin/admin_FAQ";
 	}
+	
 	
 	
 }

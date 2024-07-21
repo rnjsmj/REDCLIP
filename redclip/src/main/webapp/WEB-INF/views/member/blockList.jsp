@@ -48,9 +48,10 @@
     </header>
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">마이페이지</a></li>
-          <li class="breadcrumb-item active" aria-current="page">차단회원 관리</li>
+			<img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
+			<li class="breadcrumb-item"><a href="#">Home</a></li>
+			<li class="breadcrumb-item"><a href="#">마이페이지</a></li>
+			<li class="breadcrumb-item active" aria-current="page">차단회원 관리</li>
         </ol>
     </nav>
      <!-- 탭 클릭 시 비동기식 요청으로 화면 전환 -->
@@ -64,6 +65,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/member/myProduct/${ sessionScope.loginUser.userId  }">내가 쓴 글</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="${pageContext.request.contextPath}/member/wishList/${ sessionScope.loginUser.userId  }">찜한 상품</a>
             </li>
           </ul>
     </div>

@@ -1,5 +1,24 @@
 package com.kh.redclip.admin.model.service;
 
-public class AdminServiceImpl {
+import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.kh.redclip.admin.model.dao.AdminMapper;
+import com.kh.redclip.member.model.vo.ReportMember;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class AdminServiceImpl implements AdminService {
+	
+	private final AdminMapper adminMapper;
+
+	@Override
+	public List<ReportMember> findAll() {
+		return adminMapper.findAll();
+	}
+
+	
 }

@@ -55,6 +55,7 @@ public interface BarterService {
 	int wishDelete(Wishlist wish);
 	//게시글 신고
 	int barterReport(ReportMember report);
+	//위시 목록 조회
 	
 	
 	

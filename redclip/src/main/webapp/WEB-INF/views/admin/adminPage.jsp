@@ -53,32 +53,55 @@
             <thead>
               <tr>
                 <th scope="col">신고 제목</th>
-                <th scope="col">신고 내용</th>
+                <th scope="col">신고 유형</th>
+                <th scope="col">신고 당한 아이디</th>
                 <th scope="col">신고 일자</th>
               </tr>
             </thead>
             <tbody>
             <c:choose>
             <c:when test="${ empty list }">
+            <tr>
             	<td colspan="3" align="center">신고 내역이 존재하지 않습니다.</td>
+            </tr>
             </c:when>
             <c:otherwise>
-           	<c:forEach items="${ list }" var="reports">
-           		<td>${ reports.reportTitle }</td>
-           		<td>${ reports.reportContent }</td>
-           		<td>${ reports.reportDate }</td>
+           	<c:forEach items="${ list }" var="report">
+           	<tr>
+           		<td id="reportTitle">${ report.reportTitle }</td>
+           		<td id="reportType">${ report.reportType }</td>
+           		<td id="reportDate">${ report.reportedId }</td>
+           		<td id="reportDate">${ report.reportDate }</td>
+           	</tr>
            	</c:forEach>
             </c:otherwise>
             </c:choose>
             </tbody>
           </table>
           <div class="icon" align="center" style="margin-top: 40px; ">
-            <a href=""><i class="bi bi-megaphone" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
+            <a href="${pageContext.request.contextPath}/noticeform"><i class="bi bi-megaphone" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href="${pageContext.request.contextPath}/admin/adminFaq"><i class="bi bi-patch-question" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href=""><i class="bi bi-person-lines-fill" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href=""><i class="bi bi-person-exclamation" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
           </div>
     </div>
+    <script>
+    $(document).ready(() => {
+    	
+    	$.ajax({
+    		url : 'admin/reports',
+    		type : 'get',
+    		success : result => {
+    			console.log('요청 성공', result);
+    			
+    		},
+    		error : e => {
+    			console.log('요청 실패');
+    		}
+    	});
+    }); 
+    </script>
+    
     <footer>
         <jsp:include page="../common/footer.jsp" />
     </footer>
