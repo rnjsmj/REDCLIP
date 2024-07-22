@@ -87,9 +87,32 @@
             margin: 0 auto;
             margin-bottom: 50px;
         }
+        
+        #carouselBarters {
+        	width:100%;
+        	height:600px;
+        }
+        
         #trade-image {
             width: 100%;
             margin: 0 auto;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+            margin-bottom: 20px;
+            
+            .carousel-item {
+            	width: 100%;
+            	height:600px;
+            	overflow: hidden;
+            	
+            	img {
+            	width:100%;
+            	height:100%;
+            	object-fit:cover;
+            	
+            	}
+            }
+            
+            
         }
         #trade-info {
             width: 100%;
@@ -406,6 +429,8 @@
         		height:200px;
         	}
         }
+        
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
     </style>
 </head>
 <body>
@@ -442,9 +467,8 @@
                                 <c:forEach var="barterFile" items="${ barter.barterFileList }" >
                                 
 	                                <div class="carousel-item">
-	                                    <img
-	                                        class="d-block w-100 img-fluid"
-	                                        src="${ barterFile.barterFileName }"
+	                                    <img 
+	                                        src="/redclip/${ barterFile.barterFileName }"
 	                                        alt="${ barterFile.barterFileNo }"
 	                                    />
 	                                </div>
