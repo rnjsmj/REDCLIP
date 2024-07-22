@@ -29,12 +29,9 @@
         #memberList {
              margin: 0 auto; 
              width: 1200px;
+             margin-bottom: 50px;
             }
 
-        #btn-none {
-            float: right;
-            margin-right: 330px;
-         }
     </style>
 </head>
 <body>
@@ -66,9 +63,9 @@
         <table class="table" id="memberList">
             <thead>
                 <tr>
-                    <th scope="col">선택</th>
                     <th scope="col">아이디</th>
                     <th scope="col">이름</th>
+                    <th scope="col">닉네임</th>
                     <th scope="col">가입일</th>
                     <th scope="col">회원상태</th>
                 </tr>
@@ -83,9 +80,9 @@
                <c:otherwise>
                <c:forEach items="${ list }" var="member">
                <tr>
-               	<td><input class="form-check-input" type="checkbox" id="flexCheckDefault"></td>
                	<td>${ member.userId }</td>
                	<td>${ member.userName }</td>
+               	<td>${ member.nickname }</td>
                	<td>${ member.createDate }</td>
                	<td>${ member.status }</td>
                </tr>
@@ -94,7 +91,6 @@
                </c:choose>
             </tbody>
         </table>
-        <button id="btn-none" class="btn btn-success">활동정지</button>
     </div>
     <script>
         function status() {
@@ -105,7 +101,7 @@
         		contentType : 'application/json',
         		success : result => {
         			console.log('요청 성공', result);
-        			console.log(result.userId);
+        			console.log(result.members.userId);
         		},
         		error : e => {
         			console.log('요청 실패', e);

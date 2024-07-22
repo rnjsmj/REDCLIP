@@ -29,7 +29,7 @@
        text-align: center;
       }
 
-  #btn-none {
+  .btn-success {
       float: right;
       margin-right: 330px;
    }
@@ -81,30 +81,54 @@
           </table>
           <div class="icon" align="center" style="margin-top: 40px; ">
             <a href="${pageContext.request.contextPath}/noticeform"><i class="bi bi-megaphone" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
-            <a href="${pageContext.request.contextPath}/admin/adminFaq"><i class="bi bi-patch-question" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
+            <a href="${pageContext.request.contextPath}/admin/adminFaq"><i class="bi bi-question" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href="${pageContext.request.contextPath}/admin/memList"><i class="bi bi-person-lines-fill" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
-            <a href=""><i class="bi bi-person-exclamation" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
+            <a href=""><i class="bi bi-emoji-kiss" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);">.</i></a>
           </div>
     </div>
     
-    <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#adminModal">
+	  관리자 계정 생성
+	</button>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">노예 양성소</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-default">아이디</span>
+			  </div>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			</div>
+			 <div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-default">비밀번호</span>
+			  </div>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			</div>
+			 <div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-default">비밀번호 확인</span>
+			  </div>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary">양성</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     <script>
     
     </script>

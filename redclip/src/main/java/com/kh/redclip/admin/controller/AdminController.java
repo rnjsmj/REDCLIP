@@ -2,6 +2,8 @@ package com.kh.redclip.admin.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,13 +68,18 @@ public class AdminController {
 	
 	@ResponseBody
 	@GetMapping("/status")
-	public String status() {
+	public ResponseEntity<List<Member>> status() {
 
 		List<Member> members = adminService.status();
 		
 		log.info("조회한 데이터 : {}", members);
 		
-		return members.isEmpty()? "error" : "success";
+		if(members.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(members);
+		}
+		
 	}
 	
 }

@@ -39,7 +39,8 @@
 				USER_ID userId,
 				USER_NAME userName,
 				CREATE_DATE createDate,
-				STATUS status
+				STATUS status,
+				NICKNAME nickname
 		  FROM
 		  		TB_MEMBER
 		  WHERE

@@ -134,7 +134,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
                         <button type="button" class="btn btn-success" onclick="insert();">작성</button>
-                        <button type="reset" class="btn btn-secondary">취소</button>
+                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     </div>
             </div>
         </div>
@@ -176,7 +176,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
                         <button type="button" class="btn btn-success" onclick="update();">수정</button>
-                        <button type="reset" class="btn btn-secondary">취소</button>
+                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     </div>
             </div>
         </div>
