@@ -97,6 +97,7 @@
             width: 100%;
             margin: 0 auto;
             box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+            margin-bottom: 20px;
             
             .carousel-item {
             	width: 100%;
