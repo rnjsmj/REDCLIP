@@ -36,6 +36,7 @@
   		<mapper resource="/mapper/faq-mapper.xml"/>
   		<mapper resource="/mapper/chatting-mapper.xml" />
   		<mapper resource="/mapper/notice-mapper.xml"/>
+  		<mapper resource="/mapper/main-mapper.xml"/>
   	</mappers>
   	
 </configuration>
