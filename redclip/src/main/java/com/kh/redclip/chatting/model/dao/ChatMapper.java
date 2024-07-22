@@ -5,14 +5,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.redclip.chatting.model.vo.ChatMessage;
+import com.kh.redclip.chatting.model.vo.ChatMessageVO;
 import com.kh.redclip.chatting.model.vo.ChatRoom;
 import com.kh.redclip.chatting.model.vo.ChatRoomVO;
 
 @Mapper
 public interface ChatMapper {
 
-	// 채팅 전송
-	int insertMessage(ChatMessage chatMessage);
+	
 
 	// 채팅 목록
 	List<ChatRoomVO> findAll(String userId);
@@ -27,4 +27,8 @@ public interface ChatMapper {
 	// 글 작성자, 답글 작성자, 글번호를 이용하여 글번호 갱신
 	int chatBarterUpdate(ChatRoom cr);
 		
+	// 채팅 전송
+	int insertMessage(ChatMessage chatMessage);
+	
+	ChatMessageVO chatListByRoomNo(int roomNo);
 }

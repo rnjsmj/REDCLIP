@@ -82,27 +82,28 @@
             <tbody>
                 <!-- 반복문으로 회원 아이디와 일치하는 레코드를 전부 출력-->
                 <c:forEach items="${ list }" var="blockMember">
-                   <c:choose>
-                      <c:when test="${ empty list }">
-                         <td colspan="3" align="center">차단한 회원이 존재하지 않습니다.</td>
-                      </c:when>
-                      <c:otherwise>
-                         <tr>
-                         <input type="hidden"  value="${ sessionScope.loginUser.userId }"  id="userId" />
-                             <td><div class="form-check">
-                                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                               </div></td>
-                               <td id="blockedId">${ blockMember.blockedId }</td>
-                               <td id="blockId">${ blockMember.blockDate }</td>
-                          </tr>
-                      </c:otherwise>
-                   </c:choose>
+	                <c:choose>
+	                	<c:when test="${ empty list }">
+	                		<td colspan="3" align="center">차단한 회원이 존재하지 않습니다.</td>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<tr>
+	                		<input type="hidden" value="${ sessionScope.loginUser.userId }" id="userId" />
+			                    <td><div class="form-check">
+			                        <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+			                      </div></td>
+			                      <td id="blockedId">${ blockMember.blockedId }</td>
+			                      <td id="blockId">${ blockMember.blockDate }</td>
+			                 </tr>
+	                	</c:otherwise>
+	                </c:choose>
                 </c:forEach>
             </tbody>
         </table>
         <button type="button" id="btn-none" class="btn btn-success" onclick="deleteByBlock();">차단해제</button>
     </div>
     <script>
+
           function deleteByBlock() {
           
              var userId = $('#userId').val();
@@ -138,6 +139,45 @@
                 }
              });
           };
+
+    		function deleteByBlock() {
+    		
+    			const userId = $('#userId').val();
+    			
+    			//배열 선언
+    			const blockMembers = [];
+    			
+    			//체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
+    			$('.form-check-input:checked').each(function() {
+    				const block= $(this).closest('tr').find('#blockedId').text().trim();
+
+                    blockMembers.push(block);
+    			});
+    			
+    			console.log(blockMembers);
+    			console.log(userId);
+    			
+    			$.ajax({
+    				
+    				url: userId,
+    				type : 'delete',
+    				data : JSON.stringify(blockMembers),
+    				contentType : 'application/json',
+    				traditional: true,
+    				success : result => {
+    					console.log('차단 해제함', result);
+    					
+    					alert('차단 해제에 성공했습니다.');
+    					location.reload();
+    				},
+    				error : e => {
+    					console.log('차단 해제 실패함', e);
+    					
+    					alert('차단 해제에 실패했습니다.');
+    				}
+    			});
+    		};
+
     </script>
     <footer>
         <jsp:include page="../common/footer.jsp" />

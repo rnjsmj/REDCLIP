@@ -45,7 +45,12 @@ public class BarterServiceImpl implements BarterService{
 		return barterMapper.barterInsert(barterFile);
 	}
 	
-	
+	//게시글 수정
+	@Override
+	public int update(Barter barter) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	@Override
 	public List<BarterReply> getBarterReply(int barterNo) {
@@ -132,6 +137,7 @@ public class BarterServiceImpl implements BarterService{
 	public List<BarterVO> getFilteredBarters(Map<String, Integer> params) {
 		return barterMapper.getFilteredBarters(params);
 	}
+
 
 	
 	

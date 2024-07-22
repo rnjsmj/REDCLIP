@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.redclip.chatting.model.dao.ChatMapper;
 import com.kh.redclip.chatting.model.vo.ChatMessage;
+import com.kh.redclip.chatting.model.vo.ChatMessageVO;
 import com.kh.redclip.chatting.model.vo.ChatRoom;
 import com.kh.redclip.chatting.model.vo.ChatRoomVO;
 
@@ -44,6 +45,9 @@ public class ChatServiceImpl implements ChatService {
 		return chatMapper.chatBarterUpdate(cr);
 	}
 
-	
+	@Override
+	public ChatMessageVO chatListByRoomNo(int roomNo) {
+		return chatMapper.chatListByRoomNo(roomNo);
+	}
 
 }

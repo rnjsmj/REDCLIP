@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import com.kh.redclip.chatting.model.vo.ChatMessage;
+import com.kh.redclip.chatting.model.vo.ChatMessageVO;
 import com.kh.redclip.chatting.model.vo.ChatRoom;
 import com.kh.redclip.chatting.model.vo.ChatRoomVO;
 
@@ -25,6 +26,7 @@ public interface ChatService {
 	// 글 작성자, 답글 작성자, 글번호를 이용하여 글번호 갱신
 	int chatBarterUpdate(ChatRoom cr);
 	
-	
+	// 채팅 내역 화면 출력
+	ChatMessageVO chatListByRoomNo(int roomNo);
 
 }
