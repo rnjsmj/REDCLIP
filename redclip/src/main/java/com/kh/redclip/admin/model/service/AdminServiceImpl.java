@@ -31,5 +31,11 @@ public class AdminServiceImpl implements AdminService {
 		return adminMapper.status();
 	}
 
+	@Override
+	public int reportCount(String userId) {
+		return adminMapper.reportCount(userId);
+	}
+
+	
 	
 }

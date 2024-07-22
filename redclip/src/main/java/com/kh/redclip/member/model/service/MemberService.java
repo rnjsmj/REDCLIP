@@ -72,6 +72,8 @@ public interface MemberService {
 
 	int memberStatus(String userId, String status);
 
+	int reportCount(String userId);
+
 
 
 

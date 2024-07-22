@@ -47,16 +47,14 @@
 		  		STATUS = 'Y'
 	</select>
 	
-	<select id="status" resultType="member">
+	<select id="status" resultType="status" parameterType="member">
 		SELECT
 				USER_ID userId,
 				USER_NAME userName,
 				CREATE_DATE createDate,
 				STATUS status
 		  FROM
-		  		TB_MEMBER
-		  WHERE
-		  		STATUS = 'N'
+		  		TB_MEM_STATUS
 	</select>
 
 </mapper>

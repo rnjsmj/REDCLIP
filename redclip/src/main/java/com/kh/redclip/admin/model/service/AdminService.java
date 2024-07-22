@@ -12,5 +12,7 @@ public interface AdminService {
 	List<Member> allMember();
 
 	List<Member> status();
+	
+	int reportCount(String userId);
 
 }

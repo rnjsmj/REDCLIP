@@ -101,7 +101,7 @@
         		contentType : 'application/json',
         		success : result => {
         			console.log('요청 성공', result);
-        			console.log(result.members.userId);
+        			console.log(result.userId);
         		},
         		error : e => {
         			console.log('요청 실패', e);

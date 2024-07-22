@@ -44,6 +44,19 @@ public class AdminController {
 		return "admin/adminPage";
 	}
 	
+	//누적 신고 횟수 조회
+	@GetMapping("/count")
+	public String reportCount(String userId, Model model) {
+		
+		int count= memberService.reportCount(userId);
+		
+		model.addAttribute("count", count);
+		
+		log.info("누적 신고 횟수 : {}", count);
+		
+		return "redirect:/"; 
+	}
+	
 	//faq 관리 페이지 이동
 	@GetMapping("/adminFaq")
 	public String adminFaq(Model model) {
@@ -66,6 +79,7 @@ public class AdminController {
 		return "admin/memList";
 	}
 	
+	//탈퇴 회원 조회..인데 미완성
 	@ResponseBody
 	@GetMapping("/status")
 	public ResponseEntity<List<Member>> status() {
@@ -81,5 +95,7 @@ public class AdminController {
 		}
 		
 	}
+	
+	
 	
 }

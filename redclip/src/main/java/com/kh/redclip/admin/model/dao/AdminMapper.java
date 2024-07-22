@@ -16,4 +16,6 @@ public interface AdminMapper {
 
 	List<Member> status();
 
+	int reportCount(String userId);
+
 }
