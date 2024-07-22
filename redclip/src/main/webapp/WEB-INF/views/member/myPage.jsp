@@ -263,7 +263,7 @@
    				success : result => {
    					console.log('요청 성공', result);
    					alert('회원 탈퇴에 성공했습니다.');
-   					location.href = '/redclip';
+   					location.href = 'member/logout';
    				},
    				error : (e) => {
    					
