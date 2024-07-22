@@ -9,7 +9,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.redclip.notice.model.service.NoticeService;
@@ -96,6 +98,7 @@ public class NoticeController {
 		return "notice/insertNoticeform";
 	}
 	
+	//글등록
 	@PostMapping("insertNotice")
 	public String insertNotice(Notice notice) {
 		 log.info("여기보세요여기{}",notice);
@@ -103,4 +106,63 @@ public class NoticeController {
 	    log.info(notice.getUserId());
 	    return "redirect:/noticeform";
 	}
+	//글삭제 (체크박스)
+	
+	@PostMapping("deleteNotice")
+	public String deleteNotice(@RequestParam List<Integer> deleteNo, HttpSession session) {
+		
+		 //log.info("이거 배열잘가져옴?!?!?{}",deleteNo);
+	    int result = noticeService.deleteNotice(deleteNo);
+        
+	    if (result > 0) {
+	        session.setAttribute("successMsg", "삭제성공.");
+	        return "redirect:/noticeform";
+	    } else {
+	        session.setAttribute("failMsg", "삭제실패");
+	        return "redirect:/noticeform";
+	    }
+	}
+	//공지사항 상세보기
+	@GetMapping("noticeDetail")
+	public String noticeDetail(@RequestParam int noticeNo, Model model) {
+		
+		log.info("글번호잘가져옴?{}",noticeNo);
+	    Notice notice = noticeService.noticeDetail(noticeNo);
+	    log.info("노티스를알려달라{}",notice);
+	    
+	    if (notice != null) {
+	        model.addAttribute("notice", notice);
+	        return "notice/noticeDetailform";
+	    } else {
+	        return "errorPage";
+	    }
+	}
+	
+	//공지사항수정페이지 
+	@GetMapping("noticeUpdateform")
+    public String noticeUpdateform(@RequestParam int noticeNo, Model model) {
+		
+		
+		 Notice notice = noticeService.noticeDetail(noticeNo);
+	
+		  if (notice != null) {
+		        model.addAttribute("notice", notice);
+		        return "notice/noticeUpdateform";
+		    } else {
+		        return "errorPage";
+		    }
+	}
+	  // 공지사항 수정 처리
+	  @PostMapping("updateNotice")
+	    public String updateNotice(Notice notice, HttpSession session) {
+	        int result = noticeService.updateNotice(notice);
+	        
+	        if (result > 0) {
+	            session.setAttribute("alertMsg", "공지사항 수정성공.");
+	            return "redirect:/noticeDetail?noticeNo=" + notice.getNoticeNo();
+	        } else {
+	            session.setAttribute("elertMsg", "공지사항 수정에 실패했습니다.");
+	            return "errorPage";
+	        }
+	    }
 }
