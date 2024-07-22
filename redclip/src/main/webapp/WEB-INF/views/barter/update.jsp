@@ -196,13 +196,13 @@
 	});
 	
 	function enteredData() {
-		$.ajax({
-			url : '/redclip/barters',
-			type : 'get',
-			success : result => {
+		
 				console.log(result);
-				$('#categoryNo').val(result.categoryNo).filter(function() {
+				$('#categoryNo').val(${ barter.categoryNo}).filter(function() {
 	                return $(this).text() === result.categoryNo;
+	                $(this)
+	                
+	                
 				$('#si').val(result.si).filter(function() {
 	                return $(this).text() === result.si;
 				$('#gu').val(result.gu).filter(function() {
@@ -211,9 +211,6 @@
 	                return $(this).text() === result.dong;
 	            }).prop('selected', true);
 				
-			},
-			error : e => {
-				console.log('글이 없져');
 			}
 		});	
 	};

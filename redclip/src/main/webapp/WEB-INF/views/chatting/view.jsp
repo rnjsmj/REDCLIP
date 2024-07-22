@@ -516,6 +516,20 @@
                     
                 }); 
             	
+            	
+            	
+            	$(document).on('click', '.chat-header-right button', function() {
+            		
+            		// 버튼 클릭시 message의 type을 close 로 전달하여 핸들러에서 구분할 수 있도록 함 
+            		// DB에도 저장하지 않음
+            		
+            		if (socket) {
+                    	sendMessage = roomNo + ', ' + '${ sessionScope.loginUser.userId }' + ', close message, close';
+                    	socket.send(sendMessage);
+                    } 
+            		
+            		
+            	});
             });
             
             	
@@ -541,7 +555,7 @@
                     
             	
                     if (socket) {
-                    	sendMessage = roomNo + ', ' + '${ sessionScope.loginUser.userId }' + ', ' + message;
+                    	sendMessage = roomNo + ', ' + '${ sessionScope.loginUser.userId }' + ', ' + message + ', chat';
                     	socket.send(sendMessage);
                     } 
                     

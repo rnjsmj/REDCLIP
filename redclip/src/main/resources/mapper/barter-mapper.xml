@@ -62,6 +62,9 @@
 		  		VW_BARTER_DETAIL
 		 WHERE
 		 		BARTER_NO = #{barterNo}
+		 ORDER
+		    BY
+		    	BARTER_FILE_NO ASC
 	
 	</select>
 	<!-- 검색 조회 -->
@@ -88,7 +91,8 @@
 	    </where>
 	    ORDER BY
 	       		BARTER_STATUS DESC,
-	        	BARTER_NO DESC
+	       		BARTER_NO DESC,
+	       		BARTER_FILE_NO ASC
 	</select>
 
 

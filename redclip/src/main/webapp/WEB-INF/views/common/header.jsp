@@ -119,32 +119,33 @@
 		
 		
    function connect(roomNo) {
-			console.log("연결 시도");
+		console.log("연결 시도");
+		
+		var socketAddress = "ws://localhost/redclip/chatting";
+		roomNo != null ? socketAddress += ("/" + roomNo) : socketAddress += "/0";
+		var ws = new WebSocket(socketAddress);
+		socket = ws;
+		
+		ws.onopen = function() {
+			console.log("소켓 open : ", socketAddress);
+		};
+		
+		ws.onmessage = function(event) {
+			let today = new Date();
+			console.log(event);
+			/* console.log("전달받은 메시지 : ", event.data+'\n'); */
+			const recValue = '<div class="receive-div"><div class="message receive"><p>' + event.data + '</p></div>'
+							+ '<span class="receive-date">' + today.getHours() + ':' + today.getMinutes() + '</span></div>';
+			$('.chat-messages').append(recValue);
+			scrollToBottom();
 			
-			let socketAddress = "ws://localhost/redclip/chatting";
-			roomNo != null ? socketAddress += ("/" + roomNo) : socketAddress += "/0";
-			let ws = new WebSocket(socketAddress);
-			socket = ws;
-			
-			ws.onopen = function() {
-				console.log("소켓 open : ", socketAddress);
-			};
-			
-			ws.onmessage = function(event) {
-				let today = new Date();
-				console.log("전달받은 메시지 : ", event.data+'\n');
-				const recValue = '<div class="receive-div"><div class="message receive"><p>' + event.data + '</p></div>'
-								+ '<span class="receive-date">' + today.getHours() + ':' + today.getMinutes() + '</span></div>';
-				$('.chat-messages').append(recValue);
-				scrollToBottom();
-				
-			};
-        
-			ws.onerror = function(err) { 
-				console.log("소켓 error : ", err)
-			};
-			
-		}
+		};
+       
+		ws.onerror = function(err) { 
+			console.log("소켓 error : ", err)
+		};
+		
+	}
    </script>
 </div>    
 </html>

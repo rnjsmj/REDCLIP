@@ -11,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
@@ -94,6 +95,7 @@ public class ChatHandler extends TextWebSocketHandler{
 			String roomNo = messageInfo[0];
 			String senderId = messageInfo[1].trim();
 			String chatMessage = messageInfo[2].substring(1);
+			String type = messageInfo[3].trim();
 			
 			/*
 			 * ChatMessage chatMessageData = new ChatMessage();
@@ -110,12 +112,14 @@ public class ChatHandler extends TextWebSocketHandler{
 //				
 //			}
 			
-			// 서비스 호출하여 DB에 저장
-			ChatMessage cm = new ChatMessage();
-			cm.setRoomNo(Integer.parseInt(roomNo));
-			cm.setSenderId(senderId);
-			cm.setChatMessage(chatMessage);
-			chatService.insertMessage(cm);
+			if (type == "chat") {
+				// 서비스 호출하여 DB에 저장
+				ChatMessage cm = new ChatMessage();
+				cm.setRoomNo(Integer.parseInt(roomNo));
+				cm.setSenderId(senderId);
+				cm.setChatMessage(chatMessage);
+				chatService.insertMessage(cm);
+			}	
 			
 			HashMap<String, Object> recieveSession  = new HashMap<String, Object>();
 			if(roomSessions.size() > 0) {
@@ -131,18 +135,23 @@ public class ChatHandler extends TextWebSocketHandler{
 				if(chatMessage.length() > 0) {
 					WebSocketSession wss = (WebSocketSession) recieveSession.get("socketSession");
 					if (wss != null) {
-						log.info("리시브 세션 존재 : {} - {}", recieveSession , wss);
+//							log.info("리시브 세션 존재 : {} - {}", recieveSession , wss);
 						try {
+							
+								if(type == "chat") {
 								wss.sendMessage(new TextMessage(chatMessage));
+								} else {
+									wss.sendMessage(new TextMessage(senderId + " : close"));
+								}
 								
 								
 								
 							} catch (IOException e) {
-								log.info("아...왜저래");
+//								log.info("아...왜저래");
 								e.printStackTrace();
 							}
 					} else {
-						log.info("리시브 세션 없음..");
+//							log.info("리시브 세션 없음..");
 					}
 					
 					
