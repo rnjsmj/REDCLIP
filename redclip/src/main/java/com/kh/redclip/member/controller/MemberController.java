@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.barter.model.service.BarterService;
 import com.kh.redclip.barter.model.vo.Barter;
+import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.BlockMember;
 import com.kh.redclip.member.model.vo.Member;
@@ -269,4 +270,15 @@ public class MemberController {
     	return memberService.deleteByBlock(userId, blockMembers) > 0 ? "success" : "error";
     }
     
+    //위시 목록보기
+	/*
+	 * @GetMapping("wishList/{userId}") public String wishList(@PathVariable String
+	 * userId, Model model) {
+	 * 
+	 * BarterVO wishs = barterService.wishList(userId);
+	 * 
+	 * model.addAttribute("list", wishs);
+	 * 
+	 * return "member/wishList"; }
+	 */
 }

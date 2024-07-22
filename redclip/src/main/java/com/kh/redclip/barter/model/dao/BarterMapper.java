@@ -72,4 +72,5 @@ public interface BarterMapper {
 	int replyListDelete(int barterNo);
 	
 	
+	
 }

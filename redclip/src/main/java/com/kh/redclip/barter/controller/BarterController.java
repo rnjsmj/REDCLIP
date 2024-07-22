@@ -143,13 +143,14 @@ public class BarterController {
 		}	
 	}
 	
-	@ResponseBody
-	@GetMapping
-	public ResponseEntity<BarterVO> enteredData(int barterNo) {
-		 barterService.findById(barterNo);
-		return ResponseEntity.status(HttpStatus.OK).body();
-	}
-	
+	//이거 때문에 오류나서 주석 처리해둔거임요
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping public ResponseEntity<BarterVO> enteredData(int barterNo) {
+	 * barterService.findById(barterNo); return
+	 * ResponseEntity.status(HttpStatus.OK).body(); }
+	 */
 	//파일업로드의 메서드를 만들어줌 
 	public String updateFile(MultipartFile updatefile,HttpSession session) {
 		  String originName = updatefile.getOriginalFilename();

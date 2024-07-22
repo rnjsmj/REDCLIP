@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.redclip.admin.model.dao.AdminMapper">
+	
+	<sql id="reports">
+		SELECT
+                REPORT_NO reportNo,
+		        REPORT_TITLE reportTitle,
+		        REPORT_CONTENT reportContent,
+		        REPORT_DATE reportDate,
+		        REPORTED_ID reportedId,
+		        REPORT_TYPE reportType,
+		        REFERENCE_NO referenceNo
+	</sql>
+	
+	<!-- 누적 신고 횟수 -->
+	<select id="count">
+		SELECT
+				COUNT(REPORTED_ID)
+		  FRO
+		  		TB_MEM_REPORT
+		  WHERE
+		  		REPORTED_ID = #{reportedId}
+	</select>
+	<!-- 신고 내역 조회 -->
+	<select id="findAll" resultType="report">
+		<include refid="reports"/>
+		  FROM
+				TB_MEM_REPORT
+		 ORDER
+			BY
+				REPORT_DATE DESC
+	</select>
+	
+	<select id="allMember" resultType="member">
+		SELECT
+				USER_ID userId,
+				USER_NAME userName,
+				CREATE_DATE createDate,
+				STATUS status,
+				NICKNAME nickname
+		  FROM
+		  		TB_MEMBER
+		  WHERE
+		  		STATUS = 'Y'
+	</select>
+	
+	<select id="status" resultType="member">
+		SELECT
+				USER_ID userId,
+				USER_NAME userName,
+				CREATE_DATE createDate,
+				STATUS status
+		  FROM
+		  		TB_MEMBER
+		  WHERE
+		  		STATUS = 'N'
+	</select>
+
+</mapper>

@@ -138,8 +138,5 @@ public class BarterServiceImpl implements BarterService{
 		return barterMapper.getFilteredBarters(params);
 	}
 
-
-	
-	
-	
+		
 }
