@@ -13,6 +13,7 @@ import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.vo.BlockMember;
 
 import com.kh.redclip.member.model.vo.Member;
+import com.kh.redclip.member.model.vo.StatusMember;
 import com.kh.redclip.region.model.vo.Region;
 
 public interface MemberService {
@@ -68,6 +69,8 @@ public interface MemberService {
 	int searchPw(Member member);
 
 	int changePw(Member member);
+
+	int memberStatus(String userId, String status);
 
 
 

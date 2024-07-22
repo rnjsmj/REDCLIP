@@ -20,6 +20,7 @@ import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.dao.MemberMapper;
 import com.kh.redclip.member.model.vo.BlockMember;
 import com.kh.redclip.member.model.vo.Member;
+import com.kh.redclip.member.model.vo.StatusMember;
 import com.kh.redclip.region.model.vo.Region;
 
 import lombok.RequiredArgsConstructor;
@@ -52,11 +53,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int update(Member member) {
 		return memberMapper.update(member);
-	}
-
-	@Override
-	public int changeStatus(String userId) {
-		return memberMapper.changeStatus(userId);
 	}
 
 	@Override
@@ -227,6 +223,18 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.changepw(member);
 	}
 
+	@Override
+	public int changeStatus(String userId) {
+		return memberMapper.changeStatus(userId);
+	}
+	
+	@Override
+	public int memberStatus(String userId, String status) {
+		return memberMapper.memberStatus(userId, status);
+	}
+
+
+	
 	
 
 	

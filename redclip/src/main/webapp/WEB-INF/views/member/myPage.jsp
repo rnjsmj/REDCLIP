@@ -190,6 +190,9 @@
                               모든 내용을 숙지하였으며 회원 탈퇴에 동의합니다.
                             </label>
                         </div>
+                         <div class="form-group">
+						    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="dropReason" placeholder="탈퇴 사유를 적어주세요" required></textarea>
+						  </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
@@ -247,20 +250,24 @@
    		function changeStatus() {
    			
    			const userId = $('#loginUserId').val();
+   			const reason = $('#exampleFormControlTextarea1').val(); 
    			
-   			//console.log(userId);
+   			console.log(userId);
+   			console.log(reason);
    			
    			$.ajax({
    				url: 'member/' + userId,
    				type: 'put',
+   				data : JSON.stringify(reason),
+   				contentType : 'application/json',
    				success : result => {
-   					
+   					console.log('요청 성공', result);
    					alert('회원 탈퇴에 성공했습니다.');
-   					location.reload();
+   					location.href = '/redclip';
    				},
    				error : (e) => {
    					
-   					//console.log("요청 실패");
+   					console.log('요청 실패', e);
    					alert('회원 탈퇴에 실패했습니다.');
    				}
    			});

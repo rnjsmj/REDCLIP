@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.barter.model.service.BarterService;
 import com.kh.redclip.barter.model.vo.Barter;
-import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.BlockMember;
 import com.kh.redclip.member.model.vo.Member;
+import com.kh.redclip.member.model.vo.ReportMember;
+import com.kh.redclip.member.model.vo.StatusMember;
 import com.kh.redclip.region.model.vo.Region;
 
 import lombok.RequiredArgsConstructor;
@@ -197,11 +199,22 @@ public class MemberController {
    
     //회원 상태 변경
     @ResponseBody
-    @PutMapping("/{userId}")
-    public String changeStatus(@PathVariable String userId) {
+    @PutMapping(value = "/{userId}")
+    public String changeStatus(@PathVariable String userId, @RequestBody String status) {
     	  
-    	//log.info("탈주: {}", userId);
-    	return memberService.changeStatus(userId) > 0 ? "success" : "error";
+    	log.info("탈주: {}", userId);
+    	
+		
+		 if(memberService.changeStatus(userId) > 0) {
+			 log.info("아이디: {}", userId);
+			 log.info("나가는 이유가 뭐야 : {}", status);
+			 return memberService.memberStatus(userId, status) > 0 ? "success" : "error";
+			 }
+		 else {
+			 return "error";
+		 }
+    	
+    	//return memberService.changeStatus(userId) > 0 && memberService.memberStatus(userId, dropReason) > 0? "success" : "error"; 
     }
     
     //내가 쓴 글 조회

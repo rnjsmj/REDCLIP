@@ -10,6 +10,7 @@ import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.member.model.vo.BlockMember;
 import com.kh.redclip.member.model.vo.Member;
+import com.kh.redclip.member.model.vo.StatusMember;
 import com.kh.redclip.region.model.vo.Region;
 
 @Mapper
@@ -58,6 +59,8 @@ public interface MemberMapper {
 	int searchpw(Member member);
 
 	int changepw(Member member);
+
+	int memberStatus(@Param("userId") String userId, @Param("dropReason") String status);
 
 
 

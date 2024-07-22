@@ -102,6 +102,22 @@
 		   	  
 	</update>
 	
+	<!-- 탈퇴 대기줄 -->
+	<insert id="memberStatus" parameterType="string">
+		INSERT
+		  INTO
+		  		TB_MEM_STATUS
+		  		(
+		  		USER_ID,
+		  		DROP_REASON
+		  		)
+		VALUES
+				(
+				#{userId},
+				#{dropReason}
+				)
+	</insert>
+	
 	<insert id="insertMember" parameterType="member">
     INSERT INTO TB_MEMBER
         (
