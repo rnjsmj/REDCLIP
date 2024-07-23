@@ -108,43 +108,7 @@
     </div>
     <script>
 
-          function deleteByBlock() {
-          
-             var userId = $('#userId').val();
-             
-             //배열 선언
-             var blockMembers = [];
-             
-       
-             //체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
-             $('.form-check-input:checked').each(function() {
-                 var block = $(this).closest('tr').find('#blockedId').text().trim();
-                 blockMembers.push(block);
-             });
-             
-             console.log(blockMembers);
-             console.log(userId);
-             
-             $.ajax({
-                
-                url: userId,
-                type : 'delete',
-                data : JSON.stringify(blockMembers),
-                contentType : 'application/json',
-                traditional: true,
-                success : result => {
-                  // console.log('차단 해제함', result);
-                  // location.reload();
-                },
-                error : e => {
-                   //console.log('차단 해제 실패함', e);
-                  // alert('차단 해제에 실패했습니다.');
-
-                }
-             });
-          };
-
-    		function deleteByBlock() {
+     		function deleteByBlock() {
     		
     			const userId = $('#userId').val();
     			

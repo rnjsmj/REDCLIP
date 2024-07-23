@@ -2,12 +2,9 @@ package com.kh.redclip.admin.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,6 +14,7 @@ import com.kh.redclip.faq.model.vo.FAQ;
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.member.model.vo.ReportMember;
+import com.kh.redclip.member.model.vo.StatusMember;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -80,20 +78,16 @@ public class AdminController {
 	}
 	
 	//탈퇴 회원 조회..인데 미완성
-	@ResponseBody
 	@GetMapping("/status")
-	public ResponseEntity<List<Member>> status() {
+	public String status(Model model) {
 
-		List<Member> members = adminService.status();
+		List<StatusMember> member = adminService.status();
 		
-		log.info("조회한 데이터 : {}", members);
+		log.info("조회한 데이터 : {}", member);
 		
-		if(members.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-		} else {
-			return ResponseEntity.status(HttpStatus.OK).body(members);
-		}
+		model.addAttribute("list", member);
 		
+		return "admin/statusList";
 	}
 	
 	

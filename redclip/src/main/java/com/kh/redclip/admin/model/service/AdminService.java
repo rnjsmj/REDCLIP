@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.member.model.vo.ReportMember;
+import com.kh.redclip.member.model.vo.StatusMember;
 
 public interface AdminService {
 
@@ -11,7 +12,7 @@ public interface AdminService {
 
 	List<Member> allMember();
 
-	List<Member> status();
+	List<StatusMember> status();
 	
 	int reportCount(String userId);
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.kh.redclip.admin.model.dao.AdminMapper;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.member.model.vo.ReportMember;
+import com.kh.redclip.member.model.vo.StatusMember;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +28,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Member> status() {
+	public List<StatusMember> status() {
 		return adminMapper.status();
 	}
 

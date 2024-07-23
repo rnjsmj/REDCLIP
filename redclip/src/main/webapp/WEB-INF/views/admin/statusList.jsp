@@ -49,10 +49,10 @@
     <div class="tab">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a id="all" class="nav-link active" aria-current="page">전체회원관리</a>
+              <a href="memList" id="all" class="nav-link">전체회원관리</a>
             </li>
             <li class="nav-item">
-              <a href="status" id="status" class="nav-link">탈퇴대기</a>
+              <a id="status" class="nav-link active" aria-current="page">탈퇴대기</a>
             </li>
           </ul>
     </div>

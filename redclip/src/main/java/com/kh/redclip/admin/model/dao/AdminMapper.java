@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.member.model.vo.ReportMember;
+import com.kh.redclip.member.model.vo.StatusMember;
 
 @Mapper
 public interface AdminMapper {
@@ -14,7 +15,7 @@ public interface AdminMapper {
 
 	List<Member> allMember();
 
-	List<Member> status();
+	List<StatusMember> status();
 
 	int reportCount(String userId);
 

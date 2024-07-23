@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.redclip.barter.model.dao.BarterMapper;
 import com.kh.redclip.barter.model.vo.Barter;
@@ -224,14 +225,22 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int changeStatus(String userId) {
-		return memberMapper.changeStatus(userId);
+	@Transactional
+	public int changeStatus(String userId, String status) {
+		/*
+		 * if(memberMapper.changeStatus(userId) > 0) { return
+		 * memberMapper.memberStatus(userId, status); } else { return 0; }
+		 */
+		
+		return memberMapper.changeStatus(userId) > 0? memberMapper.memberStatus(userId, status) : 0;
 	}
 	
 	@Override
 	public int memberStatus(String userId, String status) {
 		return memberMapper.memberStatus(userId, status);
 	}
+
+
 
 
 	

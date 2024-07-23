@@ -28,7 +28,7 @@ public interface MemberService {
 	public int update(Member member);
 	
 	//회원상태 업데이트(탈퇴)
-	public int changeStatus(String userId);
+	public int changeStatus(String userId, String status);
 
 	//회원 삭제
 	public int delete(String userId);
@@ -72,7 +72,6 @@ public interface MemberService {
 
 	int memberStatus(String userId, String status);
 
-	int reportCount(String userId);
 
 
 

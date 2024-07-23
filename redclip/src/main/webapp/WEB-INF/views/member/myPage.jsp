@@ -102,12 +102,12 @@
     
         <div id="updateForm">
             <div>
-                <div class="userImg">
+               <!--  <div class="userImg">
                 	<div id="profil">
 						<img alt="프로필 사진" src="">
 					</div>
 					<input type="file" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-				</div>
+				</div> -->
                     
                     <label for="userId">* ID </label><br>
                     <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
@@ -144,7 +144,7 @@
                
 				<div id="buttons">
                     <button type="button" id="userUpdate" class="btn btn-success" onclick="update();">수정</button>
-                    <button type="reset" class="btn btn-secondary" onclick="location.reloard">취소</button><br>
+                    <button type="reset" class="btn btn-secondary">취소</button><br>
                     <button type="button" id="delete-btn" class="btn btn-secondary" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
 				</div>
               </div>
@@ -208,7 +208,7 @@
      	//회원정보 수정
    		function update() {
    			
-   			var updateData = {
+   			const updateData = {
    					"userId" : $('#userId').val(),
    					"userName" : $('#userName').val(),
    					"nickname" : $('#nickname').val(),
@@ -220,17 +220,12 @@
    					
    			};
    			
-   			 //console.log(updateData);
-
    			$.ajax({
    				url : 'member/',
    				type : 'put',
    				data : JSON.stringify(updateData),
    				contentType : 'application/json',
    				success : function(result) {
-   					
-   					//console.log(result);
-   					
    						alert('회원 정보가 수정되었습니다.');
    						
    					},

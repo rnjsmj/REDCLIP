@@ -47,14 +47,19 @@
 		  		STATUS = 'Y'
 	</select>
 	
-	<select id="status" resultType="status" parameterType="member">
+	<select id="status" resultType="member" parameterType="status">
 		SELECT
-				USER_ID userId,
-				USER_NAME userName,
-				CREATE_DATE createDate,
-				STATUS status
+				S.USER_ID userId,
+				M.USER_NAME userName,
+				M.NICKNAME nickname,
+                M.CREATE_DATE createDate,
+                M.STATUS status,
+				S.DROP_DATE dropDate,
+				S.DROP_REASON dropReason
 		  FROM
-		  		TB_MEM_STATUS
+		  		TB_MEM_STATUS S, TB_MEMBER M
+       	 WHERE  
+                S.USER_ID = M.USER_ID
 	</select>
 
 </mapper>

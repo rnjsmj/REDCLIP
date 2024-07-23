@@ -202,19 +202,7 @@ public class MemberController {
     @PutMapping(value = "/{userId}")
     public String changeStatus(@PathVariable String userId, @RequestBody String status) {
     	  
-    	log.info("탈주: {}", userId);
-    	
-		
-		 if(memberService.changeStatus(userId) > 0) {
-			 log.info("아이디: {}", userId);
-			 log.info("나가는 이유가 뭐야 : {}", status);
-			 return memberService.memberStatus(userId, status) > 0 ? "success" : "error";
-			 }
-		 else {
-			 return "error";
-		 }
-    	
-    	//return memberService.changeStatus(userId) > 0 && memberService.memberStatus(userId, dropReason) > 0? "success" : "error"; 
+    	return memberService.changeStatus(userId, status) > 0? "success" : "error"; 
     }
     
     //내가 쓴 글 조회
