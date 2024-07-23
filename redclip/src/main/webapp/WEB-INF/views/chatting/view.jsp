@@ -502,7 +502,7 @@
                     			
                     		
                     		});
-                    		$('.chat-header-left').html<(chatProfile);
+                    		$('.chat-header-left').html(chatProfile);
                     		$('.chat-messages').html(messageList);
                     		scrollToBottom();
                     		
