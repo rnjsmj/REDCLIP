@@ -197,12 +197,12 @@ public class MemberController {
     	
     }
    
-    //회원 상태 변경
+    //회원 탈퇴
     @ResponseBody
     @PutMapping(value = "/{userId}")
-    public String changeStatus(@PathVariable String userId, @RequestBody String status) {
+    public String changeStatus(@PathVariable String userId, @RequestBody String reason) {
     	  
-    	return memberService.changeStatus(userId, status) > 0? "success" : "error"; 
+    	return memberService.status(userId, reason) > 0? "success" : "error"; 
     }
     
     //내가 쓴 글 조회

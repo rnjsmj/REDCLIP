@@ -157,8 +157,8 @@
                 </div>
                     <div class="modal-body">
                          <div>
-                          <input type="hidden" id="userId" value="${ detail.userId }" />
-                          <input type="hidden" id="faqNo" value="${ detail.faqNo }" />
+                          <input type="hidden" id="userId" />
+                          <input type="hidden" id="faqNo" />
                        </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">제목</label>
@@ -166,7 +166,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
-                            <select class="form-select" aria-label="Default select example" value="${ detail.faqType }" id="faqType">
+                            <select class="form-select" aria-label="Default select example" id="faqType">
                                 <option selected></option>
                                 <option value="시스템">시스템</option>
                                 <option value="회원">회원</option>

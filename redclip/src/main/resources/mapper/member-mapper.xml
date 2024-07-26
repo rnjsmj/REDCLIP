@@ -102,7 +102,7 @@
 		   	  
 	</update>
 	
-	<!-- 탈퇴 대기줄 -->
+	<!-- 탈퇴 테이블 -->
 	<insert id="memberStatus" parameterType="string">
 		INSERT
 		  INTO

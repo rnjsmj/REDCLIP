@@ -25,9 +25,6 @@ public interface MemberMapper {
 	//회원정보 수정
 	public int update(Member member); 
 	
-	//회원상태 업데이트(탈퇴)
-	public int changeStatus(String userId);
-
 	//회원 삭제
 	public int delete(String userId);
 	
@@ -59,8 +56,11 @@ public interface MemberMapper {
 	int searchpw(Member member);
 
 	int changepw(Member member);
+	
+	//회원상태 업데이트(탈퇴)
+	public void changeStatus(String userId);
 
-	int memberStatus(@Param("userId") String userId, @Param("dropReason") String status);
+	public void memberStatus(@Param("userId") String userId, @Param("dropReason") String status);
 
 
 

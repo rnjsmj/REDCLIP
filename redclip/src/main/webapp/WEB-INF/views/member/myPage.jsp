@@ -245,28 +245,25 @@
    		function changeStatus() {
    			
    			const userId = $('#loginUserId').val();
-   			const reason = $('#exampleFormControlTextarea1').val(); 
+   			const reason = $('#exampleFormControlTextarea1').val();
    			
-   			console.log(userId);
-   			console.log(reason);
-   			
-   			$.ajax({
-   				url: 'member/' + userId,
-   				type: 'put',
-   				data : JSON.stringify(reason),
-   				contentType : 'application/json',
-   				success : result => {
-   					console.log('요청 성공', result);
-   					alert('회원 탈퇴에 성공했습니다.');
-   					location.href = 'member/logout';
-   				},
-   				error : (e) => {
-   					
-   					console.log('요청 실패', e);
-   					alert('회원 탈퇴에 실패했습니다.');
-   				}
-   			});
-   			
+   			if(reason === "") {
+   				alert('탈퇴 사유를 입력해주세요.');
+   			} else {
+   				$.ajax({
+   	   				url: 'member/' + userId,
+   	   				type: 'put',
+   	   				data : JSON.stringify(reason),
+   	   				contentType : 'application/json',
+   	   				success : result => {
+   	   					alert('회원 탈퇴에 성공했습니다.');
+   	   					location.href = 'member/logout';
+   	   				},
+   	   				error : (e) => {
+   	   					alert('회원 탈퇴에 실패했습니다.');
+   	   				}
+   	   			});
+   			}
    		};
    		
     </script>

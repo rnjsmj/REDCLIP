@@ -226,24 +226,29 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	@Transactional
-	public int changeStatus(String userId, String status) {
-		/*
-		 * if(memberMapper.changeStatus(userId) > 0) { return
-		 * memberMapper.memberStatus(userId, status); } else { return 0; }
-		 */
+	public int status(String userId, String reason) {
 		
-		return memberMapper.changeStatus(userId) > 0? memberMapper.memberStatus(userId, status) : 0;
+		try {
+			changeStatus(userId);
+			memberStatus(userId, reason);
+			
+			return 1;
+		} catch (Exception e) {
+			return 0;
+		}
+		
 	}
 	
-	@Override
-	public int memberStatus(String userId, String status) {
-		return memberMapper.memberStatus(userId, status);
+	
+	public void changeStatus(String userId) {
+		memberMapper.changeStatus(userId);
+	}
+	
+	public void memberStatus(String userId, String reason) {
+		memberMapper.memberStatus(userId, reason);
 	}
 
 
-
-
-	
 	
 
 	

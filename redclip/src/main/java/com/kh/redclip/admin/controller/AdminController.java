@@ -42,6 +42,7 @@ public class AdminController {
 		return "admin/adminPage";
 	}
 	
+	/*
 	//누적 신고 횟수 조회
 	@GetMapping("/count")
 	public String reportCount(String userId, Model model) {
@@ -54,7 +55,7 @@ public class AdminController {
 		
 		return "redirect:/"; 
 	}
-	
+	*/
 	//faq 관리 페이지 이동
 	@GetMapping("/adminFaq")
 	public String adminFaq(Model model) {

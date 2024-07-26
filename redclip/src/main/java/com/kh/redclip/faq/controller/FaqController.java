@@ -51,13 +51,7 @@ public class FaqController {
 	@GetMapping("/{faqNo}")
 	public FAQ selectByNo(@PathVariable int faqNo, Model model) {
 		
-		//log.info("받아온 번호 : {}", faqNo);
-		
 		FAQ faq = faqService.selectByNo(faqNo);
-		
-		//log.info("가져온 정보 : {}", faq);
-		
-		model.addAttribute("detail", faq);
 		
 		return faq;
 		
@@ -67,10 +61,6 @@ public class FaqController {
 	@PutMapping("/{faqNo}")
 	public String update(@PathVariable int faqNo, @RequestBody FAQ faq) {
 		
-		log.info("받아온 번호 : {}", faqNo);
-		
-		log.info("입력한 값 : {}", faq);
-		
 		return faqService.update(faq) > 0? "success" : "error" ;
 		
 	}
@@ -78,8 +68,6 @@ public class FaqController {
 	@ResponseBody
 	@DeleteMapping
 	public String delete(@RequestBody List<Integer> numbers) {
-		
-		log.info("받아온 번호 : {}", numbers);
 		
 		return faqService.delete(numbers) > 0? "success" : "error";
 	}

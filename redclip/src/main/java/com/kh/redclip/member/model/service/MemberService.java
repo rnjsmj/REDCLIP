@@ -28,8 +28,8 @@ public interface MemberService {
 	public int update(Member member);
 	
 	//회원상태 업데이트(탈퇴)
-	public int changeStatus(String userId, String status);
-
+	int status(String userId, String reason);
+	
 	//회원 삭제
 	public int delete(String userId);
 	
@@ -70,7 +70,7 @@ public interface MemberService {
 
 	int changePw(Member member);
 
-	int memberStatus(String userId, String status);
+	
 
 
 

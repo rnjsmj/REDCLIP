@@ -121,10 +121,7 @@
 
                     blockMembers.push(block);
     			});
-    			
-    			console.log(blockMembers);
-    			console.log(userId);
-    			
+    		
     			$.ajax({
     				
     				url: userId,
@@ -133,14 +130,10 @@
     				contentType : 'application/json',
     				traditional: true,
     				success : result => {
-    					console.log('차단 해제함', result);
-    					
     					alert('차단 해제에 성공했습니다.');
     					location.reload();
     				},
     				error : e => {
-    					console.log('차단 해제 실패함', e);
-    					
     					alert('차단 해제에 실패했습니다.');
     				}
     			});
