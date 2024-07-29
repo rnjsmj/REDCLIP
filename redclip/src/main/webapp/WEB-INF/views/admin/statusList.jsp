@@ -26,10 +26,11 @@
              margin: 30px; 
              margin-left: 340px;
         }
-        #memberList {
+        #statusList {
              margin: 0 auto; 
              width: 1200px;
              margin-bottom: 50px;
+             text-align: center;
             }
 
     </style>
@@ -60,9 +61,10 @@
         
         <h3 id="title">회원관리</h3>
 
-        <table class="table" id="memberList">
+        <table class="table" id="statusList">
             <thead>
                 <tr>
+                	<th scope="col"></th>
                     <th scope="col">아이디</th>
                     <th scope="col">이름</th>
                     <th scope="col">닉네임</th>
@@ -80,7 +82,12 @@
                <c:otherwise>
                <c:forEach items="${ list }" var="member">
                <tr>
-               	<td>${ member.userId }</td>
+               	<td>
+               		<div class="form-check">
+	                    <input class="form-check-input" type="checkbox" id="seletBox" />
+	                </div>
+               	</td>
+               	<td id="userId">${ member.userId }</td>
                	<td>${ member.userName }</td>
                	<td>${ member.nickname }</td>
                	<td>${ member.createDate }</td>
@@ -91,7 +98,46 @@
                </c:choose>
             </tbody>
         </table>
+        <div id="buttons">
+	       	<button type="button" class="btn btn-success" onclick="change();">복구</button>
+	        <button type="button" class="btn btn-secondary" onclick="deleteMember();">삭제</button>
+        </div>
     </div>
+    <script>
+    	function change() {
+    		
+    		const userId = $('#userId').val();
+			
+			//배열 선언
+			const members = [];
+			
+			//체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
+			$('#seletBox').each(function() {
+				const member= $(this).closest('tr').find('#userId').text().trim();
+				
+                members.push(member);
+			});
+			
+			console.log(members);
+
+			$.ajax({
+				url : '/redclip/admin/',
+				type : 'put',
+				data : JSON.stringify(members),
+				contentType : 'application/json',
+				success : result => {
+					console.log('요청 성공');
+				},
+				error : e => {
+					console.log('요청 실패');
+				}
+			});
+		};
+    	
+    	function deleteMember() {
+    		
+    	}
+    </script>
     <footer>
         <jsp:include page="../common/footer.jsp" />
     </footer>

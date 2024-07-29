@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -78,18 +81,29 @@ public class AdminController {
 		return "admin/memList";
 	}
 	
-	//탈퇴 회원 조회..인데 미완성
+	//탈퇴 회원 조회
 	@GetMapping("/status")
 	public String status(Model model) {
 
 		List<StatusMember> member = adminService.status();
 		
-		log.info("조회한 데이터 : {}", member);
+		//log.info("조회한 데이터 : {}", member);
 		
 		model.addAttribute("list", member);
 		
 		return "admin/statusList";
 	}
+	
+	//회원 복구
+	@ResponseBody
+	@PutMapping
+	public String change(@RequestBody String[] members) {
+		
+		log.info("넘어온 아이디 : {}", members);
+		
+		return adminService.change(members) > 0? "success" : "error";
+	}
+	
 	
 	
 	

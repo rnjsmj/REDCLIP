@@ -3,6 +3,7 @@ package com.kh.redclip.admin.model.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.redclip.admin.model.dao.AdminMapper;
 import com.kh.redclip.member.model.vo.Member;
@@ -37,6 +38,28 @@ public class AdminServiceImpl implements AdminService {
 		return adminMapper.reportCount(userId);
 	}
 
+	@Transactional
+	@Override
+	public int change(String[] members) {
+		try {
+			changeMember(members);
+			getMember(members);
+			
+			return 1;
+		} catch (Exception e) {
+			return 0;
+		} 
+	}
+	
+	void changeMember(String[] members) {
+		adminMapper.changeMember(members);
+	}
+	
+	void getMember(String[] members) {
+		adminMapper.getMember(members);
+	}
+
+	
 	
 	
 }

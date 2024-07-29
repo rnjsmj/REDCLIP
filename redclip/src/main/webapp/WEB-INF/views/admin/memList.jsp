@@ -30,6 +30,7 @@
              margin: 0 auto; 
              width: 1200px;
              margin-bottom: 50px;
+             text-align: center;
             }
 
     </style>

@@ -186,10 +186,7 @@
 	
 	
 	
-	<!-- 회원 차단 -->
-	<insert id="">
 	
-	</insert>
 	
 	<!-- 차단 회원 조회 -->
 	<select id="selectByBlock" parameterType="string" resultType="block">

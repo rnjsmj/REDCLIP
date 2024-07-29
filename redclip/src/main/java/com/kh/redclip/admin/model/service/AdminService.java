@@ -16,4 +16,6 @@ public interface AdminService {
 	
 	int reportCount(String userId);
 
+	int change(String[] members);
+
 }

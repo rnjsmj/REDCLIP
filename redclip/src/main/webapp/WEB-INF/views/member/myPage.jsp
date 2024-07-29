@@ -227,7 +227,7 @@
    				contentType : 'application/json',
    				success : result => {
    					
-   						if(result > 0) {
+   						if(result === 'success') {
    							alert('회원 정보가 수정되었습니다.');	
    						}
    						else {
@@ -262,7 +262,8 @@
    	   				contentType : 'application/json',
    	   				success : result => {
    	   					
-   	   					if(result > 0) {
+   	   					console.log(result);
+   	   					if(result === 'success') {
 	   	   					alert('회원 탈퇴에 성공했습니다.');
 	   	   					location.href = 'member/logout';	
    	   					} else {

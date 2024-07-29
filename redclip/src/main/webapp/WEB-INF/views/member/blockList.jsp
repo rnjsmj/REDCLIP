@@ -134,7 +134,7 @@
     				traditional: true,
     				success : result => {
     					
-    					if(result > 0) {
+    					if(result === 'success') {
     						alert('차단 해제에 성공했습니다.');
         					location.reload();	
     					}

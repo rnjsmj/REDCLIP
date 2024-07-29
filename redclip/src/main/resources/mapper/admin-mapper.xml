@@ -61,5 +61,34 @@
        	 WHERE  
                 S.USER_ID = M.USER_ID
 	</select>
+	
+	<update id="changeMember" parameterType="string">
+		UPDATE
+				TB_MEMBER
+		   SET
+		   		STATUS = 'Y'
+		 WHERE
+		 		STATUS = 'N'
+		   AND
+		   		USER_ID
+		   	IN
+		   		<foreach item="id" collection="members"
+		        open="(" separator="," close=")">
+       			#{id}
+   				</foreach>
+	</update>
+	
+	<delete id="getMember" parameterType="string">
+		DELETE
+		  FROM
+		        TB_MEM_STATUS
+		 WHERE
+		        USER_ID
+		    IN
+        		<foreach item="id" collection="members"
+        		open="(" separator="," close=")">
+        		#{id}
+        		</foreach>
+	</delete>
 
 </mapper>
