@@ -85,7 +85,7 @@
           <input type="text" class="form-control" id="name" name="barterName" value="${barter.barterName}" maxlength="250" placeholder="내용을 입력해주세요." required>
         </div>
       </div>
-      <div class="form-group" style="display: none;">
+      <div class="form-group">
 	    <label for="writer">작성자</label>
 	    <input type="text" id="writer" class="form-control" value="${barter.barterWriter}" name="barterWriter" readonly>
 	  </div>

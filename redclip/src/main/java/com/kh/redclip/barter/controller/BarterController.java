@@ -143,25 +143,6 @@ public class BarterController {
 		}	
 	}
 	
-	//파일업로드의 메서드를 만들어줌 
-	public String updateFile(MultipartFile updatefile,HttpSession session) {
-		  String originName = updatefile.getOriginalFilename();
-	         String ext = originName.substring(originName.lastIndexOf("."));
-	         int num = (int) (Math.random() * 900) + 100;
-	         String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-	         String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
-	         String changeName = "KH_" +currentTime +"_" +num +ext;
-	         
-	         try {
-	        	  updatefile.transferTo(new File(savePath + changeName));
-	            } catch (IllegalStateException e) {
-	                e.printStackTrace();
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	            }
-	    return "resources/upload/" +changeName;
-	}
-	
 	// 파일 업로드 메서드
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
