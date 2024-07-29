@@ -30,7 +30,6 @@
    width: 100%;
    height: 100%;
    object-fit: cover;
-   display: none;
  }
  .file-input {
    position: absolute;
@@ -57,7 +56,7 @@
 	    </ol>
 	</nav>
     <h2 class="title">게시글 수정</h2>
-    <form id="updateForm" method="post" action="${pageContext.request.contextPath}/barters/update" enctype="multipart/form-data">
+    <form id="updateForm" method="post" action="${pageContext.request.contextPath}/barters/barter-update" enctype="multipart/form-data">
       <div class="form-group">
        <label for="name">상품명</label>
         <div class="input-group">
@@ -86,6 +85,7 @@
         </div>
       </div>
       <div class="form-group">
+      <input type="hidden" id="barterNo" name="barterNo" value="${barter.barterNo }" />
         <label for="writer">작성자</label>
         <input type="text" id="writer" class="form-control" value="${barter.barterWriter}" name="barterWriter" readonly>
       </div>
@@ -119,19 +119,19 @@
 	    <label>이미지 등록</label>
 	    <div class="form-row">
 	        <div class="col image-placeholder">
-	            <img id="imagePreview1" class="image-preview" src="" alt="이미지 미리보기">
+	            <img id="imagePreview1" class="image-preview" src="../${barter.barterFileList[0].barterFileName}" alt="이미지 미리보기">
 	            <input type="file" id="upfile" class="file-input" name="upfile" value="reupfile" onchange="loadImg(this, 1)">
 	        </div>
 	        <div class="col image-placeholder">
-	            <img id="imagePreview2" class="image-preview" src="" alt="이미지 미리보기">
+	            <img id="imagePreview2" class="image-preview" src="../${barter.barterFileList[1].barterFileName}" alt="이미지 미리보기">
 	            <input type="file" id="upfile" class="file-input" name="upfile" value="reupfile" onchange="loadImg(this, 2)">
 	        </div>
 	        <div class="col image-placeholder">
-	            <img id="imagePreview3" class="image-preview" src="" alt="이미지 미리보기">
+	            <img id="imagePreview3" class="image-preview" src="../${barter.barterFileList[2].barterFileName}" alt="이미지 미리보기">
 	            <input type="file" id="upfile" class="file-input" name="upfile" value="reupfile" onchange="loadImg(this, 3)">
 	        </div>
 	        <div class="col image-placeholder">
-	            <img id="imagePreview4" class="image-preview" src="" alt="이미지 미리보기">
+	            <img id="imagePreview4" class="image-preview" src="../${barter.barterFileList[3].barterFileName}" alt="이미지 미리보기">
 	            <input type="file" id="upfile" class="file-input" name="upfile" value="reupfile" onchange="loadImg(this, 4)">
 	        </div>
 	    </div>
@@ -149,7 +149,7 @@
   });
 
   function enteredData() {
-  //    console.log('Barter Data:', '${barter}');
+      console.log('Barter Data:', '${barter}');
   //    console.log('Category No:', '${barter.categoryNo}');
   //    console.log('City Code:', '${barter.region.cityCode}');
   //    console.log('Town Code:', '${barter.region.townCode}');
@@ -268,22 +268,22 @@
          });
      });
 	
-	function loadImg(inputFile, index) {
-	    const previewImage = document.getElementById('imagePreview' + index);
+     function loadImg(inputFile, index) {
+ 	    const previewImage = document.getElementById('imagePreview' + index);
 
-	    if (inputFile.files.length) {
-	        const reader = new FileReader();
-	        
-	        reader.readAsDataURL(inputFile.files[0]);
-	        reader.onload = function (e) {
-	            previewImage.src = e.target.result;
-	            previewImage.style.display = 'block';
-	        };
-	    } else {
-	        previewImage.src = "";
-	        previewImage.style.display = 'none';
-	    }
-	}
+ 	    if (inputFile.files.length) {
+ 	        const reader = new FileReader();
+ 	        
+ 	        reader.readAsDataURL(inputFile.files[0]);
+ 	        reader.onload = function (e) {
+ 	            previewImage.src = e.target.result;
+ 	            previewImage.style.display = 'block';
+ 	        };
+ 	    } else {
+ 	        previewImage.src = "";
+ 	        previewImage.style.display = 'none';
+ 	    }
+ 	}
 
   </script>
   <jsp:include page="/WEB-INF/views/common/footer.jsp" />

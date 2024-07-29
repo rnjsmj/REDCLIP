@@ -3,6 +3,10 @@ package com.kh.redclip.barter.model.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterFile;
 import com.kh.redclip.barter.model.vo.BarterReply;
@@ -20,7 +24,7 @@ public interface BarterService {
 	int barterInsert(BarterFile barterfile);
 	List<BarterVO> getFilteredBarters(Map<String, Object> params);
 	//게시글 수정
-	int update(Barter barter);
+	int update(Barter barter, MultipartFile[] reupFile, HttpSession session);
 	
 	//댓글 목록
 	List<BarterReply> getBarterReply(int barterNo);
@@ -56,6 +60,7 @@ public interface BarterService {
 	//게시글 신고
 	int barterReport(ReportMember report);
 	//위시 목록 조회
+
 	
 	
 	

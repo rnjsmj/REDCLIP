@@ -249,17 +249,15 @@ TB_BARTER_FILE
 	</insert>
 	
 	<update id="update" parameterType="barter">
-	UPDATE 
-	    	  BARTER
-	   SET 
-	    	  BARTER_TITLE=#{barterTitle},
-	    	  BARTER_CONTENT=#{barterContent},
-	    	  CHANGE_NAME=#{changeName},
-	    	  VILLAGE_CODE=#{villageCode},
-	    	  ORIGIN_NAME=#{originName},
-	      	  CATEGORY_NO=#{categoryNo}
-	  WHERE
-	    	  BARTER_NO=#{barterdNo}	
+	  UPDATE
+	    		TB_BARTER
+	    SET 	
+		        BARTER_NAME=#{barterName},
+		        BARTER_CONTENT=#{barterContent},
+		        VILLAGE_CODE=#{villageCode},
+		        CATEGORY_NO=#{categoryNo}
+	    WHERE
+	    		BARTER_NO=#{barterNo}
 	</update>
 	
 	<resultMap type="barterReply" id="replyResultSet">

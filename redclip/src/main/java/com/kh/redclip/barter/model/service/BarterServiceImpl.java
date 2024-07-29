@@ -3,10 +3,14 @@ package com.kh.redclip.barter.model.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.redclip.barter.controller.BarterController;
 import com.kh.redclip.barter.model.dao.BarterMapper;
 import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterFile;
@@ -23,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 public class BarterServiceImpl implements BarterService{
 
 	private final BarterMapper barterMapper;
-	private final SqlSessionTemplate sqlSession;
 
 	@Override
 	public List<BarterVO> getAllBarters(Integer code) {
@@ -46,9 +49,27 @@ public class BarterServiceImpl implements BarterService{
 	}
 	
 	//게시글 수정
+	@Transactional
 	@Override
-	public int update(Barter barter) {
-		return barterMapper.update(sqlSession, barter);
+	public int update(Barter barter, MultipartFile[] reupFile, HttpSession session) {
+		try {
+	         barterMapper.update(barter);
+	         barterMapper.barterFileDelete(barter.getBarterNo());
+	         if (reupFile != null) {
+	               for (MultipartFile file : reupFile) {
+	                     if(!file.isEmpty()) {
+	                       BarterFile uploadFile = new BarterFile();
+	                       uploadFile.setBarterFileName(BarterController.saveFile(file, session));;
+	                       barterInsert(uploadFile);
+	                  }
+	               }     
+	           }
+	         
+	         return 1;
+	         
+	      } catch (Exception e ) {
+	         return 0;
+	      }
 	}
 	
 	@Override
@@ -156,6 +177,7 @@ public class BarterServiceImpl implements BarterService{
 	public List<BarterVO> getFilteredBarters(Map<String, Object> params) {
 		return barterMapper.getFilteredBarters(params);
 	}
+
 
 		
 }
