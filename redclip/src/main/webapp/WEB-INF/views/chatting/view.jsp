@@ -369,8 +369,6 @@
                                 case 'tab-barter' : selectList('barter'); break;
                                 case 'tab-reply' : selectList('reply'); break;
                                 };
-                                
-                                
                             });
                         });
                     </script>
@@ -489,15 +487,15 @@
                     		// 채팅 내역
                     		(result.chatMessageList).map(( message ) => {
                     			let type = (message.senderId === '${sessionScope.loginUser.userId}') ? 'send' : 'receive';
-                    			messageList += '<div class="'+ type + '-div chat-div">'
+                    			messageList += `<div class="\${type}-div chat-div">`
                     			
-                    			let dateData = '<span class="' + type + '-date">' + message.chatDate + '</span>';
-                    			let messageData = '<div class="message ' + type + '"><p>' + message.chatMessage + '</p></div>'
+                    			let dateData = `<span class="\${type}-date">\${message.chatDate}</span>`;
+                    			let messageData = `<div class="message \${type}"><p>\${message.chatMessage}</p></div>`;
                     			
                     			messageList += (message.senderId === '${sessionScope.loginUser.userId}') 
                     							? dateData + messageData
                     							: messageData + dateData;
-                    			messageList +=  '</div>';
+                    			messageList +=  `</div>`;
                     			
                     			
                     		
@@ -529,9 +527,9 @@
                 
 
                 if (message.trim() !== '') {
-                    const insValue = '<div class="send-div chat-div">'
-                    				+ '<span class="send-date">' + today.getHours() + ':' + today.getMinutes() + '</span>'
-                    				+ '<div class="message send"><p>' + $('#chat-input').val() + '</p></div></div>';
+                    const insValue = `<div class="send-div chat-div">
+                    				  <span class="send-date">\${today.getHours()} : \${today.getMinutes()}</span>
+                    				  <div class="message send"><p>\${ message }</p></div></div>`;
 
                     const chatMessage = {
                     	roomNo : roomNo,
@@ -588,22 +586,34 @@
                 				case 'barter' :  result = result.filter((room) => room.barterWriter == '${sessionScope.loginUser.userId}'); break;
                 				case 'reply' : result = result.filter ((room) => room.replyWriter == '${sessionScope.loginUser.userId}'); break;
                 			}
-                			 
+                			
                 			result.map((room) => {
-                				chatItems += '<li class="chat-item" id="' + room.roomNo +'">'
-                						   + '<div class="list-img">프사</div>'
-                                    	   + '<div class="chat-details">'
-                                           + '<h5><span class="badge text-bg-secondary">'
-                                           + '<a class="chat-link" href="/redclip/barters/' + room.barterNo + '">' + room.barterName + '</a></span>'
-                                           + '</h5><p class="nickname">';
-                                           
-                                chatItems += ( room.barterWriter === "${ sessionScope.loginUser.userId }" ) 
-                                			? room.replyNickname + '</p><span class="small-detail">' + room.replyVillageName 
-                                			: room.barterNickname + '</p><span class="small-detail">' + room.barterVillageName; 
-                                			
+                				
+                				let profile;
+                				let nickname;
+                				let villageName;
+                				
+                				if (room.barterWriter === "${ sessionScope.loginUser.userId }") {
+                					profile = room.replyProfil;
+                					nickname = room.replyNickname;
+                					villageName = room.replyVillageName;
+                				} else {
+                					profile = room.barterProfil;
+                					nickname = room.barterNickname;
+                					villageName = room.villageName;
+                				}
+                				
+                				chatItems += `<li class="chat-item" id="\${room.roomNo}">
+                							  <img class="list-img" src="/redclip/\${profile}">
+                                    	      <div class="chat-details">
+                                              <h5><span class="badge text-bg-secondary">
+                                              <a class="chat-link" href="/redclip/barters/\${room.barterNo}">\${room.barterName}</a></span>
+                                              </h5><p class="nickname">\${nickname}</p>
+                                              <span class="small-detail">\${villageName}`;
+                                        
                                 chatItems +=  ( room.chatDate != null || room.chatMessage != null)
-                                			 ? ' · ' + room.chatDate + '</span><p class="latest-message">' + room.chatMessage + '</p></div></li>'
-                                			 : '</div></li>';
+                                			 ? ` · \${room.chatDate}</span><p class="latest-message">\${room.chatMessage}</p></div></li>`
+                                			 : `</div></li>`;
                                   
                 				
                 			});
