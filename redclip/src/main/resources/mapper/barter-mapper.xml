@@ -92,9 +92,6 @@
 	        	BARTER_NO DESC
 	</select>
 
-
-	
-	
 	<resultMap type="barterVO" id="barterListResultSet">
 		<id column="BARTER_NO" property="barterNo" />
 		<result column="BARTER_NAME" property="barterName" />
