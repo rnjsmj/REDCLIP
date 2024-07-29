@@ -104,7 +104,10 @@
                 </c:forEach>
             </tbody>
         </table>
-        <button type="button" id="btn-none" class="btn btn-success" onclick="deleteByBlock();">차단해제</button>
+        
+        <button type="button" id="btn-none" class="btn btn-success"
+        onclick="deleteByBlock();">차단해제</button>
+        
     </div>
     <script>
 
@@ -130,11 +133,17 @@
     				contentType : 'application/json',
     				traditional: true,
     				success : result => {
-    					alert('차단 해제에 성공했습니다.');
-    					location.reload();
+    					
+    					if(result > 0) {
+    						alert('차단 해제에 성공했습니다.');
+        					location.reload();	
+    					}
+    					else {
+    						alert('차단 해제에 실패했습니다.');	
+    					}
     				},
     				error : e => {
-    					alert('차단 해제에 실패했습니다.');
+    					alert('요청을 실패했습니다.');
     				}
     			});
     		};

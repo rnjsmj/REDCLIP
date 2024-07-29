@@ -195,23 +195,27 @@
 			
 			
 			const faqNo = $("input[name='faqNo']:checked").val();
-			//const numbers = Array.from(faqNo).map(checkbox => parseInt(checkbox.value, 10));
 			
 			$.ajax({
 				url : '/redclip/faq/' + faqNo,
 				type : 'get',
 				success : result => {
-					$('#userId').val(result.userId);
-					$('#faqNo').val(result.faqNo);
-					$('#exampleFormControlInput1').val(result.question);
-					$('#exampleFormControlTextarea1').val(result.answer);
-					$('#faqType option').filter(function() {
-		                return $(this).text() === result.faqType;
-		            }).prop('selected', true);
 					
+					if(result != null) {
+						$('#userId').val(result.userId);
+						$('#faqNo').val(result.faqNo);
+						$('#exampleFormControlInput1').val(result.question);
+						$('#exampleFormControlTextarea1').val(result.answer);
+						$('#faqType option').filter(function() {
+			                return $(this).text() === result.faqType;
+			            }).prop('selected', true);	
+					}
+					else {
+						alert('글 정보를 불러올 수 없습니다.')	
+					}
 				},
 				error : e => {
-					console.log('글이 존재하지 않습니다.');
+					alert('요청에 실패했습니다.');
 				}
 			});
 			
@@ -233,11 +237,16 @@
 				contentType: 'application/json',
 				data : JSON.stringify(newFaq),
 				success : result => {
-					alert('FAQ가 추가되었습니다.');
-					location.reload();
+					if(result > 0) {
+						alert('FAQ가 추가되었습니다.');
+						location.reload();	
+					}
+					else {
+						alert('FAQ 추가에 실패했습니다.')
+					}
 				},
 				error : (error) => {
-					alert('FAQ 추가에 실패했습니다.');
+					alert('FAQ 추가 요청에 실패했습니다.');
 				}
 			});
 		};
@@ -261,13 +270,17 @@
 	            data : JSON.stringify(updateData),
 	            contentType : 'application/json',
 	            success : result => {
-	               console.log('요청 성공');
-	               alert('faq 정보가 수정되었습니다.');
-	               location.reload();
+	            	
+	            	if(result > 0) {
+	 	               alert('faq 정보가 수정되었습니다.');
+	 	               location.reload();	
+	            	}
+	            	else {
+	            		alert('정보 수정에 실패했습니다.')	
+	            	}
 	            },
 	            error : e => {
-	               console.log('요청 실패', e);
-	               alert('정보 수정에 실패했습니다.')
+	               alert('정보 수정 요청을 실패했습니다.')
 	            }
 	         });
 	         
@@ -285,19 +298,23 @@
 				numbers.push(faqNo);
 			});			
 			
-			console.log(numbers);
-			
 			$.ajax({
 				url : '/redclip/faq',
 				type : 'delete',
 				data : JSON.stringify(numbers),
 				contentType : 'application/json',
 				success : result => {
-					alert('글을 삭제했습니다.');
-					location.reload();
+					
+					if(result > 0) {
+						alert('글을 삭제했습니다.');
+						location.reload();	
+					}
+					else {
+						alert('글을 삭제하지 못했습니다.');	
+					}
 				},
 				error : e => {
-					alert('글을 삭제하지 못했습니다.');
+					alert('요청에 실패했습니다.');
 				}
 			});
 			

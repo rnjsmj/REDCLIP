@@ -225,12 +225,17 @@
    				type : 'put',
    				data : JSON.stringify(updateData),
    				contentType : 'application/json',
-   				success : function(result) {
-   						alert('회원 정보가 수정되었습니다.');
-   						
+   				success : result => {
+   					
+   						if(result > 0) {
+   							alert('회원 정보가 수정되었습니다.');	
+   						}
+   						else {
+   							alert('회원 정보 수정에 실패했습니다.');		
+   						}
    					},
-   				error : function(error) {
-   					alert('회원 정보 수정에 실패했습니다.');
+   				error : (e) => {
+   					alert('요청에 실패했습니다.');   					
    				}
    			});
    		};
@@ -256,11 +261,17 @@
    	   				data : JSON.stringify(reason),
    	   				contentType : 'application/json',
    	   				success : result => {
-   	   					alert('회원 탈퇴에 성공했습니다.');
-   	   					location.href = 'member/logout';
+   	   					
+   	   					if(result > 0) {
+	   	   					alert('회원 탈퇴에 성공했습니다.');
+	   	   					location.href = 'member/logout';	
+   	   					} else {
+   	   						alert('회원 탈퇴에 실패했습니다.')
+   	   					}
+   	   					
    	   				},
    	   				error : (e) => {
-   	   					alert('회원 탈퇴에 실패했습니다.');
+   	   					alert('회원 탈퇴 요청에 실패했습니다.');
    	   				}
    	   			});
    			}
