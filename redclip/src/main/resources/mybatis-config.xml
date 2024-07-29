@@ -11,6 +11,8 @@
   	<typeAliases>
   		<typeAlias type="com.kh.redclip.sample.model.vo.Sample" alias="sample" />
   		<typeAlias type="com.kh.redclip.member.model.vo.Member" alias="member" />
+  		<typeAlias type="com.kh.redclip.member.model.vo.ReportMember" alias="report"/>
+  		<typeAlias type="com.kh.redclip.member.model.vo.StatusMember" alias="status"/>
   		<typeAlias type="com.kh.redclip.barter.model.vo.Barter" alias="barter" />
   		<typeAlias type="com.kh.redclip.barter.model.vo.BarterVO" alias="barterVo" />
   		<typeAlias type="com.kh.redclip.barter.model.vo.BarterFile" alias="barterFile" />
@@ -36,7 +38,11 @@
   		<mapper resource="/mapper/faq-mapper.xml"/>
   		<mapper resource="/mapper/chatting-mapper.xml" />
   		<mapper resource="/mapper/notice-mapper.xml"/>
+
   		<mapper resource="/mapper/main-mapper.xml"/>
+
+  		<mapper resource="/mapper/admin-mapper.xml"/>
+
   	</mappers>
   	
 </configuration>

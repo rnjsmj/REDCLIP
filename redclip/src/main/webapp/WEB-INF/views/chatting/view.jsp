@@ -103,6 +103,19 @@
             display: flex;
             align-items: center;
         }
+         .chat-header-right {
+        	display:flex;
+        	align-items: center;
+        	
+        	> button  {
+        		padding: 5px;
+			    line-height: 1;
+			    height: 30px;
+			    font-size: 14px;
+    			font-weight: bold;
+        	}
+        }
+       
 
         #profile-name {
             margin: 0;
@@ -133,13 +146,14 @@
         .search-container {
             display: flex;
             align-items: center;
+            margin-left:5px;
         }
         .search-container input[type='text'] {
             padding: 5px;
             font-size: 14px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            width: 250px;
+            width: 150px;
             margin-right: 10px;
             height: 40px;
         }
@@ -340,128 +354,30 @@
                 <div class="sidebar">
                     <!-- 카테고리, 선택 시 배경 색 바뀌는 자바스크립트 추가 예정-->
                     <div class="sidebar-tab">
-                        <span class="tab-badge active">전체</span>
-                        <span class="tab-badge">게시글</span>
-                        <span class="tab-badge">답글</span>
+                        <span class="tab-badge active" id="tab-all">전체</span>
+                        <span class="tab-badge" id="tab-barter">게시글</span>
+                        <span class="tab-badge" id="tab-reply">답글</span>
                     </div>
                     <script>
                         $(document).ready(function () {
                             $('.tab-badge').on('click', function () {
                                 $('.tab-badge').removeClass('active');
                                 $(this).addClass('active');
+                                
+                                switch ($(this).attr('id')) {
+                                case 'tab-all' : selectList(); break;
+                                case 'tab-barter' : selectList('barter'); break;
+                                case 'tab-reply' : selectList('reply'); break;
+                                };
+                                
+                                
                             });
                         });
                     </script>
                     <!-- 채팅방 목록 -->
                     <div class="chat-room-list">
                         <ul class="chat-list">
-                            <!-- <li class="chat-item" id="11">
-                                <img src="profile1.jpg" alt="Profile Picture 1">
-                                <div class="list-img">프사</div>
-                                <div class="chat-details">
-                                    <h5>
-                                        <span class="badge text-bg-secondary"
-                                            ><a class="chat-link" href="#">교환 게시글 제목</a></span
-                                        >
-                                    </h5>
-                                    <p class="nickname">User 1</p>
-                                    <span class="small-detail">OO동 · 4시간 전</span>
-                                    <p class="latest-message" style="color: #303030; font-weight: bold">
-                                        Hello! How are you?
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="chat-item" id="2">
-                                <div class="list-img">프사</div>
-                                <div class="chat-details">
-                                    <h5>
-                                        <span class="badge text-bg-secondary"
-                                            ><a class="chat-link" href="#">교환 게시글 제목</a></span
-                                        >
-                                    </h5>
-                                    <p class="nickname">User 2</p>
-                                    <span class="small-detail">OO동 · 7시간 전</span>
-                                    <p class="latest-message">Are you coming tomorrow?</p>
-                                </div>
-                            </li>
-                            <li class="chat-item" id="3">
-                                <div class="list-img">프사</div>
-                                <div class="chat-details">
-                                    <h5>
-                                        <span class="badge text-bg-secondary"
-                                            ><a class="chat-link" href="#">교환 게시글 제목</a></span
-                                        >
-                                    </h5>
-                                    <p class="nickname">User 3</p>
-                                    <span class="small-detail">OO동 · 07.04</span>
-                                    <p class="latest-message">Thank you for the help!</p>
-                                </div>
-                            </li>
-                            <li class="chat-item">
-                                <div class="list-img">프사</div>
-                                <div class="chat-details">
-                                    <h5>
-                                        <span class="badge text-bg-secondary"
-                                            ><a class="chat-link" href="#">교환 게시글 제목</a></span
-                                        >
-                                    </h5>
-                                    <p class="nickname">User 4</p>
-                                    <span class="small-detail">OO동 · 07.04</span>
-                                    <p class="latest-message">Thank you for the help!</p>
-                                </div>
-                            </li>
-                            <li class="chat-item">
-                                <div class="list-img">프사</div>
-                                <div class="chat-details">
-                                    <h5>
-                                        <span class="badge text-bg-secondary"
-                                            ><a class="chat-link" href="#">교환 게시글 제목</a></span
-                                        >
-                                    </h5>
-                                    <p class="nickname">User 5</p>
-                                    <span class="small-detail">OO동 · 07.04</span>
-                                    <p class="latest-message">Thank you for the help!</p>
-                                </div>
-                            </li>
-                            <li class="chat-item">
-                                <div class="list-img">프사</div>
-                                <div class="chat-details">
-                                    <h5>
-                                        <span class="badge text-bg-secondary"
-                                            ><a class="chat-link" href="#">교환 게시글 제목</a></span
-                                        >
-                                    </h5>
-                                    <p class="nickname">User 6</p>
-                                    <span class="small-detail">OO동 · 07.04</span>
-                                    <p class="latest-message">Thank you for the help!</p>
-                                </div>
-                            </li>
-                            <li class="chat-item">
-                                <div class="list-img">프사</div>
-                                <div class="chat-details">
-                                    <h5>
-                                        <span class="badge text-bg-secondary"
-                                            ><a class="chat-link" href="#">교환 게시글 제목</a></span
-                                        >
-                                    </h5>
-                                    <p class="nickname">User 7</p>
-                                    <span class="small-detail">OO동 · 07.04</span>
-                                    <p class="latest-message">Thank you for the help!</p>
-                                </div>
-                            </li>
-                            <li class="chat-item">
-                                <div class="list-img">프사</div>
-                                <div class="chat-details">
-                                    <h5>
-                                        <span class="badge text-bg-secondary"
-                                            ><a class="chat-link" href="#">교환 게시글 제목</a></span
-                                        >
-                                    </h5>
-                                    <p class="nickname">User 8</p>
-                                    <span class="small-detail">OO동 · 07.04</span>
-                                    <p class="latest-message">Thank you for the help!</p>
-                                </div>
-                            </li> -->
+                            
                         </ul>
                     </div>
                 </div>
@@ -484,23 +400,7 @@
                     };
                    
                     
-                    /* function chatView(e) {
-                    	socket.close();
-                    	
-                    	console.log(e.target.id);
-                        $('.chat-item').removeClass('active');
-                        e.addClass('active');
-						
-                        const roomNo = e.attr("id");
-                        let onclick = 'submitMessage(' + roomNo + ')';
-                        $('#sendbtn').attr("onclick", onclick);
-                        
-                        var socketAddress = "ws://localhost/redclip/chatting/" + roomNo;
-                        connect(roomNo);
-                        
-                        // 선택한 채팅방 채팅내역 select 해오는 ajax 필요!
-                        
-                        $('.chat-area').show(); */
+                    
                     
                 </script>
                 <!-- 오른쪽 영역 -->
@@ -508,46 +408,22 @@
                     <!-- 채팅 상대 정보 -->
                     <div class="chat-header">
                         <div class="chat-header-left">
-                            <div class="profile-img">프사</div>
+                            <img class="profile-img" src="">
                             <div id="profile-name">
                                 <p id="nickname">User2</p>
-                                <p id="level">CLIP</p>
+                                <!-- <p id="level">CLIP</p> -->
                             </div>
                         </div>
-                        <div class="search-container">
-                            <input type="text" placeholder="Search..." />
+                        <div class="chat-header-right">
+                        	
+	                        <div class="search-container">
+	                            <input type="text" placeholder="채팅 검색" />
+	                        </div>
                         </div>
                     </div>
                     <!-- 채팅 내역 -->
                     <div class="chat-messages">
-                    	<div class="send-div chat-div">
-	                    	<span class="send-date">09.15 17:55</span>
-	                        <div class="message sender">
-	                            <p>Sender message 1 Sender message 1 Sender message 1 Sender message 1Sender message 1</p>
-	                        </div>
-                        
-                        </div>
-                        <div class="receiver-div">
-                        <div class="message receiver">
-                            <p>Receiver message 1</p>
-                        </div>
-                        <span class="receive-date">09.15 17:56</span>
-                        </div>
-                        <div class="message sender">
-                            <p>Sender message 2</p>
-                        </div>
-                        <div class="message receiver">
-                            <p>Receiver message 2</p>
-                        </div>
-                        <div class="message sender">
-                            <p>Sender message 3</p>
-                        </div>
-                        <div class="message sender">
-                            <p>Sender message 4</p>
-                        </div>
-                        <div class="message receiver">
-                            <p>Receiver message 3 Receiver message 3 Receiver message 3</p>
-                        </div>
+                    	
                     </div>
                     <!-- 채팅 입력창 -->
                     <div class="chat-input">
@@ -578,6 +454,7 @@
                     roomVar = roomNo;
                     
                     let messageList = '';
+                    let chatProfile = '';
                     
                     // 선택한 채팅방 채팅내역 select
                     $.ajax({
@@ -588,7 +465,25 @@
                     		console.log(result);
                     		
                     		// 채팅 상대 (채팅창 헤더)
+                    		let profile;
+                    		let nickname;
                     		
+                    		if (result.barterWriter === '${sessionScope.loginUser.userId}') {
+                    			profile = result.replyProfil;
+                    			nickname = result.replyNickname;
+                    			$('.chat-header-right button').remove();
+                    			$('.chat-header-right').prepend('<button class="btn btn-primary">거래 완료 요청</button>');
+                    		} else {
+                    			profile = result.barterProfile;
+                    			nickname = result.barterNickname;
+                    		}
+                    		
+                    		chatProfile += '<img class="profile-img" src="/redclip/' + profile + '">'
+                    					+ '<div id="profile-name"><p id="nickname">'; 
+                    		chatProfile += (nickname != null)
+                    						? nickname + '</p></div>'
+                    						: '(탈퇴한 회원)</p></div>';
+                            
                     		
                     		
                     		// 채팅 내역
@@ -604,41 +499,23 @@
                     							: messageData + dateData;
                     			messageList +=  '</div>';
                     			
-                        					/* + '<span class="' + type + '-date">' + message.chatDate + '</span>'
-                        					+ '<div class="message ' + type + '"><p>' + message.chatMessage + '</p>'
-                        					+  */
+                    			
+                    		
                     		});
-                    		
+                    		$('.chat-header-left').html(chatProfile);
                     		$('.chat-messages').html(messageList);
+                    		scrollToBottom();
                     		
                     		
-                    		
-                    		/* <div class="send-div chat-div">
-		                    	<span class="send-date">09.15 17:55</span>
-		                        <div class="message sender">
-		                            <p>Sender message 1 Sender message 1 Sender message 1 Sender message 1Sender message 1</p>
-		                        </div>
-                        	</div>
-                        	
-                        	<div class="receiver-div">
-	                            <div class="message receiver">
-	                                <p>Receiver message 1</p>
-	                            </div>
-	                            <span class="receive-date">09.15 17:56</span>
-                            </div> */
                     	}
                     
                     });
                     
-                    
-                    
-                    
-                    
                     $('.chat-area').show();
                     
-
                     
                 }); 
+            	
             });
             
             	
@@ -695,7 +572,7 @@
                     }
                 });
                
-                function selectList() {
+                function selectList(condition) {
                 	$.ajax({
                 		
                 		url : 'list',
@@ -706,6 +583,12 @@
                 		success : result => {
                 			console.log(result);
                 			let chatItems = '';
+                			
+                			switch (condition) {
+                				case 'barter' :  result = result.filter((room) => room.barterWriter == '${sessionScope.loginUser.userId}'); break;
+                				case 'reply' : result = result.filter ((room) => room.replyWriter == '${sessionScope.loginUser.userId}'); break;
+                			}
+                			 
                 			result.map((room) => {
                 				chatItems += '<li class="chat-item" id="' + room.roomNo +'">'
                 						   + '<div class="list-img">프사</div>'

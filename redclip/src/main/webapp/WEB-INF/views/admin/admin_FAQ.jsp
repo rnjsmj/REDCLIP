@@ -95,7 +95,7 @@
           </table>
           <!-- 수정 | 삭제 버튼 -->
             <div id="buttons" style="margin-top: 30px;">
-                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" onclick="updateForm();">수정</button> | <button type="submit" id="delete" class="btn btn-secondary">삭제</button>
+                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" >수정</button> | <button type="submit" id="delete" class="btn btn-secondary" onclick="deleteFaq();">삭제</button>
             </div>
     </div>
     
@@ -134,13 +134,13 @@
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
                         <button type="button" class="btn btn-success" onclick="insert();">작성</button>
-                        <button type="reset" class="btn btn-secondary">취소</button>
+                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     </div>
             </div>
         </div>
     </div>
 
-    <!-- 게시글 수정 모달창 -->
+ <!-- 게시글 수정 모달창 -->
     <div class="modal fade" id="updateForm">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -151,10 +151,10 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                     <div class="modal-body">
-                   		<div>
-                    		<input type="hidden" id="userId" value="${ detail.userId }" />
-                    		<input type="hidden" id="faqNo" value="${ detail.faqNo }" />
-                    	</div>
+                         <div>
+                          <input type="hidden" id="userId" value="${ detail.userId }" />
+                          <input type="hidden" id="faqNo" value="${ detail.faqNo }" />
+                       </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">제목</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1">
@@ -176,11 +176,12 @@
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
                         <button type="button" class="btn btn-success" onclick="update();">수정</button>
-                        <button type="reset" class="btn btn-secondary">취소</button>
+                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     </div>
             </div>
         </div>
     </div>
+
 
 	<script>
 	 
@@ -249,41 +250,76 @@
 			});
 		};
 		
-		function updateForm() {
-			
-			
-		};
-		
 		//글 수정
-		function update() {
+	      function update() {
+	         
+	         const faqNo = $("input[name='faqNo']:checked").val();
+	         
+	         console.log(faqNo);
+	         
+	         const updateData = {
+	               "faqNo" : $('#faqNo').val(),
+	               "question" : $('#exampleFormControlInput1').val(),
+	               "answer" : $('#exampleFormControlTextarea1').val(),
+	               "faqType" : $('#faqType').val(),
+	               "userId" : $('#userId').val()
+	            };
+	         
+	         console.log(updateData);
+	         
+	         $.ajax({
+	            url : '/redclip/faq/' + faqNo,
+	            type : 'put',
+	            data : JSON.stringify(updateData),
+	            contentType : 'application/json',
+	            success : result => {
+	               console.log('요청 성공');
+	               //console.log(result);
+	               alert('faq 정보가 수정되었습니다.');
+	               location.reload();
+	            },
+	            error : e => {
+	               console.log('요청 실패', e);
+	               alert('정보 수정에 실패했습니다.')
+	            }
+	         });
+	         
+	      };
+
+		
+		//글 삭제
+		function deleteFaq() {
 			
-			const faqNo = $("input[name='faqNo']:checked").val();
+			const numbers = []
 			
-			console.log(faqNo);
+			$("input[name='faqNo']:checked").each(function() {
+				const faqNo = $(this).val();
+				
+				numbers.push(faqNo);
+			});			
 			
-			const updateData = {
-					"question" : $('#exampleFormControlInput1').val(),
-					"answer" : $('#exampleFormControlTextarea1').val(),
-					"faqType" : $('#faqType').val(),
-					"userId" : $('#userId').val()
-				};
-			
-			console.log(updateData);
+			console.log(numbers);
 			
 			$.ajax({
-				url : '/redclip/faq/' + faqNo,
-				type : 'put',
-				data : JSON.stringify(updateData),
-				contentType : 'application.json',
+				url : '/redclip/faq',
+				type : 'delete',
+				data : JSON.stringify(numbers),
+				contentType : 'application/json',
 				success : result => {
-					console.log('요청 성공');
+					//console.log('요청 성공', result);
+					alert('글을 삭제했습니다.');
+					location.reload();
 				},
 				error : e => {
-					console.log('요청 실패', e);
+					//console.log('요청 실패', e);
+					alert('글을 삭제하지 못했습니다.');
 				}
 			});
 			
-		};
+		}
+		
+		
+		
 	</script>
     <footer>
         <jsp:include page="../common/footer.jsp" />

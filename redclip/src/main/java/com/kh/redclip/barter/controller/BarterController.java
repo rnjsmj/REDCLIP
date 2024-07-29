@@ -56,12 +56,17 @@ public class BarterController {
     }
 
 	// 교환 게시글 상세보기
+	/**
+	 * 물물교환 게시글 상세보기
+	 * @param barterNo : list.jsp에서 <a> 태그로 요청한 매핑주소로 전달된 게시글 번호
+	 * @param model : 요청 처리 후 응답 시 requestScope에 값을 담기 위한 객체
+	 * @return 성공시 detail.jsp로, 실패하는 경우 다시 list.jsp로 forward하기 위해 redirect
+	 */
 	@GetMapping("/{barterNo}")
 	public String findByNo(@PathVariable int barterNo, Model model) {
 		
 		BarterVO barterDetail = barterService.findById(barterNo);
 		if (barterService.increaseHit(barterNo) > 0) {
-			//log.info("상세정보 : {}", barterDetail);
 			model.addAttribute("barter", barterDetail);
 			return "barter/detail";	
 			
@@ -142,6 +147,7 @@ public class BarterController {
 			 return "common/errorPage";
 		}	
 	}
+
 	/*
 	@ResponseBody
 	@GetMapping
@@ -150,6 +156,17 @@ public class BarterController {
 		return ResponseEntity.status(HttpStatus.OK).body();
 	}
 	*/
+
+	
+	//이거 때문에 오류나서 주석 처리해둔거임요
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping public ResponseEntity<BarterVO> enteredData(int barterNo) {
+	 * barterService.findById(barterNo); return
+	 * ResponseEntity.status(HttpStatus.OK).body(); }
+	 */
+
 	//파일업로드의 메서드를 만들어줌 
 	public String updateFile(MultipartFile updatefile,HttpSession session) {
 		  String originName = updatefile.getOriginalFilename();

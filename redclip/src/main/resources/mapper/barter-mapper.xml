@@ -107,8 +107,9 @@ WHERE
 	
 	
 	
-	<select id="findById" parameterType="_int" resultType="barterVo" resultMap="barterResultSet">
-		<!-- resultMap 적용하여 수정 -->
+	<select id="findById" 
+		parameterType="_int" resultType="barterVo" 
+		resultMap="barterResultSet">
 		SELECT
 				BARTER_NO,
 				BARTER_NAME,
@@ -167,9 +168,6 @@ WHERE
                 BARTER_FILE_NO ASC
 	</select>
 
-
-	
-	
 	<resultMap type="barterVO" id="barterListResultSet">
 		<id column="BARTER_NO" property="barterNo" />
 		<result column="BARTER_NAME" property="barterName" />

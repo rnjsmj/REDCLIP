@@ -13,5 +13,7 @@ public interface FaqService {
 	FAQ selectByNo(int faqNo);
 
 	int update(FAQ faq);
+	
+	int delete(List<Integer> numbers);
 
 }

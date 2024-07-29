@@ -87,9 +87,32 @@
             margin: 0 auto;
             margin-bottom: 50px;
         }
+        
+        #carouselBarters {
+        	width:100%;
+        	height:600px;
+        }
+        
         #trade-image {
             width: 100%;
             margin: 0 auto;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+            margin-bottom: 20px;
+            
+            .carousel-item {
+            	width: 100%;
+            	height:600px;
+            	overflow: hidden;
+            	
+            	img {
+            	width:100%;
+            	height:100%;
+            	object-fit:cover;
+            	
+            	}
+            }
+            
+            
         }
         #trade-info {
             width: 100%;
@@ -406,6 +429,8 @@
         		height:200px;
         	}
         }
+        
+        box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
     </style>
 </head>
 <body>
@@ -425,10 +450,8 @@
                 <div id="detail-wrap">
                 <c:if test="${ barter.barterFileList[0].barterFileNo != 0 }">
                     <div id="trade-image">
-                        <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> -->
                         <div id="carouselBarters" class="carousel slide" data-ride="carousel" data-interval="false">
                             <ol class="carousel-indicators">
-                                <!-- <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li> -->
                                 <c:forEach var="barterFile" items="${ barter.barterFileList }" varStatus="status">
                                 	<li data-target="#carouselBarters" data-slide-to="${ status.index }"></li>
                                 </c:forEach>
@@ -438,17 +461,13 @@
                                 data-toggle="modal"
                                 data-target="#barter-image-modal"
                                 onclick="modalContent(this);">
-                                <!-- <div class="carousel-item active"> -->
                                 <c:forEach var="barterFile" items="${ barter.barterFileList }" >
-                                
 	                                <div class="carousel-item">
-	                                    <img
-	                                        class="d-block w-100 img-fluid"
-	                                        src="${ barterFile.barterFileName }"
+	                                    <img 
+	                                        src="/redclip/${ barterFile.barterFileName }"
 	                                        alt="${ barterFile.barterFileNo }"
 	                                    />
 	                                </div>
-	                                
                                 </c:forEach>
                             </div>
                             <a
@@ -560,10 +579,8 @@
                                    			<span>(알 수 없음)</span>
                                    		</c:otherwise>
                                    	</c:choose>
-                                    
-                                      
                                     </li>
-                                    <li id="level"><%-- ${ barter.point / 100 } 레벨 </li> --%>
+                                    <li id="level">
                                     	<c:choose>
                                     		<c:when test="${ (barter.point / 100) lt '1'}">레벨1</c:when>
                                     		<c:when test="${ (barter.point / 100) lt '2'}">레벨2</c:when>
@@ -621,7 +638,8 @@
                                 <span> · </span>
                                 <span>좋아요 <span id="wishcount">${ barter.wishCount }</span></span>
                                 <c:if test="${ (not empty sessionScope.loginUser.userId) && (sessionScope.loginUser.userId ne barter.barterWriter) }">
-                                <p id="heart"><svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                <p id="heart">
+                                <svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
   												<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
 												</svg></p>
 								</c:if>
@@ -868,13 +886,13 @@
                 						
                 					}
                 					
-                					resultStr += '<div class="reply-detail">'
-                							  + '<div class="reply-list-content" id="reply-content-' + result[i].replyNo + '">'
-                                    		  + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path d="M12 2.5a5.25 5.25 0 0 0-2.519 9.857 9.005 9.005 0 0 0-6.477 8.37.75.75 0 0 0 .727.773H20.27a.75.75 0 0 0 .727-.772 9.005 9.005 0 0 0-6.477-8.37A5.25 5.25 0 0 0 12 2.5Z"></path>'
-                                    		  + '</svg><a href="">' + result[i].replyNickname 
-                                    		  + '</a><span class="reply-date">' + result[i].replyDate + '</span><p>'
-                                    		  + result[i].replyContent
-                                    		  + '</p></div>';
+                					resultStr += `<div class="reply-detail">
+                							  <div class="reply-list-content" id="reply-content-${result[i].replyNo}">
+                                    		  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path d="M12 2.5a5.25 5.25 0 0 0-2.519 9.857 9.005 9.005 0 0 0-6.477 8.37.75.75 0 0 0 .727.773H20.27a.75.75 0 0 0 .727-.772 9.005 9.005 0 0 0-6.477-8.37A5.25 5.25 0 0 0 12 2.5Z"></path>
+                                    		  </svg><a href=""> \${result[i].replyNickname} 
+                                    		  </a><span class="reply-date">\${result[i].replyDate }</span><p>
+                                    		  \${result[i].replyContent}
+                                    		  </p></div>`;
                                     
                                     const userId = "${ sessionScope.loginUser.userId }";
                                     

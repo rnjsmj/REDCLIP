@@ -76,4 +76,5 @@ public interface BarterMapper {
 	List<BarterVO> getTopCount();
 	
 	
+	
 }

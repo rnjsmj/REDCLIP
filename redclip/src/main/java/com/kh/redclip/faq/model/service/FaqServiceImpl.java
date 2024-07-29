@@ -35,6 +35,11 @@ public class FaqServiceImpl implements FaqService {
 		return faqMapper.update(faq);
 	}
 
+	@Override
+	public int delete(List<Integer> numbers) {
+		return faqMapper.delete(numbers);
+	}
+
 	
 	
 }
