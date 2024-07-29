@@ -38,12 +38,11 @@ public class ChattingController {
 	//채팅방 목록 조회
 	@GetMapping("/list") 
 	@ResponseBody
-	public ResponseEntity<List<ChatRoomVO>> chattingList(Model model, String userId) {
+	public ResponseEntity<List<ChatRoomVO>> chattingList(String userId) {
 		
 		List<ChatRoomVO> chatRoomList = chatService.findAll(userId);
-		model.addAttribute(chatRoomList);
-		log.info("목록: {}", chatRoomList);
 		return ResponseEntity.status(HttpStatus.OK).body(chatRoomList);
+		
 	}
 	
 	//채팅방 찾기 (존재 유무에 따라 생성 / 게시글 제목 갱신)

@@ -18,7 +18,7 @@ public interface BarterService {
 	BarterVO findById(int barterNo);
 	int insert(Barter barter);
 	int barterInsert(BarterFile barterfile);
-	List<BarterVO> getFilteredBarters(Map<String, Integer> params);
+	List<BarterVO> getFilteredBarters(Map<String, Object> params);
 	//게시글 수정
 	int update(Barter barter);
 	
@@ -38,11 +38,11 @@ public interface BarterService {
 	int replyFileInsert(BarterReplyFile replyFile);
 
 	//게시글 삭제
-	int barterDelete(int barterNo);
+	int barterDelete(int barterNo, int fileExist);
 	//게시글에 포함된 파일 갯수
 	int getBarterFileCount(int barterNo);
 	//게시글에 포함된 파일 삭제
-	int barterFileDelete(int barterNo);
+//	int barterFileDelete(int barterNo);
 	
 	//답글에 포함된 파일 삭제
 	int replyFileDelete(int replyNo);

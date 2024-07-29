@@ -124,7 +124,7 @@
 <body>
     <div class="search-container">
         <input type="text" class="search-input" placeholder="키워드를 입력해주세요." />
-        <button class="search-button">검색</button>
+        <button class="search-button" >검색</button>
         <div class="search-results">
             <div class="tab">
                 <button class="active" data-tab="recent">최근검색어</button>
@@ -149,8 +149,11 @@
        </div>
    </div>
 <script>
+	
+	
     const recentSearches = [];
-
+    
+    
     $(document).ready(function () {
         $('.search-input').on('focus', function () {
             $('.search-results').addClass('active');
@@ -179,17 +182,20 @@
                 recentSearches.push(searchTerm);
                 updateRecentSearches();
                 // 검색창을 비웁니다.
-                $('.search-input').val('');
+               
             }
         }
-
+        
+        
         $('.search-input').on('keypress', function (e) {
             if (e.key === 'Enter') {
+
                 addSearchTerm();
             }
         });
 
         $('.search-button').on('click', function () {
+
             addSearchTerm();
         });
 

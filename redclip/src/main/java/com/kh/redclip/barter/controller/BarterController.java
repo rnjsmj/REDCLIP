@@ -49,7 +49,7 @@ public class BarterController {
 
 	//교환 게시글 목록보기
 	@GetMapping
-	public String getAllBarters(@RequestParam(value="code", defaultValue="0") Integer code, Model model) {
+	public String getAllBarters(@RequestParam(value="code", defaultValue="0") Integer code, @RequestParam(value="category", defaultValue="0") Integer category, Model model) {
 	List<BarterVO> barters = barterService.getAllBarters(code);
 	model.addAttribute("list", barters);
 	return "barter/list";
@@ -105,12 +105,15 @@ public class BarterController {
 	}
 	
 	//게시글 검색 조회
-	@GetMapping("/{category}/{code}")
+	@GetMapping({"/{category}/{code}/{keyword}", "/{category}/{code}"})
     @ResponseBody
-    public List<BarterVO> getFilteredBarters(@PathVariable("category") Integer categoryNo, @PathVariable("code") Integer code) {
-        Map<String, Integer> params = new HashMap<String, Integer>();
+    public List<BarterVO> getFilteredBarters(@PathVariable("category") Integer categoryNo, 
+    										 @PathVariable("code") Integer code, 
+    										 @PathVariable(value="keyword", required=false) String keyword) {
+        Map<String, Object> params = new HashMap<String,Object>();
         params.put("categoryNo", categoryNo);
         params.put("code", code);
+        params.put("keyword", keyword);
         log.info("뭐냐묘{}",barterService.getFilteredBarters(params));
         return barterService.getFilteredBarters(params);
     }
@@ -271,39 +274,48 @@ public class BarterController {
 	}
 	
 
-	//게시글 삭제
+	
+	/**
+	 * 물물교환 게시글 삭제
+	 * @param barterNo : 선택한 글을 삭제하기 위한 TB_BARTER 테이블의 식별자
+	 * @param fileExist : 선택한 글의 파일목록 중 첫번째 파일객체의 파일번호 (TB_BARTER_FILE의 식별자)
+	 * @param session : 어느 페이지로 이동해도 alert창을 보여줄 수 있도록 sessionScope를 이용하기 위한 객체
+	 * @return 게시글이 정상적으로 삭제되면 목록으로, 삭제 중 오류가 발생하면 다시 상세보기 페이지로 redirect
+	 */
 	@PostMapping("/delete")
 	public String barterDelete(int barterNo, int fileExist, HttpSession session) {
-		log.info("삭제할 게시글 번호 : {}", barterNo);
-		if (fileExist != 0) {
-			barterService.barterFileDelete(barterNo);
-		}
 		
-		// 게시글에 포함된 답글을 삭제하기 위해 답글에 포함된 파일 삭제
-		List<BarterReply> replyList = barterService.getBarterReply(barterNo);
-		for ( BarterReply reply : replyList ) {
-			barterService.replyFileDelete(reply.getReplyNo());
-		}
-
-		// 게시글 삭제 service에서 포함된 답글 삭제 후 게시글 삭제
-		if (barterService.barterDelete(barterNo) > 0) {
+		if (barterService.barterDelete(barterNo, fileExist) > 0) {
 			session.setAttribute("alertMsg", "게시글이 삭제되었습니다.");
 			return "redirect:/barters";
-		} else {
+		}  else {
 			session.setAttribute("alertMsg", "오류가 발생했습니다.");
 			return "redirect:/barters/" + barterNo;
 		}	
+		
 	}
+	// 게시글 삭제
+	// 먼저 삭제해야 될 것 : 게시글 첨부파일, 댓글 첨부파일, 댓글 
+	// >>> 게시글 삭제
+	// barterDelete(barterNo, fileExist)를 통해 위의 과정을 transacition 처리
+	// 게시글에 포함된 답글을 삭제하기 위해 답글에 포함된 파일 삭제
+	// 게시글 삭제 service에서 포함된 답글 삭제 후 게시글 삭제
+	
 	
 	//좋아요 상태 확인
+	/**
+	 * 관심글 등록 상태 확인
+	 * @param wish : 글번호와 회원 아이디 필드름 포함하고 있는 Wishlist 객체로 전달값을 받아오는 변수
+	 * @return : 전달한 글번호와 아이디가 일치하는 행이 존재하면 "exist", 존재하지 않으면 "none" 반환
+	 */
 	@GetMapping("/wish")
 	@ResponseBody
 	public String barterWishState(Wishlist wish) {
-		//log.info("요청 객체 : {}", wish);
 		Wishlist state = barterService.wishStatus(wish);
-		//log.info("객체 : {}", state);
 		return state != null ? "exist" : "none";
 	}
+	
+	
 	
 	//좋아요 등록/해제
 	@PostMapping("/wish")

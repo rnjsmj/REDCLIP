@@ -3,8 +3,8 @@ package com.kh.redclip.barter.model.service;
 import java.util.List;
 import java.util.Map;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.redclip.barter.model.dao.BarterMapper;
 import com.kh.redclip.barter.model.vo.Barter;
@@ -71,6 +71,10 @@ public class BarterServiceImpl implements BarterService{
 		return barterMapper.replyDelete(replyNo);
 	}
 	
+	/*
+	 * public void replyListDelete(int barterNo) {
+	 * barterMapper.replyListDelete(barterNo); }
+	 */
 	@Override
 	public int increaseHit(int barterNo) {
 		return barterMapper.increaseHit(barterNo);
@@ -86,27 +90,43 @@ public class BarterServiceImpl implements BarterService{
 		return barterMapper.replyFileInsert(replyFile);
 	}
 
+	@Transactional
 	@Override
-	public int barterDelete(int barterNo) {
-		int replyCount = barterMapper.replyCount(barterNo);
-		if (barterMapper.replyListDelete(barterNo) == replyCount) {
-			return barterMapper.barterDelete(barterNo);
+	public int barterDelete(int barterNo, int fileExist) {
+		try {
+			
+			if (fileExist != 0) {
+				barterMapper.barterFileDelete(barterNo);
+			}
+			
+			for ( BarterReply reply : getBarterReply(barterNo) ) {
+				replyFileDelete(reply.getReplyNo());
+			}
+			
+			barterMapper.replyListDelete(barterNo);
+			barterMapper.barterDelete(barterNo);
+			
+			return 1;
+			
+			
+		} catch (Exception e) {
+			
+			return 0;
 		}
-		return 0;
 		
 	}
 	
-	@Override
+	
 	public int getBarterFileCount(int barterNo) {
-		
 		return barterMapper.getBarterFileCount(barterNo);
 	}
 	
-	@Override
-	public int barterFileDelete(int barterNo) {
-		return barterMapper.barterFileDelete(barterNo);
-		
-	}
+	/*
+	 * public void barterFileDelete(int barterNo) {
+	 * barterMapper.barterFileDelete(barterNo);
+	 * 
+	 * }
+	 */
 	@Override
 	public int replyFileDelete(int replyNo) {
 		return barterMapper.replyFileDelete(replyNo);
@@ -134,7 +154,7 @@ public class BarterServiceImpl implements BarterService{
 	}
 
 	@Override
-	public List<BarterVO> getFilteredBarters(Map<String, Integer> params) {
+	public List<BarterVO> getFilteredBarters(Map<String, Object> params) {
 		return barterMapper.getFilteredBarters(params);
 	}
 

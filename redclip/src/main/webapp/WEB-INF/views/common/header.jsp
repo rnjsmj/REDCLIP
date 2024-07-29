@@ -133,8 +133,8 @@
 			ws.onmessage = function(event) {
 				let today = new Date();
 				console.log("전달받은 메시지 : ", event.data+'\n');
-				const recValue = '<div class="receive-div"><div class="message receive"><p>' + event.data + '</p></div>'
-								+ '<span class="receive-date">' + today.getHours() + ':' + today.getMinutes() + '</span></div>';
+				const recValue = `<div class="receive-div chat-div"><div class="message receive"><p>\${event.data}</p></div>
+								  <span class="receive-date">\${today.getHours()}:\${today.getMinutes().toString().padStart(2, '0')}</span></div>`;
 				$('.chat-messages').append(recValue);
 				scrollToBottom();
 				

@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
+@Component
 public class ChatHandler extends TextWebSocketHandler{
 	
 	@Autowired
@@ -32,6 +34,7 @@ public class ChatHandler extends TextWebSocketHandler{
 	private Set<WebSocketSession> sessions = new CopyOnWriteArraySet();
 	private List<HashMap<String, Object>> roomSessions = new ArrayList<HashMap<String, Object>>();
 
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		

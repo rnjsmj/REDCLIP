@@ -193,14 +193,29 @@
                 });
             }
         });
+        
+        $('.search-button').click(function() {
+        	
+            loadFilteredBarters();
+        });
+        
+        $('.search-input').on('keypress', function (e) {
+            if (e.key === 'Enter') {
+            	loadFilteredBarters();
+            }
+        });
 
         // 필터링된 바터 목록 로드
         function loadFilteredBarters() {
+        	
+        	/* let keyword = $('.search-input').val(); */
+        	var keyword = $('.search-input').val();
             const categoryNo = $categorySelect.val();
             const si = $siSelect.val();
             const gu = $guSelect.val();
             const dong = $dongSelect.val();
             const $cardContainer = $('.card-container');
+            $cardContainer.empty();
             console.log(dong);
             let code;
 
@@ -211,16 +226,24 @@
             } else if (si) {
                 code = si;
             }
+            
+            let urlData = '/redclip/barters/' + categoryNo + '/' + code;
+            
+            if (keyword != '') {
+            	
+            	urlData += '/' + keyword;
+            }
 
             $.ajax({
-                url: '/redclip/barters/' + categoryNo + '/' + code,
+                url: urlData,
                 type: 'GET',
                 success: function(response) {
                     // 필터링된 결과를 기존 카드 목록에 추가
                     console.log('카테고리번호:', categoryNo);
                     console.log('지역코드번호:', code);
+                    console.log('검색어 :', keyword);
                     response.forEach(barter => {
-                    	console.log(barter);
+                    	/* console.log(barter); */
                         const card =
                         	`<div class="card" style="width: 270px; height:440px;">
                         	 <img src="\${barter.barterFileList[0].barterFileName}" class="card-img-top" alt="\${barter.barterName}">
@@ -231,7 +254,7 @@
                              <a href="/redclip/barters/\${barter.barterNo}" class="btn btn-primary">상세보기</a>
                              </div>
                              </div>`;
-                             console.log(response);
+                             
                         $cardContainer.append(card); // 기존 카드 목록에 추가
                     });
 
@@ -248,7 +271,7 @@
 
         // 카테고리 및 위치 변경 시 필터링된 목록 로드
         $('#categoryNo, #si, #gu, #dong').change(function() {
-            $cardContainer.empty(); // 기존 카드 목록 비우기
+            //$cardContainer.empty(); // 기존 카드 목록 비우기
             loadFilteredBarters(); // 필터링된 목록 다시 로드
         });
 

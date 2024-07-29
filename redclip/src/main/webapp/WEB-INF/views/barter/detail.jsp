@@ -637,7 +637,8 @@
                                 <span>조회 ${ barter.hit }</span>
                                 <span> · </span>
                                 <span>좋아요 <span id="wishcount">${ barter.wishCount }</span></span>
-                                <c:if test="${ (not empty sessionScope.loginUser.userId) && (sessionScope.loginUser.userId ne barter.barterWriter) }">
+                                <c:if test="${ (not empty sessionScope.loginUser.userId) 
+                                				&& (sessionScope.loginUser.userId ne barter.barterWriter) }">
                                 <p id="heart">
                                 <svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
   												<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
@@ -790,7 +791,6 @@
                 	};
                 		
                 	function deleteBarter() {
-                		
                 		if(confirm("글을 삭제하시겠습니까? 삭제된 게시글은 복구되지 않습니다.")) {
                 			$('#postForm').attr("action", "delete").submit();
                 		}
@@ -816,16 +816,12 @@
 	                				var svg;
 	                				
 	                				if(result === 'exist') {
-	                					svg = '<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(0)" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">'
-	                	    		  		+ '<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>';
-	                	        	
-	                					
+	                					svg = `<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(0)" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+	                	    		  		   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>`;
 	                				} else {
-	                					svg = '<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">'
-	                						+ '<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>';
-	                	        	
+	                					svg = `<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+	                						   <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>`;
 	                				}
-	                				
 	                				$heart.html(svg);
 	                			}
 	                		});
@@ -849,38 +845,34 @@
                 				let resultStr = '';
                 				for (let i in result) {
                 					
-                					resultStr += '<hr /><div class="reply-item">';
+                					resultStr += `<hr /><div class="reply-item">`;
                 					
                 					const fileList = result[i].replyFileList;
                 					
                 					if(fileList.length != 0) {
                 						
-                						resultStr += '<figure class="reply-img">'
-                                            	  +'<div id="reply-img-' + result[i].replyNo + '" class="carousel slide" data-ride="carousel" data-interval="false">'
-                                        		  + '<div class="carousel-inner" data-toggle="modal" data-target="#barter-image-modal" onclick="modalContent(this);">';
+                						resultStr += `<figure class="reply-img">
+                                            	      <div id="reply-img-\${result[i].replyNo}" class="carousel slide" data-ride="carousel" data-interval="false">
+                                        		  	  <div class="carousel-inner" data-toggle="modal" data-target="#barter-image-modal" onclick="modalContent(this);">`;
                 						
                 						for (let j in fileList) {
-                							resultStr += '<div class="carousel-item">'
-                                            		  + '<img src="/redclip/'
-                                            		  + fileList[j].replyFileName
-                                            		  + '" alt="이미지' + fileList[j].replyFileNo + '"/></div>';
+                							resultStr += `<div class="carousel-item">
+                                            		  	  <img src="/redclip/\${fileList[j].replyFileName}" alt="이미지\${fileList[j].replyFileNo}"/></div>`;
                 						}
                                        
-                						resultStr += '</div>';
+                						resultStr += `</div>`;
                 						
                 						if(fileList.length > 1) {
-                                        resultStr += '<a class="carousel-control-prev"'
-                                        		  + 'href="#reply-img-' + result[i].replyNo + '" '
-                                            	  + 'role="button" data-slide="prev">'
-                                            	  + '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a>'
-                                            	  + '<a class="carousel-control-next" '
-                                            	  + 'href="#reply-img-' + result[i].replyNo  
-                                            	  + '" role="button" data-slide="next"> '
-                                            	  + '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
-                                                  + '<span class="sr-only">Next</span></a>';
+                                        resultStr += `<a class="carousel-control-prev"
+                                        		      href="#reply-img-\${result[i].replyNo}" 
+                                            	  	  role="button" data-slide="prev">
+                                            	  	  <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a>
+                                            	  	  <a class="carousel-control-next" href="#reply-img-\${result[i].replyNo}" role="button" data-slide="next"> 
+                                            	  	  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                  	  <span class="sr-only">Next</span></a>`;
                                         }      
                 						
-                                        resultStr += '</div></figure>';
+                                        resultStr += `</div></figure>`;
                 						
                 						
                 						
@@ -897,22 +889,20 @@
                                     const userId = "${ sessionScope.loginUser.userId }";
                                     
                                     if( userId === "${ barter.barterWriter}") {
-                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo +'"><button onclick="openChat(\'' +result[i].replyWriter+ '\');"'
-                                    			  +' id="chatbtn" class="btn btn-light">채팅하기</button></div>'
-                                    			  +'</div></div>';
+                                    	resultStr += `<div class="btn-group2" id="btn-group-\${ result[i].replyNo}"><button onclick="openChat(\'\${result[i].replyWriter}\');"
+                                    			      id="chatbtn" class="btn btn-light">채팅하기</button></div></div></div>`;
                                     } else if( userId === result[i].replyWriter) {
-                                    	resultStr += '<div class="btn-group2" id="btn-group-' + result[i].replyNo + '"><button id="updbtn" class="btn btn-light" data-toggle="modal" href="#updateModal"'
-                                    			  + 'onclick="getReply(' + result[i].replyNo + ', 0)">수정</a>'
-                                    			  + '<button id="rep-delbtn" class="btn btn-light"'
-                                    			  + ' onclick="deleteReply('+ result[i].replyNo + ')">삭제</button></div>'
-                                    			  + '</div></div>';
+                                    	resultStr += `<div class="btn-group2" id="btn-group-\${result[i].replyNo}"><button id="updbtn" class="btn btn-light" data-toggle="modal" href="#updateModal"
+                                    			      onclick="getReply(\${result[i].replyNo}, 0)">수정</a>
+                                    			      <button id="rep-delbtn" class="btn btn-light"
+                                    			      onclick="deleteReply(\${result[i].replyNo})">삭제</button></div></div></div>`;
                                     } else {
-                                    	resultStr += '</div></div>';
+                                    	resultStr += `</div></div>`;
                                     }
                                     
                                     
                 				};
-                				if(result.length != 0) resultStr += "<hr/>";
+                				if(result.length != 0) resultStr += `<hr/>`;
                 				$('#reply-list').html(resultStr);
                 				
                 			}
@@ -1035,15 +1025,15 @@
 	                				$(replyContentEl).hide();
 	                				$(btngroupEl).hide();
 	                				
-	                				let replyContent = '<div id="edit-reply">'
-	                				+ '<div style="width: 100%; content: "'+'"; clear: both"></div>'
-	                                + '<textarea class="reply-content-area" id="edit-reply-content">'
-	                                + result.replyContent + '</textarea>'
-	                                + '<span style="margin-left: 10px" onclick="editReply('
-	                				+ result.replyNo +')" >저장</span>'
-	                				+ '<span style="margin-left: 10px" onclick="getReply('+ result.replyNo +', 1)">취소</span></div>';
+	                				let replyContent = `<div id="edit-reply">
+	                				   <div style="width: 100%; content: "'+'"; clear: both"></div>
+	                                   <textarea class="reply-content-area" id="edit-reply-content">
+	                                   \${result.replyContent}</textarea>
+	                                   <span style="margin-left: 10px" onclick="editReply(\${result.replyNo})" >저장</span>
+	                				   <span style="margin-left: 10px" onclick="getReply(\${result.replyNo}, 1)">취소</span></div>`;
 	                                
 	                				$(selectEl).append(replyContent);
+	                				
 	                				
 	                			}
 	                			
@@ -1198,8 +1188,7 @@
             
            	let modalIndicators = '';
            	for (var step = 0; step < child; step++ ) {
-           		modalIndicators += '<li data-target="#carouselBarters-modal" data-slide-to="'
-           			 + step + '"></li>';
+           		modalIndicators += `<li data-target="#carouselBarters-modal" data-slide-to="\${step}"></li>`;
            	}
            	
            	
@@ -1214,7 +1203,6 @@
         	
         	const $heart = $('#heart');
         	const $wishcount = $('#wishcount');
-        	var wishcount;
         	var svg;
         	
         		
@@ -1222,28 +1210,25 @@
         		url : 'wish',
         		type : 'post',
         		data : { barterNo : ${barter.barterNo},
-        			wishUser : '${sessionScope.loginUser.userId}',
-        			state : state
-        			},
+        				 wishUser : '${sessionScope.loginUser.userId}',
+        				 state : state
+        			   },
         		success : result => {
-        			console.log(result);
-            		wishcount = result; //좋아요 개수 반환받기
-            		$wishcount.text(wishcount);
-        			}
-        		});
-        	
-        	if (state == 1) {
-        		svg = '<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(0)" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">'
-    		  		+ '<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>';
-        	} else {
-        		svg = '<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">'
-					+ '<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>';
-        		
-        	}
+        			
+            		$wishcount.text(result);
+            		
+            		if (state == 1) {
+                		svg = `<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(0)" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+            		  		   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>`;
+                	} else {
+                		svg = `<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+        					   <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>`;
+                	}
+            		
+        		}
+        	});
         	
         	$heart.html(svg);
-        	
-        	
         }
         
        

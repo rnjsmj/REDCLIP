@@ -86,6 +86,9 @@
 	        <if test="code != null and code != ''">
 	            AND VILLAGE_CODE LIKE CONCAT(#{code}, '%')
 	        </if>
+	        <if test="keyword != null and keyword != ''">
+	        	AND (BARTER_NAME LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%' OR BARTER_CONTENT LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+	        </if>
 	    </where>
 	    ORDER BY
 	       		BARTER_STATUS DESC,
@@ -341,7 +344,7 @@ TB_BARTER_FILE
 		 		WISH_USER = #{wishUser}
 	
 	</select>
-	<!-- 좋아요 등록 -->
+	<!-- 관심글 등록 -->
 	<insert id="wishInsert" parameterType="wish">
 		INSERT
 		  INTO
@@ -359,7 +362,7 @@ TB_BARTER_FILE
 		 		)
 	</insert>
 	
-	<!-- 좋아요 해제 -->
+	<!-- 관심글 해제 -->
 	<delete id="wishDelete" parameterType="wish">
 		DELETE
 		  FROM

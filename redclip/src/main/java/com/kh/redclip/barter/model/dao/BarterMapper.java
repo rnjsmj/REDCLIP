@@ -26,7 +26,7 @@ public interface BarterMapper {
 	//게시글 등록
 	int barterInsert(BarterFile barterFile);
 	//검색 조회
-	List<BarterVO> getFilteredBarters(Map<String, Integer> params);
+	List<BarterVO> getFilteredBarters(Map<String, Object> params);
 	//게시글 수정
 	public int update(SqlSessionTemplate sqlSession, Barter barter);
 	
