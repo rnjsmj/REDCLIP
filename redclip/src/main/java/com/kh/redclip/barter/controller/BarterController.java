@@ -147,6 +147,16 @@ public class BarterController {
 			 return "common/errorPage";
 		}	
 	}
+
+	/*
+	@ResponseBody
+	@GetMapping
+	public ResponseEntity<BarterVO> enteredData(int barterNo) {
+		 barterService.findById(barterNo);
+		return ResponseEntity.status(HttpStatus.OK).body();
+	}
+	*/
+
 	
 	//이거 때문에 오류나서 주석 처리해둔거임요
 	/*
@@ -156,6 +166,7 @@ public class BarterController {
 	 * barterService.findById(barterNo); return
 	 * ResponseEntity.status(HttpStatus.OK).body(); }
 	 */
+
 	//파일업로드의 메서드를 만들어줌 
 	public String updateFile(MultipartFile updatefile,HttpSession session) {
 		  String originName = updatefile.getOriginalFilename();
@@ -270,6 +281,33 @@ public class BarterController {
 		return barterService.replyUpdate(reply) > 0 ? "success" : "error";
 	}
 	
+
+
+	
+	// 파일 업로드 메서드
+	public String saveFile(MultipartFile upfile, HttpSession session) throws IllegalArgumentException {
+		
+		String fileName = upfile.getOriginalFilename();
+		String ext = fileName.substring(fileName.lastIndexOf("."));
+		
+		int num = (int) (Math.random() * 900) + 100; 
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		String savePath = session.getServletContext().getRealPath("/resources/upload/");	
+		
+		String changeName = "REDCLIP_" + currentTime + "_" + num + ext;
+		
+		//파일 업로드
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return "resources/upload/" + changeName;
+	}
 
 	//게시글 삭제
 	@PostMapping("/delete")

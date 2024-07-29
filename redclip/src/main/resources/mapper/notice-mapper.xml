@@ -13,23 +13,23 @@
 	
 <select id="selectNotice" parameterType="map" resultType="notice">
     SELECT
-        NOTICE_NO noticeNo,
-        NOTICE_TITLE noticeTitle,
-        NOTICE_CONTENT noticeContent,
-        NOTICE_DATE noticeDate,
-        NOTICE_TYPE noticeType,
-        USER_ID userId
+	        NOTICE_NO noticeNo,
+	        NOTICE_TITLE noticeTitle,
+	        NOTICE_CONTENT noticeContent,
+	        NOTICE_DATE noticeDate,
+	        NOTICE_TYPE noticeType,
+	        USER_ID userId
     FROM
-    (
-        SELECT
-            NOTICE_NO,
-            NOTICE_TITLE,
-            NOTICE_CONTENT,
-            NOTICE_DATE,
-            NOTICE_TYPE,
-            USER_ID,
-            ROWNUM RNUM
-        FROM
+   		 (
+	        SELECT
+	            NOTICE_NO,
+	            NOTICE_TITLE,
+	            NOTICE_CONTENT,
+	            NOTICE_DATE,
+	            NOTICE_TYPE,
+	            USER_ID,
+	            ROWNUM RNUM
+	        FROM
         (
             SELECT
                 NOTICE_NO,

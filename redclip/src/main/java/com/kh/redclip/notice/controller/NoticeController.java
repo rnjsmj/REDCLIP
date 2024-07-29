@@ -9,9 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.redclip.notice.model.service.NoticeService;
@@ -28,6 +26,7 @@ public class NoticeController {
 	
 	private final NoticeService noticeService;
 	// 공지 페이지 이동 컨트롤러 
+	/*
 	@GetMapping("noticeform")
 	public String noticeform(@RequestParam(value="page",defaultValue = "1")  int page,
 			  			@RequestParam(value = "type", defaultValue = "1")  int type,
@@ -84,14 +83,63 @@ public class NoticeController {
 			List<Notice> noticeList = noticeService.findAllNotice(map); //sqlmapper에서 startValu랑 endValue로 목록을 가져와야댐
 			
 			  model.addAttribute("noticeList", noticeList);
-			    model.addAttribute("pageInfo", pageInfo);
-		 log.info("왜안뜨냐:{}",noticeList);
+			   model.addAttribute("pageInfo", pageInfo);
+		 log.info("노티스리스트 :{}",noticeList);
 		 log.info("페이지인포{}",pageInfo);
 		 log.info("start/end : {}, {}", startValue, endValue);
 		 return "notice/noticeform";
 	}	
+	*/
 	
-	
+	@GetMapping("noticeform")
+	public String noticeform(@RequestParam(value="page",defaultValue = "1") int page,
+	                         @RequestParam(value = "type", defaultValue = "1") int type,
+	                         Model model) {
+
+	    int listCount; 
+	    int currentPage;  
+	    int pageLimit; 
+	    int boardLimit; 
+	    int maxPage;  
+	    int startPage; 
+	    int endPage; 
+
+	    listCount = noticeService.noticeCount();
+	    currentPage = page;
+	    pageLimit = 10;
+	    boardLimit = 10;
+	    maxPage = (int)Math.ceil((double)listCount / boardLimit);
+	    startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
+	    endPage = startPage + pageLimit - 1;
+	    if (endPage > maxPage) endPage = maxPage;
+
+	    PageInfo pageInfo = PageInfo.builder()
+	                                .listCount(listCount)
+	                                .currentPage(currentPage)
+	                                .pageLimit(pageLimit)
+	                                .boardLimit(boardLimit)
+	                                .maxPage(maxPage)
+	                                .startPage(startPage)
+	                                .endPage(endPage)
+	                                .build();
+
+	    Map<String, Integer> map = new HashMap();
+	    int startValue = (currentPage - 1) * boardLimit + 1;
+	    int endValue = startValue + boardLimit - 1;
+	    map.put("type", type);
+	    map.put("startValue", startValue);
+	    map.put("endValue", endValue);
+
+	    List<Notice> noticeList = noticeService.findAllNotice(map);
+	    model.addAttribute("noticeList", noticeList);
+	    model.addAttribute("pageInfo", pageInfo);
+
+	    log.info("노티스리스트 :{}", noticeList);
+	    log.info("페이지인포{}", pageInfo);
+	    log.info("start/end : {}, {}", startValue, endValue);
+	    return "notice/noticeform";
+	}
+
 	@PostMapping("insertNoticeform")
 	public String insertNoticeform(HttpSession session ) {
 	
@@ -101,13 +149,14 @@ public class NoticeController {
 	//글등록
 	@PostMapping("insertNotice")
 	public String insertNotice(Notice notice) {
-		 log.info("여기보세요여기{}",notice);
+		 log.info("글등록 정보{}",notice);
 	    noticeService.insertNotice(notice);
-	    log.info(notice.getUserId());
 	    return "redirect:/noticeform";
 	}
-	//글삭제 (체크박스)
 	
+	
+	//글삭제 (체크박스)
+
 	@PostMapping("deleteNotice")
 	public String deleteNotice(@RequestParam List<Integer> deleteNo, HttpSession session) {
 		
@@ -126,9 +175,9 @@ public class NoticeController {
 	@GetMapping("noticeDetail")
 	public String noticeDetail(@RequestParam int noticeNo, Model model) {
 		
-		log.info("글번호잘가져옴?{}",noticeNo);
+		log.info("글번호{}",noticeNo);
 	    Notice notice = noticeService.noticeDetail(noticeNo);
-	    log.info("노티스를알려달라{}",notice);
+	    log.info("노티스에 담긴내용{}",notice);
 	    
 	    if (notice != null) {
 	        model.addAttribute("notice", notice);
