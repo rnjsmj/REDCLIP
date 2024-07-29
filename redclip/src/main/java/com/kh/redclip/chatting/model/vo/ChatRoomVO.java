@@ -19,8 +19,10 @@ public class ChatRoomVO {
 	private String barterNickname;
 	private String replyWriter;
 	private String replyNickname;
-	private String villageName;
+	private String barterVillageName;
+	private String replyVillageName;
 	private String chatDate;
 	private String chatMessage;
 	private String senderId;
+	private char chatRead;
 }

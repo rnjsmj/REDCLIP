@@ -42,7 +42,7 @@ public interface MemberService {
 	List<BlockMember> selectByBlock(String userId);
 	
 	//차단 해제
-	int deleteByBlock(String usreId);
+	int deleteByBlock(String userId, List<String> blockMembers);
 	// 신고 내역 조회 
 	//회원 아이디 검색
 	//누적 신고 횟수 조회

@@ -32,4 +32,5 @@ public class Member {
 	private int villageCode;			//관심지역 코드
 	private String addr1;			
 	private String addr2;
+	private String profil;
 }

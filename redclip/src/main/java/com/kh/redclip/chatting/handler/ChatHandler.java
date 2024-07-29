@@ -15,6 +15,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.kh.redclip.chatting.model.service.ChatService;
+import com.kh.redclip.chatting.model.vo.ChatMessage;
 import com.kh.redclip.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,15 +35,15 @@ public class ChatHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
-		log.info("연결 : {}", getId(session));
-		log.info("세션번호 : {}", session.getId());
+		//log.info("연결 : {}", getId(session));
+		//log.info("세션번호 : {}", session.getId());
 		sessions.add(session);
 		
 		super.afterConnectionEstablished(session);
 		boolean flag = false;
 		String url = session.getUri().toString();
 		String roomNo = url.split("/chatting/")[1];
-		log.info("핸들러 연결 : {}", roomNo);
+		//log.info("핸들러 연결 : {}", roomNo);
 		
 		int idx = roomSessions.size();
 		if(idx > 0) {
@@ -54,7 +55,7 @@ public class ChatHandler extends TextWebSocketHandler{
 				if(rN.equals(roomNo) && uId.equals(getId(session))) {
 					flag = true;
 					idx = i;
-					log.info("플래그 true");
+					//log.info("플래그 true");
 					break;
 				}
 			}
@@ -70,7 +71,7 @@ public class ChatHandler extends TextWebSocketHandler{
 			map.put("socketSession", session);
 			map.put("userId", getId(session));
 		} else {  // List에 존재하지 않는 경우 새로운 세션 정보 추가
-			log.info("플래그 false");
+			//log.info("플래그 false");
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("roomNo", roomNo);
 			map.put("socketSession", session);
@@ -91,8 +92,8 @@ public class ChatHandler extends TextWebSocketHandler{
 		String[] messageInfo = fullMessage.split(",");
 		if ( messageInfo != null && messageInfo.length == 3) {
 			String roomNo = messageInfo[0];
-			String senderId = messageInfo[1];
-			String chatMessage = messageInfo[2];
+			String senderId = messageInfo[1].trim();
+			String chatMessage = messageInfo[2].substring(1);
 			
 			/*
 			 * ChatMessage chatMessageData = new ChatMessage();
@@ -108,6 +109,13 @@ public class ChatHandler extends TextWebSocketHandler{
 //				}
 //				
 //			}
+			
+			// 서비스 호출하여 DB에 저장
+			ChatMessage cm = new ChatMessage();
+			cm.setRoomNo(Integer.parseInt(roomNo));
+			cm.setSenderId(senderId);
+			cm.setChatMessage(chatMessage);
+			chatService.insertMessage(cm);
 			
 			HashMap<String, Object> recieveSession  = new HashMap<String, Object>();
 			if(roomSessions.size() > 0) {
@@ -126,12 +134,15 @@ public class ChatHandler extends TextWebSocketHandler{
 						log.info("리시브 세션 존재 : {} - {}", recieveSession , wss);
 						try {
 								wss.sendMessage(new TextMessage(chatMessage));
+								
+								
+								
 							} catch (IOException e) {
 								log.info("아...왜저래");
 								e.printStackTrace();
 							}
 					} else {
-						log.info("리시브 세션 없음..");
+						//log.info("리시브 세션 없음..");
 					}
 					
 					

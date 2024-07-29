@@ -76,11 +76,12 @@ public class MemberController {
         if (loginUser != null && bCryptPasswordEncoder.matches(member.getUserPwd(), loginUser.getUserPwd())) {
             //log.info("로그인 성공: {}", loginUser);
             session.setAttribute("loginUser", loginUser);
+            session.setAttribute("alertMsg","로그인에 성공하셨습니다");
             return "redirect:/";  // 로그인 성공 시 홈 페이지로 리다이렉트
         } else {
            // log.error("로그인 실패: 사용자 정보가 없습니다.");
-            model.addAttribute("errorMsg", "로그인 실패");
-            return "redirect:/";  // 홈화면으로
+            session.setAttribute("alertMsg", "로그인에 실패하셨습니다");
+            return "redirect:/loginform";  // 로그인페이지로 
             
             
         }
@@ -125,7 +126,7 @@ public class MemberController {
         
         return dongList;
     }
-    //로그인 컨트롤러
+    //회원가입 컨트롤러
     @PostMapping("/join")
     public String join(Member member,Model model) {
     	 
@@ -139,7 +140,16 @@ public class MemberController {
         	 model.addAttribute("errorMessage", "회원 가입에 실패했습니다. 다시 시도해 주세요.");
         	 return "error";
         }
-  }
+    }
+    
+    //로그아웃 컨트롤러
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("loginUser"); 
+        session.removeAttribute("alertMsg");
+        log.info("/logout");
+        return "redirect:/"; // 홈 화면으로 리다이렉트
+    }
     
     //아이디 찾기 컨트롤러
     @ResponseBody
@@ -184,7 +194,6 @@ public class MemberController {
     	
     }
    
-    
     //회원 상태 변경
     @ResponseBody
     @PutMapping("/{userId}")
@@ -244,15 +253,15 @@ public class MemberController {
 
    }
    
-   
-   //차단 해제
-   @ResponseBody
-   @DeleteMapping("blockList/{userId}")
-   public String deleteByBlock(@PathVariable("userId") String userId, @RequestBody List<String> blockMembers) {
-      
-      log.info("차단 해제 할 아이디 : {}", blockMembers);
-      log.info("차단 신청한 아이디 : {}", userId);
-      
-      return "success";// memberService.deleteByBlock(userId, blockMembers) > 0 ? "success" : "error";
-   }
+    //차단 해제
+    @ResponseBody
+    @DeleteMapping("blockList/{userId}")
+    public String deleteByBlock(@PathVariable("userId") String userId, @RequestBody List<String> blockMembers) {
+    	
+    	log.info("차단 해제 할 아이디 : {}", blockMembers);
+    	log.info("차단 신청한 아이디 : {}", userId);
+    	
+    	return memberService.deleteByBlock(userId, blockMembers) > 0 ? "success" : "error";
+    }
+    
 }

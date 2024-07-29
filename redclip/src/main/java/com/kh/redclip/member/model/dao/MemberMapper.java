@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterVO;
@@ -49,7 +50,7 @@ public interface MemberMapper {
 	int insertMember(Member member);
 
 	//차단 해제
-	int deleteByBlock(String usreId);
+	int deleteByBlock(@Param("userId") String userId, @Param("blockMembers") List<String> blockMembers);
 
 
 	String searchid(Member member);

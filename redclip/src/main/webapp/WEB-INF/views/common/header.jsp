@@ -78,8 +78,8 @@
    <nav class="my-2 my-md-0 mr-md-3">
       <a class="p-2 text-dark" href="${pageContext.request.contextPath}/barters">물물교환</a>
       <a class="p-2 text-dark" href="${pageContext.request.contextPath}/chatting/view">체팅</a>
-      <a class="p-2 text-dark" href="noticeform">공지사항</a>
-      <a class="p-2 text-dark" href="#">FAQ</a>
+      <a class="p-2 text-dark" href="${pageContext.request.contextPath}/noticeform">공지사항</a>
+      <a class="p-2 text-dark" href="${pageContext.request.contextPath}/faq">FAQ</a>
    </nav>
    <c:choose>
    <c:when test="${empty sessionScope.loginUser }">
@@ -90,8 +90,9 @@
    </c:when>
    <c:otherwise>
     <nav class="btnbox">
+      <label>${sessionScope.loginUser.userName}님 환영합니다</label> &nbsp;&nbsp;
       <a class="btn btn-outline-primary" href="/redclip/myPage" id="btn-sign">마이페이지</a>
-      <a class="btn btn-outline-primary" href="#" id="btn-sign">로그아웃</a>
+      <a class="btn btn-outline-primary" href="/redclip/member/logout" id="btn-sign">로그아웃</a>
    </nav>
    </c:otherwise>
    </c:choose>
@@ -113,9 +114,9 @@
    function connect(roomNo) {
 			console.log("연결 시도");
 			
-			var socketAddress = "ws://localhost/redclip/chatting";
+			let socketAddress = "ws://localhost/redclip/chatting";
 			roomNo != null ? socketAddress += ("/" + roomNo) : socketAddress += "/0";
-			var ws = new WebSocket(socketAddress);
+			let ws = new WebSocket(socketAddress);
 			socket = ws;
 			
 			ws.onopen = function() {
@@ -123,13 +124,15 @@
 			};
 			
 			ws.onmessage = function(event) {
+				let today = new Date();
 				console.log("전달받은 메시지 : ", event.data+'\n');
-				const recValue = '<div class="message receiver"><p>' + event.data + '</p></div>';
+				const recValue = '<div class="receive-div"><div class="message receive"><p>' + event.data + '</p></div>'
+								+ '<span class="receive-date">' + today.getHours() + ':' + today.getMinutes() + '</span></div>';
 				$('.chat-messages').append(recValue);
 				scrollToBottom();
 				
 			};
-			
+        
 			ws.onerror = function(err) { 
 				console.log("소켓 error : ", err)
 			};

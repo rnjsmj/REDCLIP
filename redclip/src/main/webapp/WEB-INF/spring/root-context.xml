@@ -41,6 +41,8 @@
     <mybatis-spring:scan base-package="com.kh.redclip.sample.model.dao"/>
     <mybatis-spring:scan base-package="com.kh.redclip.member.model.dao"/>
 	<mybatis-spring:scan base-package="com.kh.redclip.barter.model.dao"/>
+	<mybatis-spring:scan base-package="com.kh.redclip.faq.model.dao"/>
 	<mybatis-spring:scan base-package="com.kh.redclip.chatting.model.dao"/>
 	<mybatis-spring:scan base-package="com.kh.redclip.notice.model.dao"/>
+   <mybatis-spring:scan base-package="com.kh.redclip.main.model.dao"/>
 </beans>

@@ -19,7 +19,8 @@ public interface BarterService {
 	int insert(Barter barter);
 	int barterInsert(BarterFile barterfile);
 	List<BarterVO> getFilteredBarters(Map<String, Integer> params);
-	
+	//게시글 수정
+	int update(Barter barter);
 	
 	//댓글 목록
 	List<BarterReply> getBarterReply(int barterNo);
@@ -54,6 +55,7 @@ public interface BarterService {
 	int wishDelete(Wishlist wish);
 	//게시글 신고
 	int barterReport(ReportMember report);
+	
 	
 	
 

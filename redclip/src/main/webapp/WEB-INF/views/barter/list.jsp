@@ -222,7 +222,7 @@
                     response.forEach(barter => {
                     	console.log(barter);
                         const card =
-                        	'<div class="card" style="width: 270px; height:300px;">'
+                        	'<div class="card" style="width: 270px; height:440px;">'
                         	 +'<img src="' + barter.barterFileList[0].barterFileName+ '" class="card-img-top" alt="' +barter.barterName+ '">'
                              +'<div class="card-body">'
                              +'<h5 class="card-title">' +barter.barterName+ '</h5>'

@@ -6,7 +6,7 @@
 	
 	
 	
-	<!-- 채팅 목록 -->
+	<!-- 채팅방 목록 -->
 	<select id="findAll" parameterType="String" resultType="chatRoomVo">
 		SELECT
 				ROOM_NO roomNo,
@@ -18,19 +18,18 @@
 				BARTER_NICKNAME barterNickname,
 				REPLY_WRITER replyWriter,
 				REPLY_NICKNAME replyNickname,
-				VILLAGE_NAME villageName, 
+				BARTER_VILLAGE_NAME barterVillageName, 
+				REPLY_VILLAGE_NAME replyVillageName,
 				CHAT_DATE chatDate,
 				CHAT_MESSAGE chatMessage,
-				SENDER_ID senderId
+				SENDER_ID senderId,
+				CHAT_READ chatRead
 		  FROM
 		  		VW_CHAT_ROOM_LIST
 		 WHERE
 		 		BARTER_WRITER = #{userId}
 		    OR
 		    	REPLY_WRITER = #{userId}
-		 ORDER
-		    BY
-		    	CHAT_DATE DESC
 	</select>
 
 	 <!-- 채팅방 존재 유무 확인 -->
@@ -105,5 +104,50 @@
 		 		 #{chatMessage}
 		 		)
 	</insert>
+	
+	
+	<!-- 채팅 내역 select -->
+	<resultMap type="chatMessageVO" id="chatMessageResultSet">
+		<result column="ROOM_NO" property="roomNo" />
+		<result column="BARTER_NO" property="barterNo" />
+		<result column="BARTER_PROFIL" property="barterProfil" />
+		<result column="BARTER_WRITER" property="barterWriter" />
+		<result column="BARTER_NICKNAME" property="barterNickname" />
+		<result column="BARTER_VILLAGE_NAME" property="barterVillageName"/>
+		<result column="REPLY_PROFIL" property="replyProfil" />
+		<result column="REPLY_WRITER" property="replyWriter" />
+		<result column="REPLY_NICKNAME" property="replyNickname" />
+		<result column="REPLY_VILLAGE_NAME" property="replyVillageName"/>
+		<collection resultMap="chatMessageListResultSet" property="chatMessageList" />
+	</resultMap>
+	<resultMap type="chatMessage" id="chatMessageListResultSet">
+		<result column="CHAT_NO" property="chatNo" />
+		<result column="CHAT_MESSAGE" property="chatMessage"/>
+		<result column="CHAT_DATE" property="chatDate"/>	
+		<result column="SENDER_ID" property="senderId"/>
+		<result column="CHAT_READ" property="chatRead" />
+	</resultMap>
+	<select id="chatListByRoomNo" parameterType="_int" resultType="chatMessageVo" resultMap="chatMessageResultSet">
+		SELECT
+				ROOM_NO,
+				BARTER_NO,
+				BARTER_PROFIL,
+				BARTER_WRITER,
+				BARTER_NICKNAME,
+				BARTER_VILLAGE_NAME,
+				REPLY_PROFIL,
+				REPLY_WRITER,
+				REPLY_NICKNAME,
+				REPLY_VILLAGE_NAME,
+				CHAT_NO,
+				CHAT_MESSAGE,
+				CHAT_DATE,
+				SENDER_ID,
+				CHAT_READ
+		  FROM
+		  		VW_CHAT_MESSAGE
+		 WHERE
+		 		ROOM_NO = #{roomNo}
+	</select>
 	 
 </mapper>

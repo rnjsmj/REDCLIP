@@ -135,7 +135,9 @@
                             <th>제목</th>
                             <th>등록날짜</th>
                             <th>작성자</th>
-                            <th>선택</th>
+                           	<c:if test="${sessionScope.loginUser != null && sessionScope.loginUser.status == 'A'}">
+                                <th>선택</th>
+                            </c:if>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,10 +145,12 @@
                             <tr>
                                 <td>${(pageInfo.currentPage - 1) * 10 + status.count}</td>
                                 <td>${notice.noticeType}</td>
-                                <td><a href="noticeDetail?boardNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
-                                <td>${notice.noticeDate}</td>
+                      		    <td><a href="noticeDetail?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
+                                <td>${notice.noti	ceDate}</td>
                                 <td>${notice.userId}</td>
-                                <td><input type="checkbox"></td>
+                                <c:if test="${sessionScope.loginUser != null && sessionScope.loginUser.status == 'A'}">
+                                    <td><input type="checkbox" name="noticeNo" value="${notice.noticeNo}"></td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -157,9 +161,38 @@
 		             	<form action="insertNoticeform" method="post">
 		                    <button class="btn btn-primary write-button" >글쓰기</button>
 		              	</form>      
-		             	    <button class="btn btn-danger delete-button">글삭제</button>
+		             	 <form id="deleteForm" action="deleteNotice" method="post">
+		             	 	<input type="hidden" name="deleteNo" id="deleteNoInput">
+				            <button class="btn btn-danger delete-button" type="button" id="deleteBtn">글삭제</button>
+				        </form>
 		             </c:if>
 	            </div>
+	            
+	         <script>
+			    $(() => {
+			        $('#deleteBtn').click(() => {
+			            let deleteNo = [];
+			            $('input[type=checkbox]:checked').each(function() {
+			                deleteNo.push($(this).val());
+			            });
+			
+			            console.log("잘나오냐{} ", deleteNo); 
+			
+			            if (deleteNo.length > 0) {
+			            	$('#deleteNoInput').val(deleteNo);
+			              $('#deleteForm').submit();
+			              
+			            } else {
+			                alert("삭제할 항목을 선택해주세요.");
+			            }
+			        });
+			    });
+			</script>
+
+	            
+	            
+	            
+	            
 		     <div class="pagination">
 		        <ul>
 		            <!-- 이전 페이지 링크 -->

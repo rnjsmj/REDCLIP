@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,7 @@
 <!-- Bootstrap JS, Popper.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Bootstrap core CSS -->
@@ -98,6 +100,9 @@
 </head>
 <body class="text-center">
 
+
+   
+
 <form class="form-signin" action="member/login" method="post">
   <img class="mb-4" src="" alt="" width="72" height="72">
   <h1 class="h3 mb-3 font-weight-normal">로그인</h1>
@@ -112,10 +117,14 @@
   </div>
   <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
 
-  <button class="btn btn-custom kakao-button" type="button" id="kakaoLogin">
+  <button class="btn btn-custom kakao-button" type="button" id="kakaoLogin" hidden>
     <img src="" alt="카카오 로그인" class="icon">
     <span class="btn-text">카카오 로그인</span>
   </button>
+  	<c:if test="${ not empty alertMsg }">
+         <script>alert("${ alertMsg }")</script>
+         <c:remove var="alertMsg" scope="session" />
+   </c:if>
 <script>
     $(() => {
         $('#kakaoLogin').click(() => {
@@ -131,7 +140,7 @@
 
 
 	
-  <button class="btn btn-custom naver-button" type="button">
+  <button class="btn btn-custom naver-button" type="button" hidden>
     <img src="" alt="네이버 로그인" class="icon">
     <span class="btn-text">네이버 로그인</span>
   </button>

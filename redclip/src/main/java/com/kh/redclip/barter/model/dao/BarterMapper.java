@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterFile;
@@ -26,8 +27,8 @@ public interface BarterMapper {
 	int barterInsert(BarterFile barterFile);
 	//검색 조회
 	List<BarterVO> getFilteredBarters(Map<String, Integer> params);
-	
-	
+	//게시글 수정
+	public int update(SqlSessionTemplate sqlSession, Barter barter);
 	
 	
 	//댓글 목록
@@ -69,6 +70,10 @@ public interface BarterMapper {
 	int replyCount(int barterNo);
 	// 게시글에 포함된 답글 삭제
 	int replyListDelete(int barterNo);
+	
+	//메인화면 목록출력
+	List<BarterVO> getRecentProducts();
+	List<BarterVO> getTopCount();
 	
 	
 }
