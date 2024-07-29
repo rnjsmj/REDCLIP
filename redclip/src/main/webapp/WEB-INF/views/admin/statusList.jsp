@@ -26,7 +26,7 @@
              margin: 30px; 
              margin-left: 340px;
         }
-        #memberList {
+        #statusList {
              margin: 0 auto; 
              width: 1200px;
              margin-bottom: 50px;
@@ -50,10 +50,10 @@
     <div class="tab">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a id="all" class="nav-link active" aria-current="page">전체회원관리</a>
+              <a href="memList" id="all" class="nav-link">전체회원관리</a>
             </li>
             <li class="nav-item">
-              <a href="status" id="status" class="nav-link">탈퇴대기</a>
+              <a id="status" class="nav-link active" aria-current="page">탈퇴대기</a>
             </li>
           </ul>
     </div>
@@ -61,9 +61,10 @@
         
         <h3 id="title">회원관리</h3>
 
-        <table class="table" id="memberList">
+        <table class="table" id="statusList">
             <thead>
                 <tr>
+                	<th scope="col"></th>
                     <th scope="col">아이디</th>
                     <th scope="col">이름</th>
                     <th scope="col">닉네임</th>
@@ -81,7 +82,12 @@
                <c:otherwise>
                <c:forEach items="${ list }" var="member">
                <tr>
-               	<td>${ member.userId }</td>
+               	<td>
+               		<div class="form-check">
+	                    <input class="form-check-input" type="checkbox" id="seletBox" />
+	                </div>
+               	</td>
+               	<td id="userId">${ member.userId }</td>
                	<td>${ member.userName }</td>
                	<td>${ member.nickname }</td>
                	<td>${ member.createDate }</td>
@@ -92,7 +98,85 @@
                </c:choose>
             </tbody>
         </table>
+        <div id="buttons">
+	       	<button type="button" class="btn btn-success" onclick="change();">복구</button>
+	        <button type="button" class="btn btn-secondary" onclick="deleteMember();">삭제</button>
+        </div>
     </div>
+    <script>
+    	function change() {
+    		
+    		const userId = $('#userId').val();
+			
+			//배열 선언
+			const members = [];
+			
+			//체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
+			$('#seletBox:checked').each(function() {
+				const member= $(this).closest('tr').find('#userId').text().trim();
+				
+                members.push(member);
+			});
+			
+			console.log(members);
+
+			$.ajax({
+				url : '/redclip/admin/',
+				type : 'put',
+				data : JSON.stringify(members),
+				contentType : 'application/json',
+				success : result => {
+					console.log('요청 성공');
+					if(result === 'success') {
+						alert('성공적으로 복구되었습니다.');
+					} else {
+						alert('복구에 실패했습니다.');
+					}
+				},
+				error : e => {
+					console.log('요청 실패');
+					alert('요청에 실패했습니다.');
+				}
+			});
+		};
+    	
+    	function deleteMember() {
+			const userId = $('#userId').val();
+						
+				//배열 선언
+				const members = [];
+				
+				//체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
+				$('#seletBox:checked').each(function() {
+					const member= $(this).closest('tr').find('#userId').text().trim();
+					
+	                members.push(member);
+				});
+				
+				console.log(members);
+				
+			$.ajax({
+				url : '/redclip/admin/',
+				type : 'delete',
+				data : JSON.stringify(members),
+				contentType : 'application/json',
+				success : result => {
+					console.log('요청 성공');
+					if(result === 'success') {
+						alert('회원을 삭제했습니다.');
+						location.reload();
+						
+					} else {
+						alert('삭제에 실패했습니다.');
+					}
+				},
+				error : e => {
+					console.log('요청 실패');
+					alert('요청에 실패했습니다.');
+				}
+			});
+    	}
+    </script>
     <footer>
         <jsp:include page="../common/footer.jsp" />
     </footer>

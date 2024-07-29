@@ -13,6 +13,7 @@ import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.vo.BlockMember;
 
 import com.kh.redclip.member.model.vo.Member;
+import com.kh.redclip.member.model.vo.StatusMember;
 import com.kh.redclip.region.model.vo.Region;
 
 public interface MemberService {
@@ -27,8 +28,8 @@ public interface MemberService {
 	public int update(Member member);
 	
 	//회원상태 업데이트(탈퇴)
-	public int changeStatus(String userId);
-
+	int status(String userId, String reason);
+	
 	//회원 삭제
 	public int delete(String userId);
 	
@@ -68,6 +69,10 @@ public interface MemberService {
 	int searchPw(Member member);
 
 	int changePw(Member member);
+
+	
+
+
 
 
 

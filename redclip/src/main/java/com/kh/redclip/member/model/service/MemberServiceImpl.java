@@ -14,12 +14,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.redclip.barter.model.dao.BarterMapper;
 import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.member.model.dao.MemberMapper;
 import com.kh.redclip.member.model.vo.BlockMember;
 import com.kh.redclip.member.model.vo.Member;
+import com.kh.redclip.member.model.vo.StatusMember;
 import com.kh.redclip.region.model.vo.Region;
 
 import lombok.RequiredArgsConstructor;
@@ -52,11 +54,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int update(Member member) {
 		return memberMapper.update(member);
-	}
-
-	@Override
-	public int changeStatus(String userId) {
-		return memberMapper.changeStatus(userId);
 	}
 
 	@Override
@@ -226,6 +223,31 @@ public class MemberServiceImpl implements MemberService {
 	public int changePw(Member member) {
 		return memberMapper.changepw(member);
 	}
+
+	@Override
+	@Transactional
+	public int status(String userId, String reason) {
+		
+		try {
+			changeStatus(userId);
+			memberStatus(userId, reason);
+			
+			return 1;
+		} catch (Exception e) {
+			return 0;
+		}
+		
+	}
+	
+	
+	public void changeStatus(String userId) {
+		memberMapper.changeStatus(userId);
+	}
+	
+	public void memberStatus(String userId, String reason) {
+		memberMapper.memberStatus(userId, reason);
+	}
+
 
 	
 

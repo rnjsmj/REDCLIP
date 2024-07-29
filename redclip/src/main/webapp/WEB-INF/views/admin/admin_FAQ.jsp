@@ -58,7 +58,8 @@
 
         <h3 id="title">FAQ 관리 (관리자용)</h3> <br>
         <!-- 글 작성 버튼-->
-        <button id="insert" type="button" class="btn btn-success" data-toggle="modal" data-target="#insertForm" align="right">글 작성</button><br><br>
+        <button id="insert" type="button" class="btn btn-success" data-toggle="modal"
+        data-target="#insertForm">글 작성</button><br><br>
 
         <table id="faqList" class="table table-hover">
             <thead>
@@ -81,7 +82,8 @@
             	<tr>
 	                <td>
 	                <div class="form-check">
-	                    <input class="form-check-input" type="checkbox" value="${ faq.faqNo }" id="flexCheckDefault" name="faqNo" onclick="selectNo(this);">
+	                    <input class="form-check-input" type="checkbox" value="${ faq.faqNo }" id="flexCheckDefault"
+	                    name="faqNo" onclick="selectNo(this);">
 	                </div>
 	                </td>
 	                <td>${ faq.faqType }</td>
@@ -95,7 +97,8 @@
           </table>
           <!-- 수정 | 삭제 버튼 -->
             <div id="buttons" style="margin-top: 30px;">
-                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" >수정</button> | <button type="submit" id="delete" class="btn btn-secondary" onclick="deleteFaq();">삭제</button>
+                <button type="button" id="update" class="btn btn-success" data-toggle="modal" data-target="#updateForm" >수정</button>
+                <button type="submit" id="delete" class="btn btn-secondary" onclick="deleteFaq();">삭제</button>
             </div>
     </div>
     
@@ -116,7 +119,8 @@
                     	</div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">제목</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput2" name="question" placeholder="제목을 입력하세요">
+                            <input type="text" class="form-control" id="exampleFormControlInput2" name="question"
+                            placeholder="제목을 입력하세요">
                         </div>
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
@@ -128,7 +132,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="내용을 입력하세요" name="answer"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="내용을 입력하세요"
+                            name="answer"></textarea>
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -152,8 +157,8 @@
                 </div>
                     <div class="modal-body">
                          <div>
-                          <input type="hidden" id="userId" value="${ detail.userId }" />
-                          <input type="hidden" id="faqNo" value="${ detail.faqNo }" />
+                          <input type="hidden" id="userId" />
+                          <input type="hidden" id="faqNo" />
                        </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">제목</label>
@@ -161,7 +166,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
-                            <select class="form-select" aria-label="Default select example" value="${ detail.faqType }" id="faqType">
+                            <select class="form-select" aria-label="Default select example" id="faqType">
                                 <option selected></option>
                                 <option value="시스템">시스템</option>
                                 <option value="회원">회원</option>
@@ -186,33 +191,31 @@
 	<script>
 	 
 		//체크 박스에 체크 된 글번호 가져오기
-			
 		function selectNo() {
 			
 			
 			const faqNo = $("input[name='faqNo']:checked").val();
 			
-			//const numbers = Array.from(faqNo).map(checkbox => parseInt(checkbox.value, 10));
-			
-			console.log(faqNo);
-			
 			$.ajax({
 				url : '/redclip/faq/' + faqNo,
 				type : 'get',
 				success : result => {
-					console.log('글이 있져');
-					console.log(result);
-					$('#userId').val(result.userId);
-					$('#faqNo').val(result.faqNo);
-					$('#exampleFormControlInput1').val(result.question);
-					$('#exampleFormControlTextarea1').val(result.answer);
-					$('#faqType option').filter(function() {
-		                return $(this).text() === result.faqType;
-		            }).prop('selected', true);
 					
+					if(result != null) {
+						$('#userId').val(result.userId);
+						$('#faqNo').val(result.faqNo);
+						$('#exampleFormControlInput1').val(result.question);
+						$('#exampleFormControlTextarea1').val(result.answer);
+						$('#faqType option').filter(function() {
+			                return $(this).text() === result.faqType;
+			            }).prop('selected', true);	
+					}
+					else {
+						alert('글 정보를 불러올 수 없습니다.')	
+					}
 				},
 				error : e => {
-					console.log('글이 없져');
+					alert('요청에 실패했습니다.');
 				}
 			});
 			
@@ -228,24 +231,22 @@
 				"userId" : $('#userId').val()
 			};
 			
-			console.log(newFaq);
-			
 			$.ajax({
 				url : '/redclip/faq',
 				type : 'post',
 				contentType: 'application/json',
 				data : JSON.stringify(newFaq),
 				success : result => {
-					//console.log('작성 성공');
-					alert('FAQ가 추가되었습니다.');
-					location.reload();
+					if(result > 0) {
+						alert('FAQ가 추가되었습니다.');
+						location.reload();	
+					}
+					else {
+						alert('FAQ 추가에 실패했습니다.')
+					}
 				},
-				error : (xhr, status, error) => {
-					//console.log('작성 실패');
-					//console.log('상태: ', status);
-					//console.log('오류: ', error);
-					//console.log('응답: ', xhr.responseText);
-					alert('FAQ 추가에 실패했습니다.');
+				error : (error) => {
+					alert('FAQ 추가 요청에 실패했습니다.');
 				}
 			});
 		};
@@ -255,8 +256,6 @@
 	         
 	         const faqNo = $("input[name='faqNo']:checked").val();
 	         
-	         console.log(faqNo);
-	         
 	         const updateData = {
 	               "faqNo" : $('#faqNo').val(),
 	               "question" : $('#exampleFormControlInput1').val(),
@@ -265,22 +264,23 @@
 	               "userId" : $('#userId').val()
 	            };
 	         
-	         console.log(updateData);
-	         
 	         $.ajax({
 	            url : '/redclip/faq/' + faqNo,
 	            type : 'put',
 	            data : JSON.stringify(updateData),
 	            contentType : 'application/json',
 	            success : result => {
-	               console.log('요청 성공');
-	               //console.log(result);
-	               alert('faq 정보가 수정되었습니다.');
-	               location.reload();
+	            	
+	            	if(result > 0) {
+	 	               alert('faq 정보가 수정되었습니다.');
+	 	               location.reload();	
+	            	}
+	            	else {
+	            		alert('정보 수정에 실패했습니다.')	
+	            	}
 	            },
 	            error : e => {
-	               console.log('요청 실패', e);
-	               alert('정보 수정에 실패했습니다.')
+	               alert('정보 수정 요청을 실패했습니다.')
 	            }
 	         });
 	         
@@ -298,21 +298,23 @@
 				numbers.push(faqNo);
 			});			
 			
-			console.log(numbers);
-			
 			$.ajax({
 				url : '/redclip/faq',
 				type : 'delete',
 				data : JSON.stringify(numbers),
 				contentType : 'application/json',
 				success : result => {
-					//console.log('요청 성공', result);
-					alert('글을 삭제했습니다.');
-					location.reload();
+					
+					if(result > 0) {
+						alert('글을 삭제했습니다.');
+						location.reload();	
+					}
+					else {
+						alert('글을 삭제하지 못했습니다.');	
+					}
 				},
 				error : e => {
-					//console.log('요청 실패', e);
-					alert('글을 삭제하지 못했습니다.');
+					alert('요청에 실패했습니다.');
 				}
 			});
 			

@@ -47,16 +47,65 @@
 		  		STATUS = 'Y'
 	</select>
 	
-	<select id="status" resultType="member">
+	<select id="status" resultType="member" parameterType="status">
 		SELECT
-				USER_ID userId,
-				USER_NAME userName,
-				CREATE_DATE createDate,
-				STATUS status
+				S.USER_ID userId,
+				M.USER_NAME userName,
+				M.NICKNAME nickname,
+                M.CREATE_DATE createDate,
+                M.STATUS status,
+				S.DROP_DATE dropDate,
+				S.DROP_REASON dropReason
 		  FROM
-		  		TB_MEMBER
-		  WHERE
-		  		STATUS = 'N'
+		  		TB_MEM_STATUS S, TB_MEMBER M
+       	 WHERE  
+                S.USER_ID = M.USER_ID
 	</select>
+	
+	<update id="changeMember" parameterType="string">
+		UPDATE
+				TB_MEMBER
+		   SET
+		   		STATUS = 'Y'
+		 WHERE
+		 		STATUS = 'N'
+		   AND
+		   		USER_ID
+		   	IN
+		   		<foreach item="id" collection="members"
+		        open="(" separator="," close=")">
+       			#{id}
+   				</foreach>
+	</update>
+	
+	<!-- 탈퇴 목록 삭제 -->
+	<delete id="getMember" parameterType="string">
+		DELETE
+		  FROM
+		        TB_MEM_STATUS
+		 WHERE
+		        USER_ID
+		    IN
+        		<foreach item="id" collection="members"
+        		open="(" separator="," close=")">
+        		#{id}
+        		</foreach>
+	</delete>
+	
+	<!-- 회원 삭제 -->
+	<delete id="dropMember" parameterType="string" >
+		DELETE
+		  FROM
+		        TB_MEMBER
+		 WHERE
+		        STATUS = 'N'
+		   AND
+		        USER_ID
+		    IN
+	       		<foreach item="id" collection="members"
+	       		open="(" separator="," close=")">
+	       		#{id}
+	       		</foreach>
+	</delete>
 
 </mapper>

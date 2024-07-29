@@ -102,12 +102,12 @@
     
         <div id="updateForm">
             <div>
-                <div class="userImg">
+               <!--  <div class="userImg">
                 	<div id="profil">
 						<img alt="프로필 사진" src="">
 					</div>
 					<input type="file" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-				</div>
+				</div> -->
                     
                     <label for="userId">* ID </label><br>
                     <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
@@ -144,7 +144,7 @@
                
 				<div id="buttons">
                     <button type="button" id="userUpdate" class="btn btn-success" onclick="update();">수정</button>
-                    <button type="reset" class="btn btn-secondary" onclick="location.reloard">취소</button><br>
+                    <button type="reset" class="btn btn-secondary">취소</button><br>
                     <button type="button" id="delete-btn" class="btn btn-secondary" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
 				</div>
               </div>
@@ -190,6 +190,9 @@
                               모든 내용을 숙지하였으며 회원 탈퇴에 동의합니다.
                             </label>
                         </div>
+                         <div class="form-group">
+						    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="dropReason" placeholder="탈퇴 사유를 적어주세요" required></textarea>
+						  </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
@@ -205,7 +208,7 @@
      	//회원정보 수정
    		function update() {
    			
-   			var updateData = {
+   			const updateData = {
    					"userId" : $('#userId').val(),
    					"userName" : $('#userName').val(),
    					"nickname" : $('#nickname').val(),
@@ -217,22 +220,22 @@
    					
    			};
    			
-   			 //console.log(updateData);
-
    			$.ajax({
    				url : 'member/',
    				type : 'put',
    				data : JSON.stringify(updateData),
    				contentType : 'application/json',
-   				success : function(result) {
+   				success : result => {
    					
-   					//console.log(result);
-   					
-   						alert('회원 정보가 수정되었습니다.');
-   						
+   						if(result === 'success') {
+   							alert('회원 정보가 수정되었습니다.');	
+   						}
+   						else {
+   							alert('회원 정보 수정에 실패했습니다.');		
+   						}
    					},
-   				error : function(error) {
-   					alert('회원 정보 수정에 실패했습니다.');
+   				error : (e) => {
+   					alert('요청에 실패했습니다.');   					
    				}
    			});
    		};
@@ -247,24 +250,32 @@
    		function changeStatus() {
    			
    			const userId = $('#loginUserId').val();
+   			const reason = $('#exampleFormControlTextarea1').val();
    			
-   			//console.log(userId);
-   			
-   			$.ajax({
-   				url: 'member/' + userId,
-   				type: 'put',
-   				success : result => {
-   					
-   					alert('회원 탈퇴에 성공했습니다.');
-   					location.reload();
-   				},
-   				error : (e) => {
-   					
-   					//console.log("요청 실패");
-   					alert('회원 탈퇴에 실패했습니다.');
-   				}
-   			});
-   			
+   			if(reason === "") {
+   				alert('탈퇴 사유를 입력해주세요.');
+   			} else {
+   				$.ajax({
+   	   				url: 'member/' + userId,
+   	   				type: 'put',
+   	   				data : JSON.stringify(reason),
+   	   				contentType : 'application/json',
+   	   				success : result => {
+   	   					
+   	   					console.log(result);
+   	   					if(result === 'success') {
+	   	   					alert('회원 탈퇴에 성공했습니다.');
+	   	   					location.href = 'member/logout';	
+   	   					} else {
+   	   						alert('회원 탈퇴에 실패했습니다.')
+   	   					}
+   	   					
+   	   				},
+   	   				error : (e) => {
+   	   					alert('회원 탈퇴 요청에 실패했습니다.');
+   	   				}
+   	   			});
+   			}
    		};
    		
     </script>

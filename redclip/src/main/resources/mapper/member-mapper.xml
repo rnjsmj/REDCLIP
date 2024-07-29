@@ -102,6 +102,22 @@
 		   	  
 	</update>
 	
+	<!-- 탈퇴 테이블 -->
+	<insert id="memberStatus" parameterType="string">
+		INSERT
+		  INTO
+		  		TB_MEM_STATUS
+		  		(
+		  		USER_ID,
+		  		DROP_REASON
+		  		)
+		VALUES
+				(
+				#{userId},
+				#{dropReason}
+				)
+	</insert>
+	
 	<insert id="insertMember" parameterType="member">
     INSERT INTO TB_MEMBER
         (
@@ -170,10 +186,7 @@
 	
 	
 	
-	<!-- 회원 차단 -->
-	<insert id="">
 	
-	</insert>
 	
 	<!-- 차단 회원 조회 -->
 	<select id="selectByBlock" parameterType="string" resultType="block">
@@ -188,17 +201,18 @@
 
 	<!-- 차단 해제 -->
 	<delete id="deleteByBlock">
-		    DELETE
-		      FROM
-		      			TB_MEM_BLOCK
-		     WHERE
-		     			BLOCK_ID = #{userId}
-		     	AND
-		     			BLOCKED_ID
+		     DELETE
+		       FROM
+		      		TB_MEM_BLOCK
+		      WHERE
+		     		BLOCK_ID = #{userId}
+		        AND
+		     		BLOCKED_ID
 		     	 IN
-				        <foreach item="id" collection="blockMembers" open="(" separator="," close=")">
-            #{id}
-        </foreach>
+			        <foreach item="id" collection="blockMembers"
+			        open="(" separator="," close=")">
+           			#{id}
+       				</foreach>
 	</delete>
 	
 	<!-- 비밀번호변경 -->
