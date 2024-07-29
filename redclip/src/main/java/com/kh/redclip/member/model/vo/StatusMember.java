@@ -1,6 +1,7 @@
 package com.kh.redclip.member.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +17,5 @@ public class StatusMember {
 	private String userId;		//탈퇴회원 아이디
 	private String dropReason;	//탈퇴 사유
 	private Date dropDate;		//탈퇴 일자
-	
+	private List<Member> members;
 }

@@ -79,20 +79,20 @@
             </c:choose>
             </tbody>
           </table>
+          <a href="reportList" style="float: right; margin-right: 300px;">더 보기</a>
           <div class="icon" align="center" style="margin-top: 40px; ">
             <a href="${pageContext.request.contextPath}/noticeform"><i class="bi bi-megaphone" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href="${pageContext.request.contextPath}/admin/adminFaq"><i class="bi bi-question" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href="${pageContext.request.contextPath}/admin/memList"><i class="bi bi-person-lines-fill" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
-            <a href=""><i class="bi bi-emoji-kiss" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);">.</i></a>
           </div>
     </div>
     
 	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#adminModal">
+	<!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adminModal">
 	  관리자 계정 생성
 	</button>
 	
-	<!-- Modal -->
+	Modal
 	<div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -128,7 +128,7 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>
+	</div> -->
     <script>
     
     </script>

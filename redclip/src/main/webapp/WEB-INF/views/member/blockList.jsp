@@ -104,47 +104,14 @@
                 </c:forEach>
             </tbody>
         </table>
-        <button type="button" id="btn-none" class="btn btn-success" onclick="deleteByBlock();">차단해제</button>
+        
+        <button type="button" id="btn-none" class="btn btn-success"
+        onclick="deleteByBlock();">차단해제</button>
+        
     </div>
     <script>
 
-          function deleteByBlock() {
-          
-             var userId = $('#userId').val();
-             
-             //배열 선언
-             var blockMembers = [];
-             
-       
-             //체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
-             $('.form-check-input:checked').each(function() {
-                 var block = $(this).closest('tr').find('#blockedId').text().trim();
-                 blockMembers.push(block);
-             });
-             
-             console.log(blockMembers);
-             console.log(userId);
-             
-             $.ajax({
-                
-                url: userId,
-                type : 'delete',
-                data : JSON.stringify(blockMembers),
-                contentType : 'application/json',
-                traditional: true,
-                success : result => {
-                  // console.log('차단 해제함', result);
-                  // location.reload();
-                },
-                error : e => {
-                   //console.log('차단 해제 실패함', e);
-                  // alert('차단 해제에 실패했습니다.');
-
-                }
-             });
-          };
-
-    		function deleteByBlock() {
+     		function deleteByBlock() {
     		
     			const userId = $('#userId').val();
     			
@@ -157,10 +124,7 @@
 
                     blockMembers.push(block);
     			});
-    			
-    			console.log(blockMembers);
-    			console.log(userId);
-    			
+    		
     			$.ajax({
     				
     				url: userId,
@@ -169,15 +133,17 @@
     				contentType : 'application/json',
     				traditional: true,
     				success : result => {
-    					console.log('차단 해제함', result);
     					
-    					alert('차단 해제에 성공했습니다.');
-    					location.reload();
+    					if(result === 'success') {
+    						alert('차단 해제에 성공했습니다.');
+        					location.reload();	
+    					}
+    					else {
+    						alert('차단 해제에 실패했습니다.');	
+    					}
     				},
     				error : e => {
-    					console.log('차단 해제 실패함', e);
-    					
-    					alert('차단 해제에 실패했습니다.');
+    					alert('요청을 실패했습니다.');
     				}
     			});
     		};
