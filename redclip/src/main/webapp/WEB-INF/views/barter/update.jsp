@@ -86,9 +86,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="writer">작성자</label>
-        <input type="text" id="writer" class="form-control" value="${barter.barterWriter}" name="barterWriter" readonly>
-      </div>
+	    <label for="writer">작성자</label>
+	    <input type="text" id="writer" class="form-control" value="${barter.barterWriter}" name="barterWriter" readonly>
+	  </div>
       <div class="form-group">
         <label>주소 입력</label>
         <div class="form-row">
@@ -195,27 +195,34 @@
 	    });
 	});
 	
+	$(document).ready(function() {
+	    enteredData(); 
+	});
+
 	function enteredData() {
-		$.ajax({
-			url : '/redclip/barters',
-			type : 'get',
-			success : result => {
-				console.log(result);
-				$('#categoryNo').val(result.categoryNo).filter(function() {
-	                return $(this).text() === result.categoryNo;
-				$('#si').val(result.si).filter(function() {
-	                return $(this).text() === result.si;
-				$('#gu').val(result.gu).filter(function() {
-	                return $(this).text() === result.gu;
-				$('#dong').val(result.dong).filter(function() {
-	                return $(this).text() === result.dong;
-	            }).prop('selected', true);
-				
-			},
-			error : e => {
-				console.log('글이 없져');
-			}
-		});	
+	    
+	    console.log('${barter}');
+	    
+		$('#categoryNo').val('${barter.categoryNo}').filter(function() {
+		    return $(this).text() === '${barter.categoryNo}';
+		}).prop('selected', true);
+
+		$('#si').val('${barter.region.cityCode}').filter(function() {
+		    return $(this).val() === '${barter.region.cityCode}';
+		}).prop('selected', true);
+		
+		document.getElementById('si').dispatchEvent(new Event('change'));
+
+		$('#gu').val('${barter.region.townCode}').filter(function() {
+		    return $(this).val() === '${barter.region.townCode}';
+		}).prop('selected', true);
+		
+		
+		$('#dong').prop('disabled',false);
+		
+		$('#dong').val('${barter.region.villageCode}').filter(function() {
+		    return $(this).val() === '${barter.region.villageCode}';
+		}).prop('selected', true);
 	};
 	
 	function loadImg(inputFile, index) {
@@ -233,7 +240,7 @@
 	        previewImage.src = "";
 	        previewImage.style.display = 'none';
 	    }
-	}
+	};
 
   </script>
   <jsp:include page="/WEB-INF/views/common/footer.jsp" />
