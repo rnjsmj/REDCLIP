@@ -147,7 +147,7 @@ public class BarterController {
 			 return "common/errorPage";
 		}	
 	}
-	 
+	
 	// 파일 업로드 메서드
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
@@ -242,7 +242,6 @@ public class BarterController {
 		
 		return barterService.replyUpdate(reply) > 0 ? "success" : "error";
 	}
-	
 
 	//게시글 삭제
 	@PostMapping("/delete")

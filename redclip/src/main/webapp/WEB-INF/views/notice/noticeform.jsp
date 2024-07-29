@@ -146,7 +146,7 @@
                                 <td>${(pageInfo.currentPage - 1) * 10 + status.count}</td>
                                 <td>${notice.noticeType}</td>
                       		    <td><a href="noticeDetail?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
-                                <td>${notice.noticeDate}</td>
+                                <td>${notice.noti	ceDate}</td>
                                 <td>${notice.userId}</td>
                                 <c:if test="${sessionScope.loginUser != null && sessionScope.loginUser.status == 'A'}">
                                     <td><input type="checkbox" name="noticeNo" value="${notice.noticeNo}"></td>
