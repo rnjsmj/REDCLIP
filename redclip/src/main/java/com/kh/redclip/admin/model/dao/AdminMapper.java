@@ -25,4 +25,6 @@ public interface AdminMapper {
 
 	void getMember(@Param("members") String[] members);
 
+	void dropMember(@Param("members") String[] members);
+
 }

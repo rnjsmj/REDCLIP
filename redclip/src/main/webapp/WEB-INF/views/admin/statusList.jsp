@@ -112,7 +112,7 @@
 			const members = [];
 			
 			//체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
-			$('#seletBox').each(function() {
+			$('#seletBox:checked').each(function() {
 				const member= $(this).closest('tr').find('#userId').text().trim();
 				
                 members.push(member);
@@ -127,15 +127,54 @@
 				contentType : 'application/json',
 				success : result => {
 					console.log('요청 성공');
+					if(result === 'success') {
+						alert('성공적으로 복구되었습니다.');
+					} else {
+						alert('복구에 실패했습니다.');
+					}
 				},
 				error : e => {
 					console.log('요청 실패');
+					alert('요청에 실패했습니다.');
 				}
 			});
 		};
     	
     	function deleteMember() {
-    		
+			const userId = $('#userId').val();
+						
+				//배열 선언
+				const members = [];
+				
+				//체크 박스에 체크된 차단당한 아이디 정보 배열에 담아주기
+				$('#seletBox:checked').each(function() {
+					const member= $(this).closest('tr').find('#userId').text().trim();
+					
+	                members.push(member);
+				});
+				
+				console.log(members);
+				
+			$.ajax({
+				url : '/redclip/admin/',
+				type : 'delete',
+				data : JSON.stringify(members),
+				contentType : 'application/json',
+				success : result => {
+					console.log('요청 성공');
+					if(result === 'success') {
+						alert('회원을 삭제했습니다.');
+						location.reload();
+						
+					} else {
+						alert('삭제에 실패했습니다.');
+					}
+				},
+				error : e => {
+					console.log('요청 실패');
+					alert('요청에 실패했습니다.');
+				}
+			});
     	}
     </script>
     <footer>

@@ -59,6 +59,26 @@ public class AdminServiceImpl implements AdminService {
 		adminMapper.getMember(members);
 	}
 
+	@Transactional
+	@Override
+	public int deleteMember(String[] members) {
+		try {
+			getMember(members);
+			dropMember(members);
+			
+			
+			return 1;
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	
+	void dropMember(String[] members) {
+		adminMapper.dropMember(members);
+	}
+	
+	
+
 	
 	
 	

@@ -78,6 +78,7 @@
    				</foreach>
 	</update>
 	
+	<!-- 탈퇴 목록 삭제 -->
 	<delete id="getMember" parameterType="string">
 		DELETE
 		  FROM
@@ -89,6 +90,22 @@
         		open="(" separator="," close=")">
         		#{id}
         		</foreach>
+	</delete>
+	
+	<!-- 회원 삭제 -->
+	<delete id="dropMember" parameterType="string" >
+		DELETE
+		  FROM
+		        TB_MEMBER
+		 WHERE
+		        STATUS = 'N'
+		   AND
+		        USER_ID
+		    IN
+	       		<foreach item="id" collection="members"
+	       		open="(" separator="," close=")">
+	       		#{id}
+	       		</foreach>
 	</delete>
 
 </mapper>

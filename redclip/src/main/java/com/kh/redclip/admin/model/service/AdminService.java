@@ -18,4 +18,6 @@ public interface AdminService {
 
 	int change(String[] members);
 
+	int deleteMember(String[] members);
+
 }
