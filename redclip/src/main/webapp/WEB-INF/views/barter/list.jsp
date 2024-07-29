@@ -13,8 +13,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
     .btn-container {
-    display: flex;
-    align-items: center;
+        display: flex;
+        align-items: center;
     }
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -31,8 +31,13 @@
         font-size: 22px;
         font-weight: bold;
     }
-    .d-flex { width: 1100px; margin-bottom: 40px;}
-    .form-control { margin-right: 4px;}
+    .d-flex { 
+        width: 1100px; 
+        margin-bottom: 40px;
+    }
+    .form-control { 
+        margin-right: 4px;
+    }
     .filter-select {
         margin: 0 5px;
     }
@@ -50,10 +55,24 @@
     .card-container {
         display: flex;
         flex-wrap: wrap;
+        width: 100%;
+        padding: 0;
     }
     .filter-info-container {
         display: flex;
         align-items: center;
+    }
+    .card {
+        width: 260px; 
+        height: 450px;
+        margin-bottom: 12px;
+        margin-right: 10px;
+        box-sizing: border-box;
+    }
+    .card-img-top {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
     }
 </style>
 </head>
@@ -118,20 +137,6 @@
 	            </c:if>
 	            <br>
 	            <div class="card-container">
-	            <!--
-                    <c:forEach items="${list}" var="barter">
-                    <div class="card" style="width: 270px; height:300px;">
-                        <img src="${barter.barterFileList[0].barterFileName}" class="card-img-top" alt="${barter.barterName}">
-                        <div class="card-body">
-                            <h5 class="card-title">${barter.barterName}</h5>
-                            <p class="card-text">${barter.barterWriter}</p>
-                            <p class="card-text">${barter.region.cityName} ${barter.region.townName} ${barter.region.villageName}</p>
-                            <p class="card-text">${barter.barterDate}</p>
-                            <a href="/redclip/barters/${ barter.barterNo }" class="btn btn-primary">상세보기</a>
-                        </div>
-                    </div>
-                </c:forEach>
-                 -->
                 </div>
                 <div class="btn-container">
                     <button id="load-more-btn" class="btn btn-danger load-more-btn">더보기</button>
@@ -245,7 +250,7 @@
                     response.forEach(barter => {
                     	/* console.log(barter); */
                         const card =
-                        	`<div class="card" style="width: 270px; height:440px;">
+                        	`<div class="card">
                         	 <img src="\${barter.barterFileList[0].barterFileName}" class="card-img-top" alt="\${barter.barterName}">
                              <div class="card-body">
                              <h5 class="card-title">\${barter.barterName}</h5>
