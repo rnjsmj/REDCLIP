@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.kh.redclip.barter.model.dao.BarterMapper;
 import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.main.model.dao.MainMapper;
-import com.kh.redclip.member.model.dao.MemberMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +15,16 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MainServiceImpl implements MainService {
 	private final MainMapper mainMapper;
+	private final BarterMapper barterMapper;
 
 	@Override
 	public List<BarterVO> getRecentProducts() {
-		return mainMapper.getRecentProducts();
+		return barterMapper.getRecentProducts();
+	}
+
+	@Override
+	public List<BarterVO> getTopCount() {
+		return barterMapper.getTopCount();
 	}
 	
 }

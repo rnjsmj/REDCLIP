@@ -71,5 +71,9 @@ public interface BarterMapper {
 	// 게시글에 포함된 답글 삭제
 	int replyListDelete(int barterNo);
 	
+	//메인화면 목록출력
+	List<BarterVO> getRecentProducts();
+	List<BarterVO> getTopCount();
+	
 	
 }

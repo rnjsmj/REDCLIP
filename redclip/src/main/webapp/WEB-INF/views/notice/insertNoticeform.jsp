@@ -63,7 +63,7 @@
             <h2>게시글 작성하기</h2>
             <br>
 
-            <form id="enrollForm" method="post" action="insertNotice" enctype="multipart/form-data">
+            <form id="enrollForm" method="post" action="insertNotice">
                 <table>
                     <tr>
                         <th><label for="title">제목</label></th>

@@ -5,4 +5,6 @@ import com.kh.redclip.barter.model.vo.BarterVO;
 
 public interface MainService {
     List<BarterVO> getRecentProducts();
+
+	List<BarterVO> getTopCount();
 }

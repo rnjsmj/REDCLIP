@@ -9,6 +9,7 @@
     BARTER_NAME,
     BARTER_NICKNAME,
     VILLAGE_NAME,
+    WISH_COUNT,
     BARTER_DATE,
     BARTER_FILE_NO,
     BARTER_FILE_NAME
@@ -33,6 +34,52 @@ FROM (
 WHERE 
      ROWNUM BETWEEN 1 AND 12
 	</select>
+	
+	<select id="getCountTop" resultType="barterVO" >
+	SELECT 
+        BARTER_NO,
+        BARTER_NAME,
+        BARTER_NICKNAME,
+        VILLAGE_NAME,
+        BARTER_DATE,
+        BARTER_FILE_NO,
+        BARTER_FILE_NAME,
+        WISH_COUNT
+ FROM       
+		(SELECT
+		    BARTER_NO,
+		    BARTER_NAME,
+		    BARTER_NICKNAME,
+		    VILLAGE_NAME,
+		    BARTER_DATE,
+		    BARTER_FILE_NO,
+		    BARTER_FILE_NAME,
+		    WISH_COUNT
+		FROM (
+		    SELECT
+		        BARTER_NO,
+		        BARTER_NAME,
+		        BARTER_NICKNAME,
+		        VILLAGE_NAME,
+		        BARTER_DATE,
+		        BARTER_FILE_NO,
+		        BARTER_FILE_NAME,
+		        WISH_COUNT,
+		        ROW_NUMBER() OVER (PARTITION BY BARTER_NO ORDER BY BARTER_FILE_NO) AS rn
+		    FROM
+		        VW_BARTER_DETAIL
+		)
+		WHERE rn = 1 ORDER BY WISH_COUNT DESC
+		)
+		WHERE
+		    	ROWNUM BETWEEN 1 AND 12;
+	
+	
+	</select>
+	
+	
+	
+	
 	
 	
 </mapper>
