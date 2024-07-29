@@ -169,6 +169,20 @@ TB_BARTER_FILE
     			)
 	</insert>
 	
+	<update id="update" parameterType="barter">
+	UPDATE 
+	    	  BARTER
+	   SET 
+	    	  BARTER_TITLE=#{barterTitle},
+	    	  BARTER_CONTENT=#{barterContent},
+	    	  CHANGE_NAME=#{changeName},
+	    	  VILLAGE_CODE=#{villageCode},
+	    	  ORIGIN_NAME=#{originName},
+	      	  CATEGORY_NO=#{categoryNo}
+	  WHERE
+	    	  BARTER_NO=#{barterdNo}	
+	</update>
+	
 	<resultMap type="barterReply" id="replyResultSet">
 		<id column="REPLY_NO" property="replyNo"/>
 		<result column="REPLY_CONTENT" property="replyContent" />

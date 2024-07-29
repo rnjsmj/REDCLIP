@@ -16,6 +16,7 @@ import lombok.ToString;
 public class Barter {
 	private int barterNo;
 	private String barterName;
+	private String originName;
 	private String changeName;
 	private String barterContent;
 	private String barterWriter;

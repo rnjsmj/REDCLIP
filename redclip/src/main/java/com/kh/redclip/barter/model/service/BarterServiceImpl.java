@@ -22,8 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class BarterServiceImpl implements BarterService{
 
 	private final BarterMapper barterMapper;
-	
-	
+	private final SqlSessionTemplate sqlSession;
 
 	@Override
 	public List<BarterVO> getAllBarters(Integer code) {
@@ -48,8 +47,7 @@ public class BarterServiceImpl implements BarterService{
 	//게시글 수정
 	@Override
 	public int update(Barter barter) {
-		// TODO Auto-generated method stub
-		return 0;
+		return barterMapper.update(sqlSession, barter);
 	}
 	
 	@Override

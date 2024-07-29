@@ -136,8 +136,10 @@
 	        </div>
 	    </div>
 	 </div>
-     <button type="submit" class="btn btn-success">수정하기</button>
-     <button type="submit" class="btn btn-danger">취소하기</button>
+	 <div align="center">
+	     <button type="submit" class="btn btn-success">수정하기</button>
+	     <button type="reset" class="btn btn-danger">취소하기</button>
+     </div>
      </form>
     </section>
   </div>
@@ -200,7 +202,7 @@
 	});
 	
 	function enteredData() {
-console.log('${barter}');
+	console.log('${barter}');
 	    
 		$('#categoryNo').val('${barter.categoryNo}').filter(function() {
 		    return $(this).text() === '${barter.categoryNo}';
