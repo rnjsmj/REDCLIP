@@ -2,12 +2,13 @@ package com.kh.redclip.main.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.support.HttpRequestHandlerServlet;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.main.model.service.MainService;
@@ -35,7 +36,21 @@ public class MainController {
         return "main";
     }
 	
+	@GetMapping("/keywordForward/{keyword}")
+	public String keywordForward(@PathVariable("keyword") String keyword, HttpSession session) {
+		
+		session.setAttribute("keyword", keyword);
+		
+		return "redirect:/barters";
+	}
 	
+	@ResponseBody
+	@GetMapping("/removeKeyword")
+	public int removeKeyword(HttpSession session) {
+		
+		session.removeAttribute("keyword");
+		return 1;
+	}
 	
 
 	

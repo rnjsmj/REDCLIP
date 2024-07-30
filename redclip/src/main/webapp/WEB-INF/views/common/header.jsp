@@ -63,6 +63,8 @@
         justify-content: space-between; 
         align-items: center;
         width: 100%;
+        
+        
       }
 
       .navbar h5 {
@@ -74,6 +76,11 @@
         margin-left: auto; 
         display: flex;
         gap: 10px;
+        
+        > label {
+        	margin-bottom : 0px;
+        	align-content: center;
+        }
       }
       .my-2{
         margin-left:20px ;
