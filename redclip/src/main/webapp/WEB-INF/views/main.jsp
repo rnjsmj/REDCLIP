@@ -9,6 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    
     <style>
         body {
             width: 100%;
@@ -74,7 +76,7 @@
             color: black;
         }
         .swiper-button-prev {
-            left: 20px !important; /* 왼쪽 버튼을 약간 안쪽으로 조정 */
+            left: 20px !important; 
         }
         .swiper-button-next {
             right: 20px !important; /* 오른쪽 버튼을 약간 안쪽으로 조정 */
@@ -117,7 +119,24 @@
         	margin-bottom:200px;
         	margin-top:60px;	
         }
+
+     	      #link {
+            text-decoration: none !important;
+            color: black !important;
+            width: 120px !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+            cursor: pointer !important;
+        }
+        .title{
+            width: 120px !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
+              overflow: hidden !important;
+        }
     </style>
+    <jsp:include page="/WEB-INF/views/common/head.jsp" />
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -137,13 +156,13 @@
                     <c:forEach var="product" items="${recentProducts}">
                         <div class="swiper-slide">
                             <c:if test="${not empty product.barterFileList}">
-                                <img src="${product.barterFileList[0].barterFileName}" alt="이미지" />
+                                <img for="link" src="${product.barterFileList[0].barterFileName}" alt="이미지" />
                             </c:if>
                             <div class="text-container">
-                                <div class="title">${product.barterName}</div>
-                                <div class="author">작성자: ${product.barterNickname}</div>
-                                <div class="date">등록날짜: ${product.barterDate}</div>
-                                <div class="location">지역: ${product.region.villageName}</div>
+                                <div class="title"  ><a id="link" href="/redclip/barters/${product.barterNo}">${product.barterName}</a></div>
+                                <div class="author">${product.barterNickname}</div>
+                                <div class="date">${product.barterDate}</div>
+                                <div class="location">${product.region.villageName}</div>
                             </div>
                         </div>
                     </c:forEach>
@@ -164,11 +183,11 @@
                                 <img src="${product.barterFileList[0].barterFileName}" alt="이미지" />
                             </c:if>
                             <div class="text-container">
-                                <div class="title">${product.barterName}</div>
-                                <div class="author">작성자: ${product.barterNickname}</div>
-                                <div class="date">등록날짜: ${product.barterDate}</div>
-                                <div class="location">지역: ${product.region.villageName}</div>
-                                <div class="views">조회수: ${product.wishCount}</div> <!-- 조회수 출력 -->
+                                <div class="title"><a id="link" href="/redclip/barters/${product.barterNo}">${product.barterName}</a></div>
+                                <div class="author">${product.barterNickname}</div>
+                                <div class="date">${product.barterDate}</div>
+                                <div class="location">${product.region.villageName}</div>
+                                <div class="views">좋아요:${product.wishCount}</div> <!-- 조회수 출력 -->
                             </div>
                         </div>
                     </c:forEach>
