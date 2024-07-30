@@ -62,7 +62,7 @@
 		   	  'admin%'
 	</update>
 	
-	<delete id="delete">
+	<delete id="delete" >
 		DELETE
 		  FROM
 		  		TB_FAQ

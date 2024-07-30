@@ -273,7 +273,8 @@
 	            	
 	            	if(result === 'success') {
 	 	               alert('faq 정보가 수정되었습니다.');
-	 	               location.reload();	
+	 	               $('#updateForm').modal('hide');
+	 	               location.href = '/redclip/admin/adminFaq';
 	            	}
 	            	else {
 	            		alert('정보 수정에 실패했습니다.')	
