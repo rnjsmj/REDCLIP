@@ -57,26 +57,34 @@ public class BarterServiceImpl implements BarterService{
 	@Transactional
 	@Override
 	public int update(Barter barter, MultipartFile[] upfile, HttpSession session) {
-		try {
-			int barterNo = barter.getBarterNo();
-	         barterMapper.update(barter);
-	         if (upfile != null) {
-	        	 barterMapper.barterFileDelete(barterNo);
-	             for (MultipartFile file : upfile) {
-                     if(file.getSize() != 0) {
-                       BarterFile uploadFile = new BarterFile();
-                       uploadFile.setBarterFileName(saveFile(file, session));
-                       uploadFile.setBarterNo(barterNo);
-                       barterMapper.barterFileUpdate(uploadFile);
-                  }
-               }     
-	         }
-	         return 1;
-	         
-	      } catch (Exception e ) {
-	         return 0;
-	      }
+	    try {
+	        int barterNo = barter.getBarterNo();
+	        // 바터 데이터 업데이트
+	        barterMapper.update(barter);
+	        
+	        // 업로드된 파일이 있는지 확인
+	        if (upfile.length > 0 && upfile[0] != null && !upfile[0].isEmpty()) {
+	            // 새로운 파일이 업로드된 경우, 기존 파일 삭제
+	            barterMapper.barterFileDelete(barterNo);
+	            
+	            // 새로운 파일 저장 및 데이터베이스 업데이트
+	            for (MultipartFile file : upfile) {
+	                if (!file.isEmpty()) {
+	                    BarterFile uploadFile = new BarterFile();
+	                    uploadFile.setBarterFileName(saveFile(file, session));
+	                    uploadFile.setBarterNo(barterNo);
+	                    barterMapper.barterFileUpdate(uploadFile);
+	                }
+	            }
+	        }
+	        
+	        return 1;
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 로그에 에러 메시지 추가
+	        return 0;
+	    }
 	}
+
 	
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
