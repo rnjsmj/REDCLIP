@@ -66,8 +66,11 @@ public class BarterController {
 	public String findByNo(@PathVariable int barterNo, Model model) {
 		
 		BarterVO barterDetail = barterService.findById(barterNo);
+		List<BarterVO> topBarters = barterService.getTopBarters(barterNo);
 		if (barterService.increaseHit(barterNo) > 0) {
 			model.addAttribute("barter", barterDetail);
+			model.addAttribute("topBarters", topBarters);
+			log.info("상위 게시글 : {}", topBarters);
 			return "barter/detail";	
 			
 		}
@@ -137,22 +140,23 @@ public class BarterController {
 	
 	//게시글 수정
 	@PostMapping("barter-update")
-	public String update(Barter barter,MultipartFile reupFile,HttpSession session) {
-		if (!reupFile.getOriginalFilename().equals("")) {
-		    barter.setChangeName(saveFile(reupFile, session));
-		}
-
-		if (barterService.update(barter) > 0) {
-		    session.setAttribute("alertMsg", "게시물 수정 완료");
-		    return "redirect:board-detail?boardNo=" + barter.getBarterNo();
-		}else {
-			 session.setAttribute("alertMsg", "게시물 수정 실패");
-			 return "common/errorPage";
-		}	
+	public String update(Barter barter,MultipartFile[] reupFile,HttpSession session) {
+		barterService.update(barter, reupFile, session);
+		/*
+		 * if (!reupFile.getOriginalFilename().equals("")) {
+		 * barter.setChangeName(saveFile(reupFile, session)); }
+		 * 
+		 * if (barterService.update(barter) > 0) { session.setAttribute("alertMsg",
+		 * "게시물 수정 완료"); return "redirect:board-detail?boardNo=" + barter.getBarterNo();
+		 * }else { session.setAttribute("alertMsg", "게시물 수정 실패"); return
+		 * "common/errorPage"; }
+		 */	
+		
+		return "";
 	}
 	
 	// 파일 업로드 메서드
-	public String saveFile(MultipartFile upfile, HttpSession session) {
+	public static String saveFile(MultipartFile upfile, HttpSession session) {
 		
 		String fileName = upfile.getOriginalFilename();
 		String ext = fileName.substring(fileName.lastIndexOf("."));

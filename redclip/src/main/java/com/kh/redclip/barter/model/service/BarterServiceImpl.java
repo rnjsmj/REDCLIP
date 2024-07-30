@@ -3,9 +3,14 @@ package com.kh.redclip.barter.model.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.redclip.barter.controller.BarterController;
 import com.kh.redclip.barter.model.dao.BarterMapper;
 import com.kh.redclip.barter.model.vo.Barter;
 import com.kh.redclip.barter.model.vo.BarterFile;
@@ -45,9 +50,11 @@ public class BarterServiceImpl implements BarterService{
 	}
 	
 	//게시글 수정
+	@Transactional
 	@Override
-	public int update(Barter barter) {
-		return barterMapper.update(sqlSession, barter);
+	public int update(Barter barter, MultipartFile[] upfile, HttpSession session) {
+		return 0;
+		
 	}
 	
 	@Override
@@ -156,5 +163,9 @@ public class BarterServiceImpl implements BarterService{
 		return barterMapper.getFilteredBarters(params);
 	}
 
+	@Override
+	public List<BarterVO> getTopBarters(int barterNo) {
+		return barterMapper.getTopBarters(barterNo);
+	}
 		
 }

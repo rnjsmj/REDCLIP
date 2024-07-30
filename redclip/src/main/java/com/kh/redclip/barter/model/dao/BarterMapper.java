@@ -74,6 +74,7 @@ public interface BarterMapper {
 	//메인화면 목록출력
 	List<BarterVO> getRecentProducts();
 	List<BarterVO> getTopCount();
+	List<BarterVO> getTopBarters(int barterNo);
 	
 	
 	

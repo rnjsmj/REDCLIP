@@ -8,10 +8,10 @@
     <title>Document</title>
     <jsp:include page="/WEB-INF/views/common/head.jsp"></jsp:include>
 <script>
-        $(document).ready(function(){
+        $(document).ready(() => {
           $('[data-toggle="popover"]').popover({
             html: true,
-            content : function() {
+            content : () => {
                 let popoverContent = '<ul id="popover-list"><li><a ">회원페이지</a></li>'
                                    + '<li><a href="/redclip/member/block">차단</a></li></ul>';
                 return popoverContent;
@@ -179,7 +179,6 @@
             border-radius: 5px;
         }
         .btn-group #delbtn, #updbtn {
-            color: #fff;
             cursor:pointer;
             
         }
@@ -303,13 +302,29 @@
         }
         #popular-list-wrap {
             margin-top: 20px;
+            
+            * {
+            	text-decoration : none;
+            }
         }
         .card-list {
             display: inline-block;
+            
+            
+        }
+        
+        .card-list a {
+        	text-decoration : none;
         }
         #popular-list .card {
             width: 283px;
             cursor: pointer;
+            
+            > img {
+            	width:100%;
+            	height:283px;
+            	object-fit:cover;
+            }
         }
         #popular-list li:not(:last-child) {
             margin-right: 11px;
@@ -317,6 +332,7 @@
 
         #popular-list .card-title {
             font-weight: 600;
+            color : #303030;
         }
         #popular-list .card-date {
             color: #6d6d6d;
@@ -339,8 +355,12 @@
         	margin-bottom:10px;
         }
         
-        #writer-btn #updbtn {
-        	margin-right:5px;
+        #writer-btn  {
+        	#updbtn, #delbtn {
+	        	margin-right:5px;
+	        	color:#fff;
+        	}
+        	
         }
         .reply-date {
         	float:right;
@@ -714,7 +734,7 @@
                                             <span class="length"><span class="reply_length">0 </span> / 200</span>
                                         </div>
                                         <script>
-                                            $('#reply-content').keyup(function (e) {
+                                            $('#reply-content').keyup((e) => {
                                                 var content = $(this).val();
 
                                                 if (content.length == 0 || content == '') {
@@ -748,7 +768,7 @@
                        
                         </c:if>
                     <script>
-                    	function loadImg(inputFile) {
+                    	const loadImg = (inputFile) => {
                     		
                     		
                     		$('#file-list').html('');
@@ -786,22 +806,22 @@
                 		
                 	});
                 	
-                	function updateBarter() {
+                	const updateBarter = () => {
                 		$('#postForm').attr("action", "update").submit();
                 	};
                 		
-                	function deleteBarter() {
+                	const deleteBarter = () => {
                 		if(confirm("글을 삭제하시겠습니까? 삭제된 게시글은 복구되지 않습니다.")) {
                 			$('#postForm').attr("action", "delete").submit();
                 		}
                 	};
                 	
-                	function addActive() {
+                	const addActive = () => {
                     	$('.carousel-item:first-child').addClass('active');
                     	$('.reply-img .carousel-item:first-child').addClass('active');
                 	};
                 	
-                	function wishState() {
+                	const wishState = () => {
                 		
                 		if('${sessionScope.loginUser.userId}' != '' ) {
 	                		$.ajax({
@@ -828,7 +848,7 @@
                 		}
                 	};
                 	
-                	function selectReply() {
+                	const selectReply = () => {
                 		
                 		$.ajax({
                 			
@@ -912,7 +932,7 @@
                 	};
                 	
                 	
-                	function saveReply() {
+                	const saveReply = () => {
                 		
                 		if($('#reply-content').val().trim() != '') {
                 			
@@ -959,7 +979,7 @@
                 	};
                 	
                 	
-                	function deleteReply(no) {
+                	const deleteReply = (no) => {
                 		console.log(no);
                 		
                 		if(confirm('삭제하시겠습니까?')) {
@@ -1000,7 +1020,7 @@
                 		
                 	};
                 	
-                	function getReply(no, state) {
+                	const getReply = (no, state) => {
                 		
                 		console.log(no);
                 		// 1. 선택한 답글 정보 SELECT 수행
@@ -1047,7 +1067,7 @@
                 	};
                 	
                 	
-                	function editReply(no) {
+                	const editReply = (no) => {
                 		
                 		const updateData = {
                 				replyNo : no,
@@ -1076,12 +1096,6 @@
                 	}
                 
                 </script>
-         
-	
-	
-	
-	
-
                 
             </section>
             <section id="page2" class="page">
@@ -1090,80 +1104,27 @@
                     <!--해당 게시글 정보의 동 정보를 이용하여 가져온 인기글 리스트 (조회수 상위 4개 추후 댓글 개수로 바꿀지 고민중)-->
                     <div id="popular-list">
                         <ul>
+                        	<c:forEach var="topBarter" items="${ topBarters }">
                             <!-- 반복문으로 li 출력 -->
                             <li class="card-list">
-                                <a>
+                                <a href="${ topBarter.barterNo }">
                                     <div class="card">
                                         <img
                                             class="card-img-top"
-                                            src="https://via.placeholder.com/300x300/"
-                                            alt="Card image cap"
+                                            src="/redclip/${topBarter.barterFileList[0].barterFileName }"
+                                            alt="${ topBarter.barterNo }"
                                         />
                                         <div class="card-body">
                                             <ul>
-                                                <li class="card-title">물물교환 상품 제목</li>
-                                                <li class="card-date">O시간 전</li>
-                                                <li class="card-region">서울시 중구 삼각동</li>
+                                                <li class="card-title">${ topBarter.barterName }</li>
+                                                <li class="card-date">${ topBarter.barterDate }</li>
+                                                <li class="card-region">${ topBarter.region.cityName } ${ topBarter.region.townName } ${ topBarter.region.villageName }</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </a>
                             </li>
-                            <!--반복문 끝-->
-                            <li class="card-list">
-                                <a>
-                                    <div class="card">
-                                        <img
-                                            class="card-img-top"
-                                            src="https://via.placeholder.com/300x300/"
-                                            alt="Card image cap"
-                                        />
-                                        <div class="card-body">
-                                            <ul>
-                                                <li class="card-title">물물교환 상품 제목</li>
-                                                <li class="card-date">O시간 전</li>
-                                                <li class="card-region">서울시 중구 삼각동</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="card-list">
-                                <a>
-                                    <div class="card">
-                                        <img
-                                            class="card-img-top"
-                                            src="https://via.placeholder.com/300x300/"
-                                            alt="Card image cap"
-                                        />
-                                        <div class="card-body">
-                                            <ul>
-                                                <li class="card-title">물물교환 상품 제목</li>
-                                                <li class="card-date">O시간 전</li>
-                                                <li class="card-region">서울시 중구 삼각동</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="card-list">
-                                
-                                    <div class="card">
-                                        <img
-                                            class="card-img-top"
-                                            src="https://via.placeholder.com/300x300/"
-                                            alt="Card image cap"
-                                        />
-                                        <div class="card-body">
-                                            <ul>
-                                                <li class="card-title">물물교환 상품 제목</li>
-                                                <li class="card-date">O시간 전</li>
-                                                <li class="card-region">서울시 중구 삼각동</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                
-                            </li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>
@@ -1178,7 +1139,7 @@
             interval: false,
         });
 
-        function modalContent(track) {
+        const modalContent = (track) => {
         	console.log('모달 동작');
             var innerContent = track.innerHTML;
             $('.carousel-inner.modal-inner').html(innerContent);
@@ -1199,7 +1160,7 @@
            	
         };
         
-        function wish(state) {
+        const wish = (state) => {
         	
         	const $heart = $('#heart');
         	const $wishcount = $('#wishcount');
@@ -1232,7 +1193,7 @@
         }
         
        
-        function openChat(replyWriter) {
+        const openChat = (replyWriter) => {
         	// 채팅하기 버튼을 누르면 컨트롤러로 이동
         	// => 채당 글 작성자, 답글 작성자로 채팅방 목록을 select
         	// 존재 하면 현재 글 번호로 글 번호 update 수행 후 채팅방 번호를 반환함
@@ -1267,7 +1228,7 @@
         };
         
     	
-    	window.onload = function() {
+    	window.onload = () => {
     		$('.carousel').carousel({
                 interval: false,
             });

@@ -502,4 +502,56 @@ TB_BARTER_FILE
 		 WHERE
 		 		BARTER_NO = #{barterNo}
 	</delete>
+	
+	
+	<!-- 해당 동 인기글 상위 4개 -->
+	<select id="getTopBarters" parameterType="_int" resultType="barterVO" resultMap="barterResultSet">
+		SELECT
+		        BARTER_NO,
+		        BARTER_NAME,
+		        CITY_NAME,
+		        TOWN_NAME,
+		        VILLAGE_NAME,
+		        BARTER_DATE,
+		        BARTER_STATUS,
+		        BARTER_FILE_NO,
+		        BARTER_FILE_NAME
+  		 FROM
+		        (SELECT
+		                BARTER_NO,
+		                BARTER_NAME,
+		                CITY_NAME,
+		                TOWN_NAME,
+		                VILLAGE_NAME,
+		                BARTER_DATE,
+		                BARTER_STATUS,
+		                BARTER_FILE_NO,
+		                BARTER_FILE_NAME
+		          FROM
+		                (SELECT
+		                        BARTER_NO,
+		                        BARTER_NAME,
+		                        CITY_NAME,
+		                        TOWN_NAME,
+		                        VILLAGE_NAME,
+		                        BARTER_DATE,
+		                        BARTER_STATUS,
+		                        BARTER_FILE_NO,
+		                        BARTER_FILE_NAME,
+		                        ROW_NUMBER() OVER (PARTITION BY BARTER_NO ORDER BY BARTER_FILE_NO) AS rn
+		                  FROM
+		                        VW_BARTER_DETAIL
+		                 WHERE
+		                        VILLAGE_CODE IN (SELECT VILLAGE_CODE FROM VW_BARTER_DETAIL WHERE BARTER_NO = #{barterNo})
+		                   AND
+		                        BARTER_STATUS = 'Y'
+		                 ORDER
+		                    BY
+		                        WISH_COUNT DESC)
+		         WHERE
+		                rn = 1
+		        )
+		 WHERE
+		        ROWNUM BETWEEN 1 AND 4
+	</select>
 </mapper>
