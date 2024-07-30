@@ -84,6 +84,7 @@ public class BarterController {
 	@PostMapping(value="/insert")
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
 	    //log.info("파일 배열 : {}", upfile);
+		log.info("upfile : {}", upfile);
 	    if (barterService.insert(barter) > 0) {
 	        
 	        if (upfile != null) {
@@ -137,18 +138,19 @@ public class BarterController {
 	
 	// 게시글 수정
 	@PostMapping("barter-update")
-	public String update(Barter barter, MultipartFile[] reupFile, HttpSession session) {
-	    if(barterService.update(barter, reupFile, session) > 0) {
-	    	 return "redirect:/"+barter.getBarterNo();
+	public String update(Barter barter, MultipartFile[] upfile, HttpSession session) {
+	    log.info("upfile : {}", upfile);
+		if(barterService.update(barter, upfile, session) > 0) {
+	    	 return "redirect:"+barter.getBarterNo();
 	    } else {
-	    	return "redirect:/"+barter.getBarterNo();
+	    	return "redirect:"+barter.getBarterNo();
 	    }
 	   
 	}
 
 	
 	// 파일 업로드 메서드
-	public static String saveFile(MultipartFile upfile, HttpSession session) {
+	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
 		String fileName = upfile.getOriginalFilename();
 		String ext = fileName.substring(fileName.lastIndexOf("."));

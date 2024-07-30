@@ -24,7 +24,7 @@ public interface BarterService {
 	int barterInsert(BarterFile barterfile);
 	List<BarterVO> getFilteredBarters(Map<String, Object> params);
 	//게시글 수정
-	int update(Barter barter, MultipartFile[] reupFile, HttpSession session);
+	int update(Barter barter, MultipartFile[] upfile, HttpSession session);
 	
 	//댓글 목록
 	List<BarterReply> getBarterReply(int barterNo);

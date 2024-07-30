@@ -1,11 +1,14 @@
 package com.kh.redclip.barter.model.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,9 +24,11 @@ import com.kh.redclip.barter.model.vo.Wishlist;
 import com.kh.redclip.member.model.vo.ReportMember;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BarterServiceImpl implements BarterService{
 
 	private final BarterMapper barterMapper;
@@ -51,25 +56,50 @@ public class BarterServiceImpl implements BarterService{
 	//게시글 수정
 	@Transactional
 	@Override
-	public int update(Barter barter, MultipartFile[] reupFile, HttpSession session) {
+	public int update(Barter barter, MultipartFile[] upfile, HttpSession session) {
 		try {
+			int barterNo = barter.getBarterNo();
 	         barterMapper.update(barter);
-	         barterMapper.barterFileDelete(barter.getBarterNo());
-	         if (reupFile != null) {
-	               for (MultipartFile file : reupFile) {
-	                     if(!file.isEmpty()) {
-	                       BarterFile uploadFile = new BarterFile();
-	                       uploadFile.setBarterFileName(BarterController.saveFile(file, session));;
-	                       barterInsert(uploadFile);
-	                  }
-	               }     
-	           }
-	         
+	         if (upfile != null) {
+	        	 barterMapper.barterFileDelete(barterNo);
+	             for (MultipartFile file : upfile) {
+                     if(file.getSize() != 0) {
+                       BarterFile uploadFile = new BarterFile();
+                       uploadFile.setBarterFileName(saveFile(file, session));
+                       uploadFile.setBarterNo(barterNo);
+                       barterMapper.barterFileUpdate(uploadFile);
+                  }
+               }     
+	         }
 	         return 1;
 	         
 	      } catch (Exception e ) {
 	         return 0;
 	      }
+	}
+	
+	public String saveFile(MultipartFile upfile, HttpSession session) {
+		
+		String fileName = upfile.getOriginalFilename();
+		String ext = fileName.substring(fileName.lastIndexOf("."));
+		
+		int num = (int) (Math.random() * 900) + 100; 
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		String savePath = session.getServletContext().getRealPath("/resources/upload/");	
+		
+		String changeName = "REDCLIP_" + currentTime + "_" + num + ext;
+		
+		//파일 업로드
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return "resources/upload/" + changeName;
 	}
 	
 	@Override

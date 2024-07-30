@@ -247,6 +247,22 @@ TB_BARTER_FILE
     			#{barterFileName}
     			)
 	</insert>
+	<insert id="barterFileUpdate" parameterType="barterFile">
+	INSERT
+    			INTO
+TB_BARTER_FILE
+    			(
+    			BARTER_FILE_NO,
+ 			    BARTER_NO,
+    			BARTER_FILE_NAME
+    			)
+    	VALUES 
+    			(
+    			SEQ_BARTER_FILE.NEXTVAL,
+    			#{barterNo},
+    			#{barterFileName}
+    			)
+	</insert>
 	
 	<update id="update" parameterType="barter">
 	  UPDATE
