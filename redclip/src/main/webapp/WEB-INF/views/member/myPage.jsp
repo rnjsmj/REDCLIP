@@ -110,15 +110,19 @@
 				</div> -->
                     
                     <label for="userId">* ID </label><br>
-                    <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" id="userId"  neme="userId" aria-label="Disabled input example" disabled readonly> <br>
+                    <input type="text" class="form-control" value="${ sessionScope.loginUser.userId }" 
+                    id="userId"  name="userId" aria-label="Disabled input example" disabled readonly> <br>
                     
-                    <input type="hidden" value="${ sessionScope.loginUser.userPwd }" id="userPwd"  neme="userPwd"> <br>
+                    <input type="hidden" value="${ sessionScope.loginUser.userPwd }" id="userPwd"
+                      name="userPwd"> <br>
 
                     <label for="userName">* Name : </label>
-                    <input type="text" class="form-control" id="userName" value="${ sessionScope.loginUser.userName }" name="userName" required> <br>
+                    <input type="text" class="form-control" id="userName" value="${ sessionScope.loginUser.userName }"
+                     name="userName" required> <br>
 
                     <label for="nickname">* Nickname : </label>
-                    <input type="text" class="form-control" id="nickname" value="${ sessionScope.loginUser.nickname }" name="nickname" required> <br>
+                    <input type="text" class="form-control" id="nickname" value="${ sessionScope.loginUser.nickname }"
+                     name="nickname" required> <br>
 
                     <label for="email"> &nbsp; Email : </label>
                     <input type="email" class="form-control" id="email" value="${ sessionScope.loginUser.email }" name="email"> <br>
@@ -226,17 +230,12 @@
    				data : JSON.stringify(updateData),
    				contentType : 'application/json',
    				success : result => {
-   					
    						if(result === 'success') {
    							alert('회원 정보가 수정되었습니다.');	
    						}
    						else {
    							alert('회원 정보 수정에 실패했습니다.');		
    						}
-   					},
-   				error : (e) => {
-   					alert('요청에 실패했습니다.');   					
-   				}
    			});
    		};
    		

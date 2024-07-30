@@ -133,7 +133,6 @@
     				contentType : 'application/json',
     				traditional: true,
     				success : result => {
-    					
     					if(result === 'success') {
     						alert('차단 해제에 성공했습니다.');
         					location.reload();	
@@ -141,10 +140,6 @@
     					else {
     						alert('차단 해제에 실패했습니다.');	
     					}
-    				},
-    				error : e => {
-    					alert('요청을 실패했습니다.');
-    				}
     			});
     		};
 

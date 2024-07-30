@@ -17,13 +17,11 @@ public class MemberFowardController {
 		return "member/loginform";
 	}
 	
-	//마이페이지 이동
-	@GetMapping("/myPage")
+	 @GetMapping("/myPage")
 	public String myPage() {
 		
 		return "member/myPage";
 	}
-	
 	//약관페이지
 	@GetMapping("/team")
 	public String team() {
