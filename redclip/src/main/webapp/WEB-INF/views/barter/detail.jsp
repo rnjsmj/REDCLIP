@@ -936,11 +936,11 @@
                 		
                 		if($('#reply-content').val().trim() != '') {
                 			
-                			var formData = new FormData();
-                			var inputFile = $("#reply-file");
-                			var files = inputFile[0].files;
+                			let formData = new FormData();
+                			let inputFile = $("#reply-file");
+                			let files = inputFile[0].files;
                 			
-                			for (var i=0; i<files.length; i++) {
+                			for (let i=0; i<files.length; i++) {
                 				
                 				formData.append("upfiles", files[i]);
                 			}
@@ -1020,15 +1020,15 @@
                 		
                 	};
                 	
-                	const getReply = (no, state) => {
+                	function getReply(no, state) {
                 		
                 		console.log(no);
                 		// 1. 선택한 답글 정보 SELECT 수행
                 		// 2. p 태그를 textarea로 변환하여 select한 replyContent를 textarea에 출력
                 		// 3. 내용 수정 후 다시 수정 버튼을 누르면 UPDATE 수행
-                		var selectEl = '#reply-content-' + no;
-           				var replyContentEl = '#reply-content-' + no + ' > p'; 
-           				var btngroupEl = '#btn-group-' + no;
+                		const selectEl = '#reply-content-' + no;
+           				const replyContentEl = '#reply-content-' + no + ' > p'; 
+           				const btngroupEl = '#btn-group-' + no;
            				
            				$('#edit-reply').remove();
            				
@@ -1046,7 +1046,7 @@
 	                				$(btngroupEl).hide();
 	                				
 	                				let replyContent = `<div id="edit-reply">
-	                				   <div style="width: 100%; content: "'+'"; clear: both"></div>
+	                				   <div style="width: 100%; content: ''; clear: both"></div>
 	                                   <textarea class="reply-content-area" id="edit-reply-content">
 	                                   \${result.replyContent}</textarea>
 	                                   <span style="margin-left: 10px" onclick="editReply(\${result.replyNo})" >저장</span>
@@ -1160,11 +1160,11 @@
            	
         };
         
-        const wish = (state) => {
+        function wish(state) {
         	
         	const $heart = $('#heart');
         	const $wishcount = $('#wishcount');
-        	var svg;
+        	let svg;
         	
         		
         	$.ajax({

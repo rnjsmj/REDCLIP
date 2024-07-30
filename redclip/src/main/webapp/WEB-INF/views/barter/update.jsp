@@ -94,19 +94,19 @@
         <div class="form-row">
           <div class="col">
             <select class="form-control" id="si" required>
-              <option value="">시 선택</option>
+              <option >시 선택</option>
               <option value="1">서울특별시</option>
               <option value="2">인천광역시</option>
             </select>
           </div>
           <div class="col">
-            <select class="form-control" id="gu" disabled>
-              <option value="">구 선택</option>
+            <select class="form-control" id="gu" disabled required>
+              <option>구 선택</option>
             </select>
           </div>
           <div class="col">
-            <select class="form-control" id="dong" name="villageCode" disabled>
-              <option value="">동 선택</option>
+            <select class="form-control" id="dong" name="villageCode" disabled required>
+              <option>동 선택</option>
             </select>
           </div>
         </div>
@@ -138,7 +138,7 @@
 	 </div>
 	 <div align="center">
 	     <button type="submit" class="btn btn-success">수정하기</button>
-	     <button type="reset" class="btn btn-danger">취소하기</button>
+	     <button type="reset" class="btn btn-danger" onclick="history.back()">취소하기</button>
      </div>
      </form>
     </section>
