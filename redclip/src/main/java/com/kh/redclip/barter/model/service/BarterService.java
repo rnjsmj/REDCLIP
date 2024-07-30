@@ -62,6 +62,9 @@ public interface BarterService {
 	//위시 목록 조회
 
 	
+	//해당 동 인기 게시글 4개
+	List<BarterVO> getTopBarters(int barterNo);
+	
 	
 	
 

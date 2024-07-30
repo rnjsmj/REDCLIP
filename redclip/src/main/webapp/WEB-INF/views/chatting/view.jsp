@@ -292,6 +292,7 @@
         }
         .chat-details {
             flex-grow: 1;
+                width: 319px;
             
             .badge {
             	background-color: #007300;
@@ -306,6 +307,9 @@
         .latest-message {
             color: #666;
             margin: 5px 0 0;
+            white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         }
 
         .small-detail {
@@ -381,22 +385,18 @@
                 </div>
                 <script>
                 	
-                    $(document).ready(function () {
+                    $(document).ready(() => {
                     	
-                    	if( '${ sessionScope.RoomNo }' != '' ) {
-                    		const id= '#' + '${ sessionScope.RoomNo }';
-                    		$(id).trigger('onclick');
-                    		console.log(id + '로 트리거 동작');
-                    	}
+                    	
                     	
                     	
                          
                     });
                     
-                    window.onload = function() {
+                   /*  window.onload = function() {
                     	
                     };
-                   
+                    */
                     
                     
                     
@@ -437,7 +437,13 @@
             	selectList();
             	openedChat();
             	
-            	$(document).on('click', '.chat-item',function () {
+            	if( '${ sessionScope.RoomNo }' != '' ) {
+            		const id= '#' + '${ sessionScope.RoomNo }';
+            		$(id).trigger('onclick');
+            		console.log(id + '로 트리거 동작');
+            	}
+            	
+            	$(document).on('click', '.chat-item', function () {
                 	socket.close();
                 	
                     $('.chat-item').removeClass('active');
@@ -449,7 +455,6 @@
                     
                     var socketAddress = "ws://localhost/redclip/chatting/" + roomNo;
                     connect(roomNo);
-                    roomVar = roomNo;
                     
                     let messageList = '';
                     let chatProfile = '';
@@ -503,21 +508,16 @@
                     		$('.chat-header-left').html(chatProfile);
                     		$('.chat-messages').html(messageList);
                     		scrollToBottom();
-                    		
-                    		
                     	}
-                    
                     });
-                    
                     $('.chat-area').show();
-                    
-                    
+
                 }); 
             	
             });
             
             	
-            function submitMessage(roomNo) {
+            const submitMessage = (roomNo) => {
             	
             
                 const message = $('#chat-input').val();
@@ -554,7 +554,7 @@
                 selectList();
             }
 
-                function scrollToBottom() {
+                const scrollToBottom = () => {
                     const chatContainer = $('.chat-messages');
                     chatContainer.scrollTop(chatContainer[0].scrollHeight);
                 }
@@ -570,7 +570,7 @@
                     }
                 });
                
-                function selectList(condition) {
+                const selectList = (condition) => {
                 	$.ajax({
                 		
                 		url : 'list',
@@ -623,16 +623,6 @@
                 	});
                 	
                 	
-                	
-                	
-                	
-                	
-                	
-                	
-                	
-                	
-                	
-                	
                 	/* 
                 	<li class="chat-item" id="11">
                     <!-- <img src="profile1.jpg" alt="Profile Picture 1"> -->
@@ -652,7 +642,7 @@
                 </li> */
                 };
                 
-                function openedChat() {
+                const openedChat = () => {
                 	
                 };
                 

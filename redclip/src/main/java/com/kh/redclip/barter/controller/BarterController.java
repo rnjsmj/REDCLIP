@@ -66,8 +66,11 @@ public class BarterController {
 	public String findByNo(@PathVariable int barterNo, Model model) {
 		
 		BarterVO barterDetail = barterService.findById(barterNo);
+		List<BarterVO> topBarters = barterService.getTopBarters(barterNo);
 		if (barterService.increaseHit(barterNo) > 0) {
 			model.addAttribute("barter", barterDetail);
+			model.addAttribute("topBarters", topBarters);
+			log.info("상위 게시글 : {}", topBarters);
 			return "barter/detail";	
 			
 		}
@@ -145,12 +148,12 @@ public class BarterController {
 	    } else {
 	    	return "redirect:"+barter.getBarterNo();
 	    }
-	   
+
 	}
 
 	
 	// 파일 업로드 메서드
-	public String saveFile(MultipartFile upfile, HttpSession session) {
+	public static String saveFile(MultipartFile upfile, HttpSession session) {
 		
 		String fileName = upfile.getOriginalFilename();
 		String ext = fileName.substring(fileName.lastIndexOf("."));

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -108,6 +109,7 @@ public class BarterServiceImpl implements BarterService{
 		}
 		
 		return "resources/upload/" + changeName;
+
 	}
 	
 	@Override
@@ -216,6 +218,11 @@ public class BarterServiceImpl implements BarterService{
 		return barterMapper.getFilteredBarters(params);
 	}
 
+
+	@Override
+	public List<BarterVO> getTopBarters(int barterNo) {
+		return barterMapper.getTopBarters(barterNo);
+	}
 
 		
 }
