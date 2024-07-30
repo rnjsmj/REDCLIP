@@ -87,6 +87,7 @@ public class BarterController {
 	@PostMapping(value="/insert")
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
 	    //log.info("파일 배열 : {}", upfile);
+		log.info("upfile : {}", upfile);
 	    if (barterService.insert(barter) > 0) {
 	        
 	        if (upfile != null) {
@@ -138,22 +139,18 @@ public class BarterController {
 	    return mv;
 	}
 	
-	//게시글 수정
+	// 게시글 수정
 	@PostMapping("barter-update")
-	public String update(Barter barter,MultipartFile[] reupFile,HttpSession session) {
-		barterService.update(barter, reupFile, session);
-		/*
-		 * if (!reupFile.getOriginalFilename().equals("")) {
-		 * barter.setChangeName(saveFile(reupFile, session)); }
-		 * 
-		 * if (barterService.update(barter) > 0) { session.setAttribute("alertMsg",
-		 * "게시물 수정 완료"); return "redirect:board-detail?boardNo=" + barter.getBarterNo();
-		 * }else { session.setAttribute("alertMsg", "게시물 수정 실패"); return
-		 * "common/errorPage"; }
-		 */	
-		
-		return "";
+	public String update(Barter barter, MultipartFile[] upfile, HttpSession session) {
+	    log.info("upfile : {}", upfile);
+		if(barterService.update(barter, upfile, session) > 0) {
+	    	 return "redirect:"+barter.getBarterNo();
+	    } else {
+	    	return "redirect:"+barter.getBarterNo();
+	    }
+
 	}
+
 	
 	// 파일 업로드 메서드
 	public static String saveFile(MultipartFile upfile, HttpSession session) {

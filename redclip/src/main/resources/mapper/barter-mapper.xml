@@ -247,19 +247,33 @@ TB_BARTER_FILE
     			#{barterFileName}
     			)
 	</insert>
+	<insert id="barterFileUpdate" parameterType="barterFile">
+	INSERT
+    			INTO
+TB_BARTER_FILE
+    			(
+    			BARTER_FILE_NO,
+ 			    BARTER_NO,
+    			BARTER_FILE_NAME
+    			)
+    	VALUES 
+    			(
+    			SEQ_BARTER_FILE.NEXTVAL,
+    			#{barterNo},
+    			#{barterFileName}
+    			)
+	</insert>
 	
 	<update id="update" parameterType="barter">
-	UPDATE 
-	    	  BARTER
-	   SET 
-	    	  BARTER_TITLE=#{barterTitle},
-	    	  BARTER_CONTENT=#{barterContent},
-	    	  CHANGE_NAME=#{changeName},
-	    	  VILLAGE_CODE=#{villageCode},
-	    	  ORIGIN_NAME=#{originName},
-	      	  CATEGORY_NO=#{categoryNo}
-	  WHERE
-	    	  BARTER_NO=#{barterdNo}	
+	  UPDATE
+	    		TB_BARTER
+	    SET 	
+		        BARTER_NAME=#{barterName},
+		        BARTER_CONTENT=#{barterContent},
+		        VILLAGE_CODE=#{villageCode},
+		        CATEGORY_NO=#{categoryNo}
+	    WHERE
+	    		BARTER_NO=#{barterNo}
 	</update>
 	
 	<resultMap type="barterReply" id="replyResultSet">

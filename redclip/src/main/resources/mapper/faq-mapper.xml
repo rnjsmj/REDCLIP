@@ -69,9 +69,10 @@
 		 WHERE
 		 		FAQ_NO
 		 	IN
-		 		<foreach collection="numbers" item="faqNo" open="(" separator="," close=")">
-		 			#{faqNo}
-		 		</foreach>
+			  	<foreach collection="numbers"
+		 		item="faqNo" open="(" separator="," close=")">
+ 				#{faqNo}
+			  	</foreach>
 	</delete>
 	
 </mapper>

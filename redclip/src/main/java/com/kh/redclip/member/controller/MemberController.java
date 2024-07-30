@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.redclip.barter.model.service.BarterService;
 import com.kh.redclip.barter.model.vo.Barter;
-import com.kh.redclip.barter.model.vo.BarterVO;
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.BlockMember;
 import com.kh.redclip.member.model.vo.Member;
+import com.kh.redclip.member.model.vo.ReportMember;
+import com.kh.redclip.member.model.vo.StatusMember;
 import com.kh.redclip.region.model.vo.Region;
 
 import lombok.RequiredArgsConstructor;
@@ -195,13 +197,12 @@ public class MemberController {
     	
     }
    
-    //회원 상태 변경
+    //회원 탈퇴
     @ResponseBody
-    @PutMapping("/{userId}")
-    public String changeStatus(@PathVariable String userId) {
+    @PutMapping(value = "/{userId}")
+    public String changeStatus(@PathVariable String userId, @RequestBody String reason) {
     	  
-    	//log.info("탈주: {}", userId);
-    	return memberService.changeStatus(userId) > 0 ? "success" : "error";
+    	return memberService.status(userId, reason) > 0? "success" : "error"; 
     }
     
     //내가 쓴 글 조회
@@ -258,10 +259,7 @@ public class MemberController {
     @ResponseBody
     @DeleteMapping("blockList/{userId}")
     public String deleteByBlock(@PathVariable("userId") String userId, @RequestBody List<String> blockMembers) {
-    	
-    	log.info("차단 해제 할 아이디 : {}", blockMembers);
-    	log.info("차단 신청한 아이디 : {}", userId);
-    	
+
     	return memberService.deleteByBlock(userId, blockMembers) > 0 ? "success" : "error";
     }
     

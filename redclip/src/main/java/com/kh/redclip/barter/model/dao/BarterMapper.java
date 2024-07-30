@@ -28,7 +28,7 @@ public interface BarterMapper {
 	//검색 조회
 	List<BarterVO> getFilteredBarters(Map<String, Object> params);
 	//게시글 수정
-	public int update(SqlSessionTemplate sqlSession, Barter barter);
+	public int update(Barter barter);
 	
 	
 	//댓글 목록
@@ -74,7 +74,11 @@ public interface BarterMapper {
 	//메인화면 목록출력
 	List<BarterVO> getRecentProducts();
 	List<BarterVO> getTopCount();
+
 	List<BarterVO> getTopBarters(int barterNo);
+
+	void barterFileUpdate(BarterFile uploadFile);
+
 	
 	
 	

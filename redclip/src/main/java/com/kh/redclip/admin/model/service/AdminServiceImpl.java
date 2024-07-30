@@ -3,10 +3,12 @@ package com.kh.redclip.admin.model.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.redclip.admin.model.dao.AdminMapper;
 import com.kh.redclip.member.model.vo.Member;
 import com.kh.redclip.member.model.vo.ReportMember;
+import com.kh.redclip.member.model.vo.StatusMember;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,9 +29,57 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Member> status() {
+	public List<StatusMember> status() {
 		return adminMapper.status();
 	}
 
+	@Override
+	public int reportCount(String userId) {
+		return adminMapper.reportCount(userId);
+	}
+
+	@Transactional
+	@Override
+	public int change(String[] members) {
+		try {
+			changeMember(members);
+			getMember(members);
+			
+			return 1;
+		} catch (Exception e) {
+			return 0;
+		} 
+	}
+	
+	void changeMember(String[] members) {
+		adminMapper.changeMember(members);
+	}
+	
+	void getMember(String[] members) {
+		adminMapper.getMember(members);
+	}
+
+	@Transactional
+	@Override
+	public int deleteMember(String[] members) {
+		try {
+			getMember(members);
+			dropMember(members);
+			
+			
+			return 1;
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	
+	void dropMember(String[] members) {
+		adminMapper.dropMember(members);
+	}
+	
+	
+
+	
+	
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.redclip.faq.model.service.FaqService;
 import com.kh.redclip.faq.model.vo.FAQ;
@@ -19,7 +20,7 @@ import com.kh.redclip.faq.model.vo.FAQ;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
+@RestController
 @RequestMapping("/faq")
 @RequiredArgsConstructor
 @Slf4j
@@ -27,19 +28,6 @@ public class FaqController {
 
 	private final FaqService faqService;
 	
-	@GetMapping
-	public String faqList(Model model) {
-		
-		List<FAQ> faqList = faqService.selectAll();
-		
-		//log.info("faq 목록 :{}", faqList);
-		
-		model.addAttribute("list", faqList);
-		
-		return "faq/faqList";
-	}
-	
-	@ResponseBody
 	@PostMapping
 	public String faqInsert(@RequestBody FAQ faq) {
 		
@@ -47,39 +35,24 @@ public class FaqController {
 		
 	}
 	
-	@ResponseBody
 	@GetMapping("/{faqNo}")
 	public FAQ selectByNo(@PathVariable int faqNo, Model model) {
 		
-		//log.info("받아온 번호 : {}", faqNo);
-		
 		FAQ faq = faqService.selectByNo(faqNo);
-		
-		//log.info("가져온 정보 : {}", faq);
-		
-		model.addAttribute("detail", faq);
 		
 		return faq;
 		
 	}
 	
-	@ResponseBody
 	@PutMapping("/{faqNo}")
 	public String update(@PathVariable int faqNo, @RequestBody FAQ faq) {
-		
-		log.info("받아온 번호 : {}", faqNo);
-		
-		log.info("입력한 값 : {}", faq);
 		
 		return faqService.update(faq) > 0? "success" : "error" ;
 		
 	}
 	
-	@ResponseBody
 	@DeleteMapping
 	public String delete(@RequestBody List<Integer> numbers) {
-		
-		log.info("받아온 번호 : {}", numbers);
 		
 		return faqService.delete(numbers) > 0? "success" : "error";
 	}

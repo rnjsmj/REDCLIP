@@ -30,6 +30,7 @@
              margin: 0 auto; 
              width: 1200px;
              margin-bottom: 50px;
+             text-align: center;
             }
 
     </style>
@@ -52,7 +53,7 @@
               <a id="all" class="nav-link active" aria-current="page">전체회원관리</a>
             </li>
             <li class="nav-item">
-              <a onclick="status();" id="status" class="nav-link">탈퇴대기</a>
+              <a href="status" id="status" class="nav-link">탈퇴대기</a>
             </li>
           </ul>
     </div>
@@ -92,23 +93,6 @@
             </tbody>
         </table>
     </div>
-    <script>
-        function status() {
-        	
-        	$.ajax({
-        		url : 'status',
-        		type : 'get',
-        		contentType : 'application/json',
-        		success : result => {
-        			console.log('요청 성공', result);
-        			console.log(result.members.userId);
-        		},
-        		error : e => {
-        			console.log('요청 실패', e);
-        		}
-        	});
-        };
-    </script>
     <footer>
         <jsp:include page="../common/footer.jsp" />
     </footer>
