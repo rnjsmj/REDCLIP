@@ -105,7 +105,7 @@
     </c:when>
     <c:otherwise>
         <nav class="btnbox">
-            <label>${sessionScope.loginUser.userName}님 환영합니다</label> &nbsp;&nbsp;
+            <label>${sessionScope.loginUser.nickname}님 환영합니다</label> &nbsp;&nbsp;
             <c:choose>
                 <c:when test="${sessionScope.loginUser.status == 'A'}">
                     <a class="btn btn-outline-primary" href="/redclip/admin" id="btn-sign">관리자 페이지</a>
@@ -146,10 +146,14 @@
 			};
 			
 			ws.onmessage = function(event) {
+				
 				let today = new Date();
+				let hours = today.getHours().toString().padStart(2, '0');
+                let minutes = today.getMinutes().toString().padStart(2, '0');
+                
 				console.log("전달받은 메시지 : ", event.data+'\n');
 				const recValue = `<div class="receive-div chat-div"><div class="message receive"><p>\${event.data}</p></div>
-								  <span class="receive-date">\${today.getHours()}:\${today.getMinutes().toString().padStart(2, '0')}</span></div>`;
+								  <span class="receive-date">\${hours}:\${minutes}</span></div>`;
 				$('.chat-messages').append(recValue);
 				scrollToBottom();
 				
