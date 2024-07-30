@@ -261,8 +261,6 @@
    	   				data : JSON.stringify(reason),
    	   				contentType : 'application/json',
    	   				success : result => {
-   	   					
-   	   					console.log(result);
    	   					if(result === 'success') {
 	   	   					alert('회원 탈퇴에 성공했습니다.');
 	   	   					location.href = 'member/logout';	

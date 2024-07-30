@@ -24,14 +24,29 @@
 		  WHERE
 		  		REPORTED_ID = #{reportedId}
 	</select>
+	
 	<!-- 신고 내역 조회 -->
 	<select id="findAll" resultType="report">
 		<include refid="reports"/>
 		  FROM
-				TB_MEM_REPORT
-		 ORDER
+				(
+		SELECT
+                REPORT_NO,
+		        REPORT_TITLE,
+		        REPORT_CONTENT,
+		        REPORT_DATE,
+		        REPORTED_ID,
+		        REPORT_TYPE,
+		        REFERENCE_NO
+         FROM
+                 TB_MEM_REPORT
+         ORDER
 			BY
 				REPORT_DATE DESC
+                )
+        WHERE
+				ROWNUM BETWEEN 1 AND 5
+		
 	</select>
 	
 	<select id="allMember" resultType="member">
@@ -102,10 +117,10 @@
 		   AND
 		        USER_ID
 		    IN
-	       		<foreach item="id" collection="members"
-	       		open="(" separator="," close=")">
+       		<foreach item="id" collection="members"
+       		open="(" separator="," close=")">
 	       		#{id}
-	       		</foreach>
+       		</foreach>
 	</delete>
 
 </mapper>
