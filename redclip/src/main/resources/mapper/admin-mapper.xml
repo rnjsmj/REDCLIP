@@ -24,6 +24,7 @@
 		  WHERE
 		  		REPORTED_ID = #{reportedId}
 	</select>
+	
 	<!-- 신고 내역 조회 -->
 	<select id="findAll" resultType="report">
 		<include refid="reports"/>
@@ -116,10 +117,10 @@
 		   AND
 		        USER_ID
 		    IN
-	       		<foreach item="id" collection="members"
-	       		open="(" separator="," close=")">
+       		<foreach item="id" collection="members"
+       		open="(" separator="," close=")">
 	       		#{id}
-	       		</foreach>
+       		</foreach>
 	</delete>
 
 </mapper>

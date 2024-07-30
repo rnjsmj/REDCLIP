@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +34,7 @@
       float: right;
       margin-right: 330px;
    }
+   
 </style>
 <body>
      <!-- 헤더 영역-->
@@ -53,10 +55,12 @@
         <table id="memberList" class="table table-hover">
             <thead>
               <tr>
+              	
                 <th scope="col">신고 제목</th>
                 <th scope="col">신고 유형</th>
                 <th scope="col">신고 당한 아이디</th>
                 <th scope="col">신고 일자</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -69,10 +73,26 @@
             <c:otherwise>
            	<c:forEach items="${ list }" var="report">
            	<tr>
-           		<td id="reportTitle"><a data-bs-toggle="modal" data-bs-target="#exampleModal">${ report.reportTitle }</a></td>
+           		
+           		<td id="reportTitle">${ report.reportTitle }</td>
            		<td id="reportType">${ report.reportType }</td>
-           		<td id="reportDate">${ report.reportedId }</td>
+           		<td id="reportedId">${ report.reportedId }</td>
            		<td id="reportDate">${ report.reportDate }</td>
+           		<fmt:formatDate value="${report.reportDate}" pattern="yyyy-MM-dd" var="formattedReportDate" />
+	            ${formattedReportDate}
+	
+	            <%-- 신고일과 현재 날짜의 차이를 계산 --%>
+	            <fmt:parseDate value="${ report.reportDate }" pattern="yyyy-MM-dd" var="reportDateParsed" />
+	            <fmt:parseDate value="${ currentDate }" pattern="yyyy-MM-dd" var="currentDateParsed" />
+	            <c:set var="differenceInMilliseconds" value="${currentDateParsed.time - reportDateParsed.time}" />
+	            <c:set var="differenceInDays" value="${differenceInMilliseconds / (1000 * 60 * 60 * 24)}" />
+	
+	            <%-- 하루 미만 경과한 경우 배지 표시 --%>
+	            <c:if test="${differenceInDays < 1}">
+	                <td><span class="badge text-bg-secondary" style="color:red">New</span></td>
+	            </c:if>
+           		
+           		
            	</tr>
            	</c:forEach>
             </c:otherwise>
@@ -86,7 +106,16 @@
             <a href="${pageContext.request.contextPath}/admin/memList"><i class="bi bi-person-lines-fill" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
           </div>
     </div>
+    <script>
     
+    const now = new Date();
+    
+    
+    
+    console.log(createDate);
+    console.log(now);
+    
+    </script>
 	<!-- Button trigger modal -->
 	<!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adminModal">
 	  관리자 계정 생성

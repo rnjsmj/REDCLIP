@@ -237,7 +237,7 @@
 				contentType: 'application/json',
 				data : JSON.stringify(newFaq),
 				success : result => {
-					if(result > 0) {
+					if(result === 'success') {
 						alert('FAQ가 추가되었습니다.');
 						location.reload();	
 					}
@@ -271,7 +271,7 @@
 	            contentType : 'application/json',
 	            success : result => {
 	            	
-	            	if(result > 0) {
+	            	if(result === 'success') {
 	 	               alert('faq 정보가 수정되었습니다.');
 	 	               location.reload();	
 	            	}
@@ -305,7 +305,7 @@
 				contentType : 'application/json',
 				success : result => {
 					
-					if(result > 0) {
+					if(result === 'success') {
 						alert('글을 삭제했습니다.');
 						location.reload();	
 					}
@@ -318,7 +318,7 @@
 				}
 			});
 			
-		}
+		};
 		
 		
 		
