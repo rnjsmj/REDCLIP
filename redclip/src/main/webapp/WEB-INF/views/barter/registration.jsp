@@ -86,8 +86,7 @@
         </div>
       </div>
       <div class="form-group">
-      	<input type="hidden" id="barterNo" name="barterNo" value="${barter.barterNo }" />
-        <input type="hidden" id="writer" class="form-control" value="${barter.barterWriter}" name="barterWriter" readonly>
+        <input type="hidden" id="writer" class="form-control" value="${sessionScope.loginUser.userId}" name="barterWriter" readonly>
       </div>
       <div class="form-group">
         <label>주소 입력</label>
