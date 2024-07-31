@@ -173,6 +173,7 @@
                 $('#clear-recent-searches').addClass('hidden');
                 fetchPopularSearches();
             }
+            
         });
 
         function addSearchTerm() {
@@ -181,7 +182,7 @@
             if (searchTerm) {
                 recentSearches.push(searchTerm);
                 updateRecentSearches();
-                // 검색창을 비웁니다.
+                
                
             }
         }
@@ -191,12 +192,14 @@
             if (e.key === 'Enter') {
 
                 addSearchTerm();
+                $('.search-results').removeClass('active');
             }
         });
 
         $('.search-button').on('click', function () {
 
             addSearchTerm();
+            $('.search-results').removeClass('active');
         });
 
         $(document).on('click', '.delete-btn', function () {

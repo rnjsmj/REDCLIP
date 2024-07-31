@@ -86,23 +86,25 @@
         }
         .search {
 		    width: 100%;
-		    height: 500px;
+		    height: 300px;
 		    margin: auto;
 		    text-align: center;
-		    display: flex;
-		    flex-direction: column;
-		    justify-content: center;
-		    align-items: center;
+		    align-content : center;
+		    
+		    > * {
+		    	display : inline-block;
+		    }
 		}
 
         .search input[type="text"] {
-            width: 300px;
+            width: 500px;
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            
         }
-        .search input[type="submit"] {
+        .search button {
             padding: 10px 20px;
             font-size: 16px;
             border: none;
@@ -111,7 +113,7 @@
             color: white;
             cursor: pointer;
         }
-        .search input[type="submit"]:hover {
+        .search button:hover {
             background-color: #218838;
         }
         
@@ -143,7 +145,7 @@
     <div class="all">
         <div class="search">
             <input type="text" placeholder="검색어를 입력하세요" />
-            <input type="submit" value="검색" />
+            <button type="button">검색</button>
         </div>
 
         <div id="content_2">
@@ -238,6 +240,20 @@
                     nextEl: "#content_3 .swiper-button-next",
                 },
             });
+            
+            
+            // 검색 => 카테고리, 지역 선택 x
+            $('.search button').click(function() {
+            	let keyword = $('.search input').val();
+	        	location.href = `keywordForward/\${keyword}`;
+	        });
+	        
+	        $('.search input').on('keypress', function (e) {
+	            if (e.key === 'Enter') {
+	            	console.log("엔터키 키워드 : ", e.currentTarget.value);
+	            	location.href = 'keywordForward/' + e.currentTarget.value;
+	            }
+	        });
         </script>
     </div>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />

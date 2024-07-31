@@ -402,7 +402,7 @@
                     
                 </script>
                 <!-- 오른쪽 영역 -->
-                <div class="chat-area" style="display: none">
+                <div class="chat-area" style="display:none;">
                     <!-- 채팅 상대 정보 -->
                     <div class="chat-header">
                         <div class="chat-header-left">
@@ -444,13 +444,15 @@
             	}
             	
             	$(document).on('click', '.chat-item', function () {
-                	socket.close();
+                	if(socket) {
+                		socket.close();
+                	};
                 	
                     $('.chat-item').removeClass('active');
                     $(this).addClass('active');
 					
                     const roomNo = $(this).attr("id");
-                    let onclick = 'submitMessage(' + roomNo + ')';
+                    let onclick = 'submitMessage()';
                     $('#sendbtn').attr("onclick", onclick);
                     
                     var socketAddress = "ws://localhost/redclip/chatting/" + roomNo;
@@ -510,6 +512,7 @@
                     		scrollToBottom();
                     	}
                     });
+                    $('.chat-area').attr("id", roomNo);
                     $('.chat-area').show();
 
                 }); 
@@ -517,29 +520,32 @@
             });
             
             	
-            const submitMessage = (roomNo) => {
+            const submitMessage = () => {
             	
-            
+            	const $roomNo = $('.chat-area').attr("id")
                 const message = $('#chat-input').val();
+                
                 
                 let today = new Date();
                 
+                let hours = today.getHours().toString().padStart(2, '0');
+                let minutes = today.getMinutes().toString().padStart(2, '0');
                 
 
                 if (message.trim() !== '') {
                     const insValue = `<div class="send-div chat-div">
-                    				  <span class="send-date">\${today.getHours()} : \${today.getMinutes()}</span>
+                    				  <span class="send-date">\${hours}:\${minutes}</span>
                     				  <div class="message send"><p>\${ message }</p></div></div>`;
 
                     const chatMessage = {
-                    	roomNo : roomNo,
+                    	roomNo : $roomNo,
                     	senderId : '${ sessionScope.loginUser.userId }',
                     	message : message
                     };
                     
             	
                     if (socket) {
-                    	sendMessage = roomNo + ', ' + '${ sessionScope.loginUser.userId }' + ', ' + message;
+                    	sendMessage = $roomNo + ', ' + '${ sessionScope.loginUser.userId }' + ', ' + message;
                     	socket.send(sendMessage);
                     } 
                     
@@ -565,8 +571,7 @@
 
                 $('#chat-input').on('keypress', (e) => {
                     if (e.which === 13) {
-                    	console.log('roomVar : ', roomVar);
-                        submitMessage(roomVar);
+                        submitMessage();
                     }
                 });
                
@@ -600,7 +605,7 @@
                 				} else {
                 					profile = room.barterProfil;
                 					nickname = room.barterNickname;
-                					villageName = room.villageName;
+                					villageName = room.barterVillageName;
                 				}
                 				
                 				chatItems += `<li class="chat-item" id="\${room.roomNo}">
@@ -613,7 +618,7 @@
                                         
                                 chatItems +=  ( room.chatDate != null || room.chatMessage != null)
                                 			 ? ` · \${room.chatDate}</span><p class="latest-message">\${room.chatMessage}</p></div></li>`
-                                			 : `</div></li>`;
+                                			 : `</span></div></li>`;
                                   
                 				
                 			});

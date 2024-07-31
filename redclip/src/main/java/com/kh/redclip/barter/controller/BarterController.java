@@ -118,7 +118,7 @@ public class BarterController {
         params.put("categoryNo", categoryNo);
         params.put("code", code);
         params.put("keyword", keyword);
-        log.info("뭐냐묘{}",barterService.getFilteredBarters(params));
+        
         return barterService.getFilteredBarters(params);
     }
 	
