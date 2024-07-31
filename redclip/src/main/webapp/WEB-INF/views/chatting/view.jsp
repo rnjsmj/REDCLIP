@@ -592,6 +592,7 @@
                 				case 'reply' : result = result.filter ((room) => room.replyWriter == '${sessionScope.loginUser.userId}'); break;
                 			}
                 			
+                			
                 			result.map((room) => {
                 				
                 				let profile;

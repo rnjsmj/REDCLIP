@@ -258,13 +258,17 @@ public class BarterController {
 	@PostMapping("/delete")
 	public String barterDelete(int barterNo, int fileExist, HttpSession session) {
 		
+		String alertMsg = "";
+		String viewPath = "redirect:/barters";
+		
 		if (barterService.barterDelete(barterNo, fileExist) > 0) {
-			session.setAttribute("alertMsg", "게시글이 삭제되었습니다.");
-			return "redirect:/barters";
+			alertMsg = "게시글이 삭제되었습니다.";
 		}  else {
-			session.setAttribute("alertMsg", "오류가 발생했습니다.");
-			return "redirect:/barters/" + barterNo;
+			alertMsg = "오류가 발생했습니다.";
+			viewPath += "/" + barterNo;
 		}	
+		session.setAttribute("alertMsg", alertMsg);
+		return viewPath;
 		
 	}
 	// 게시글 삭제
