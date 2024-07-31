@@ -25,6 +25,15 @@
 		  		REPORTED_ID = #{reportedId}
 	</select>
 	
+	<!-- 신고 내역 상세 조회 -->
+	<select id="getDetail">
+		<include refid="reports" />
+		FROM
+				TB_MEM_REPORT
+	   WHERE
+	   			REPORTED_ID = #{reportedId}
+	</select>
+	
 	<!-- 신고 내역 조회 -->
 	<select id="findAll" resultType="report">
 		<include refid="reports"/>

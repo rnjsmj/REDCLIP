@@ -59,7 +59,7 @@
         <div class="tab">
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">전체</a>
+                  <a class="nav-link active" aria-current="page" >전체</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">회원</a>
@@ -68,7 +68,7 @@
                   <a class="nav-link" href="#">포인트</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">기타</a>
+                    <a class="nav-link" href="#">시스템</a>
                   </li>
               </ul>
        	 </div>
@@ -89,7 +89,7 @@
 	              </h2>
 	           </div>
 	      
-	           <div id="collapse-${ faq.faqNo }" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+	           <div id="collapse-${ faq.faqNo }" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="text-align: right;">
 	              <div class="card-body">
 	                  ${ faq.answer }
 	              </div>

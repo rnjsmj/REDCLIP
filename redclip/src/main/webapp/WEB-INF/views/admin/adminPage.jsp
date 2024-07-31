@@ -78,44 +78,25 @@
            		<td id="reportType">${ report.reportType }</td>
            		<td id="reportedId">${ report.reportedId }</td>
            		<td id="reportDate">${ report.reportDate }</td>
-           		<fmt:formatDate value="${report.reportDate}" pattern="yyyy-MM-dd" var="formattedReportDate" />
-	            ${formattedReportDate}
-	
-	            <%-- 신고일과 현재 날짜의 차이를 계산 --%>
-	            <fmt:parseDate value="${ report.reportDate }" pattern="yyyy-MM-dd" var="reportDateParsed" />
-	            <fmt:parseDate value="${ currentDate }" pattern="yyyy-MM-dd" var="currentDateParsed" />
-	            <c:set var="differenceInMilliseconds" value="${currentDateParsed.time - reportDateParsed.time}" />
-	            <c:set var="differenceInDays" value="${differenceInMilliseconds / (1000 * 60 * 60 * 24)}" />
-	
+           			
 	            <%-- 하루 미만 경과한 경우 배지 표시 --%>
-	            <c:if test="${differenceInDays < 1}">
+	           <%--  <c:if test="${}">
 	                <td><span class="badge text-bg-secondary" style="color:red">New</span></td>
 	            </c:if>
-           		
-           		
+           		 --%>
            	</tr>
            	</c:forEach>
             </c:otherwise>
             </c:choose>
             </tbody>
           </table>
-          <a href="reportList" style="float: right; margin-right: 300px;">더 보기</a>
+          <a href="${pageContext.request.contextPath}/admin/reportList" style="float: right; margin-right: 300px;">더 보기</a>
           <div class="icon" align="center" style="margin-top: 40px; ">
             <a href="${pageContext.request.contextPath}/noticeform"><i class="bi bi-megaphone" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href="${pageContext.request.contextPath}/admin/adminFaq"><i class="bi bi-question" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
             <a href="${pageContext.request.contextPath}/admin/memList"><i class="bi bi-person-lines-fill" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
           </div>
     </div>
-    <script>
-    
-    const now = new Date();
-    
-    
-    
-    console.log(createDate);
-    console.log(now);
-    
-    </script>
 	<!-- Button trigger modal -->
 	<!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adminModal">
 	  관리자 계정 생성

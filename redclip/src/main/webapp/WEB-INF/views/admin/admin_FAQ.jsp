@@ -139,7 +139,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
                         <button type="button" class="btn btn-success" onclick="insert();">작성</button>
-                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     </div>
             </div>
         </div>
@@ -167,7 +167,6 @@
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
                             <select class="form-select" aria-label="Default select example" id="faqType">
-                                <option selected></option>
                                 <option value="시스템">시스템</option>
                                 <option value="회원">회원</option>
                                 <option value="등급">등급</option>
@@ -181,7 +180,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
                         <button type="button" class="btn btn-success" onclick="update();">수정</button>
-                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     </div>
             </div>
         </div>
@@ -213,9 +212,6 @@
 					else {
 						alert('글 정보를 불러올 수 없습니다.')	
 					}
-				},
-				error : e => {
-					alert('요청에 실패했습니다.');
 				}
 			});
 			
@@ -239,14 +235,11 @@
 				success : result => {
 					if(result === 'success') {
 						alert('FAQ가 추가되었습니다.');
-						location.reload();	
+						location.href = '/redclip/admin/adminFaq';
 					}
 					else {
 						alert('FAQ 추가에 실패했습니다.')
 					}
-				},
-				error : (error) => {
-					alert('FAQ 추가 요청에 실패했습니다.');
 				}
 			});
 		};
@@ -254,6 +247,8 @@
 		//글 수정
 	      function update() {
 	         
+			const a = $('#faqType').val()
+			console.log(a);
 	         const faqNo = $("input[name='faqNo']:checked").val();
 	         
 	         const updateData = {
@@ -279,9 +274,6 @@
 	            	else {
 	            		alert('정보 수정에 실패했습니다.')	
 	            	}
-	            },
-	            error : e => {
-	               alert('정보 수정 요청을 실패했습니다.')
 	            }
 	         });
 	         
@@ -308,14 +300,11 @@
 					
 					if(result === 'success') {
 						alert('글을 삭제했습니다.');
-						location.reload();	
+						location.href = '/redclip/admin/adminFaq';
 					}
 					else {
 						alert('글을 삭제하지 못했습니다.');	
 					}
-				},
-				error : e => {
-					alert('요청에 실패했습니다.');
 				}
 			});
 			
