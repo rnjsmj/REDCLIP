@@ -201,60 +201,59 @@
         </div>
 
         <script>
-            // 두 번째 슬라이더 동작 정의
-            const swiper2 = new Swiper("#content_2 .swiper", {
-                autoplay: {
-                    delay: 10000, 
-                },
-                loop: true, // 반복 재생 여부
-                slidesPerView: 6, // 한 번에 보여지는 슬라이드 수
-                slidesPerGroup: 6, // 한 번에 6개씩 넘어가는 슬라이드 수
-                pagination: {
-                    // 페이징 버튼 클릭 시 이미지 이동 가능
-                    el: "#content_2 .swiper-pagination",
-                    clickable: true,
-                },
-                navigation: {
-                    // 화살표 버튼 클릭 시 이미지 이동 가능
-                    prevEl: "#content_2 .swiper-button-prev",
-                    nextEl: "#content_2 .swiper-button-next",
-                },
-            });
+    // 두 번째 슬라이더 동작 정의
+    const swiper2 = new Swiper("#content_2 .swiper", {
+        loop: true, // 반복 재생 여부
+        slidesPerView: 6, // 한 번에 보여지는 슬라이드 수
+        spaceBetween: 30, // 슬라이드 간의 간격
+        speed: 3000, // 슬라이드 전환 시간 (밀리초 단위)
+        autoplay: {
+            delay: 1, // 자동 재생 간격을 1밀리초로 설정하여 끊김 없이 움직이도록 설정
+            disableOnInteraction: false, // 사용자가 슬라이드에 상호작용해도 자동 재생이 멈추지 않도록 설정
+        },
+        loopAdditionalSlides: 1, // 추가 슬라이드를 사용하여 부드럽게 전환
+        allowTouchMove: false, // 사용자가 슬라이드를 터치로 움직이지 못하게 설정
+        pagination: {
+            el: "#content_2 .swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            prevEl: "#content_2 .swiper-button-prev",
+            nextEl: "#content_2 .swiper-button-next",
+        },
+    });
 
-            // 세 번째 슬라이더 동작 정의
-            const swiper3 = new Swiper("#content_3 .swiper", {
-                autoplay: {
-                    delay: 100000, 
-                },
-                loop: true, // 반복 재생 여부
-                slidesPerView: 6, // 한 번에 보여지는 슬라이드 수
-                slidesPerGroup: 6, // 한 번에 6개씩 넘어가는 슬라이드 수
-                pagination: {
-                    // 페이징 버튼 클릭 시 이미지 이동 가능
-                    el: "#content_3 .swiper-pagination",
-                    clickable: true,
-                },
-                navigation: {
-                    // 화살표 버튼 클릭 시 이미지 이동 가능
-                    prevEl: "#content_3 .swiper-button-prev",
-                    nextEl: "#content_3 .swiper-button-next",
-                },
-            });
-            
-            
-            // 검색 => 카테고리, 지역 선택 x
-            $('.search button').click(function() {
-            	let keyword = $('.search input').val();
-	        	location.href = `keywordForward/\${keyword}`;
-	        });
-	        
-	        $('.search input').on('keypress', function (e) {
-	            if (e.key === 'Enter') {
-	            	console.log("엔터키 키워드 : ", e.currentTarget.value);
-	            	location.href = 'keywordForward/' + e.currentTarget.value;
-	            }
-	        });
-        </script>
+    // 세 번째 슬라이더 동작 정의
+    const swiper3 = new Swiper("#content_3 .swiper", {
+        autoplay: {
+            delay: 100000,
+        },
+        loop: true, // 반복 재생 여부
+        slidesPerView: 6, // 한 번에 보여지는 슬라이드 수
+        slidesPerGroup: 6, // 한 번에 6개씩 넘어가는 슬라이드 수
+        pagination: {
+            el: "#content_3 .swiper-pagination",
+            clickable: true, // 페이징 버튼 클릭 시 이미지 이동 가능
+        },
+        navigation: {
+            prevEl: "#content_3 .swiper-button-prev",
+            nextEl: "#content_3 .swiper-button-next", // 화살표 버튼 클릭 시 이미지 이동 가능
+        },
+    });
+
+    // 검색 => 카테고리, 지역 선택 x
+    $('.search button').click(function() {
+        let keyword = $('.search input').val();
+        location.href = `keywordForward/${keyword}`;
+    });
+
+    $('.search input').on('keypress', function(e) {
+        if (e.key === 'Enter') {
+            console.log("엔터키 키워드 : ", e.currentTarget.value);
+            location.href = `keywordForward/${e.currentTarget.value}`;
+        }
+    });
+</script>
     </div>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>

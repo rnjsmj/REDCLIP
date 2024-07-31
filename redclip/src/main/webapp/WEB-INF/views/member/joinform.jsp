@@ -438,7 +438,6 @@
                     alert("아이디는 소문자와 숫자를 포함하여 5~12자여야 합니다.");
                     return;
                 }
-                console.log("콘솔에 잘 찍힘?:", userId); 
                 $.ajax({
                     url: 'member/check-id',
                     type: 'POST',
@@ -450,7 +449,6 @@
                             alert("사용 가능한 아이디 입니다.");
                              idOkay ='Y'
                         }
-                        //console.log("아이디오케?",idOkay);
                     },
                     error: function() {
                         alert('오류 발생');
