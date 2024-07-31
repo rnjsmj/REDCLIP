@@ -65,14 +65,14 @@ public class BarterController {
 	@GetMapping("/{barterNo}")
 	public String findByNo(@PathVariable int barterNo, Model model) {
 		
-		BarterVO barterDetail = barterService.findById(barterNo);
-		List<BarterVO> topBarters = barterService.getTopBarters(barterNo);
 		if (barterService.increaseHit(barterNo) > 0) {
+			
+			BarterVO barterDetail = barterService.findById(barterNo);
+			List<BarterVO> topBarters = barterService.getTopBarters(barterNo);
+		
 			model.addAttribute("barter", barterDetail);
 			model.addAttribute("topBarters", topBarters);
-			log.info("상위 게시글 : {}", topBarters);
 			return "barter/detail";	
-			
 		}
 		return "redirect:/barters";
 	}
@@ -225,7 +225,8 @@ public class BarterController {
 	//답글 삭제
 	@DeleteMapping(value="reply/{replyNo}")
 	@ResponseBody
-	public String replyDelete(@PathVariable int replyNo, @RequestBody boolean fileExist) {
+	public String replyDelete(@PathVariable int replyNo) {
+		/*
 		//log.info("fileExist : {}", fileExist);
 		
 		if (fileExist == true) {
@@ -235,8 +236,10 @@ public class BarterController {
 			}
 			//log.info("파일 삭제 완료");
 		}
-		//log.info("답글 삭제 시도");
+		//log.info("답글 삭제 시도");*/
 		return barterService.replyDelete(replyNo) > 0 ? "success" : "error";
+		
+		
 	}
 	
 	//답글 수정
@@ -256,12 +259,12 @@ public class BarterController {
 	 * @return 게시글이 정상적으로 삭제되면 목록으로, 삭제 중 오류가 발생하면 다시 상세보기 페이지로 redirect
 	 */
 	@PostMapping("/delete")
-	public String barterDelete(int barterNo, int fileExist, HttpSession session) {
+	public String barterDelete(int barterNo, HttpSession session) {
 		
 		String alertMsg = "";
 		String viewPath = "redirect:/barters";
 		
-		if (barterService.barterDelete(barterNo, fileExist) > 0) {
+		if (barterService.barterDelete(barterNo) > 0) {
 			alertMsg = "게시글이 삭제되었습니다.";
 		}  else {
 			alertMsg = "오류가 발생했습니다.";

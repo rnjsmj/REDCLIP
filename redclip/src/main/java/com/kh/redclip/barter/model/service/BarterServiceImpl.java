@@ -152,7 +152,8 @@ public class BarterServiceImpl implements BarterService{
 
 	@Transactional
 	@Override
-	public int barterDelete(int barterNo, int fileExist) {
+	public int barterDelete(int barterNo) {
+		/*
 		try {
 			
 			if (fileExist != 0) {
@@ -172,7 +173,9 @@ public class BarterServiceImpl implements BarterService{
 		} catch (Exception e) {
 			
 			return 0;
-		}
+		}*/
+		
+		return barterMapper.barterDelete(barterNo);
 		
 	}
 	

@@ -985,7 +985,7 @@
                 		console.log(no);
                 		
                 		if(confirm('삭제하시겠습니까?')) {
-                			
+                			/*
 	                		var deleteData;
 	                		
                				if($('#reply-img-'+no).length) {
@@ -995,14 +995,12 @@
                					deleteData = false;
                				}
 	                		
-               				console.log(deleteData);
+               				//console.log(deleteData);*/
 	                			
                 			$.ajax({
                 				
                 				url : 'reply/' + no,
                 				type : 'delete',
-                				data : JSON.stringify(deleteData),
-                    			contentType : 'application/json',
                 				success : result => {
                 					
                 					console.log(result);
