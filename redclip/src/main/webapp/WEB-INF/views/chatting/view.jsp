@@ -444,7 +444,9 @@
             	}
             	
             	$(document).on('click', '.chat-item', function () {
-                	socket.close();
+                	if(socket) {
+                		socket.close();
+                	};
                 	
                     $('.chat-item').removeClass('active');
                     $(this).addClass('active');

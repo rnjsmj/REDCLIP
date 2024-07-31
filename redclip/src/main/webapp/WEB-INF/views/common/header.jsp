@@ -125,14 +125,14 @@
    </c:if>
    
    <script>
-   var roomVar;
+   /* var roomVar;
    
    var socket = null;
 	$(document).ready( function() {
 		connect(roomVar);
-	});
-		
-		
+	}); */
+   let socket = null;
+	
    function connect(roomNo) {
 			console.log("연결 시도");
 			
