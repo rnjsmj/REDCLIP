@@ -42,7 +42,7 @@ public interface BarterService {
 	int replyFileInsert(BarterReplyFile replyFile);
 
 	//게시글 삭제
-	int barterDelete(int barterNo, int fileExist);
+	int barterDelete(int barterNo);
 	//게시글에 포함된 파일 갯수
 	int getBarterFileCount(int barterNo);
 	//게시글에 포함된 파일 삭제
