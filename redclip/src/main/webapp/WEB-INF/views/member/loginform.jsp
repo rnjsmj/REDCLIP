@@ -15,7 +15,17 @@
 <!-- Bootstrap core CSS -->
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="resources/css/signin.css" rel="stylesheet">
-<style>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+
+
+
+body {
+ font-family: "Noto Sans KR", sans-serif !important;
+}
+
   .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
@@ -104,7 +114,6 @@
    
 
 <form class="form-signin" action="member/login" method="post">
-  <img class="mb-4" src="" alt="" width="72" height="72">
   <h1 class="h3 mb-3 font-weight-normal">로그인</h1>
   <label for="inputEmail" class="sr-only">아이디</label>
   <input type="text" id="userId" name="userId" class="form-control" placeholder="ID입력" required autofocus>
@@ -112,7 +121,7 @@
   <input type="password" id="userPwd" name="userPwd" class="form-control" placeholder="PW입력" required>
   <div class="checkbox mb-3">
     <label>
-      <input type="checkbox" value="remember-me"> 아이디 저장하기
+         <input type="checkbox" id="remember-me" name="remember-me" value="on">아이디 저장하기
     </label>
   </div>
   <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
