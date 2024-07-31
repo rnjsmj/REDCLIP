@@ -149,11 +149,7 @@
   });
 
   function enteredData() {
-      console.log('Barter Data:', '${barter}');
-  //    console.log('Category No:', '${barter.categoryNo}');
-  //    console.log('City Code:', '${barter.region.cityCode}');
-  //    console.log('Town Code:', '${barter.region.townCode}');
-  //    console.log('Village Code:', '${barter.region.villageCode}');
+      
 
       $('#categoryNo').val('${barter.categoryNo}');
       $('#si').val('${barter.region.cityCode}');

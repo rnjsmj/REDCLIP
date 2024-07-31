@@ -49,9 +49,19 @@
         display: block;
         margin: 20px auto;
     }
+    
+    .card-title {
+    	height:48px;
+    	overflow: hidden;
+	  text-overflow: ellipsis;
+	  display: -webkit-box;
+	  -webkit-line-clamp: 2;
+	  -webkit-box-orient: vertical;
+    }
     .card-text {
         font-size: 14px;
     }
+   
     
     .card-text.date-text {
     	color:#636363;
