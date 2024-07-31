@@ -556,7 +556,7 @@ TB_BARTER_FILE
 		                  FROM
 		                        VW_BARTER_DETAIL
 		                 WHERE
-		                        VILLAGE_CODE IN (SELECT VILLAGE_CODE FROM VW_BARTER_DETAIL WHERE BARTER_NO = #{barterNo})
+		                        VILLAGE_CODE = (SELECT VILLAGE_CODE FROM TB_BARTER WHERE BARTER_NO = #{barterNo})
 		                   AND
 		                        BARTER_STATUS = 'Y'
 		                 ORDER

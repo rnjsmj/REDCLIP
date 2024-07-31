@@ -72,6 +72,7 @@ public class BarterController {
 		
 			model.addAttribute("barter", barterDetail);
 			model.addAttribute("topBarters", topBarters);
+			
 			return "barter/detail";	
 		}
 		return "redirect:/barters";
