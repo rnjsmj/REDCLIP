@@ -469,6 +469,7 @@
                     	success : result => {
                     		console.log(result);
                     		
+                    		
                     		// 채팅 상대 (채팅창 헤더)
                     		let profile;
                     		let nickname;
@@ -505,11 +506,17 @@
                     			messageList +=  `</div>`;
                     			
                     			
-                    		
                     		});
                     		$('.chat-header-left').html(chatProfile);
                     		$('.chat-messages').html(messageList);
+                    		
+                    		if (result.barterName == null) {
+                    			$('.chat-input').empty();
+                    			$('.chat-input').html(`대화가 종료된 채팅방입니다.`);
+                    		}
                     		scrollToBottom();
+                    		
+                    		
                     	}
                     });
                     $('.chat-area').attr("id", roomNo);
@@ -612,8 +619,14 @@
                 				chatItems += `<li class="chat-item" id="\${room.roomNo}">
                 							  <img class="list-img" src="/redclip/\${profile}">
                                     	      <div class="chat-details">
-                                              <h5><span class="badge text-bg-secondary">
-                                              <a class="chat-link" href="/redclip/barters/\${room.barterNo}">\${room.barterName}</a></span>
+                                              <h5><span class="badge text-bg-secondary">`;
+                                              
+                                chatItems += (room.barterName != null)
+                                			 ? `<a class="chat-link" href="/redclip/barters/\${room.barterNo}">\${room.barterName}</a>`
+                                		     : '삭제된 게시글';
+                                              
+                                              
+                                chatItems += `</span>
                                               </h5><p class="nickname">\${nickname}</p>
                                               <span class="small-detail">\${villageName}`;
                                         
