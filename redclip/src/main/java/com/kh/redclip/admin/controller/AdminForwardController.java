@@ -13,7 +13,7 @@ import com.kh.redclip.faq.model.service.FaqService;
 import com.kh.redclip.faq.model.vo.FAQ;
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
-import com.kh.redclip.member.model.vo.ReportMember;
+import com.kh.redclip.admin.model.vo.ReportMember;
 import com.kh.redclip.member.model.vo.StatusMember;
 
 import lombok.RequiredArgsConstructor;

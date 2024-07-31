@@ -17,7 +17,7 @@ import com.kh.redclip.faq.model.service.FaqService;
 import com.kh.redclip.faq.model.vo.FAQ;
 import com.kh.redclip.member.model.service.MemberService;
 import com.kh.redclip.member.model.vo.Member;
-import com.kh.redclip.member.model.vo.ReportMember;
+import com.kh.redclip.admin.model.vo.ReportMember;
 import com.kh.redclip.member.model.vo.StatusMember;
 
 import lombok.RequiredArgsConstructor;
@@ -51,5 +51,13 @@ public class AdminController {
 		return adminService.deleteMember(members) > 0? "success" : "error";
 	}
 	
+	//레포트 내용 상세보기 
+	@GetMapping("reportDetail")
+	public String reportDetail() {
+		
+		
+		return "";
+		
+	}
 	
 }
