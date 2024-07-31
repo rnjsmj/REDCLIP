@@ -85,10 +85,7 @@
           <input type="text" class="form-control" id="name" name="barterName" maxlength="250" placeholder="내용을 입력해주세요." required>
         </div>
       </div>
-      <div class="form-group">
-        <label for="writer">작성자</label>
-        <input type="text" id="writer" class="form-control" value="${sessionScope.loginUser.userId }" name="barterWriter" readonly>
-      </div>
+        <input type="hidden" id="writer" class="form-control" value="${sessionScope.loginUser.userId }" name="barterWriter" readonly>
       <div class="form-group">
         <label>주소 입력</label>
         <div class="form-row">
