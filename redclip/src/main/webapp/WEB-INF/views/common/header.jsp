@@ -134,10 +134,10 @@
    let socket = null;
 	
    function connect(roomNo) {
-			console.log("연결 시도");
 			
 			let socketAddress = "ws://localhost/redclip/chatting";
-			roomNo != null ? socketAddress += ("/" + roomNo) : socketAddress += "/0";
+			roomNo != null ? socketAddress += ("/" + roomNo) 
+					       : socketAddress += "/0";
 			let ws = new WebSocket(socketAddress);
 			socket = ws;
 			
@@ -151,7 +151,6 @@
 				let hours = today.getHours().toString().padStart(2, '0');
                 let minutes = today.getMinutes().toString().padStart(2, '0');
                 
-				console.log("전달받은 메시지 : ", event.data+'\n');
 				const recValue = `<div class="receive-div chat-div"><div class="message receive"><p>\${event.data}</p></div>
 								  <span class="receive-date">\${hours}:\${minutes}</span></div>`;
 				$('.chat-messages').append(recValue);

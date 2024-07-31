@@ -155,14 +155,14 @@ WHERE
 	    FROM
 	       		VW_BARTER_DETAIL
 	    <where>
-	        <if test="categoryNo != 0">
-	            AND CATEGORY_NO = #{categoryNo, jdbcType=INTEGER}
+	        <if test="categoryNo != null and categoryNo != ''">
+	            AND CATEGORY_NO = #{categoryNo}
 	        </if>
 	        <if test="code != null and code != ''">
 	            AND VILLAGE_CODE LIKE CONCAT(#{code}, '%')
 	        </if>
 	        <if test="keyword != null and keyword != ''">
-	        	AND (BARTER_NAME LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%' OR BARTER_CONTENT LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+	        	AND (BARTER_NAME LIKE '%' || #{keyword} || '%' OR BARTER_CONTENT LIKE '%' || #{keyword} || '%')
 	        </if>
 	    </where>
 	   ORDER BY
@@ -289,7 +289,10 @@ TB_BARTER_FILE
 		<result column="REPLY_FILE_NAME" property="replyFileName"/>
 	</resultMap>
 	<!-- 댓글 목록 (파일 포함) -->
-	<select id="getBarterReply" parameterType="_int" resultType="barterReply" resultMap="replyResultSet">
+	<select id="getBarterReply" 
+	        parameterType="_int" 
+	        resultType="barterReply" 
+	        resultMap="replyResultSet">
 		SELECT
 				REPLY_NO,
 				REPLY_CONTENT,
@@ -306,7 +309,6 @@ TB_BARTER_FILE
 		 	BY
 		 		REPLY_NO DESC
 	</select>
-	<!-- 댓글 입력 -->
 	<insert id="replyInsert" parameterType="barterReply">
 		INSERT
 		  INTO
@@ -326,7 +328,6 @@ TB_BARTER_FILE
 				)
 	</insert>
 	
-	<!-- 댓글 파일 입력 -->
 	<insert id="replyFileInsert" parameterType="barterReplyFile">
 		INSERT
 		  INTO
@@ -342,8 +343,6 @@ TB_BARTER_FILE
 					SEQ_BREP.CURRVAL,
 					#{replyFileName}
 				)
-		
-	
 	</insert>
 	
 	<!-- 댓글 수정 -->

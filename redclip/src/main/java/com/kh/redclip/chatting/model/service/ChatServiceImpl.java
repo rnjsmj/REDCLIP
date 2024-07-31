@@ -3,6 +3,7 @@ package com.kh.redclip.chatting.model.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.redclip.chatting.model.dao.ChatMapper;
 import com.kh.redclip.chatting.model.vo.ChatMessage;
@@ -29,9 +30,26 @@ public class ChatServiceImpl implements ChatService {
 		return chatMapper.findAll(userId);
 	}
 
+	@Transactional
 	@Override
-	public ChatRoom findChatRoom(ChatRoom cr) {
-		return chatMapper.findChatRoom(cr);
+	public int findChatRoom(ChatRoom cr) {
+		try {
+			int roomNo = 0;
+			ChatRoom isExist = chatMapper.findChatRoom(cr);
+			
+			if(isExist == null) {
+				roomNo = newChatRoom(cr);
+			} else {
+				cr.setRoomNo(isExist.getRoomNo());
+				roomNo = (chatBarterUpdate(cr) > 0) ? isExist.getRoomNo() : 0;
+			}
+			
+			return roomNo > 0 ? 1 : 0;
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	@Override

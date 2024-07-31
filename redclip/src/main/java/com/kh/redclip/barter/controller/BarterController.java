@@ -124,7 +124,8 @@ public class BarterController {
     }
 	
 	//답글 목록
-	@GetMapping(value="reply", produces="application/json; charset=UTF-8")
+	@GetMapping(value="reply", 
+			    produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public ResponseEntity<List<BarterReply>> getAllBarterReply(int barterNo) {
 		
@@ -193,34 +194,26 @@ public class BarterController {
 	@ResponseBody
 	public String replyInsert(BarterReply reply, MultipartFile[] upfiles, HttpSession session) {
 		
-		//log.info("답글 : {}", reply);
-		//log.info("파일 배열 : {}", upfiles);
-		//barterNo, replyContent, replyWriter 필요
+		return (barterService.replyInsert(reply, upfiles, session) > 0) ? "success" : "error";
+			
 		
-		
-		if (barterService.replyInsert(reply) > 0) {
-			
-			int fileCount = 0;
-			boolean fileSuccess = true;
-			
-			if (upfiles != null) {
-				
-				for(MultipartFile file : upfiles) {
-					if( !file.isEmpty()) {
-						BarterReplyFile replyFile = new BarterReplyFile();
-						replyFile.setReplyFileName(saveFile(file, session));
-						barterService.replyFileInsert(replyFile);
-					}
-				}
-				
-			}
-			
-			return fileSuccess == true ? "success" : "file upload error"; 
-		
-		} else {
-			
-			return "reply upload error";
-		}
+		/*
+		 int fileCount = 0; boolean fileSuccess = true;
+		 
+		 if (upfiles != null) {
+		 
+		  for(MultipartFile file : upfiles) { if( !file.isEmpty()) { BarterReplyFile
+		  replyFile = new BarterReplyFile(); replyFile.setReplyFileName(saveFile(file,
+		  session)); barterService.replyFileInsert(replyFile); } }
+		  
+		  }
+		  
+		  return fileSuccess == true ? "success" : "file upload error";
+		  
+		  } else {
+		  
+		  return "reply upload error"; }
+		 */
 		
 	}
 	//답글 삭제
@@ -271,9 +264,9 @@ public class BarterController {
 			alertMsg = "오류가 발생했습니다.";
 			viewPath += "/" + barterNo;
 		}	
+		
 		session.setAttribute("alertMsg", alertMsg);
 		return viewPath;
-		
 	}
 	// 게시글 삭제
 	// 먼저 삭제해야 될 것 : 게시글 첨부파일, 댓글 첨부파일, 댓글 
@@ -310,20 +303,22 @@ public class BarterController {
 			result = barterService.wishDelete(wish);
 		}
 		
-		return result > 0 ? Integer.toString(barterService.findById(wish.getBarterNo()).getWishCount()) : "error";
+		return result > 0 
+			   ? Integer.toString(barterService.findById(wish.getBarterNo()).getWishCount()) 
+			   : "error";
 		
 	}
 
 	//게시글 신고
 	@PostMapping("/report")
 	public String barterReport(ReportMember report, HttpSession session) {
-		if (barterService.barterReport(report) > 0) {
-			session.setAttribute("alertMsg", "신고가 접수되었습니다.");
-			return "redirect:/barters/" + report.getReferenceNo();
-		} else {
-			session.setAttribute("alertMsg", "오류가 발생했습니다.");
-			return "redirect:/barters/" + report.getReferenceNo();
-		}
+		
+		String alertMsg = "";
+		alertMsg = barterService.barterReport(report) > 0 
+				   ? "신고가 접수되었습니다." : "오류가 발생했습니다.";
+		session.setAttribute("alertMsg", alertMsg);
+		return "redirect:/barters/" + report.getReferenceNo();
+		
 	}
 
 }

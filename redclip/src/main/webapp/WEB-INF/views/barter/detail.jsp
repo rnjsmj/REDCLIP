@@ -333,6 +333,12 @@
         #popular-list .card-title {
             font-weight: 600;
             color : #303030;
+            height:48px;
+    	overflow: hidden;
+	  text-overflow: ellipsis;
+	  display: -webkit-box;
+	  -webkit-line-clamp: 2;
+	  -webkit-box-orient: vertical;
         }
         #popular-list .card-date {
             color: #6d6d6d;
@@ -398,6 +404,7 @@
         	width:200px;
         	height:200px;
         	overflow:hidden;
+        	margin-right:10px;
         	
         	
         	> img {
@@ -703,7 +710,7 @@
                                         <textarea
                                             name="replyContent"
                                             id="reply-content"
-                                            placeholder="교환을 원하시면 답글을 달아주세요."
+                                            placeholder="교환을 원하시면 댓글을 달아주세요."
                                             required
                                         ></textarea>
                                     </td>
@@ -734,7 +741,7 @@
                                             <span class="length"><span class="reply_length">0 </span> / 200</span>
                                         </div>
                                         <script>
-                                            $('#reply-content').keyup((e) => {
+                                            $('#reply-content').keyup(function() {
                                                 var content = $(this).val();
 
                                                 if (content.length == 0 || content == '') {
@@ -835,8 +842,6 @@
 	                				const $heart = $('#heart');
 	                				var svg;
 	                				
-	                				
-	                				
 	                				if(result === 'exist') {
 	                					svg = `<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(0)" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
 	                	    		  		   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>`;
@@ -892,12 +897,8 @@
                                             	  	  <a class="carousel-control-next" href="#reply-img-\${result[i].replyNo}" role="button" data-slide="next"> 
                                             	  	  <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                   	  <span class="sr-only">Next</span></a>`;
-                                        }      
-                						
+                                        }   
                                         resultStr += `</div></figure>`;
-                						
-                						
-                						
                 					}
                 					
                 					resultStr += `<div class="reply-detail">
@@ -911,7 +912,8 @@
                                     const userId = "${ sessionScope.loginUser.userId }";
                                     
                                     if( userId === "${ barter.barterWriter}") {
-                                    	resultStr += `<div class="btn-group2" id="btn-group-\${ result[i].replyNo}"><button onclick="openChat(\'\${result[i].replyWriter}\');"
+                                    	resultStr += `<div class="btn-group2" id="btn-group-\${ result[i].replyNo}">
+                                    				  <button onclick="openChat(\'\${result[i].replyWriter}\');"
                                     			      id="chatbtn" class="btn btn-light">채팅하기</button></div></div></div>`;
                                     } else if( userId === result[i].replyWriter) {
                                     	resultStr += `<div class="btn-group2" id="btn-group-\${result[i].replyNo}"><button id="updbtn" class="btn btn-light" data-toggle="modal" href="#updateModal"
@@ -941,6 +943,8 @@
                 			let formData = new FormData();
                 			let inputFile = $("#reply-file");
                 			let files = inputFile[0].files;
+                			
+                			console.log(inputFile);
                 			
                 			for (let i=0; i<files.length; i++) {
                 				
@@ -1212,10 +1216,16 @@
         			replyWriter : replyWriter
         		},
         		success : result => {
-        			roomNo = result;
+        			
+        			if(result === 'success') {
+        				location.href = '../chatting/view';
+        			} else {
+        				alert('오류가 발생했습니다.');
+        			}
+        			/* roomNo = result;
         			roomVar = roomNo;
-        			connect(roomNo);
-                	location.href = '../chatting/view';
+        			connect(roomNo); */
+                	
         		}, error : err => {
         			console.log('오류가 발생했습니다.');
         			
