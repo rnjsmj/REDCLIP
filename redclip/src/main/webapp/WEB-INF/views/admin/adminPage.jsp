@@ -91,10 +91,20 @@
             </tbody>
           </table>
           <a href="${pageContext.request.contextPath}/admin/reportList" style="float: right; margin-right: 300px;">더 보기</a>
-          <div class="icon" align="center" style="margin-top: 40px; ">
+          
+          <div class="icon" align="center" style="    margin-top: 40px; width: 1200px; height: 300px; display: inline-block; clear: both;">
+          <div style="width: 200px; height: 200px;">
             <a href="${pageContext.request.contextPath}/noticeform"><i class="bi bi-megaphone" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
+            <label for="bi-megaphone">공지사항</label>
+          </div>
+          <div style="width: 200px; height: 200px;">
             <a href="${pageContext.request.contextPath}/admin/adminFaq"><i class="bi bi-question" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
+            <label for="bi-question">FAQ 관리</label>
+           </div>
+           <div style="width: 200px; height: 200px;">
             <a href="${pageContext.request.contextPath}/admin/memList"><i class="bi bi-person-lines-fill" style="margin: 25px; font-size: 8rem; color: rgb(0, 0, 0);"></i></a>
+            <label for="bi-person-lines-fill">회원 관리</label>
+           </div>
           </div>
     </div>
 	<!-- Button trigger modal -->
