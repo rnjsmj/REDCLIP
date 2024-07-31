@@ -47,6 +47,7 @@ public class FaqController {
 	@PutMapping("/{faqNo}")
 	public String update(@PathVariable int faqNo, @RequestBody FAQ faq) {
 		
+	//	log.info())
 		return faqService.update(faq) > 0? "success" : "error" ;
 		
 	}

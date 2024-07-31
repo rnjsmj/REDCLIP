@@ -251,11 +251,14 @@
 			});
 		};
 		
+	
 		//글 수정
 	      function update() {
-	         
+		
+	    	     
 	         const faqNo = $("input[name='faqNo']:checked").val();
-	         
+	        const $faqType =$('#faqType').val();
+	        console.log($faqType);
 	         const updateData = {
 	               "faqNo" : $('#faqNo').val(),
 	               "question" : $('#exampleFormControlInput1').val(),
@@ -263,7 +266,7 @@
 	               "faqType" : $('#faqType').val(),
 	               "userId" : $('#userId').val()
 	            };
-	         
+	    
 	         $.ajax({
 	            url : '/redclip/faq/' + faqNo,
 	            type : 'put',
