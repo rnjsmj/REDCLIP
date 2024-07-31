@@ -70,7 +70,7 @@ public interface MemberService {
 
 	int changePw(Member member);
 
-	
+
 
 
 

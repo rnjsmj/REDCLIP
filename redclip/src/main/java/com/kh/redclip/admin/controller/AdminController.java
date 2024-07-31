@@ -29,71 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminController {
 
-	private final FaqService faqService;
-	private final MemberService memberService;
 	private final AdminService adminService;
-	
-	//관리자 페이지로 이동
-	@GetMapping
-	public String adminPage(Model model) {
-		
-		List<ReportMember> reports = adminService.findAll();
-		
-		log.info("물어와! : {}", reports);
-		
-		model.addAttribute("list", reports);
-		
-		return "admin/adminPage";
-	}
-	
-	/*
-	//누적 신고 횟수 조회
-	@GetMapping("/count")
-	public String reportCount(String userId, Model model) {
-		
-		int count= memberService.reportCount(userId);
-		
-		model.addAttribute("count", count);
-		
-		log.info("누적 신고 횟수 : {}", count);
-		
-		return "redirect:/"; 
-	}
-	*/
-	//faq 관리 페이지 이동
-	@GetMapping("/adminFaq")
-	public String adminFaq(Model model) {
-		
-		List<FAQ> faqList = faqService.selectAll();
-		
-		model.addAttribute("list", faqList);
-		
-		return "admin/admin_FAQ";
-	}
-	
-	//회원 목록 조회
-	@GetMapping("/memList")
-	public String memList(Model model) {
-		
-		List<Member> members = adminService.allMember();
-		
-		model.addAttribute("list", members);
-		
-		return "admin/memList";
-	}
-	
-	//탈퇴 회원 조회
-	@GetMapping("/status")
-	public String status(Model model) {
-
-		List<StatusMember> member = adminService.status();
-		
-		//log.info("조회한 데이터 : {}", member);
-		
-		model.addAttribute("list", member);
-		
-		return "admin/statusList";
-	}
 	
 	//회원 복구
 	@ResponseBody

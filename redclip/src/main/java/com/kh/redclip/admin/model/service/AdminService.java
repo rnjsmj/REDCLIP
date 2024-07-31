@@ -14,10 +14,13 @@ public interface AdminService {
 
 	List<StatusMember> status();
 	
-	int reportCount(String userId);
+	int reportCount(String reportedId);
 
 	int change(String[] members);
 
 	int deleteMember(String[] members);
+
+	ReportMember getDetail(int reportNo);
+
 
 }

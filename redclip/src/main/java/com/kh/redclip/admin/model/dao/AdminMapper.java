@@ -19,12 +19,14 @@ public interface AdminMapper {
 
 	List<StatusMember> status();
 
-	int reportCount(String userId);
+	int reportCount(String reportedId);
 
 	void changeMember(@Param("members") String[] members);
 
 	void getMember(@Param("members") String[] members);
 
 	void dropMember(@Param("members") String[] members);
+
+	ReportMember getDetail(int reportNo);
 
 }

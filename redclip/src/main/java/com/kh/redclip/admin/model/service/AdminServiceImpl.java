@@ -34,8 +34,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int reportCount(String userId) {
-		return adminMapper.reportCount(userId);
+	public int reportCount(String reportedId) {
+		return adminMapper.reportCount(reportedId);
 	}
 
 	@Transactional
@@ -76,9 +76,14 @@ public class AdminServiceImpl implements AdminService {
 	void dropMember(String[] members) {
 		adminMapper.dropMember(members);
 	}
-	
-	
 
+	@Override
+	public ReportMember getDetail(int reportNo) {
+		return adminMapper.getDetail(reportNo);
+	}
+	
+	
+	
 	
 	
 	
