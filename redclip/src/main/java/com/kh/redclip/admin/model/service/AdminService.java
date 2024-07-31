@@ -22,5 +22,9 @@ public interface AdminService {
 
 	ReportMember getDetail(int reportNo);
 
+	ReportMember ReportDetail(ReportMember report);
+
+	int deleteReport(int reportNo);
+
 
 }
