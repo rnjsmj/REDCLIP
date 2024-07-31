@@ -31,8 +31,8 @@ public class ChattingController {
 	
 	//화면 테스트용 컨트롤러
 	@GetMapping("/view")
-	public String view() {
-		return "chatting/view";
+	public String view(HttpSession session) {
+		return session.getAttribute("loginUser") != null ? "chatting/view" : "redirect:/loginform";
 	}
 	
 	//채팅방 목록 조회
@@ -48,11 +48,13 @@ public class ChattingController {
 	//채팅방 찾기 (존재 유무에 따라 생성 / 게시글 제목 갱신)
 	@GetMapping("/find")
 	@ResponseBody
-	public int findChatRoom(ChatRoom cr, HttpSession session) {
-		ChatRoom chatRoom = chatService.findChatRoom(cr);
-		log.info("find 결과 : {}", chatRoom);
+	public String findChatRoom(ChatRoom cr) {
+		
+		return (chatService.findChatRoom(cr) > 0) ? "success" : "error";
+		/*
+		ChatRoom isExist = chatService.findChatRoom(cr);
 		int roomNo = 0;
-		if(chatRoom == null) {
+		if(isExist == null) {
 			// 채팅방이 존재하지 않음
 			// 방이 생성된 경우 생성된 방의 값을 return
 			roomNo = chatService.newChatRoom(cr);
@@ -60,14 +62,12 @@ public class ChattingController {
 		} else {
 			// 채팅방 존재
 			// 해당 채팅방의 ChatRoom(cr) 객체로 넘겨받은 게시글번호를 수정
-			cr.setRoomNo(chatRoom.getRoomNo());
-			roomNo = (chatService.chatBarterUpdate(cr) > 0) ? chatRoom.getRoomNo() : 0;
+			cr.setRoomNo(isExist.getRoomNo());
+			roomNo = (chatService.chatBarterUpdate(cr) > 0) ? isExist.getRoomNo() : 0;
 		}
 		
-		session.setAttribute("RoomNo", roomNo);
-		log.info("세션에 저장된 값 : {}", session.getAttribute("RoomNo") );
-		log.info("roomNo : {}", roomNo);
 		return roomNo;
+		*/
 		
 	}
 	
@@ -78,7 +78,6 @@ public class ChattingController {
 	 public ResponseEntity<ChatMessageVO> chatMessageList(@PathVariable int roomNo) {
 	 
 	 ChatMessageVO chatRoom = chatService.chatListByRoomNo(roomNo);
-	 log.info("채팅내역 : {}", chatRoom); 
 	 return ResponseEntity.status(HttpStatus.OK).body(chatRoom); 
 	 
 	 }

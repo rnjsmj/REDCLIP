@@ -296,6 +296,9 @@
             
             .badge {
             	background-color: #007300;
+            	max-width:300px;
+            	color:#fff;
+            	
             }
         }
         .nickname {
@@ -320,7 +323,10 @@
         .chat-link {
             color: #fff;
             text-decoration: none;
-             
+		    display: block;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
         }
 
         .chat-link:hover {
@@ -437,11 +443,15 @@
             	selectList();
             	openedChat();
             	
+            	 
+            	
             	if( '${ sessionScope.RoomNo }' != '' ) {
             		const id= '#' + '${ sessionScope.RoomNo }';
             		$(id).trigger('onclick');
             		console.log(id + '로 트리거 동작');
             	}
+            	
+            	const originChatInput = $('.chat-input').html();
             	
             	$(document).on('click', '.chat-item', function () {
                 	if(socket) {
@@ -452,14 +462,14 @@
                     $(this).addClass('active');
 					
                     const roomNo = $(this).attr("id");
+                    connect(roomNo);
+                    
                     let onclick = 'submitMessage()';
                     $('#sendbtn').attr("onclick", onclick);
                     
-                    var socketAddress = "ws://localhost/redclip/chatting/" + roomNo;
-                    connect(roomNo);
-                    
                     let messageList = '';
                     let chatProfile = '';
+                    
                     
                     // 선택한 채팅방 채팅내역 select
                     $.ajax({
@@ -468,7 +478,6 @@
                     	type : 'get',
                     	success : result => {
                     		console.log(result);
-                    		
                     		
                     		// 채팅 상대 (채팅창 헤더)
                     		let profile;
@@ -490,8 +499,6 @@
                     						? nickname + '</p></div>'
                     						: '(탈퇴한 회원)</p></div>';
                             
-                    		
-                    		
                     		// 채팅 내역
                     		(result.chatMessageList).map(( message ) => {
                     			let type = (message.senderId === '${sessionScope.loginUser.userId}') ? 'send' : 'receive';
@@ -507,16 +514,19 @@
                     			
                     			
                     		});
+                    		
+                    		
+                    		if (result.barterName == null) {
+                    			$('.chat-input').html(`대화가 종료된 채팅방입니다.`);
+                    		} else {
+                    			$('.chat-input').html(originChatInput);
+                    		} 
+                    		
                     		$('.chat-header-left').html(chatProfile);
                     		$('.chat-messages').html(messageList);
                     		
-                    		if (result.barterName == null) {
-                    			$('.chat-input').empty();
-                    			$('.chat-input').html(`대화가 종료된 채팅방입니다.`);
-                    		}
                     		scrollToBottom();
-                    		
-                    		
+
                     	}
                     });
                     $('.chat-area').attr("id", roomNo);
@@ -525,6 +535,7 @@
                 }); 
             	
             });
+            
             
             	
             const submitMessage = () => {
@@ -574,15 +585,18 @@
 
                 () => {
                     scrollToBottom();
+                    
+                    
                 };
-
-                $('#chat-input').on('keypress', (e) => {
-                    if (e.which === 13) {
-                        submitMessage();
-                    }
-                });
+                
+                $(document).on('keypress', '#chat-input', function(e) {
+                     if (e.which === 13) {
+                         submitMessage();
+                     }
+                 });
                
                 const selectList = (condition) => {
+                	console.log(condition);
                 	$.ajax({
                 		
                 		url : 'list',
@@ -594,11 +608,17 @@
                 			console.log(result);
                 			let chatItems = '';
                 			
+                			if (condition) {
+                				let type = condition;
+                				
+                				result = result.filter((room) => room[`\${type}Writer`] =='${sessionScope.loginUser.userId}');
+                			};
+                			/* 
                 			switch (condition) {
                 				case 'barter' :  result = result.filter((room) => room.barterWriter == '${sessionScope.loginUser.userId}'); break;
                 				case 'reply' : result = result.filter ((room) => room.replyWriter == '${sessionScope.loginUser.userId}'); break;
                 			}
-                			
+                			 */
                 			
                 			result.map((room) => {
                 				

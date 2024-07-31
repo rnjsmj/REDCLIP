@@ -29,7 +29,7 @@ public interface BarterService {
 	//댓글 목록
 	List<BarterReply> getBarterReply(int barterNo);
 	//댓글 작성
-	int replyInsert(BarterReply baterReply);
+	int replyInsert(BarterReply reply, MultipartFile[] upfiles, HttpSession session);
 	//댓글 수정
 	int replyUpdate(BarterReply barterReply);
 	//댓글 삭제s
