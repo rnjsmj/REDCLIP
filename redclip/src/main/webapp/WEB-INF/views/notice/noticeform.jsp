@@ -111,13 +111,13 @@
       
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link ${param['type'] == null || param['type'] == '1' ? 'active' : ''}" id="all-tab" href="noticeform?type=1" role="tab" aria-controls="all" aria-selected="${param['type'] == null || param['type'] == '1'}">전체보기</a>
+                <a class="nav-link ${param['type'] == null || param['type'] == '1' ? 'active' : ''}" id="all-tab" href="noticeform?type=1" role="tab" aria-controls="all" >전체보기</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link ${param['type'] == '2' ? 'active' : ''}" id="notice-tab" href="noticeform?type=2" role="tab" aria-controls="notice" aria-selected="${param['type'] == '2'}">공지</a>
+                <a class="nav-link ${param['type'] == '2' ? 'active' : ''}" id="notice-tab" href="noticeform?type=2" role="tab" aria-controls="notice" >공지</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link ${param['type'] == '3' ? 'active' : ''}" id="event-tab" href="noticeform?type=3" role="tab" aria-controls="event" aria-selected="${param['type'] == '3'}">이벤트</a>
+                <a class="nav-link ${param['type'] == '3' ? 'active' : ''}" id="event-tab" href="noticeform?type=3" role="tab" aria-controls="event" >이벤트</a>
             </li>
         </ul>
 
