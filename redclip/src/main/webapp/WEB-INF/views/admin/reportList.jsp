@@ -74,7 +74,7 @@
                 	 <tr>
                 	 	  <td>${ report.reportNo }</td>
                 	 	  <td>${ report.reportType }</td>
-	                      <td><a href="getDetail">${ report.reportTitle }</a></td>
+	                      <td><a href="ReportDetail?reportNo=${report.reportNo}&reportedId=${report.reportedId}">${ report.reportTitle }</a></td>
 	                      <td>${ report.reportedId }</td>
 	                      <td>${ report.reportDate }</td>
 	                 </tr>

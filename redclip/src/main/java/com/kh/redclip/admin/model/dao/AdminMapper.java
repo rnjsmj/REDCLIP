@@ -29,4 +29,8 @@ public interface AdminMapper {
 
 	ReportMember getDetail(int reportNo);
 
+	ReportMember getReportDetail(ReportMember report);
+
+	int deleteReport(int reportNo);
+
 }

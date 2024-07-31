@@ -77,9 +77,25 @@ public class AdminServiceImpl implements AdminService {
 		adminMapper.dropMember(members);
 	}
 
+
+	@Override
+	public ReportMember ReportDetail(ReportMember report) {
+		
+		return adminMapper.getReportDetail(report);
+		
+	}
+	
+	
+	
 	@Override
 	public ReportMember getDetail(int reportNo) {
-		return adminMapper.getDetail(reportNo);
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int deleteReport(int reportNo) {
+		return adminMapper.deleteReport(reportNo);
 	}
 	
 	
