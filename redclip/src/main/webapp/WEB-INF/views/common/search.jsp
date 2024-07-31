@@ -128,7 +128,6 @@
         <div class="search-results">
             <div class="tab">
                 <button class="active" data-tab="recent">최근검색어</button>
-                <button data-tab="popular">인기검색어</button>
             </div>
             <div class="content">
                 <div class="recent-searches active">
@@ -136,11 +135,6 @@
                         <li id="no-recent-searches">최근 검색어가 없습니다.</li>
                     </ul>
                 </div>
-                <div class="popular-searches">
-                    <ul id="popular-searches-list">
-                        <!-- 인기 검색어 리스트 -->
-                   </ul>
-               </div>
            </div>
            <div class="actions">
                <button id="clear-recent-searches" class="clear-recent">최근 검색어 전체 삭제</button>
@@ -165,11 +159,9 @@
             const tab = $(this).data('tab');
             if (tab === 'recent') {
                 $('.recent-searches').addClass('active');
-                $('.popular-searches').removeClass('active');
                 $('#clear-recent-searches').removeClass('hidden');
             } else {
                 $('.recent-searches').removeClass('active');
-                $('.popular-searches').addClass('active');
                 $('#clear-recent-searches').addClass('hidden');
                 fetchPopularSearches();
             }
