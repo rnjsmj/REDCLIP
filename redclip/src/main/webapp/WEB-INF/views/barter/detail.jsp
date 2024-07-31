@@ -677,7 +677,7 @@
                         <hr />
                         
                         <!--글 작성자에게만 보여질 버튼-->
-                        <c:if test="${ (sessionScope.loginUser.userId eq barter.barterWriter) or (sessionScope.loginUser.status eq 'A')}">
+                        <c:if test="${ sessionScope.loginUser.userId eq barter.barterWriter}">
                         <form action="" method="post" id="postForm">
                         	<input type="hidden" id="barterNo" name="barterNo" value="${ barter.barterNo }">
                         	<input type="hidden" name="fileExist" value="${barter.barterFileList[0].barterFileNo }" />
