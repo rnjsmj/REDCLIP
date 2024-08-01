@@ -44,9 +44,27 @@ public class BarterServiceImpl implements BarterService{
 		return barterMapper.findById(barterNo);
 	}
 
+	@Transactional
 	@Override
-	public int insert(Barter barter) {
-		return barterMapper.insert(barter);
+	public int insert(Barter barter, 
+					  MultipartFile[] upfile, 
+					  HttpSession session) {
+		try {
+			barterMapper.insert(barter);
+			for (MultipartFile file : upfile) {
+        		if(!file.isEmpty()) {
+                BarterFile uploadFile = new BarterFile();
+                uploadFile.setBarterFileName(saveFile(file, session));
+                barterInsert(uploadFile);
+        		}
+			}   
+			
+			return 1;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	@Override
