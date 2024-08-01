@@ -48,10 +48,8 @@ public class MemberController {
     @ResponseBody
     @PostMapping(value = "/check-id", produces = "text/html; charset=UTF-8")
     public String checkId(@RequestParam("userId") String userId) {
-        // log.info("아이디 잘 가져왔나: {}", userId);
         int result = memberService.idCheck(userId);
         
-        //log.info("리져트잘가져옴?{}", result);
         if (result > 0) {
             return "Y"; // 반환값(중복아이디 수)가 0보다 크면 Y를 리턴
         } else {
@@ -62,10 +60,8 @@ public class MemberController {
     @ResponseBody
     @PostMapping(value = "/check-nick", produces = "text/html; charset=UTF-8")
     public String checkNick(@RequestParam("userNick") String userNick) {
-        // log.info("아이디 잘 가져왔나: {}", userId);
         int result = memberService.nickCheck(userNick);
         
-        log.info("리져트잘가져옴?{}", result);
         if (result > 0) {
             return "Y"; // 반환값(중복 닉네임 수)가 0보다 크면 Y를 리턴
         } else {
