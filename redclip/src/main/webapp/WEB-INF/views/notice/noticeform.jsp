@@ -201,7 +201,7 @@
 	            
 	            
 	            
-		     <div class="pagination">
+		     <div class="pagination" style="">
 		        <ul>
 		            <!-- 이전 페이지 링크 -->
 		            <c:if test="${pageInfo.currentPage > 1}">
@@ -235,5 +235,8 @@
         </div>
     </div>
 </body>
+	<br>
+	<br>
+	<br>
   <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>
