@@ -16,20 +16,21 @@
         margin: 30px; 
         margin-left: 340px;
       }
-
+		
       .tab {
-            width: 1200px;
+            width: 1115px;
             margin-bottom: 20px;
             margin : 0 auto;
         }
 
         #title {
-             margin: 30px auto; 
+             margin: 100px auto;
+             margin-bottom:65px;
              padding: 0 350px;
         }
         
         #accordionExample {
-             width: 1200px;
+             width: 1115px;
              margin: 0 auto;
              margin-bottom : 100px;
             }
@@ -38,7 +39,10 @@
             float: right;
             margin-right: 330px;
          }
-
+		.breadcrumb {
+        background-color: transparent;
+        padding: 0;
+    }
     </style>
 </head>
 <body>
@@ -46,14 +50,14 @@
      <header>
         <jsp:include page="../common/header.jsp" />
     </header>
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">FAQ 목록</li>
-      </ol>
-  </nav>
-    <div id="content">
-
+    <div id="content" style="width:1115px; text-align: center; margin: 0 auto; padding: 0 auto;">
+		  	<nav aria-label="breadcrumb">
+	        <ol class="breadcrumb">
+	            <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
+	            <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
+	            <li class="breadcrumb-item"><a href="/redclip/faq">FAQ 목록</a></li>
+	        </ol>
+	    </nav>
         <h3 id="title">자주 묻는 질문</h3>
 
         <div class="tab">
