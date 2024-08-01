@@ -96,21 +96,15 @@ public class NoticeController {
 	                         @RequestParam(value = "type", defaultValue = "1") int type,
 	                         Model model) {
 
-	    int listCount; 
-	    int currentPage;  
-	    int pageLimit; 
-	    int boardLimit; 
-	    int maxPage;  
-	    int startPage; 
-	    int endPage; 
 
-	    listCount = noticeService.noticeCount();
-	    currentPage = page;
-	    pageLimit = 10;
-	    boardLimit = 10;
-	    maxPage = (int)Math.ceil((double)listCount / boardLimit);
-	    startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
-	    endPage = startPage + pageLimit - 1;
+	    int listCount = noticeService.noticeCount();
+	    int currentPage = page;
+	    int pageLimit = 10;
+	    int boardLimit = 10;
+	    int maxPage = (int)Math.ceil((double)listCount / boardLimit);
+	    int startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
+	    int endPage = startPage + pageLimit - 1;
+	    
 	    if (endPage > maxPage) endPage = maxPage;
 
 	    PageInfo pageInfo = PageInfo.builder()

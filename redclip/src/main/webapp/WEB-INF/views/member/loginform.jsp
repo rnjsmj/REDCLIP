@@ -159,7 +159,7 @@ body {
     <span>|</span>
     <a href="#" data-toggle="modal" data-target="#findPwModal">비밀번호 찾기</a>
     <span>|</span>
-    <a href="#">회원가입</a>
+    <a href="/redclip/joinform">회원가입</a>
   </div>
 </form>
 <!-- 아이디찾기 모달 시작 -->
