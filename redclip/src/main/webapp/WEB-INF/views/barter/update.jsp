@@ -261,6 +261,7 @@
          });
      });
 	
+     
      function loadImg(inputFile, index) {
  	    const previewImage = document.getElementById('imagePreview' + index);
 
