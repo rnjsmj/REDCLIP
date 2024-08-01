@@ -178,7 +178,8 @@
 	
 	</select>
 	<!-- 검색 조회 -->
-	<select id="getFilteredBarters" parameterType="map" resultType="barterVO" resultMap="barterListResultSet">
+	<select id="getFilteredBarters" parameterType="map" 
+	        resultType="barterVO" resultMap="barterListResultSet">
 	    SELECT
 		        BARTER_NO,
 		        BARTER_NAME,
@@ -192,14 +193,16 @@
 	    FROM
 	       		VW_BARTER_DETAIL
 	    <where>
-	        <if test="categoryNo != null and categoryNo != ''">
+	        <if test="categoryNo != null and categoryNo != 0">
 	            AND CATEGORY_NO = #{categoryNo}
 	        </if>
-	        <if test="code != null and code != ''">
+	        <if test="code != null and code != 0">
 	            AND VILLAGE_CODE LIKE CONCAT(#{code}, '%')
 	        </if>
 	        <if test="keyword != null and keyword != ''">
-	        	AND (BARTER_NAME LIKE '%' || #{keyword} || '%' OR BARTER_CONTENT LIKE '%' || #{keyword} || '%')
+	        	AND (BARTER_NAME LIKE '%' || #{keyword} || '%' 
+	        		 OR 
+	        		 BARTER_CONTENT LIKE '%' || #{keyword} || '%')
 	        </if>
 	    </where>
 	   ORDER BY
@@ -247,8 +250,8 @@
 	
 	<insert id="insert" parameterType="barter">
 	    INSERT
-	      		INTO
-	 TB_BARTER
+	      INTO
+	 			TB_BARTER
 	  			(
 	       		BARTER_NO,
 	       		BARTER_NAME,
@@ -263,15 +266,14 @@
 	        	#{barterName},
 	        	#{barterContent},
 	        	#{barterWriter},
-	        	#{villageCode, jdbcType=NUMERIC}, 
-        		#{categoryNo, jdbcType=NUMERIC}
+	        	#{villageCode}, 
+        		#{categoryNo}
 	    		)
 	</insert>
-
 	<insert id="barterInsert" parameterType="barterFile">
-	INSERT
-    			INTO
-TB_BARTER_FILE
+		INSERT
+	      INTO
+				TB_BARTER_FILE
     			(
     			BARTER_FILE_NO,
  			    BARTER_NO,

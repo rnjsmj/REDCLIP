@@ -20,7 +20,7 @@ public interface BarterService {
 
 	List<BarterVO> getAllBarters(Integer code);
 	BarterVO findById(int barterNo);
-	int insert(Barter barter);
+	int insert(Barter barter, MultipartFile[] upfile, HttpSession session);
 	int barterInsert(BarterFile barterfile);
 	List<BarterVO> getFilteredBarters(Map<String, Object> params);
 	//게시글 수정

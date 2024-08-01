@@ -45,10 +45,6 @@
         background-color: transparent;
         padding: 0;
     }
-    .load-more-btn {
-        display: block;
-        margin: 20px auto;
-    }
     
     .card-title {
     	height:48px;
@@ -73,6 +69,7 @@
         flex-wrap: wrap;
         width: 100%;
         padding: 0;
+        margin-bottom: 100px;
     }
     .filter-info-container {
         display: flex;
@@ -153,9 +150,6 @@
 	            </c:if>
 	            <br>
 	            <div class="card-container">
-                </div>
-                <div class="btn-container">
-                    <button id="load-more-btn" class="btn btn-danger load-more-btn">더보기</button>
                 </div>
 	        </div>
             </section>

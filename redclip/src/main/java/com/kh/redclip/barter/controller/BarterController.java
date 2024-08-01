@@ -87,26 +87,14 @@ public class BarterController {
 	//교환 게시글 글 등록하기
 	@PostMapping(value="/insert")
 	public String barterInsert(Barter barter, MultipartFile[] upfile, HttpSession session) {
-	    //log.info("파일 배열 : {}", upfile);
-		log.info("upfile : {}", upfile);
-	    if (barterService.insert(barter) > 0) {
-	        
-	        if (upfile != null) {
-	            for (MultipartFile file : upfile) {
-	            		if(!file.isEmpty()) {
-	                    BarterFile uploadFile = new BarterFile();
-	                    uploadFile.setBarterFileName(saveFile(file, session));;
-	                    barterService.barterInsert(uploadFile);
-	            	}
-	            }     
-	        }
-	        	
-	        return "redirect:/barters";
-
-	       } else {
-	    	   session.setAttribute("alertMsg", "너 등록망함");
-	           return "redirect:/registration";
-	    }
+	    
+		if (barterService.insert(barter, upfile, session) > 0) {
+			return "redirect:/barters";
+			
+		} else {
+			session.setAttribute("alertMsg", "오류가 발생했습니다.");
+			return "redirect:/registration";
+		}
 	}
 	
 	//게시글 검색 조회
@@ -119,6 +107,7 @@ public class BarterController {
         params.put("categoryNo", categoryNo);
         params.put("code", code);
         params.put("keyword", keyword);
+        
         
         return barterService.getFilteredBarters(params);
     }
