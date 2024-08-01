@@ -55,7 +55,7 @@
 	        <ol class="breadcrumb">
 	            <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
 	            <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
-	            <li class="breadcrumb-item active" aria-current="page">FAQ 목록</li>
+	            <li class="breadcrumb-item"><a href="/redclip/faq">FAQ 목록</a></li>
 	        </ol>
 	    </nav>
         <h3 id="title">자주 묻는 질문</h3>
