@@ -94,7 +94,7 @@
 	           </div>
 	      
 	           <div id="collapse-${ faq.faqNo }" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="text-align: right;">
-	              <div class="card-body">
+	              <div class="card-body" style="text-align: left;">
 	                  ${ faq.answer }
 	              </div>
 	          	</div>
