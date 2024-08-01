@@ -113,22 +113,7 @@
                  </c:choose>
             </tbody>
         </table>
-        <div id="buttons">
-          <button id="btn-status" class="btn btn-success" onclick="upStatus(barterNo);">거래상태 변경</button> | <button id="btn-delete" class="btn btn-secondary" >삭제</button>
-        </div>
     </div>
-    <script>
-	//거래 상태 변경    
-	function upStatus(barterNo) {
-		
-		$.ajax({
-			url : '/member'
-			type : 'put'
-		});
-	}
-    //글 삭제
-    
-    </script>
     <footer>
         <jsp:include page="../common/footer.jsp" />
     </footer>
