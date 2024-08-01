@@ -34,35 +34,72 @@
 		<result column="BARTER_FILE_NAME" property="barterFileName"/>
 	</resultMap>
 	
-		<select id="getRecentProducts" resultType="barterVo" resultMap="barterResultSet">
-	 SELECT 
-    BARTER_NO,
-    BARTER_NAME,
-    BARTER_NICKNAME,
-    VILLAGE_NAME,
-    BARTER_DATE,
-    BARTER_FILE_NO,
-    BARTER_FILE_NAME
-FROM (
-    SELECT 
-        d.BARTER_NO,
-        d.BARTER_NAME,
-        d.BARTER_NICKNAME,
-        d.VILLAGE_NAME,
-        d.BARTER_DATE,
-        d.BARTER_FILE_NO,
-        d.BARTER_FILE_NAME
-    FROM
-        VW_BARTER_DETAIL d
-    WHERE
-        d.BARTER_FILE_NO = (
-            SELECT MIN(BARTER_FILE_NO)
-            FROM VW_BARTER_DETAIL
-            WHERE BARTER_NO = d.BARTER_NO
-        )
-) 
-WHERE 
-     ROWNUM BETWEEN 1 AND 12
+	
+	<!--
+	SELECT 
+	    BARTER_NO,
+	    BARTER_NAME,
+	    BARTER_NICKNAME,
+	    VILLAGE_NAME,
+	    BARTER_DATE,
+	    BARTER_FILE_NO,
+	    BARTER_FILE_NAME
+	FROM (
+	    SELECT 
+	        d.BARTER_NO,
+	        d.BARTER_NAME,
+	        d.BARTER_NICKNAME,
+	        d.VILLAGE_NAME,
+	        d.BARTER_DATE,
+	        d.BARTER_FILE_NO,
+	        d.BARTER_FILE_NAME
+	    FROM
+	        VW_BARTER_DETAIL d
+	    WHERE
+	        d.BARTER_FILE_NO = (
+	            SELECT MIN(BARTER_FILE_NO)
+	            FROM VW_BARTER_DETAIL
+	            WHERE BARTER_NO = d.BARTER_NO
+	        )
+	) 
+	WHERE 
+	     ROWNUM BETWEEN 1 AND 12
+	  -->
+	<select id="getRecentProducts" resultType="barterVo" resultMap="barterResultSet">
+	SELECT 
+	        BARTER_NO,
+	        BARTER_NAME,
+	        BARTER_NICKNAME,
+	        VILLAGE_NAME,
+	        BARTER_DATE,
+	        BARTER_FILE_NO,
+	        BARTER_FILE_NAME
+	 FROM       
+			(SELECT
+			    BARTER_NO,
+			    BARTER_NAME,
+			    BARTER_NICKNAME,
+			    VILLAGE_NAME,
+			    BARTER_DATE,
+			    BARTER_FILE_NO,
+			    BARTER_FILE_NAME
+			FROM (
+			    SELECT
+			        BARTER_NO,
+			        BARTER_NAME,
+			        BARTER_NICKNAME,
+			        VILLAGE_NAME,
+			        BARTER_DATE,
+			        BARTER_FILE_NO,
+			        BARTER_FILE_NAME,
+			        ROW_NUMBER() OVER (PARTITION BY BARTER_NO ORDER BY BARTER_FILE_NO) AS rn
+			    FROM
+			        VW_BARTER_DETAIL
+			)
+			WHERE rn = 1 
+			)
+			WHERE
+			    	ROWNUM BETWEEN 1 AND 12
 	</select>
 	
 	<select id="getTopCount"  resultType="barterVo" resultMap="barterResultSet">

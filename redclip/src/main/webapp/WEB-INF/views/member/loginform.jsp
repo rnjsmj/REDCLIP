@@ -121,7 +121,7 @@ body {
   <input type="password" id="userPwd" name="userPwd" class="form-control" placeholder="PW입력" required>
   <div class="checkbox mb-3">
     <label>
-         <input type="checkbox" id="remember-me" name="remember-me" value="on">아이디 저장하기
+         <input type="checkbox" id="remember-me" name="remember-me" value="on">로그인 유지하기
     </label>
   </div>
   <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
@@ -322,7 +322,7 @@ $(() => {
                     resp = response;
                 },
                 error: function () {
-                    alert('오류임 똥멍청이야!!');
+                    alert('오류임!!');
                 }
             });
         }
