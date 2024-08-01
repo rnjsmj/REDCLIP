@@ -220,8 +220,6 @@ public class MemberController {
     public String selectById(@PathVariable String userId, Model model) {
 		
     	List<Barter> products = memberService.selectById(userId);
-    	//log.info("조회할 회원 : {}", userId);
-    	//log.info("목록 : {}", products);
     	
     	model.addAttribute("list", products);
     	

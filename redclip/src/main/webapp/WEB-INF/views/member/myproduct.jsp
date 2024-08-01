@@ -37,6 +37,7 @@
         #productList {
              margin: 0 auto; 
              width: 1200px;
+             text-align: center;
         }
 
         #buttons {
@@ -98,9 +99,10 @@
                 <c:otherwise>
 	                <c:forEach items="${ list }" var="barter">
 		                 <tr>
-		                    <td>
+		                 
 		                      <td><a data-barter-no="${barter.barterNo}"
 		                      href="${pageContext.request.contextPath}/barters/${barter.barterNo}">${ barter.barterName }</a></td>
+		                      
 		                      <td>${ barter.barterDate }</td>
 		                      <td>${ barter.barterStatus }</td>
 		                      <td>${ barter.hit }</td>
