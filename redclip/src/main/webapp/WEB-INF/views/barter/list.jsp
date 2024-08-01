@@ -99,7 +99,6 @@
                     <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
                     <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
                     <li class="breadcrumb-item"><a href="/redclip/barters">상품목록</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">${ barter.barterName }</li>
                 </ol>
             </nav>
             <jsp:include page="/WEB-INF/views/common/search.jsp" />
