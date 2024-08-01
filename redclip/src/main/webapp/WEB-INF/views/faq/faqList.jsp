@@ -24,15 +24,15 @@
         }
 
         #title {
-             margin: 100px auto;
-             margin-bottom:65px;
+             margin: 80px auto;
+             margin-bottom:45px;
              padding: 0 350px;
         }
         
         #accordionExample {
              width: 1115px;
              margin: 0 auto;
-             margin-bottom : 100px;
+             margin-bottom : 138px;
             }
 
         #btn-none {
