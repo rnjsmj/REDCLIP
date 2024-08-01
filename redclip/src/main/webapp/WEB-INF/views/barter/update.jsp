@@ -118,19 +118,19 @@
 	    <label>이미지 등록</label>
 	    <div class="form-row">
 	        <div class="col image-placeholder">
-	            <img id="imagePreview1" class="image-preview" src="../${barter.barterFileList[0].barterFileName}" alt="이미지 미리보기">
+	            <img id="imagePreview1" class="image-preview" src="../${barter.barterFileList[0].barterFileName}" >
 	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 1)">
 	        </div>
 	        <div class="col image-placeholder">
-	            <img id="imagePreview2" class="image-preview" src="../${barter.barterFileList[1].barterFileName}" alt="이미지 미리보기">
+	            <img id="imagePreview2" class="image-preview" src="../${barter.barterFileList[1].barterFileName}">
 	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 2)">
 	        </div>
 	        <div class="col image-placeholder">
-	            <img id="imagePreview3" class="image-preview" src="../${barter.barterFileList[2].barterFileName}" alt="이미지 미리보기">
+	            <img id="imagePreview3" class="image-preview" src="../${barter.barterFileList[2].barterFileName}" >
 	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 3)">
 	        </div>
 	        <div class="col image-placeholder">
-	            <img id="imagePreview4" class="image-preview" src="../${barter.barterFileList[3].barterFileName}" alt="이미지 미리보기">
+	            <img id="imagePreview4" class="image-preview" src="../${barter.barterFileList[3].barterFileName}" alt="">
 	            <input type="file" id="upfile" class="file-input" name="upfile" onchange="loadImg(this, 4)">
 	        </div>
 	    </div>
