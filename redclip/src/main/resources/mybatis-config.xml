@@ -28,6 +28,8 @@
   		<typeAlias type="com.kh.redclip.chatting.model.vo.ChatMessage" alias="chatMessage"/>
   		<typeAlias type="com.kh.redclip.chatting.model.vo.ChatRoomVO" alias="chatRoomVo"/>
   		<typeAlias type="com.kh.redclip.notice.model.vo.Notice" alias="notice"/>
+  		<typeAlias type="com.kh.redclip.member.model.vo.ReportMember" alias="reportMember"/>
+  		
   		<typeAlias type="com.kh.redclip.chatting.model.vo.ChatMessageVO" alias="chatMessageVo"/>
   	</typeAliases>
   
@@ -39,7 +41,6 @@
   		<mapper resource="/mapper/chatting-mapper.xml" />
   		<mapper resource="/mapper/notice-mapper.xml"/>
 
-  		<mapper resource="/mapper/main-mapper.xml"/>
 
   		<mapper resource="/mapper/admin-mapper.xml"/>
 

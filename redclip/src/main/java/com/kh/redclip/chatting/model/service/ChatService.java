@@ -18,7 +18,7 @@ public interface ChatService {
 	List<ChatRoomVO> findAll(String userId);
 
 	// 채팅방 존재 유무
-	ChatRoom findChatRoom(ChatRoom cr);
+	int findChatRoom(ChatRoom cr);
 
 	// 채팅방 생성 -> 생성된 시퀀스 번호 반환
 	int newChatRoom(ChatRoom cr);

@@ -20,4 +20,5 @@ public class ReportMember {
 	private String reportedId;		//신고당한 사람
 	private String reportType;		//신고 유형
 	private int referenceNo;		//참조 번호
+	private int reportCount; 		//누적 신고횟수 
 }

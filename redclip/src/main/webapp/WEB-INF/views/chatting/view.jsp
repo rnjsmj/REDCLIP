@@ -296,6 +296,9 @@
             
             .badge {
             	background-color: #007300;
+            	max-width:300px;
+            	color:#fff;
+            	
             }
         }
         .nickname {
@@ -320,7 +323,10 @@
         .chat-link {
             color: #fff;
             text-decoration: none;
-             
+		    display: block;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
         }
 
         .chat-link:hover {
@@ -402,7 +408,7 @@
                     
                 </script>
                 <!-- 오른쪽 영역 -->
-                <div class="chat-area" style="display: none">
+                <div class="chat-area" style="display:none;">
                     <!-- 채팅 상대 정보 -->
                     <div class="chat-header">
                         <div class="chat-header-left">
@@ -437,27 +443,33 @@
             	selectList();
             	openedChat();
             	
+            	 
+            	
             	if( '${ sessionScope.RoomNo }' != '' ) {
             		const id= '#' + '${ sessionScope.RoomNo }';
             		$(id).trigger('onclick');
             		console.log(id + '로 트리거 동작');
             	}
             	
+            	const originChatInput = $('.chat-input').html();
+            	
             	$(document).on('click', '.chat-item', function () {
-                	socket.close();
+                	if(socket) {
+                		socket.close();
+                	};
                 	
                     $('.chat-item').removeClass('active');
                     $(this).addClass('active');
 					
                     const roomNo = $(this).attr("id");
-                    let onclick = 'submitMessage(' + roomNo + ')';
-                    $('#sendbtn').attr("onclick", onclick);
-                    
-                    var socketAddress = "ws://localhost/redclip/chatting/" + roomNo;
                     connect(roomNo);
+                    
+                    let onclick = 'submitMessage()';
+                    $('#sendbtn').attr("onclick", onclick);
                     
                     let messageList = '';
                     let chatProfile = '';
+                    
                     
                     // 선택한 채팅방 채팅내역 select
                     $.ajax({
@@ -487,8 +499,6 @@
                     						? nickname + '</p></div>'
                     						: '(탈퇴한 회원)</p></div>';
                             
-                    		
-                    		
                     		// 채팅 내역
                     		(result.chatMessageList).map(( message ) => {
                     			let type = (message.senderId === '${sessionScope.loginUser.userId}') ? 'send' : 'receive';
@@ -503,43 +513,57 @@
                     			messageList +=  `</div>`;
                     			
                     			
-                    		
                     		});
+                    		
+                    		
+                    		if (result.barterName == null) {
+                    			$('.chat-input').html(`대화가 종료된 채팅방입니다.`);
+                    		} else {
+                    			$('.chat-input').html(originChatInput);
+                    		} 
+                    		
                     		$('.chat-header-left').html(chatProfile);
                     		$('.chat-messages').html(messageList);
+                    		
                     		scrollToBottom();
+
                     	}
                     });
+                    $('.chat-area').attr("id", roomNo);
                     $('.chat-area').show();
 
                 }); 
             	
             });
             
-            	
-            const submitMessage = (roomNo) => {
-            	
             
+            	
+            const submitMessage = () => {
+            	
+            	const $roomNo = $('.chat-area').attr("id")
                 const message = $('#chat-input').val();
+                
                 
                 let today = new Date();
                 
+                let hours = today.getHours().toString().padStart(2, '0');
+                let minutes = today.getMinutes().toString().padStart(2, '0');
                 
 
                 if (message.trim() !== '') {
                     const insValue = `<div class="send-div chat-div">
-                    				  <span class="send-date">\${today.getHours()} : \${today.getMinutes()}</span>
+                    				  <span class="send-date">\${hours}:\${minutes}</span>
                     				  <div class="message send"><p>\${ message }</p></div></div>`;
 
                     const chatMessage = {
-                    	roomNo : roomNo,
+                    	roomNo : $roomNo,
                     	senderId : '${ sessionScope.loginUser.userId }',
                     	message : message
                     };
                     
             	
                     if (socket) {
-                    	sendMessage = roomNo + ', ' + '${ sessionScope.loginUser.userId }' + ', ' + message;
+                    	sendMessage = $roomNo + ', ' + '${ sessionScope.loginUser.userId }' + ', ' + message;
                     	socket.send(sendMessage);
                     } 
                     
@@ -561,16 +585,18 @@
 
                 () => {
                     scrollToBottom();
+                    
+                    
                 };
-
-                $('#chat-input').on('keypress', (e) => {
-                    if (e.which === 13) {
-                    	console.log('roomVar : ', roomVar);
-                        submitMessage(roomVar);
-                    }
-                });
+                
+                $(document).on('keypress', '#chat-input', function(e) {
+                     if (e.which === 13) {
+                         submitMessage();
+                     }
+                 });
                
                 const selectList = (condition) => {
+                	console.log(condition);
                 	$.ajax({
                 		
                 		url : 'list',
@@ -582,10 +608,17 @@
                 			console.log(result);
                 			let chatItems = '';
                 			
+                			if (condition) {
+                				let type = condition;
+                				
+                				result = result.filter((room) => room[`\${type}Writer`] =='${sessionScope.loginUser.userId}');
+                			};
+                			/* 
                 			switch (condition) {
                 				case 'barter' :  result = result.filter((room) => room.barterWriter == '${sessionScope.loginUser.userId}'); break;
                 				case 'reply' : result = result.filter ((room) => room.replyWriter == '${sessionScope.loginUser.userId}'); break;
                 			}
+                			 */
                 			
                 			result.map((room) => {
                 				
@@ -600,20 +633,26 @@
                 				} else {
                 					profile = room.barterProfil;
                 					nickname = room.barterNickname;
-                					villageName = room.villageName;
+                					villageName = room.barterVillageName;
                 				}
                 				
                 				chatItems += `<li class="chat-item" id="\${room.roomNo}">
                 							  <img class="list-img" src="/redclip/\${profile}">
                                     	      <div class="chat-details">
-                                              <h5><span class="badge text-bg-secondary">
-                                              <a class="chat-link" href="/redclip/barters/\${room.barterNo}">\${room.barterName}</a></span>
+                                              <h5><span class="badge text-bg-secondary">`;
+                                              
+                                chatItems += (room.barterName != null)
+                                			 ? `<a class="chat-link" href="/redclip/barters/\${room.barterNo}">\${room.barterName}</a>`
+                                		     : '삭제된 게시글';
+                                              
+                                              
+                                chatItems += `</span>
                                               </h5><p class="nickname">\${nickname}</p>
                                               <span class="small-detail">\${villageName}`;
                                         
                                 chatItems +=  ( room.chatDate != null || room.chatMessage != null)
                                 			 ? ` · \${room.chatDate}</span><p class="latest-message">\${room.chatMessage}</p></div></li>`
-                                			 : `</div></li>`;
+                                			 : `</span></div></li>`;
                                   
                 				
                 			});

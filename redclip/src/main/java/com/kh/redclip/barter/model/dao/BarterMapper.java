@@ -22,7 +22,7 @@ public interface BarterMapper {
 	//상세보기
 	BarterVO findById(int barterNo);
 	//게시글 작성
-	int insert (Barter barter);
+	int insert(Barter barter);
 	//게시글 등록
 	int barterInsert(BarterFile barterFile);
 	//검색 조회

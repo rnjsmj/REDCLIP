@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,7 +51,7 @@ public class MemberController {
         // log.info("아이디 잘 가져왔나: {}", userId);
         int result = memberService.idCheck(userId);
         
-        log.info("리져트잘가져옴?{}", result);
+        //log.info("리져트잘가져옴?{}", result);
         if (result > 0) {
             return "Y"; // 반환값(중복아이디 수)가 0보다 크면 Y를 리턴
         } else {
@@ -73,22 +74,33 @@ public class MemberController {
     }
    //로그인컨트롤러
     @PostMapping("/login")
-    public String login(Member member, Model model, HttpSession session) {
+    public String login(Member member, 
+                        @RequestParam(value = "remember-me", required = false) String rememberMe, 
+                        Model model, 
+                        HttpSession session, 
+                        HttpServletRequest request) {
+
         Member loginUser = memberService.login(member);
 
         if (loginUser != null && bCryptPasswordEncoder.matches(member.getUserPwd(), loginUser.getUserPwd())) {
-            //log.info("로그인 성공: {}", loginUser);
+            // 로그인 성공
             session.setAttribute("loginUser", loginUser);
-            session.setAttribute("alertMsg","로그인에 성공하셨습니다");
+            session.setAttribute("alertMsg", "로그인에 성공하셨습니다");
+
+            if ("on".equals(rememberMe)) {
+                session.setMaxInactiveInterval(7 * 24 * 60 * 60); // 7일
+            } else {
+                session.setMaxInactiveInterval(30 * 60); // 30분
+            }
+
             return "redirect:/";  // 로그인 성공 시 홈 페이지로 리다이렉트
         } else {
-           // log.error("로그인 실패: 사용자 정보가 없습니다.");
+            // 로그인 실패
             session.setAttribute("alertMsg", "로그인에 실패하셨습니다");
-            return "redirect:/loginform";  // 로그인페이지로 
-            
-            
+            return "redirect:/loginform";  // 로그인 페이지로 리다이렉트
         }
     }
+
    
    //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
     @ResponseBody

@@ -132,4 +132,36 @@
        		</foreach>
 	</delete>
 
+	<!-- 신고내역 상세보기 -->
+	<select id="getReportDetail" parameterType="reportMember" resultType="reportMember">
+	 	SELECT
+	 		REPORT_NO reportNo,
+	 		REPORT_TITLE reportTitle ,
+	 		REPORT_CONTENT reportContent,
+	 		REPORT_DATE reportDate,
+	 		REPORTED_ID reportedId,
+	 		REPORT_TYPE reportType,
+	 		REFERENCE_NO referenceNo,
+	 		(SELECT COUNT 
+	 					(REPORTED_ID)
+			FROM 
+					TB_MEM_REPORT
+			WHERE 
+					REPORTED_ID = #{reportedId}) AS reportCount
+	 	FROM 
+	 		TB_MEM_REPORT
+	 	WHERE
+	 		REPORT_NO =#{reportNo}
+	</select>
+	<!-- 신고내역 삭제하기  -->
+	<delete id="deleteReport" parameterType="_int">
+		 DELETE 
+	        FROM
+	        	TB_MEM_REPORT
+	    WHERE 
+	        	REPORT_NO = #{reportNo}
+			
+	</delete>
+	
+
 </mapper>

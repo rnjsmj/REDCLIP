@@ -65,14 +65,15 @@ public class BarterController {
 	@GetMapping("/{barterNo}")
 	public String findByNo(@PathVariable int barterNo, Model model) {
 		
-		BarterVO barterDetail = barterService.findById(barterNo);
-		List<BarterVO> topBarters = barterService.getTopBarters(barterNo);
 		if (barterService.increaseHit(barterNo) > 0) {
+			
+			BarterVO barterDetail = barterService.findById(barterNo);
+			List<BarterVO> topBarters = barterService.getTopBarters(barterNo);
+		
 			model.addAttribute("barter", barterDetail);
 			model.addAttribute("topBarters", topBarters);
-			log.info("상위 게시글 : {}", topBarters);
-			return "barter/detail";	
 			
+			return "barter/detail";	
 		}
 		return "redirect:/barters";
 	}
@@ -118,12 +119,13 @@ public class BarterController {
         params.put("categoryNo", categoryNo);
         params.put("code", code);
         params.put("keyword", keyword);
-        log.info("뭐냐묘{}",barterService.getFilteredBarters(params));
+        
         return barterService.getFilteredBarters(params);
     }
 	
 	//답글 목록
-	@GetMapping(value="reply", produces="application/json; charset=UTF-8")
+	@GetMapping(value="reply", 
+			    produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public ResponseEntity<List<BarterReply>> getAllBarterReply(int barterNo) {
 		
@@ -192,40 +194,33 @@ public class BarterController {
 	@ResponseBody
 	public String replyInsert(BarterReply reply, MultipartFile[] upfiles, HttpSession session) {
 		
-		//log.info("답글 : {}", reply);
-		//log.info("파일 배열 : {}", upfiles);
-		//barterNo, replyContent, replyWriter 필요
+		return (barterService.replyInsert(reply, upfiles, session) > 0) ? "success" : "error";
+			
 		
-		
-		if (barterService.replyInsert(reply) > 0) {
-			
-			int fileCount = 0;
-			boolean fileSuccess = true;
-			
-			if (upfiles != null) {
-				
-				for(MultipartFile file : upfiles) {
-					if( !file.isEmpty()) {
-						BarterReplyFile replyFile = new BarterReplyFile();
-						replyFile.setReplyFileName(saveFile(file, session));
-						barterService.replyFileInsert(replyFile);
-					}
-				}
-				
-			}
-			
-			return fileSuccess == true ? "success" : "file upload error"; 
-		
-		} else {
-			
-			return "reply upload error";
-		}
+		/*
+		 int fileCount = 0; boolean fileSuccess = true;
+		 
+		 if (upfiles != null) {
+		 
+		  for(MultipartFile file : upfiles) { if( !file.isEmpty()) { BarterReplyFile
+		  replyFile = new BarterReplyFile(); replyFile.setReplyFileName(saveFile(file,
+		  session)); barterService.replyFileInsert(replyFile); } }
+		  
+		  }
+		  
+		  return fileSuccess == true ? "success" : "file upload error";
+		  
+		  } else {
+		  
+		  return "reply upload error"; }
+		 */
 		
 	}
 	//답글 삭제
 	@DeleteMapping(value="reply/{replyNo}")
 	@ResponseBody
-	public String replyDelete(@PathVariable int replyNo, @RequestBody boolean fileExist) {
+	public String replyDelete(@PathVariable int replyNo) {
+		/*
 		//log.info("fileExist : {}", fileExist);
 		
 		if (fileExist == true) {
@@ -235,8 +230,10 @@ public class BarterController {
 			}
 			//log.info("파일 삭제 완료");
 		}
-		//log.info("답글 삭제 시도");
+		//log.info("답글 삭제 시도");*/
 		return barterService.replyDelete(replyNo) > 0 ? "success" : "error";
+		
+		
 	}
 	
 	//답글 수정
@@ -256,16 +253,20 @@ public class BarterController {
 	 * @return 게시글이 정상적으로 삭제되면 목록으로, 삭제 중 오류가 발생하면 다시 상세보기 페이지로 redirect
 	 */
 	@PostMapping("/delete")
-	public String barterDelete(int barterNo, int fileExist, HttpSession session) {
+	public String barterDelete(int barterNo, HttpSession session) {
 		
-		if (barterService.barterDelete(barterNo, fileExist) > 0) {
-			session.setAttribute("alertMsg", "게시글이 삭제되었습니다.");
-			return "redirect:/barters";
+		String alertMsg = "";
+		String viewPath = "redirect:/barters";
+		
+		if (barterService.barterDelete(barterNo) > 0) {
+			alertMsg = "게시글이 삭제되었습니다.";
 		}  else {
-			session.setAttribute("alertMsg", "오류가 발생했습니다.");
-			return "redirect:/barters/" + barterNo;
+			alertMsg = "오류가 발생했습니다.";
+			viewPath += "/" + barterNo;
 		}	
 		
+		session.setAttribute("alertMsg", alertMsg);
+		return viewPath;
 	}
 	// 게시글 삭제
 	// 먼저 삭제해야 될 것 : 게시글 첨부파일, 댓글 첨부파일, 댓글 
@@ -302,20 +303,22 @@ public class BarterController {
 			result = barterService.wishDelete(wish);
 		}
 		
-		return result > 0 ? Integer.toString(barterService.findById(wish.getBarterNo()).getWishCount()) : "error";
+		return result > 0 
+			   ? Integer.toString(barterService.findById(wish.getBarterNo()).getWishCount()) 
+			   : "error";
 		
 	}
 
 	//게시글 신고
 	@PostMapping("/report")
 	public String barterReport(ReportMember report, HttpSession session) {
-		if (barterService.barterReport(report) > 0) {
-			session.setAttribute("alertMsg", "신고가 접수되었습니다.");
-			return "redirect:/barters/" + report.getReferenceNo();
-		} else {
-			session.setAttribute("alertMsg", "오류가 발생했습니다.");
-			return "redirect:/barters/" + report.getReferenceNo();
-		}
+		
+		String alertMsg = "";
+		alertMsg = barterService.barterReport(report) > 0 
+				   ? "신고가 접수되었습니다." : "오류가 발생했습니다.";
+		session.setAttribute("alertMsg", alertMsg);
+		return "redirect:/barters/" + report.getReferenceNo();
+		
 	}
 
 }

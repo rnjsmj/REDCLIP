@@ -128,7 +128,6 @@
         <div class="search-results">
             <div class="tab">
                 <button class="active" data-tab="recent">최근검색어</button>
-                <button data-tab="popular">인기검색어</button>
             </div>
             <div class="content">
                 <div class="recent-searches active">
@@ -136,11 +135,6 @@
                         <li id="no-recent-searches">최근 검색어가 없습니다.</li>
                     </ul>
                 </div>
-                <div class="popular-searches">
-                    <ul id="popular-searches-list">
-                        <!-- 인기 검색어 리스트 -->
-                   </ul>
-               </div>
            </div>
            <div class="actions">
                <button id="clear-recent-searches" class="clear-recent">최근 검색어 전체 삭제</button>
@@ -165,14 +159,13 @@
             const tab = $(this).data('tab');
             if (tab === 'recent') {
                 $('.recent-searches').addClass('active');
-                $('.popular-searches').removeClass('active');
                 $('#clear-recent-searches').removeClass('hidden');
             } else {
                 $('.recent-searches').removeClass('active');
-                $('.popular-searches').addClass('active');
                 $('#clear-recent-searches').addClass('hidden');
                 fetchPopularSearches();
             }
+            
         });
 
         function addSearchTerm() {
@@ -181,7 +174,7 @@
             if (searchTerm) {
                 recentSearches.push(searchTerm);
                 updateRecentSearches();
-                // 검색창을 비웁니다.
+                
                
             }
         }
@@ -191,12 +184,14 @@
             if (e.key === 'Enter') {
 
                 addSearchTerm();
+                $('.search-results').removeClass('active');
             }
         });
 
         $('.search-button').on('click', function () {
 
             addSearchTerm();
+            $('.search-results').removeClass('active');
         });
 
         $(document).on('click', '.delete-btn', function () {

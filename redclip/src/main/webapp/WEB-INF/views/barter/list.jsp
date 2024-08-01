@@ -49,9 +49,25 @@
         display: block;
         margin: 20px auto;
     }
-    .card-text {
-        font-size: 16px;
+    
+    .card-title {
+    	height:48px;
+    	overflow: hidden;
+	  text-overflow: ellipsis;
+	  display: -webkit-box;
+	  -webkit-line-clamp: 2;
+	  -webkit-box-orient: vertical;
     }
+    .card-text {
+        font-size: 14px;
+    }
+   
+    
+    .card-text.date-text {
+    	color:#636363;
+    }
+    
+    
     .card-container {
         display: flex;
         flex-wrap: wrap;
@@ -130,7 +146,7 @@
             </div>
 
         <div class="container" style="max-width: 1200px;">
-	            <h5 style="font-weight: bold">추천 물물교환</h5>
+	            <!-- <h5 style="font-weight: bold">추천 물물교환</h5> -->
 	            <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
 	            <c:if test="${not empty sessionScope.loginUser }">
 	                <a class="btn btn-secondary" style="float: right;" href="barters/registration">글쓰기</a> <br>
@@ -148,6 +164,21 @@
 	
     <script>
     $(document).ready(function() {
+    	if ('${ sessionScope.keyword }' != null) {
+    		$('.search-input').val('${ sessionScope.keyword }');
+    		
+    		$.ajax({
+    			url : '/redclip/removeKeyword',
+    			type : 'get',
+    			success : result => {
+    				
+    				if (result != 1) {
+    					location.href = '/redclip';
+    				} 
+    			}
+    		});
+    	}
+    	
         const $categorySelect = $('#categoryNo');
         const $siSelect = $('#si');
         const $guSelect = $('#gu');
@@ -214,7 +245,7 @@
         function loadFilteredBarters() {
         	
         	/* let keyword = $('.search-input').val(); */
-        	var keyword = $('.search-input').val();
+        	let keyword = $('.search-input').val();
             const categoryNo = $categorySelect.val();
             const si = $siSelect.val();
             const gu = $guSelect.val();
@@ -254,8 +285,8 @@
                         	 <img src="\${barter.barterFileList[0].barterFileName}" class="card-img-top" alt="\${barter.barterName}">
                              <div class="card-body">
                              <h5 class="card-title">\${barter.barterName}</h5>
-                             <p class="card-text">\${barter.region.cityName} \${barter.region.townName} \${barter.region.villageName}</p>
-                             <p class="card-text">\${barter.barterDate}</p>
+                             <p class="card-text region-text">\${barter.region.cityName} \${barter.region.townName} \${barter.region.villageName}</p>
+                             <p class="card-text date-text">\${barter.barterDate}</p>
                              <a href="/redclip/barters/\${barter.barterNo}" class="btn btn-primary">상세보기</a>
                              </div>
                              </div>`;

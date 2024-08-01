@@ -116,9 +116,29 @@ public class BarterServiceImpl implements BarterService{
 	public List<BarterReply> getBarterReply(int barterNo) {
 		return barterMapper.getBarterReply(barterNo);
 	}
+	
+	@Transactional
 	@Override
-	public int replyInsert(BarterReply baterReply) {
-		return barterMapper.replyInsert(baterReply);
+	public int replyInsert(BarterReply reply, 
+			               MultipartFile[] upfiles, 
+			               HttpSession session) {
+		 try {
+			 barterMapper.replyInsert(reply);
+			 
+			 if (upfiles != null && upfiles.length != 0) {
+				 for(MultipartFile file : upfiles) {
+					 BarterReplyFile replyFile = new BarterReplyFile();
+					 replyFile.setReplyFileName(saveFile(file, session));
+					 replyFileInsert(replyFile);
+				 }
+			 }
+			 
+			 return 1;
+			 
+		 } catch(Exception e) {
+			 e.printStackTrace();
+			 return 0;
+		 }
 	}
 
 	@Override
@@ -152,7 +172,8 @@ public class BarterServiceImpl implements BarterService{
 
 	@Transactional
 	@Override
-	public int barterDelete(int barterNo, int fileExist) {
+	public int barterDelete(int barterNo) {
+		/*
 		try {
 			
 			if (fileExist != 0) {
@@ -172,7 +193,9 @@ public class BarterServiceImpl implements BarterService{
 		} catch (Exception e) {
 			
 			return 0;
-		}
+		}*/
+		
+		return barterMapper.barterDelete(barterNo);
 		
 	}
 	

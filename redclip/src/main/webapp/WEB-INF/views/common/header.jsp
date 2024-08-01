@@ -63,6 +63,8 @@
         justify-content: space-between; 
         align-items: center;
         width: 100%;
+        
+        
       }
 
       .navbar h5 {
@@ -74,6 +76,11 @@
         margin-left: auto; 
         display: flex;
         gap: 10px;
+        
+        > label {
+        	margin-bottom : 0px;
+        	align-content: center;
+        }
       }
       .my-2{
         margin-left:20px ;
@@ -98,7 +105,7 @@
     </c:when>
     <c:otherwise>
         <nav class="btnbox">
-            <label>${sessionScope.loginUser.userName}님 환영합니다</label> &nbsp;&nbsp;
+            <label>${sessionScope.loginUser.nickname}님 환영합니다</label> &nbsp;&nbsp;
             <c:choose>
                 <c:when test="${sessionScope.loginUser.status == 'A'}">
                     <a class="btn btn-outline-primary" href="/redclip/admin" id="btn-sign">관리자 페이지</a>
@@ -118,19 +125,19 @@
    </c:if>
    
    <script>
-   var roomVar;
+   /* var roomVar;
    
    var socket = null;
 	$(document).ready( function() {
 		connect(roomVar);
-	});
-		
-		
+	}); */
+   let socket = null;
+	
    function connect(roomNo) {
-			console.log("연결 시도");
 			
 			let socketAddress = "ws://localhost/redclip/chatting";
-			roomNo != null ? socketAddress += ("/" + roomNo) : socketAddress += "/0";
+			roomNo != null ? socketAddress += ("/" + roomNo) 
+					       : socketAddress += "/0";
 			let ws = new WebSocket(socketAddress);
 			socket = ws;
 			
@@ -139,10 +146,13 @@
 			};
 			
 			ws.onmessage = function(event) {
+				
 				let today = new Date();
-				console.log("전달받은 메시지 : ", event.data+'\n');
+				let hours = today.getHours().toString().padStart(2, '0');
+                let minutes = today.getMinutes().toString().padStart(2, '0');
+                
 				const recValue = `<div class="receive-div chat-div"><div class="message receive"><p>\${event.data}</p></div>
-								  <span class="receive-date">\${today.getHours()}:\${today.getMinutes().toString().padStart(2, '0')}</span></div>`;
+								  <span class="receive-date">\${hours}:\${minutes}</span></div>`;
 				$('.chat-messages').append(recValue);
 				scrollToBottom();
 				

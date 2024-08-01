@@ -333,6 +333,12 @@
         #popular-list .card-title {
             font-weight: 600;
             color : #303030;
+            height:48px;
+    	overflow: hidden;
+	  text-overflow: ellipsis;
+	  display: -webkit-box;
+	  -webkit-line-clamp: 2;
+	  -webkit-box-orient: vertical;
         }
         #popular-list .card-date {
             color: #6d6d6d;
@@ -398,6 +404,7 @@
         	width:200px;
         	height:200px;
         	overflow:hidden;
+        	margin-right:10px;
         	
         	
         	> img {
@@ -677,7 +684,7 @@
                         <hr />
                         
                         <!--글 작성자에게만 보여질 버튼-->
-                        <c:if test="${ (sessionScope.loginUser.userId eq barter.barterWriter) or (sessionScope.loginUser.status eq 'A')}">
+                        <c:if test="${ sessionScope.loginUser.userId eq barter.barterWriter}">
                         <form action="" method="post" id="postForm">
                         	<input type="hidden" id="barterNo" name="barterNo" value="${ barter.barterNo }">
                         	<input type="hidden" name="fileExist" value="${barter.barterFileList[0].barterFileNo }" />
@@ -703,7 +710,7 @@
                                         <textarea
                                             name="replyContent"
                                             id="reply-content"
-                                            placeholder="교환을 원하시면 답글을 달아주세요."
+                                            placeholder="교환을 원하시면 댓글을 달아주세요."
                                             required
                                         ></textarea>
                                     </td>
@@ -734,7 +741,7 @@
                                             <span class="length"><span class="reply_length">0 </span> / 200</span>
                                         </div>
                                         <script>
-                                            $('#reply-content').keyup((e) => {
+                                            $('#reply-content').keyup(function() {
                                                 var content = $(this).val();
 
                                                 if (content.length == 0 || content == '') {
@@ -890,16 +897,12 @@
                                             	  	  <a class="carousel-control-next" href="#reply-img-\${result[i].replyNo}" role="button" data-slide="next"> 
                                             	  	  <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                   	  <span class="sr-only">Next</span></a>`;
-                                        }      
-                						
+                                        }   
                                         resultStr += `</div></figure>`;
-                						
-                						
-                						
                 					}
                 					
                 					resultStr += `<div class="reply-detail">
-                							  <div class="reply-list-content" id="reply-content-${result[i].replyNo}">
+                							  <div class="reply-list-content" id="reply-content-\${result[i].replyNo}">
                                     		  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path d="M12 2.5a5.25 5.25 0 0 0-2.519 9.857 9.005 9.005 0 0 0-6.477 8.37.75.75 0 0 0 .727.773H20.27a.75.75 0 0 0 .727-.772 9.005 9.005 0 0 0-6.477-8.37A5.25 5.25 0 0 0 12 2.5Z"></path>
                                     		  </svg><a href=""> \${result[i].replyNickname} 
                                     		  </a><span class="reply-date">\${result[i].replyDate }</span><p>
@@ -909,7 +912,8 @@
                                     const userId = "${ sessionScope.loginUser.userId }";
                                     
                                     if( userId === "${ barter.barterWriter}") {
-                                    	resultStr += `<div class="btn-group2" id="btn-group-\${ result[i].replyNo}"><button onclick="openChat(\'\${result[i].replyWriter}\');"
+                                    	resultStr += `<div class="btn-group2" id="btn-group-\${ result[i].replyNo}">
+                                    				  <button onclick="openChat(\'\${result[i].replyWriter}\');"
                                     			      id="chatbtn" class="btn btn-light">채팅하기</button></div></div></div>`;
                                     } else if( userId === result[i].replyWriter) {
                                     	resultStr += `<div class="btn-group2" id="btn-group-\${result[i].replyNo}"><button id="updbtn" class="btn btn-light" data-toggle="modal" href="#updateModal"
@@ -936,11 +940,13 @@
                 		
                 		if($('#reply-content').val().trim() != '') {
                 			
-                			var formData = new FormData();
-                			var inputFile = $("#reply-file");
-                			var files = inputFile[0].files;
+                			let formData = new FormData();
+                			let inputFile = $("#reply-file");
+                			let files = inputFile[0].files;
                 			
-                			for (var i=0; i<files.length; i++) {
+                			console.log(inputFile);
+                			
+                			for (let i=0; i<files.length; i++) {
                 				
                 				formData.append("upfiles", files[i]);
                 			}
@@ -983,7 +989,7 @@
                 		console.log(no);
                 		
                 		if(confirm('삭제하시겠습니까?')) {
-                			
+                			/*
 	                		var deleteData;
 	                		
                				if($('#reply-img-'+no).length) {
@@ -993,14 +999,12 @@
                					deleteData = false;
                				}
 	                		
-               				console.log(deleteData);
+               				//console.log(deleteData);*/
 	                			
                 			$.ajax({
                 				
                 				url : 'reply/' + no,
                 				type : 'delete',
-                				data : JSON.stringify(deleteData),
-                    			contentType : 'application/json',
                 				success : result => {
                 					
                 					console.log(result);
@@ -1026,9 +1030,9 @@
                 		// 1. 선택한 답글 정보 SELECT 수행
                 		// 2. p 태그를 textarea로 변환하여 select한 replyContent를 textarea에 출력
                 		// 3. 내용 수정 후 다시 수정 버튼을 누르면 UPDATE 수행
-                		var selectEl = '#reply-content-' + no;
-           				var replyContentEl = '#reply-content-' + no + ' > p'; 
-           				var btngroupEl = '#btn-group-' + no;
+                		const selectEl = '#reply-content-' + no;
+           				const replyContentEl = '#reply-content-' + no + ' > p'; 
+           				const btngroupEl = '#btn-group-' + no;
            				
            				$('#edit-reply').remove();
            				
@@ -1040,18 +1044,16 @@
 	                			type : 'get',
 	                			success : result => {
 	                				
-	                				console.log(result);
+	                				console.log("댓글 수정 : ", result);
 	                				
 	                				$(replyContentEl).hide();
 	                				$(btngroupEl).hide();
 	                				
 	                				let replyContent = `<div id="edit-reply">
-	                				   <div style="width: 100%; content: "'+'"; clear: both"></div>
-	                                   <textarea class="reply-content-area" id="edit-reply-content">
-	                                   \${result.replyContent}</textarea>
-	                                   <span style="margin-left: 10px" onclick="editReply(\${result.replyNo})" >저장</span>
-	                				   <span style="margin-left: 10px" onclick="getReply(\${result.replyNo}, 1)">취소</span></div>`;
-	                                
+					                                    <textarea class="reply-content-area" id="edit-reply-content">\${result.replyContent}</textarea>
+					                                    <span style="margin-left: 10px" onclick="editReply(\${result.replyNo})" >저장</span>
+					                				    <span style="margin-left: 10px" onclick="getReply(\${result.replyNo}, 1)">취소</span></div>`;
+					                                
 	                				$(selectEl).append(replyContent);
 	                				
 	                				
@@ -1164,7 +1166,7 @@
         	
         	const $heart = $('#heart');
         	const $wishcount = $('#wishcount');
-        	var svg;
+        	let svg;
         	
         		
         	$.ajax({
@@ -1181,15 +1183,17 @@
             		if (state == 1) {
                 		svg = `<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(0)" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
             		  		   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>`;
-                	} else {
+            		} else {
                 		svg = `<svg xmlns="http://www.w3.org/2000/svg" onclick="wish(1)" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
         					   <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>`;
-                	}
+            		}
             		
+            		$heart.html(svg);
         		}
+        		
         	});
         	
-        	$heart.html(svg);
+        	
         }
         
        
@@ -1212,10 +1216,16 @@
         			replyWriter : replyWriter
         		},
         		success : result => {
-        			roomNo = result;
+        			
+        			if(result === 'success') {
+        				location.href = '../chatting/view';
+        			} else {
+        				alert('오류가 발생했습니다.');
+        			}
+        			/* roomNo = result;
         			roomVar = roomNo;
-        			connect(roomNo);
-                	location.href = '../chatting/view';
+        			connect(roomNo); */
+                	
         		}, error : err => {
         			console.log('오류가 발생했습니다.');
         			
