@@ -167,9 +167,9 @@
                         <div class="mb-3">
                             <label for="Default select example" class="form-label">분류</label>
                             <select class="form-select" aria-label="Default select example" id="faqType">
-                                <option value="시스템">시스템</option>
-                                <option value="회원">회원</option>
-                                <option value="등급">등급</option>
+                                <option value="1">시스템</option>
+                                <option value="2">회원</option>
+                                <option value="3">등급</option>
                               </select>
                         </div>
                         <div class="mb-3">
@@ -223,7 +223,7 @@
 			const newFaq = {
 				"question" : $('#exampleFormControlInput2').val(),
 				"answer" : $('#exampleFormControlTextarea2').val(),
-				"faqType" : $('#faqType').val(),
+				"faqType" : $('#faqType option:selected').val(),
 				"userId" : $('#userId').val()
 			};
 			
@@ -244,20 +244,21 @@
 			});
 		};
 		
+		
 		//글 수정
 	      function update() {
 	         
-			const a = $('#faqType').val()
-			console.log(a);
 	         const faqNo = $("input[name='faqNo']:checked").val();
 	         
 	         const updateData = {
 	               "faqNo" : $('#faqNo').val(),
 	               "question" : $('#exampleFormControlInput1').val(),
 	               "answer" : $('#exampleFormControlTextarea1').val(),
-	               "faqType" : $('#faqType').val(),
+	               "faqType" : $("#faqType").val(),
 	               "userId" : $('#userId').val()
 	            };
+	         
+	         console.log(updateData);
 	         
 	         $.ajax({
 	            url : '/redclip/faq/' + faqNo,
@@ -272,7 +273,7 @@
 	 	               location.href = '/redclip/admin/adminFaq';
 	            	}
 	            	else {
-	            		alert('정보 수정에 실패했습니다.')	
+	            		alert('정보 수정에 실패했습니다.')	;
 	            	}
 	            }
 	         });
