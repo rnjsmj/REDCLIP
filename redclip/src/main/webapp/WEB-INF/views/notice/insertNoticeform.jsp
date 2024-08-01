@@ -12,7 +12,7 @@
 
     <style>
         .content {
-            width: 80%;
+            width: 1115px;
             margin: auto;
         }
         
