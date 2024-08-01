@@ -107,6 +107,13 @@
 <body>
     <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <div class="container">
+    	<nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
+                    <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
+                    <li class="breadcrumb-item"><a href="/redclip/noticeform">공지사항 </a></li>
+                </ol>
+            </nav>
         <h1>공지사항</h1>
       
         <ul class="nav nav-tabs" id="myTab" role="tablist">

@@ -67,6 +67,14 @@
          <c:remove var="alertMsg" scope="session" />
  	</c:if>
     <div class="container">
+    	<nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <img src="/redclip/resources/img/house-door-fill.svg" style="margin-right: 4px" />
+                    <li class="breadcrumb-item"><a href="/redclip">홈</a></li>
+                    <li class="breadcrumb-item"><a href="/redclip/noticeform">공지사항 </a></li>
+                    <li class="breadcrumb-item"><a href="/redclip/noticeDetail?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></li>
+                </ol>
+            </nav>
         <h1>게시글 상세보기</h1>
         <table>
             <tr>
