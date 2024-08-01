@@ -14,8 +14,8 @@
     }
 
     .container {
-        max-width:1115px !important;
-        width: 1115px !important;
+        max-width:1140px !important;
+        width: 1140px !important;
         margin: 0 auto;
         min-height: 700px;
     }
