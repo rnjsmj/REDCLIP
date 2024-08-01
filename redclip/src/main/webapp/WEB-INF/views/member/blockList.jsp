@@ -58,7 +58,7 @@
      <div class="tab">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link" href="${pageContext.request.contextPath}/member/myPage">내 정보</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/myPage">내 정보</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page"  href="#">차단 목록</a>
@@ -66,9 +66,9 @@
             <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/member/myProduct/${ sessionScope.loginUser.userId  }">내가 쓴 글</a>
             </li>
-            <li class="nav-item">
+            <%-- <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/member/wishList/${ sessionScope.loginUser.userId  }">찜한 상품</a>
-            </li>
+            </li> --%>
           </ul>
     </div>
     <div id="content">

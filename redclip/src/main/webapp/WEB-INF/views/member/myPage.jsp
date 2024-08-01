@@ -91,9 +91,9 @@
             <li class="nav-item">
               <a class="nav-link"  href="${pageContext.request.contextPath}/member/myProduct/${ sessionScope.loginUser.userId  }">내가 쓴 글</a>
             </li>
-            <li class="nav-item">
+           <%--  <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/member/wishList/${ sessionScope.loginUser.userId  }">찜한 상품</a>
-            </li>
+            </li> --%>
           </ul>
     </div>
     <div id="content">
@@ -132,16 +132,6 @@
                     <label for="address"> &nbsp; Address : </label>
                     <input type="text" class="form-control" id="address" value="${ sessionScope.loginUser.address }" name="address">
                     
-                    <label for="villageCode"> &nbsp; VillageCode : </label>
-                    <input type="number" class="form-control" id="villageCode" value="${ sessionScope.loginUser.villageCode }" name="villageCode">
-
-                    <!-- 자스 사용 -> aria-valuenow 값에 따라 progress-bar에 style 주기 -->
-                    <div id="pointbar">다음 등급까지
-	                    <div class="progress"  id="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >
-	                        <div class="progress-bar" style="width: 0%"></div>
-	                    </div>
-                    </div>
-               
 				<div id="buttons">
                     <button type="button" id="userUpdate" class="btn btn-success" onclick="update();">수정</button>
                     <button type="reset" class="btn btn-secondary">취소</button><br>
@@ -229,6 +219,7 @@
    					
    						if(result === 'success') {
    							alert('회원 정보가 수정되었습니다.');	
+   							location.href = 'myPage';
    						}
    						else {
    							alert('회원 정보 수정에 실패했습니다.');		

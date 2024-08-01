@@ -102,12 +102,10 @@ public class MemberController {
     }
 
    
-   //마이페이지에서 입력한 내용을 멤버 객체에 담아서 옮겨줄 친구!
     @ResponseBody
 	@PutMapping
 	public String update(@RequestBody Member member, HttpSession session) {
 		
-		//log.info("입력한 정보 : {}", member);
     	if(memberService.update(member)>0) {
     		
     		session.setAttribute("loginUser", memberService.login(member));
