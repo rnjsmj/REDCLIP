@@ -21,7 +21,7 @@
             margin: 0 auto;
         }
 
-        h1 {
+        h3 {
             margin-bottom: 20px;
             text-align: center;
         }
@@ -115,7 +115,7 @@
                     <li class="breadcrumb-item"><a href="/redclip/noticeform">공지사항 </a></li>
                 </ol>
             </nav>
-        <h1>공지사항</h1>
+        <h3>공지사항</h3>
       
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
