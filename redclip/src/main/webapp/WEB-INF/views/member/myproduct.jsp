@@ -63,7 +63,7 @@
      <div class="tab">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link" href="${pageContext.request.contextPath}/member/myPage">내 정보</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/myPage">내 정보</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/member/blockList/${ sessionScope.loginUser.userId }">차단 목록</a>
@@ -71,9 +71,9 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">내가 쓴 글</a>
             </li>
-            <li class="nav-item">
+            <%-- <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/member/wishList/${ sessionScope.loginUser.userId  }">찜한 상품</a>
-            </li>
+            </li> --%>
           </ul>
     </div>
     <div id="content">
@@ -83,7 +83,6 @@
         <table class="table" id="productList">
             <thead>
                 <tr>
-                    <th>선택</th>
                     <th>게시글 제목</th>
                     <th>작성일</th>
                     <th>거래상태</th>
@@ -100,10 +99,8 @@
 	                <c:forEach items="${ list }" var="barter">
 		                 <tr>
 		                    <td>
-		                    <div class="form-check">
-		                        <input class="form-check-input" type="checkbox" value=""  id="flexCheckDefault">
-		                      </div></td>
-		                      <td><a data-barter-no="${barter.barterNo}" href="${pageContext.request.contextPath}/barters/${barter.barterNo}">${ barter.barterName }</a></td>
+		                      <td><a data-barter-no="${barter.barterNo}"
+		                      href="${pageContext.request.contextPath}/barters/${barter.barterNo}">${ barter.barterName }</a></td>
 		                      <td>${ barter.barterDate }</td>
 		                      <td>${ barter.barterStatus }</td>
 		                      <td>${ barter.hit }</td>

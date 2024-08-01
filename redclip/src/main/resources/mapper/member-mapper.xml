@@ -148,6 +148,7 @@
 	<!-- 내가 쓴 글 조회 -->
 	<select id="selectById" parameterType="String" resultType="barter">
 		SELECT
+			  BARTER_NO barterNo,
 		      BARTER_NAME barterName,
 		      BARTER_DATE barterDate,
 		      BARTER_STATUS barterStatus,
