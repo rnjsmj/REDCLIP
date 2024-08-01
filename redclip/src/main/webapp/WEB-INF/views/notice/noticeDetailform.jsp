@@ -14,16 +14,15 @@
     }
 
     .container {
-        width: 60%;
+        max-width:1115px !important;
+        width: 1115px !important;
         margin: 0 auto;
-        margin-top: auto;
         min-height: 700px;
-        padding-top:100px;
     }
 
     h1 {
-    	
-        margin-bottom: 50px;
+    	margin-top:100px !important;
+        margin-bottom: 150px;
         text-align: center;
     }
 
