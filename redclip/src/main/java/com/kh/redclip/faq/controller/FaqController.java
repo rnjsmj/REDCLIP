@@ -54,6 +54,8 @@ public class FaqController {
 	@DeleteMapping
 	public String delete(@RequestBody List<Integer> numbers) {
 		
+		log.info("선택된 글 번호 목록 : {}", numbers);
+		
 		return faqService.delete(numbers) > 0? "success" : "error";
 	}
 	

@@ -292,6 +292,8 @@
 				numbers.push(faqNo);
 			});			
 			
+			console.log(numbers);
+			
 			$.ajax({
 				url : '/redclip/faq',
 				type : 'delete',

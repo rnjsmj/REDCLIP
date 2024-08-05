@@ -35,8 +35,6 @@ public class AdminForwardController {
 			
 			List<ReportMember> reports = adminService.findAll();
 			
-			log.info("물어와! : {}", reports);
-			
 			model.addAttribute("list", reports);
 			
 			return "admin/adminPage";
